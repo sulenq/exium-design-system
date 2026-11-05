@@ -1,0 +1,27 @@
+// src/design-system/components/button/types/button.type.ts
+
+import type {
+  ButtonProps as ChakraButtonProps,
+  IconButtonProps as ChakraIconButtonProps,
+} from "@chakra-ui/react";
+import type { ReactNode } from "react";
+
+export type ButtonProps = Omit<ChakraButtonProps, "variant"> & {
+  primary?: boolean;
+  variant?:
+    | ChakraButtonProps["variant"]
+    | "frosted"
+    | "glass"
+    | "blend"
+    | (string & {});
+  lineClamp?: ChakraButtonProps["lineClamp"];
+  clicky?: boolean;
+  tooltip?: ReactNode;
+};
+
+export type IconButtonProps = ChakraIconButtonProps &
+  ButtonProps & {
+    primary?: boolean;
+  };
+
+export type ColorModeToggleButtonProps = IconButtonProps;

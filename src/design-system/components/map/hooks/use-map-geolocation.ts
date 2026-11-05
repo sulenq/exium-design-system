@@ -1,0 +1,90 @@
+// src/design-system/components/map/hooks/use-map-geolocation.ts
+
+import type { UseGeolocationResult } from "@/design-system/components/map/types/map.type";
+import { toast } from "@/design-system/components/toast";
+import maplibregl from "maplibre-gl";
+import { useEffect, useRef, useState } from "react";
+
+const GEOLOCATION_FLY_TO_ZOOM = 14;
+
+/**
+ * Toggleable "my location" feature. Turning it on requests the browser's geolocation,
+ * shows a loading state while waiting, then on success flies the map there and drops
+ * a pin marker. Turning it off removes the pin and resets state back to inactive.
+ */
+export const useGeolocation = (
+  map: maplibregl.Map | null,
+): UseGeolocationResult => {
+  const [isActive, setIsActive] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
+  const markerRef = useRef<maplibregl.Marker | null>(null);
+
+  const removeMarker = () => {
+    markerRef.current?.remove();
+    markerRef.current = null;
+  };
+
+  const turnOff = () => {
+    removeMarker();
+    setIsActive(false);
+  };
+
+  const turnOn = () => {
+    if (!map) return;
+
+    if (!navigator.geolocation) {
+      const errMsg = "Geolocation is not supported by this browser";
+      setLocationError(errMsg);
+      toast.error(errMsg);
+      return;
+    }
+
+    setIsLocating(true);
+    setLocationError(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { longitude, latitude } = position.coords;
+
+        removeMarker();
+        markerRef.current = new maplibregl.Marker({ color: "#94a3b8" })
+          .setLngLat([longitude, latitude])
+          .addTo(map);
+
+        map.flyTo({
+          center: [longitude, latitude],
+          zoom: GEOLOCATION_FLY_TO_ZOOM,
+        });
+
+        setIsLocating(false);
+        setIsActive(true);
+      },
+      (error) => {
+        setIsLocating(false);
+        setLocationError(error.message);
+        toast.error(error.message);
+      },
+      { enableHighAccuracy: true, timeout: 10000 },
+    );
+  };
+
+  const toggle = () => {
+    if (isLocating) return; // ignore toggle spam while a request is already in flight
+
+    if (isActive) {
+      turnOff();
+    } else {
+      turnOn();
+    }
+  };
+
+  // Make sure the marker doesn't leak on unmount if it's still active.
+  useEffect(() => {
+    return () => {
+      markerRef.current?.remove();
+    };
+  }, []);
+
+  return { isActive, isLocating, locationError, toggle };
+};

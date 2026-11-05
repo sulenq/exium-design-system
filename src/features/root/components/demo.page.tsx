@@ -1,0 +1,2129 @@
+// src/features/root/components/demo.page.tsx
+
+import { BrandWatermark } from "@/design-system/components/branding/ui/brand-watermark";
+import { Logo } from "@/design-system/components/branding/ui/logo";
+import {
+  Button,
+  IconButton,
+} from "@/design-system/components/button/ui/button";
+import { ButtonGroup } from "@/design-system/components/button/ui/button-group";
+import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
+import type {
+  DataViewBatchActionsGenerator,
+  DataViewItemActionsGenerator,
+} from "@/design-system/components/data-display/types/data-view.type";
+import { DataViewFooter } from "@/design-system/components/data-display/ui/data-view-footer";
+import { DataViewTable } from "@/design-system/components/data-display/ui/data-view-table";
+import { Accordion } from "@/design-system/components/disclosure/ui/accordion";
+import { Breadcrumb } from "@/design-system/components/disclosure/ui/breadcrumb";
+import { Carousel } from "@/design-system/components/disclosure/ui/carousel";
+import { Collapsible } from "@/design-system/components/disclosure/ui/collapsible";
+import { Steps } from "@/design-system/components/disclosure/ui/steps";
+import { Tabs } from "@/design-system/components/disclosure/ui/tabs";
+import type { EmojiVariant } from "@/design-system/components/emoji/types/emoji.type";
+import { Emoji } from "@/design-system/components/emoji/ui/emoji";
+import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
+import { DotIndicator } from "@/design-system/components/feedback/ui/indicator";
+import {
+  Progress,
+  ProgressCircle,
+} from "@/design-system/components/feedback/ui/progress";
+import {
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
+} from "@/design-system/components/feedback/ui/skeleton";
+import { StateAccessDenied } from "@/design-system/components/feedback/ui/state.access-denied";
+import { StateNoData } from "@/design-system/components/feedback/ui/state.no-data";
+import { StateNoResult } from "@/design-system/components/feedback/ui/state.no-result";
+import { StateRetry } from "@/design-system/components/feedback/ui/state.retry";
+import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
+import { useExistingFiles } from "@/design-system/components/input/hooks/use-existing-files";
+import type { FieldProps } from "@/design-system/components/input/types/field.type";
+import { Checkbox } from "@/design-system/components/input/ui/checkbox";
+import { DateInput } from "@/design-system/components/input/ui/date-input";
+import { Field } from "@/design-system/components/input/ui/field";
+import { Fieldset } from "@/design-system/components/input/ui/fieldset";
+import { FileInput } from "@/design-system/components/input/ui/file-input";
+import { FocusSelectInput } from "@/design-system/components/input/ui/focus-select";
+import { Input } from "@/design-system/components/input/ui/input";
+import {
+  NumberInput,
+  SteppedNumberInput,
+} from "@/design-system/components/input/ui/number-input";
+import { PasswordInput } from "@/design-system/components/input/ui/password-input";
+import { PinInput } from "@/design-system/components/input/ui/pin-input";
+import { RadioCardInput } from "@/design-system/components/input/ui/radio-card-input";
+import { RadioInput } from "@/design-system/components/input/ui/radio-input";
+import { SearchInput } from "@/design-system/components/input/ui/search-input";
+import Select from "@/design-system/components/input/ui/select";
+import { Slider } from "@/design-system/components/input/ui/slider";
+import { Switch } from "@/design-system/components/input/ui/switch";
+import { Textarea } from "@/design-system/components/input/ui/textarea";
+import { Box } from "@/design-system/components/layout/ui/box";
+import {
+  AbsoluteCenter,
+  Center,
+} from "@/design-system/components/layout/ui/center";
+import { Container } from "@/design-system/components/layout/ui/container";
+import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
+import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
+import { Group } from "@/design-system/components/layout/ui/group";
+import { Splitter } from "@/design-system/components/layout/ui/splitter";
+import { Image } from "@/design-system/components/media/ui/image";
+import { ExternalLink } from "@/design-system/components/navigation/ui/link";
+import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { Dialog } from "@/design-system/components/overlay/ui/dialog";
+import { Drawer } from "@/design-system/components/overlay/ui/drawer";
+import { Modal } from "@/design-system/components/overlay/ui/modal";
+import { toast } from "@/design-system/components/toast";
+import { Badge } from "@/design-system/components/typography/ui/badge";
+import { P, TNum } from "@/design-system/components/typography/ui/p";
+import { RichTextEditorPresetEssential } from "@/design-system/components/typography/ui/rich-text-editor.preset";
+import { Span } from "@/design-system/components/typography/ui/span";
+import { DownloadTrigger } from "@/design-system/components/utilities/ui/download-trigger";
+import { useSplitterStore } from "@/design-system/stores/splitter-store";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import type {
+  DemoPaletteItem,
+  DemoSectionHeaderProps,
+} from "@/features/root/types/demo.type";
+import { SettingsTrigger } from "@/features/settings/components/settings";
+import { getLocale, getLocaleLabel } from "@/shared/libs/i18n";
+import { useLocale } from "@/shared/libs/i18n/locale-provider";
+import { isEmptyArray } from "@/shared/utils/data/array";
+import {
+  IconArrowRight,
+  IconDownload,
+  IconFilter2,
+  IconForbid,
+  IconLanguage,
+  IconPlus,
+  IconTrash,
+} from "@tabler/icons-react";
+import {
+  BellIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CogIcon,
+  CompassIcon,
+  CopyIcon,
+  EditIcon,
+  EyeIcon,
+  FolderIcon,
+  LayersIcon,
+  LayoutGridIcon,
+  MessageSquareIcon,
+  MousePointerClickIcon,
+  PaletteIcon,
+  SparklesIcon,
+  TableIcon,
+  TextCursorInputIcon,
+  TrashIcon,
+  TypeIcon,
+  Undo2Icon,
+  UndoIcon,
+  UserIcon,
+  WrenchIcon,
+} from "lucide-react";
+import { useState } from "react";
+import { useForm, type UseFormRegisterReturn } from "react-hook-form";
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
+
+export const DemoPage = () => {
+  return (
+    <VStack minH={"100dvh"} gap={4}>
+      <IntegratedFeatures />
+      <Branding />
+      <Typography />
+      <Navigation />
+      <Buttons />
+      <Toast />
+      <Layout />
+      <Inputs />
+      <Overlay />
+      <Disclosure />
+      <Feedback />
+      <DataDisplay />
+      <Utilities />
+      <ColorPalettes />
+    </VStack>
+  );
+};
+
+const DemoSectionHeader = (props: DemoSectionHeaderProps) => {
+  // Props
+  const { title, icon, description } = props;
+
+  return (
+    <VStack align={"center"} gap={1} w={"full"} pb={2}>
+      <HStack align={"center"} gap={3}>
+        <AppIcon icon={icon} size={"xl"} color={"fg.solid"} />
+        <P
+          textAlign={"center"}
+          fontSize={"2xl"}
+          fontWeight={"semibold"}
+          letterSpacing={"tight"}
+        >
+          {title}
+        </P>
+      </HStack>
+
+      {description && (
+        <P fontSize={"sm"} color={"fg.subtle"} textAlign={"center"}>
+          {description}
+        </P>
+      )}
+    </VStack>
+  );
+};
+
+const IntegratedFeatures = () => {
+  const { setLocale } = useLocale();
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Integrated Features"}
+          icon={CogIcon}
+          description={
+            "Pengaturan tema, toggle mode gelap/terang, dan pergantian bahasa"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={2}>
+          <SettingsTrigger modalKey={"settings"} w={"fit"}>
+            <IconButton>
+              <AppIcon icon={CogIcon} strokeWidth={1.3} size={"lg"} />
+            </IconButton>
+          </SettingsTrigger>
+
+          <ColorModeToggleButton />
+
+          <Button
+            onClick={() => {
+              setLocale(getLocale() === "id" ? "en" : "id");
+            }}
+          >
+            <AppIcon icon={IconLanguage} />
+            {getLocaleLabel(getLocale())}
+          </Button>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const Branding = () => {
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Branding"}
+          icon={SparklesIcon}
+          description={
+            "Identitas visual aplikasi, logo resmi, dan watermark ATR/BPN"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+          <Logo />
+
+          <BrandWatermark />
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const Typography = () => {
+  const [tnum, setTnum] = useState<number>(10);
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Typography"}
+          icon={TypeIcon}
+          description={
+            "Hierarki tipografi, color weights, dan angka tabular konsisten"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={8}>
+          <VStack>
+            <P color={"fg.solid"}>{"Default"}</P>
+            <P color={"fg.emphasized"}>{"Emphasized"}</P>
+            <P color={"fg.muted"}>{"Muted"}</P>
+            <P color={"fg.subtle"}>{"Subtle"}</P>
+          </VStack>
+
+          <VStack gap={2}>
+            <HStack align={"center"} gap={4}>
+              <VStack>
+                <HStack align={"center"} justify={"space-between"} gap={2}>
+                  <P>Normal text</P>
+                  <P>{tnum}</P>
+                </HStack>
+
+                <HStack align={"center"} justify={"space-between"} gap={2}>
+                  <P>Tabular num</P>
+                  <P>
+                    <TNum>{tnum}</TNum>
+                  </P>
+                </HStack>
+              </VStack>
+
+              <Button
+                size={"xs"}
+                variant={"outline"}
+                onClick={() => setTnum((p) => p + 1)}
+              >
+                + 1
+              </Button>
+            </HStack>
+
+            <P fontSize={"xs"} color={"fg.subtle"} w={"120px"}>
+              *Tabular num has consistent width per char
+            </P>
+          </VStack>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const COLOR_PALETTES: DemoPaletteItem[] = [
+  { palette: "neutral", label: "Neutral", category: "Monochrome" },
+  { palette: "grey", label: "Grey", category: "Monochrome" },
+  { palette: "cream", label: "Cream", category: "Earth & Warm" },
+  { palette: "caramel", label: "Caramel", category: "Earth & Warm" },
+  { palette: "mocha", label: "Mocha", category: "Earth & Warm" },
+  { palette: "brown", label: "Brown", category: "Earth & Warm" },
+  { palette: "maroon", label: "Maroon", category: "Red & Warm" },
+  { palette: "red", label: "Red", category: "Red & Warm" },
+  { palette: "salmon", label: "Salmon", category: "Red & Warm" },
+  {
+    palette: "pastelOrange",
+    label: "Pastel Orange",
+    category: "Orange & Yellow",
+  },
+  { palette: "orange", label: "Orange", category: "Orange & Yellow" },
+  { palette: "gold", label: "Gold", category: "Orange & Yellow" },
+  { palette: "yellow", label: "Yellow", category: "Orange & Yellow" },
+  { palette: "lime", label: "Lime", category: "Green & Teal" },
+  { palette: "olive", label: "Olive", category: "Green & Teal" },
+  { palette: "green", label: "Green", category: "Green & Teal" },
+  { palette: "jade", label: "Jade", category: "Green & Teal" },
+  { palette: "teal", label: "Teal", category: "Green & Teal" },
+  { palette: "tealBlue", label: "Teal Blue", category: "Cyan & Blue" },
+  { palette: "cyan", label: "Cyan", category: "Cyan & Blue" },
+  { palette: "sky", label: "Sky", category: "Cyan & Blue" },
+  { palette: "powderBlue", label: "Powder Blue", category: "Cyan & Blue" },
+  { palette: "blue", label: "Blue", category: "Cyan & Blue" },
+  { palette: "sapphire", label: "Sapphire", category: "Blue & Indigo" },
+  { palette: "indigo", label: "Indigo", category: "Blue & Indigo" },
+  { palette: "discord", label: "Discord", category: "Blue & Indigo" },
+  {
+    palette: "powderLavender",
+    label: "Powder Lavender",
+    category: "Purple & Violet",
+  },
+  { palette: "lavender", label: "Lavender", category: "Purple & Violet" },
+  { palette: "purple", label: "Purple", category: "Purple & Violet" },
+  {
+    palette: "bubblegumPink",
+    label: "Bubblegum Pink",
+    category: "Pink & Magenta",
+  },
+  { palette: "pink", label: "Pink", category: "Pink & Magenta" },
+];
+
+const COLOR_STEPS = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+] as const;
+
+const ColorPalettes = () => {
+  // States
+  const [copiedToken, setCopiedToken] = useState<string | null>(null);
+
+  // Handlers
+  const handleCopy = (token: string) => {
+    void navigator.clipboard.writeText(token);
+    setCopiedToken(token);
+    toast.create({
+      title: "Token disalin",
+      description: token,
+      variant: "info",
+    });
+    setTimeout(() => {
+      setCopiedToken(null);
+    }, 2000);
+  };
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6} align={"stretch"}>
+        <DemoSectionHeader
+          title={"Color Palettes"}
+          icon={PaletteIcon}
+          description={
+            "Koleksi token warna gradasi 50 hingga 950 di chakra-system. Klik swatch untuk menyalin token path."
+          }
+        />
+
+        <VStack align={"stretch"} gap={4} w={"full"}>
+          {COLOR_PALETTES.map((item) => {
+            return (
+              <VStack
+                key={item.palette}
+                align={"stretch"}
+                gap={2}
+                p={3}
+                rounded={"md"}
+                border={"1px solid"}
+                borderColor={"bg.canvas"}
+                bg={"bg.subtle"}
+              >
+                {/* Header row: Palette Name, Badge Category, Continuous Gradient bar */}
+                <HStack
+                  justify={"space-between"}
+                  align={"center"}
+                  wrap={"wrap"}
+                  gap={2}
+                >
+                  <HStack align={"center"} gap={2}>
+                    <P fontWeight={"semibold"} fontSize={"md"}>
+                      {item.label}
+                    </P>
+
+                    <Badge size={"xs"} colorPalette={"gray"}>
+                      {item.palette}
+                    </Badge>
+
+                    <Badge size={"xs"} colorPalette={"neutral"}>
+                      {item.category}
+                    </Badge>
+                  </HStack>
+                </HStack>
+
+                {/* 11 Swatches: 50, 100 .. 950 */}
+                <SimpleGrid
+                  columns={{ base: 4, sm: 6, md: 11 }}
+                  gap={1}
+                  w={"full"}
+                >
+                  {COLOR_STEPS.map((step) => {
+                    const tokenName = `${item.palette}.${step}`;
+                    const isCopied = copiedToken === tokenName;
+                    const stepNum = parseInt(step, 10);
+                    const isDark = stepNum >= 500;
+
+                    return (
+                      <VStack
+                        key={step}
+                        cursor={"pointer"}
+                        onClick={() => handleCopy(tokenName)}
+                        align={"center"}
+                        justify={"space-between"}
+                        h={"64px"}
+                        p={1}
+                        rounded={"sm"}
+                        bg={tokenName}
+                        border={"1px solid"}
+                        borderColor={"bg.canvas"}
+                        transition={"transform 0.1s ease, box-shadow 0.1s ease"}
+                        _hover={{
+                          transform: "scale(1.05)",
+                          zIndex: 2,
+                          shadow: "md",
+                        }}
+                        position={"relative"}
+                      >
+                        <HStack
+                          w={"full"}
+                          justify={"space-between"}
+                          align={"center"}
+                        >
+                          <P
+                            fontSize={"2xs"}
+                            fontWeight={"bold"}
+                            color={isDark ? "white" : "black"}
+                            opacity={0.85}
+                            lineHeight={1}
+                          >
+                            {`.${step}`}
+                          </P>
+
+                          <Box color={isDark ? "white" : "black"} opacity={0.7}>
+                            <AppIcon
+                              icon={isCopied ? CheckIcon : CopyIcon}
+                              size={"xs"}
+                            />
+                          </Box>
+                        </HStack>
+
+                        {step === "500" && (
+                          <Badge
+                            size={"xs"}
+                            variant={"solid"}
+                            fontSize={"2xs"}
+                            px={1}
+                            py={0}
+                            colorPalette={"neutral"}
+                            opacity={0.9}
+                          >
+                            {"BASE"}
+                          </Badge>
+                        )}
+                      </VStack>
+                    );
+                  })}
+                </SimpleGrid>
+              </VStack>
+            );
+          })}
+        </VStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const Navigation = () => {
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Navigation"}
+          icon={CompassIcon}
+          description={"Navigasi tautan internal dan tautan eksternal"}
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+          <ExternalLink href={"https://youtube.com"}>youtube.com</ExternalLink>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const Buttons = () => {
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Buttons"}
+          icon={MousePointerClickIcon}
+          description={
+            "Varian tombol interaktif primary, surface, subtle, outline, dan ghost"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+          <Button primary>Primary</Button>
+
+          <Button variant={"surface"}>Surface</Button>
+
+          <Button variant={"subtle"}>Subtle</Button>
+
+          <Button variant={"outline"}>Outline</Button>
+
+          <Button>Default/Ghost</Button>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const Toast = () => {
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Toast"}
+          icon={BellIcon}
+          description={
+            "Sistem pemberitahuan instan dengan berbagai varian dan aksi responsif"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+          <Button
+            onClick={() => {
+              toast.create({
+                variant: "success",
+                title: "All set — changes saved!",
+              });
+            }}
+          >
+            Toast success
+          </Button>
+
+          <Button
+            onClick={() => {
+              toast.create({
+                variant: "warning",
+                group: "Warning",
+                title: "Password strength: weak",
+              });
+            }}
+          >
+            Toast warning
+          </Button>
+
+          <Button
+            onClick={() => {
+              toast.create({
+                variant: "error",
+                title: "File to large",
+                description: "Max file size is 5MB",
+              });
+            }}
+          >
+            Toast error
+          </Button>
+
+          <Button
+            onClick={() => {
+              const duration = 5000;
+
+              toast.create({
+                id: "Email compose",
+                variant: "loading",
+                title: "Sending email to Jolitos",
+                quickAction: {
+                  content: (
+                    <>
+                      <AppIcon icon={UndoIcon} size={"xs"} />
+                      Undo
+                    </>
+                  ),
+                  onClick: () => {
+                    console.log("Undo");
+                  },
+                },
+                duration: duration + 100,
+              });
+
+              setTimeout(() => {
+                toast.update("Email compose", {
+                  variant: "success",
+                  title: "Email sent successfully",
+                  quickAction: undefined,
+                  duration: duration,
+                });
+              }, duration);
+            }}
+          >
+            Toast loading with quick action
+          </Button>
+
+          <Button
+            onClick={() => {
+              toast.create({
+                icon: <AppIcon icon={MessageSquareIcon} size={"sm"} />,
+                group: "Message",
+                title: "Johan sent you a message",
+                description:
+                  "Lorem ipsum dolor sit amet, adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                actions: [
+                  {
+                    content: "Mark as read",
+                    onClick: () => {
+                      console.log("Mark as read");
+                    },
+                  },
+                  {
+                    content: "Reply",
+                    onClick: () => {
+                      console.log("Reply");
+                    },
+                  },
+                  {
+                    content: "Mute",
+                    onClick: () => {
+                      console.log("Mute");
+                    },
+                  },
+                ],
+              });
+            }}
+          >
+            Toast with custom icon + actions
+          </Button>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+const DEFAULT_DEMO_SPLITTER_SIZE = [50, 50];
+
+const Layout = () => {
+  const splitterSize = useSplitterStore(
+    (s) => s.sizesByKey["demo-layout"] ?? DEFAULT_DEMO_SPLITTER_SIZE,
+  );
+  const setSplitterSize = useSplitterStore((s) => s.setSize);
+
+  const panelA = (
+    <Splitter.Panel
+      key={"a"}
+      id={"a"}
+      defaultSize={splitterSize[0]}
+      minSize={20}
+    >
+      <Center boxSize={"full"} textStyle={"2xl"}>
+        A
+      </Center>
+    </Splitter.Panel>
+  );
+
+  const resizeTrigger = (
+    <Splitter.ResizeTrigger
+      key={"trigger"}
+      id={"a:b"}
+      onDoubleClick={() => {
+        setSplitterSize("demo-layout", DEFAULT_DEMO_SPLITTER_SIZE);
+      }}
+    />
+  );
+
+  const panelB = (
+    <Splitter.Panel
+      key={"b"}
+      id={"b"}
+      defaultSize={splitterSize[1]}
+      minSize={20}
+    >
+      <Center boxSize={"full"} textStyle={"2xl"}>
+        B
+      </Center>
+    </Splitter.Panel>
+  );
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Layout"}
+          icon={LayoutGridIcon}
+          description={
+            "Komponen pembagi kontainer fleksibel, splitter, dan grid adaptif"
+          }
+        />
+
+        <HStack
+          wrap={"wrap"}
+          align={"center"}
+          justify={"center"}
+          gap={4}
+          h={"300px"}
+        >
+          <Splitter.Root
+            direction={"horizontal"}
+            defaultLayout={DEFAULT_DEMO_SPLITTER_SIZE}
+            onLayout={(layout: number[]) =>
+              setSplitterSize("demo-layout", layout)
+            }
+            borderWidth={"1px"}
+            h={"300px"}
+            w={"full"}
+          >
+            {[panelA, resizeTrigger, panelB]}
+          </Splitter.Root>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+// -------------------------------------------------------------------------------------
+
+const FieldTemplate = (props: FieldProps) => {
+  return <Field errorText={"Invalid input"} w={"fit"} {...props} />;
+};
+
+const DemoFileInput = (
+  props: FieldProps & { inputProps: UseFormRegisterReturn },
+) => {
+  const { inputProps, ...restProps } = props;
+  const apiResponse = [
+    {
+      attachment_id: "att_001",
+      file_name: "invoice-january.pdf",
+      file_size: 8000,
+      file_url: "https://cdn.example.com/files/invoice-january.pdf",
+      content_type: "application/pdf",
+    },
+    {
+      attachment_id: "att_002",
+      file_name: "product-photo.jpg",
+      file_size: 1420,
+      file_url: "https://cdn.example.com/files/product-photo.jpg",
+      content_type: "image/jpeg",
+    },
+  ];
+
+  const { existingFiles, toggleMarkedForDelete } = useExistingFiles({
+    initialExistingFiles: apiResponse.map((att) => ({
+      id: att.attachment_id,
+      name: att.file_name,
+      size: att.file_size,
+      url: att.file_url,
+      mimeType: att.content_type,
+      // markedForDelete: true,
+    })),
+  });
+
+  return (
+    <FieldTemplate label={"Edit Mode"} w={"320px"} {...restProps}>
+      <FileInput
+        inputProps={inputProps}
+        accept={[".jpeg", ".jpg"]}
+        maxFiles={2}
+        existingFiles={existingFiles}
+        onToggleDeleteExisting={toggleMarkedForDelete}
+      />
+    </FieldTemplate>
+  );
+};
+
+const DemoFileInputReplace = (
+  props: FieldProps & { inputProps: UseFormRegisterReturn },
+) => {
+  const { inputProps, ...restProps } = props;
+  const apiResponse = [
+    {
+      attachment_id: "att_001",
+      file_name: "invoice-january.pdf",
+      file_size: 8000,
+      file_url: "https://cdn.example.com/files/invoice-january.pdf",
+      content_type: "application/pdf",
+    },
+    {
+      attachment_id: "att_002",
+      file_name: "product-photo.jpg",
+      file_size: 1420,
+      file_url: "https://cdn.example.com/files/product-photo.jpg",
+      content_type: "image/jpeg",
+    },
+  ];
+
+  const { existingFiles } = useExistingFiles({
+    initialExistingFiles: apiResponse.map((att) => ({
+      id: att.attachment_id,
+      name: att.file_name,
+      size: att.file_size,
+      url: att.file_url,
+      mimeType: att.content_type,
+      // markedForDelete: true,
+    })),
+  });
+
+  return (
+    <FieldTemplate label={"Replace Mode"} w={"320px"} {...restProps}>
+      <FileInput
+        inputProps={inputProps}
+        accept={[".jpeg", ".jpg"]}
+        maxFiles={2}
+        existingFiles={existingFiles}
+      />
+    </FieldTemplate>
+  );
+};
+
+const DemoRichTextEditor = (props: FieldProps) => {
+  return (
+    <FieldTemplate {...props}>
+      <RichTextEditorPresetEssential />
+    </FieldTemplate>
+  );
+};
+
+export const Inputs = () => {
+  const {
+    register,
+    getValues,
+    //  control
+  } = useForm();
+
+  const [invalid, setInvalid] = useState<boolean>(false);
+
+  // const number1 = useWatch({
+  //   control,
+  //   name: "number1",
+  // });
+
+  // console.log("number1", number1);
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Inputs"}
+          icon={TextCursorInputIcon}
+          description={
+            "Elemen formulir, text input, password, search, slider, switch, dan date picker"
+          }
+        />
+
+        <Fieldset>
+          <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={12}>
+            <FieldTemplate invalid={invalid}>
+              <Checkbox>Checkbox</Checkbox>
+            </FieldTemplate>
+
+            <VStack>
+              <FieldTemplate label={"Text Input"} invalid={invalid}>
+                <Input
+                  placeholder={"Text input..."}
+                  w={"200px"}
+                  roundedBottom={0}
+                />
+              </FieldTemplate>
+
+              <FieldTemplate label={"Password Input"} invalid={invalid}>
+                <PasswordInput
+                  w={"200px"}
+                  withPasswordStrength
+                  roundedTop={0}
+                />
+              </FieldTemplate>
+            </VStack>
+
+            <FieldTemplate variant={"default"} invalid={invalid}>
+              <SearchInput placeholder={"Search..."} />
+            </FieldTemplate>
+
+            <FieldTemplate label={"Date Input"} invalid={invalid}>
+              <DateInput
+                modalKey={"date-input"}
+                datePickerSubtitle={"Pick a day for your leaves"}
+                w={"250px"}
+              />
+            </FieldTemplate>
+
+            <FieldTemplate label={"Select Input"} invalid={invalid}>
+              <Select
+                options={[
+                  { label: "Option 1", value: "option-1" },
+                  { label: "Option 2", value: "option-2" },
+                  { label: "Option 3", value: "option-3" },
+                  { label: "Option 4", value: "option-4" },
+                  { label: "Option 5", value: "option-5" },
+                ]}
+                w={"200px"}
+              />
+            </FieldTemplate>
+
+            <FieldTemplate label={"Focus Select Input"} invalid={invalid}>
+              <FocusSelectInput
+                options={[
+                  { label: "Option 1", value: "option-1" },
+                  { label: "Option 2", value: "option-2" },
+                  { label: "Option 3", value: "option-3" },
+                  { label: "Option 4", value: "option-4" },
+                  { label: "Option 5", value: "option-5" },
+                ]}
+                w={"200px"}
+              />
+            </FieldTemplate>
+
+            <FieldTemplate invalid={invalid}>
+              <NumberInput
+                inputProps={register("number1")}
+                placeholder={"Number input..."}
+                formatOptions={{
+                  style: "unit",
+                  unit: "inch",
+                  unitDisplay: "long",
+                }}
+                w={"200px"}
+              />
+            </FieldTemplate>
+
+            <FieldTemplate invalid={invalid}>
+              <SteppedNumberInput hiddenInputProps={register("number2")} />
+            </FieldTemplate>
+
+            <SimpleGrid columns={[1, null, 2]} gap={12}>
+              <DemoFileInput
+                invalid={invalid}
+                inputProps={register("attachments")}
+              />
+
+              <DemoFileInputReplace
+                invalid={invalid}
+                inputProps={register("attachments2")}
+              />
+            </SimpleGrid>
+
+            <FieldTemplate invalid={invalid}>
+              <PinInput />
+            </FieldTemplate>
+
+            <FieldTemplate invalid={invalid}>
+              <Switch>Switch</Switch>
+            </FieldTemplate>
+
+            <FieldTemplate invalid={invalid}>
+              <RadioInput
+                options={[
+                  { label: "Option 1", value: "option-1" },
+                  { label: "Option 2", value: "option-2" },
+                ]}
+              />
+            </FieldTemplate>
+
+            <FieldTemplate invalid={invalid}>
+              <RadioCardInput.Root defaultValue="option-1">
+                <HStack gap={4}>
+                  <RadioCardInput.Item value="option-1">
+                    <RadioCardInput.ItemControl>
+                      <VStack gap={1}>
+                        <AppIcon
+                          icon={IconArrowRight}
+                          size={"xl"}
+                          color={"fg.muted"}
+                          mb={1}
+                        />
+
+                        <RadioCardInput.ItemText>
+                          Option 1
+                        </RadioCardInput.ItemText>
+
+                        <RadioCardInput.ItemDescription>
+                          Description 1
+                        </RadioCardInput.ItemDescription>
+                      </VStack>
+
+                      <RadioCardInput.ItemIndicator />
+                    </RadioCardInput.ItemControl>
+                  </RadioCardInput.Item>
+
+                  <RadioCardInput.Item value="option-2">
+                    <RadioCardInput.ItemControl>
+                      <VStack gap={1}>
+                        <AppIcon
+                          icon={IconForbid}
+                          size={"xl"}
+                          color={"fg.muted"}
+                          mb={1}
+                        />
+
+                        <RadioCardInput.ItemText>
+                          Option 2
+                        </RadioCardInput.ItemText>
+
+                        <RadioCardInput.ItemDescription>
+                          Description 2
+                        </RadioCardInput.ItemDescription>
+                      </VStack>
+                      <RadioCardInput.ItemIndicator />
+                    </RadioCardInput.ItemControl>
+                  </RadioCardInput.Item>
+                </HStack>
+              </RadioCardInput.Root>
+            </FieldTemplate>
+
+            <FieldTemplate label={"Textarea"} invalid={invalid}>
+              <Textarea placeholder="textarea" maxLength={10} />
+            </FieldTemplate>
+
+            <FieldTemplate invalid={invalid}>
+              <Slider defaultValue={[25]} w={"200px"} />
+            </FieldTemplate>
+
+            <DemoRichTextEditor />
+          </HStack>
+        </Fieldset>
+
+        <Group justify={"center"}>
+          <Button
+            onClick={() => {
+              console.log(getValues());
+            }}
+          >
+            Log input values
+          </Button>
+
+          <Button
+            onClick={() => {
+              setInvalid((ps) => !ps);
+            }}
+          >
+            Toggle invalid <DotIndicator checked={invalid} />
+          </Button>
+        </Group>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+// -------------------------------------------------------------------------------------
+
+const OModal = () => {
+  // Hooks
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "exampleModal",
+  });
+
+  return (
+    <Modal.Root modalKey={modalKey} opened={isOpen} open={open} close={close}>
+      <Modal.Trigger>
+        <Button variant={"outline"}>Open Modal</Button>
+      </Modal.Trigger>
+
+      <Modal.Content>
+        <Modal.Header>
+          <Modal.Title w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
+            Header
+          </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <P textAlign={"center"}>
+            Modal is dynamic component, it render dialog component on large
+            viewport, render drawer component on small to medium viewport and
+            has its own fullscreen feature on dialog component
+          </P>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button flex={1} onClick={close}>
+            Close
+          </Button>
+          <Button flex={1} primary>
+            CTA
+          </Button>
+        </Modal.Footer>
+      </Modal.Content>
+    </Modal.Root>
+  );
+};
+
+const ODialog = () => {
+  // Hooks
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "exampleDialog",
+  });
+
+  return (
+    <Dialog.Root modalKey={modalKey} opened={isOpen} open={open} close={close}>
+      <Dialog.Trigger>
+        <Button variant={"outline"}>Open Dialog</Button>
+      </Dialog.Trigger>
+
+      <Dialog.Content>
+        <Dialog.Header>
+          <P
+            w={"full"}
+            fontSize={"xl"}
+            fontWeight={"semibold"}
+            textAlign={"center"}
+          >
+            Header
+          </P>
+        </Dialog.Header>
+        <Dialog.Body>
+          <P textAlign={"center"}>
+            Dialog is component that need user focus and styled like floating
+            container
+          </P>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Button flex={1} onClick={close}>
+            Close
+          </Button>
+          <Button flex={1} primary>
+            CTA
+          </Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  );
+};
+
+const ODrawer = () => {
+  // Hooks
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "exampleDrawer",
+  });
+
+  return (
+    <Drawer.Root
+      modalKey={modalKey}
+      opened={isOpen}
+      open={open}
+      close={close}
+      size={"xl"}
+    >
+      <Drawer.Trigger>
+        <Button variant={"outline"}>Open Drawer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <P
+            w={"full"}
+            fontSize={"xl"}
+            fontWeight={"semibold"}
+            textAlign={"center"}
+          >
+            Header
+          </P>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <VStack align={"center"} gap={4}>
+            <P textAlign={"center"}>
+              Drawer is component that need user focus and styled like "drawer"
+              or sliding container
+            </P>
+          </VStack>
+        </Drawer.Body>
+
+        <Drawer.Footer>
+          <Button flex={1} onClick={close}>
+            Close
+          </Button>
+
+          <ONestedDrawer />
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  );
+};
+
+const ONestedDrawer = () => {
+  // Hooks
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "exampleDrawer.nested",
+  });
+
+  return (
+    <Drawer.Root modalKey={modalKey} opened={isOpen} open={open} close={close}>
+      <Drawer.Trigger>
+        <Button primary flex={1}>
+          Open Nested
+        </Button>
+      </Drawer.Trigger>
+
+      <Drawer.Content>
+        <Drawer.Header>
+          <P
+            w={"full"}
+            fontSize={"xl"}
+            fontWeight={"semibold"}
+            textAlign={"center"}
+          >
+            Header
+          </P>
+        </Drawer.Header>
+        <Drawer.Body>
+          <P textAlign={"center"}>
+            Drawer is component that need user focus and styled like "drawer" or
+            sliding container
+          </P>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Button flex={1} onClick={close}>
+            Close
+          </Button>
+          <Button flex={1} primary>
+            CTA
+          </Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  );
+};
+
+export const Overlay = () => {
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Overlay"}
+          icon={EyeIcon}
+          description={
+            "Komponen modal popover, dialog konfirmasi, dan drawer drawer samping"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+          <OModal />
+
+          <ODialog />
+
+          <ODrawer />
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+// -------------------------------------------------------------------------------------
+
+export const Disclosure = () => {
+  const items = [
+    { value: "a", title: "First Item", text: "Some value 1..." },
+    { value: "b", title: "Second Item", text: "Some value 2..." },
+    { value: "c", title: "Third Item", text: "Some value 3..." },
+  ];
+  const images = [
+    "https://images.unsplash.com/photo-1656433031375-5042f5afe894?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2371",
+    "https://images.unsplash.com/photo-1587466412525-87497b34fc88?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2673",
+    "https://images.unsplash.com/photo-1629581688635-5d88654e5bdd?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2831",
+    "https://images.unsplash.com/photo-1661030420948-862787de0056?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2370",
+    "https://images.unsplash.com/photo-1703505841379-2f863b201212?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2371",
+    "https://images.unsplash.com/photo-1607776905497-b4f788205f6a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2370",
+  ];
+  const steps = [
+    {
+      title: "Step 1",
+      description: "Step 1 description",
+    },
+    {
+      title: "Step 2",
+      description: "Step 2 description",
+    },
+    {
+      title: "Step 3",
+      description: "Step 3 description",
+    },
+  ];
+  const tabs = [
+    { icon: UserIcon, triggerLabel: "Members" },
+    { icon: FolderIcon, triggerLabel: "Projects" },
+    { icon: CheckCircleIcon, triggerLabel: "Tasks" },
+  ];
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Disclosure"}
+          icon={LayersIcon}
+          description={
+            "Accordion lipat, tab menu bertingkat, breadcrumbs, dan carousel"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={10}>
+          <Accordion.Root
+            collapsible
+            multiple
+            defaultValue={["b"]}
+            maxW={"300px"}
+          >
+            {items.map((item, index) => (
+              <Accordion.Item key={index} value={item.value}>
+                <Accordion.ItemTrigger
+                  _open={{
+                    color: "fg.muted",
+                  }}
+                >
+                  <Span flex="1">{item.title}</Span>
+                  <Accordion.ItemIndicator />
+                </Accordion.ItemTrigger>
+
+                <Accordion.ItemContent>
+                  <Accordion.ItemBody>{item.text}</Accordion.ItemBody>
+                </Accordion.ItemContent>
+              </Accordion.Item>
+            ))}
+          </Accordion.Root>
+
+          <Breadcrumb.Root>
+            <Breadcrumb.List>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="#">Docs</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                <Breadcrumb.Link href="#">Components</Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
+              <Breadcrumb.Item>
+                <Breadcrumb.CurrentLink>Props</Breadcrumb.CurrentLink>
+              </Breadcrumb.Item>
+            </Breadcrumb.List>
+          </Breadcrumb.Root>
+
+          <Carousel.Root
+            loop={true}
+            slideCount={images.length}
+            w={"350px"}
+            maxW={"350px"}
+            flexShrink={0}
+            gap={4}
+            pos={"relative"}
+          >
+            <Carousel.Control>
+              <Carousel.ItemGroup width="full">
+                {images.map((src, index) => (
+                  <Carousel.Item key={index} index={index}>
+                    <Image
+                      src={src}
+                      alt={`Product ${index + 1}`}
+                      objectFit="cover"
+                      aspectRatio={16 / 9}
+                      maxH="72vh"
+                      w="full"
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel.ItemGroup>
+
+              <HStack
+                align={"center"}
+                justify={"space-between"}
+                w={"full"}
+                px={2}
+                pos={"absolute"}
+                top={"50%"}
+                transform={"translateY(-50%)"}
+              >
+                <Carousel.PrevTrigger asChild>
+                  <Carousel.ActionButton
+                    color={"white"}
+                    borderColor={"border.subtle"}
+                    _hover={{
+                      bg: "an1",
+                    }}
+                  >
+                    <LuArrowLeft />
+                  </Carousel.ActionButton>
+                </Carousel.PrevTrigger>
+
+                <Carousel.NextTrigger asChild>
+                  <Carousel.ActionButton
+                    color={"white"}
+                    borderColor={"border.subtle"}
+                    _hover={{
+                      bg: "an1",
+                    }}
+                  >
+                    <LuArrowRight />
+                  </Carousel.ActionButton>
+                </Carousel.NextTrigger>
+              </HStack>
+
+              <Box pos={"absolute"} bottom={4} w={"full"}>
+                <Carousel.Indicators
+                  bg={"bodyLight"}
+                  boxSize={1.5}
+                  transition={"200ms"}
+                  transformOrigin={"center"}
+                  _current={{
+                    width: 5,
+                    opacity: 1,
+                  }}
+                />
+              </Box>
+            </Carousel.Control>
+          </Carousel.Root>
+
+          <Collapsible.Root collapsedHeight={"100px"} w={"200px"}>
+            <Collapsible.Content
+            // _closed={{
+            //   shadow: "inset 0 -12px 12px -12px var(--shadow-color)",
+            //   shadowColor: "red",
+            // }}
+            >
+              <VStack padding={4}>
+                <P>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+                  consequatur saepe obcaecati facere ea, debitis neque odit nemo
+                  dicta nisi modi maxime ducimus, a vel in voluptate ratione
+                  reprehenderit odio?
+                </P>
+              </VStack>
+            </Collapsible.Content>
+
+            <Collapsible.Trigger asChild mt={4}>
+              <Button variant={"outline"} size={"sm"}>
+                <Collapsible.Context>
+                  {(api) => (api.open ? "Show Less" : "Show More")}
+                </Collapsible.Context>
+
+                <Collapsible.Indicator
+                  transition={"200ms"}
+                  _open={{ transform: "rotate(180deg)" }}
+                >
+                  <AppIcon icon={ChevronDownIcon} />
+                </Collapsible.Indicator>
+              </Button>
+            </Collapsible.Trigger>
+          </Collapsible.Root>
+
+          <Steps.Root
+            defaultStep={1}
+            count={steps.length}
+            maxW={"400px"}
+            size={"sm"}
+          >
+            <Steps.List>
+              {steps.map((step, index) => (
+                <Steps.Item key={index} index={index} title={step.title}>
+                  <Steps.Indicator />
+                  <Steps.Title>{step.title}</Steps.Title>
+                  <Steps.Separator />
+                </Steps.Item>
+              ))}
+            </Steps.List>
+
+            {steps.map((step, index) => (
+              <Steps.Content key={index} index={index}>
+                <P textAlign={"center"}>{step.description}</P>
+              </Steps.Content>
+            ))}
+
+            <Steps.CompletedContent>
+              <P textAlign={"center"}>All steps are complete!</P>
+            </Steps.CompletedContent>
+
+            <ButtonGroup size={"sm"} variant={"outline"} justify={"center"}>
+              <Steps.PrevTrigger asChild>
+                <Button>Prev</Button>
+              </Steps.PrevTrigger>
+
+              <Steps.NextTrigger asChild>
+                <Button>Next</Button>
+              </Steps.NextTrigger>
+            </ButtonGroup>
+          </Steps.Root>
+
+          <Tabs.Root defaultValue="members">
+            <Tabs.List>
+              {tabs.map((tab, index) => (
+                <Tabs.Trigger
+                  key={index}
+                  value={tab.triggerLabel.toLowerCase()}
+                >
+                  <AppIcon icon={tab.icon} />
+
+                  {tab.triggerLabel}
+                </Tabs.Trigger>
+              ))}
+            </Tabs.List>
+
+            {tabs.map((tab, index) => (
+              <Tabs.Content key={index} value={tab.triggerLabel.toLowerCase()}>
+                Manage your {tab.triggerLabel}
+              </Tabs.Content>
+            ))}
+          </Tabs.Root>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+export const Feedback = () => {
+  const EMOJI_KEYS: EmojiVariant[] = [
+    "poker",
+    "happy",
+    "laugh",
+    "funny",
+    "cool",
+    "love",
+    "thumbUp",
+    "speechless",
+    "rollingEyes",
+    "thinking",
+    "embarassed",
+    "surprised",
+    "scream",
+    "shout",
+    "sad",
+    "cry",
+    "sulk",
+    "angry",
+    "wicked",
+  ];
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Feedback"}
+          icon={MessageSquareIcon}
+          description={
+            "Indikator progress, skeleton loading, dan berbagai state visual"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={10}>
+          <HStack
+            w={"full"}
+            wrap={"wrap"}
+            align={"center"}
+            justify={"center"}
+            gap={10}
+          >
+            <StateNoData />
+
+            <StateAccessDenied />
+
+            <StateNoResult />
+
+            <StateRetry />
+          </HStack>
+
+          <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={10}>
+            <HStack gap={4}>
+              <ProgressCircle.Root value={16} size={"xl"}>
+                <ProgressCircle.Circle>
+                  <ProgressCircle.Track />
+                  <ProgressCircle.Range />
+                </ProgressCircle.Circle>
+
+                <AbsoluteCenter>
+                  <ProgressCircle.ValueText />
+                </AbsoluteCenter>
+              </ProgressCircle.Root>
+
+              <ProgressCircle.Root value={null}>
+                <ProgressCircle.Circle>
+                  <ProgressCircle.Track />
+                  <ProgressCircle.Range strokeLinecap={"round"} />
+                </ProgressCircle.Circle>
+
+                <AbsoluteCenter>
+                  <ProgressCircle.ValueText />
+                </AbsoluteCenter>
+              </ProgressCircle.Root>
+            </HStack>
+
+            <VStack gap={4} w={"200px"}>
+              <Progress.Root striped animated>
+                <Progress.Track>
+                  <Progress.Range />
+                </Progress.Track>
+              </Progress.Root>
+
+              <Progress.Root w={"200px"}>
+                <Progress.Track>
+                  <Progress.Range />
+                </Progress.Track>
+              </Progress.Root>
+
+              <Progress.Root w={"200px"} value={null}>
+                <Progress.Track>
+                  <Progress.Range />
+                </Progress.Track>
+              </Progress.Root>
+            </VStack>
+          </HStack>
+
+          <VStack gap={4}>
+            <HStack align={"center"} gap={4}>
+              <SkeletonCircle w={"40px"} h={"40px"} />
+
+              <VStack gap={2}>
+                <SkeletonText w={"200px"} noOfLines={2} />
+              </VStack>
+            </HStack>
+
+            <Skeleton w={"full"} h={"100px"} />
+          </VStack>
+        </HStack>
+
+        <VStack
+          gap={6}
+          w={"full"}
+          borderTop={"1px solid"}
+          borderColor={"border.subtle"}
+          pt={4}
+        >
+          <P fontWeight={"semibold"}>{"Emoji"}</P>
+          <VStack gap={4} w={"full"} align={"center"}>
+            <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={8}>
+              {EMOJI_KEYS.map((key) => {
+                return (
+                  <VStack gap={1} key={key}>
+                    <Emoji variant={key} boxSize={48} />
+                    <P fontSize={"2xs"} color={"fg.muted"}>
+                      {key}
+                    </P>
+                  </VStack>
+                );
+              })}
+            </HStack>
+          </VStack>
+        </VStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+export const DataDisplay = () => {
+  // Stores
+  const { theme } = useThemeStore();
+
+  // Response data - dynamicaly changes depends on filters (search, perPage per page, pagination, etc.)
+  const dataList = {
+    fields: [
+      { th: "Name", sortable: true },
+      { th: "Email", sortable: true },
+      { th: "Account Status", sortable: true },
+      { th: "Role", sortable: true },
+      { th: "Department", sortable: true },
+      { th: "Phone Number", sortable: false },
+      { th: "Location", sortable: true },
+      { th: "Join Date", sortable: true },
+      { th: "Last Active", sortable: true },
+      { th: "Plan", sortable: true },
+    ],
+
+    items: [
+      {
+        id: "1",
+        data: {
+          name: "Sulenq",
+          email: "sulenq@email.com",
+          accountStatus: "Active",
+          role: "Developer",
+          department: "Engineering",
+          phoneNumber: "+62 812-1111-0001",
+          location: "Semarang",
+          joinDate: "2024-01-10",
+          lastActive: "2 hours ago",
+          plan: "Pro",
+        },
+        columns: [
+          { value: "Sulenq", td: "Sulenq" },
+          { value: "sulenq@email.com", td: "sulenq@email.com" },
+          { value: "Active", td: "Active" },
+          { value: "Developer", td: "Developer" },
+          { value: "Engineering", td: "Engineering" },
+          { value: "+62 812-1111-0001", td: "+62 812-1111-0001" },
+          { value: "Semarang", td: "Semarang" },
+          { value: "2024-01-10", td: "2024-01-10" },
+          { value: "2 hours ago", td: "2 hours ago" },
+          { value: "Pro", td: "Pro" },
+        ],
+      },
+      {
+        id: "2",
+        data: {
+          name: "Jolitos",
+          email: "jolitos@email.com",
+          accountStatus: "Suspended",
+          role: "Designer",
+          department: "Product",
+          phoneNumber: "+62 812-1111-0002",
+          location: "Jakarta",
+          joinDate: "2023-11-22",
+          lastActive: "3 days ago",
+          plan: "Basic",
+        },
+        columns: [
+          { value: "Jolitos", td: "Jolitos" },
+          { value: "jolitos@email.com", td: "jolitos@email.com" },
+          { value: "Suspended", td: "Suspended" },
+          { value: "Designer", td: "Designer" },
+          { value: "Product", td: "Product" },
+          { value: "+62 812-1111-0002", td: "+62 812-1111-0002" },
+          { value: "Jakarta", td: "Jakarta" },
+          { value: "2023-11-22", td: "2023-11-22" },
+          { value: "3 days ago", td: "3 days ago" },
+          { value: "Basic", td: "Basic" },
+        ],
+      },
+      {
+        id: "3",
+        data: {
+          name: "Wazawsky",
+          email: "wazawsky@email.com",
+          accountStatus: "Suspended",
+          role: "QA Engineer",
+          department: "Engineering",
+          phoneNumber: "+62 812-1111-0003",
+          location: "Bandung",
+          joinDate: "2023-08-15",
+          lastActive: "1 week ago",
+          plan: "Free",
+        },
+        columns: [
+          { value: "Wazawsky", td: "Wazawsky" },
+          { value: "wazawsky@email.com", td: "wazawsky@email.com" },
+          { value: "Suspended", td: "Suspended" },
+          { value: "QA Engineer", td: "QA Engineer" },
+          { value: "Engineering", td: "Engineering" },
+          { value: "+62 812-1111-0003", td: "+62 812-1111-0003" },
+          { value: "Bandung", td: "Bandung" },
+          { value: "2023-08-15", td: "2023-08-15" },
+          { value: "1 week ago", td: "1 week ago" },
+          { value: "Free", td: "Free" },
+        ],
+      },
+      {
+        id: "4",
+        data: {
+          name: "Rasenta",
+          email: "rasenta@email.com",
+          accountStatus: "Active",
+          role: "Product Manager",
+          department: "Product",
+          phoneNumber: "+62 812-1111-0004",
+          location: "Surabaya",
+          joinDate: "2024-02-01",
+          lastActive: "5 minutes ago",
+          plan: "Pro",
+        },
+        columns: [
+          { value: "Rasenta", td: "Rasenta" },
+          { value: "rasenta@email.com", td: "rasenta@email.com" },
+          { value: "Active", td: "Active" },
+          { value: "Product Manager", td: "Product Manager" },
+          { value: "Product", td: "Product" },
+          { value: "+62 812-1111-0004", td: "+62 812-1111-0004" },
+          { value: "Surabaya", td: "Surabaya" },
+          { value: "2024-02-01", td: "2024-02-01" },
+          { value: "5 minutes ago", td: "5 minutes ago" },
+          { value: "Pro", td: "Pro" },
+        ],
+      },
+      {
+        id: "5",
+        data: {
+          name: "Dhewangga",
+          email: "dhewangga@email.com",
+          accountStatus: "Pending",
+          role: "Marketing",
+          department: "Marketing",
+          phoneNumber: "+62 812-1111-0005",
+          location: "Yogyakarta",
+          joinDate: "2024-03-18",
+          lastActive: "1 day ago",
+          plan: "Basic",
+        },
+        columns: [
+          { value: "Dhewangga", td: "Dhewangga" },
+          { value: "dhewangga@email.com", td: "dhewangga@email.com" },
+          { value: "Pending", td: "Pending" },
+          { value: "Marketing", td: "Marketing" },
+          { value: "Marketing", td: "Marketing" },
+          { value: "+62 812-1111-0005", td: "+62 812-1111-0005" },
+          { value: "Yogyakarta", td: "Yogyakarta" },
+          { value: "2024-03-18", td: "2024-03-18" },
+          { value: "1 day ago", td: "1 day ago" },
+          { value: "Basic", td: "Basic" },
+        ],
+      },
+      {
+        id: "6",
+        data: {
+          name: "Kirania",
+          email: "kirania@email.com",
+          accountStatus: "Active",
+          role: "Developer",
+          department: "Engineering",
+          phoneNumber: "+62 812-1111-0006",
+          location: "Semarang",
+          joinDate: "2023-12-05",
+          lastActive: "10 minutes ago",
+          plan: "Pro",
+        },
+        columns: [
+          { value: "Kirania", td: "Kirania" },
+          { value: "kirania@email.com", td: "kirania@email.com" },
+          { value: "Active", td: "Active" },
+          { value: "Developer", td: "Developer" },
+          { value: "Engineering", td: "Engineering" },
+          { value: "+62 812-1111-0006", td: "+62 812-1111-0006" },
+          { value: "Semarang", td: "Semarang" },
+          { value: "2023-12-05", td: "2023-12-05" },
+          { value: "10 minutes ago", td: "10 minutes ago" },
+          { value: "Pro", td: "Pro" },
+        ],
+      },
+      {
+        id: "7",
+        data: {
+          name: "Bramasetya",
+          email: "bramasetya@email.com",
+          accountStatus: "Suspended",
+          role: "Sales",
+          department: "Sales",
+          phoneNumber: "+62 812-1111-0007",
+          location: "Medan",
+          joinDate: "2023-09-30",
+          lastActive: "2 weeks ago",
+          plan: "Free",
+        },
+        columns: [
+          { value: "Bramasetya", td: "Bramasetya" },
+          { value: "bramasetya@email.com", td: "bramasetya@email.com" },
+          { value: "Suspended", td: "Suspended" },
+          { value: "Sales", td: "Sales" },
+          { value: "Sales", td: "Sales" },
+          { value: "+62 812-1111-0007", td: "+62 812-1111-0007" },
+          { value: "Medan", td: "Medan" },
+          { value: "2023-09-30", td: "2023-09-30" },
+          { value: "2 weeks ago", td: "2 weeks ago" },
+          { value: "Free", td: "Free" },
+        ],
+      },
+      {
+        id: "8",
+        data: {
+          name: "Larasati",
+          email: "larasati@email.com",
+          accountStatus: "Active",
+          role: "HR",
+          department: "Human Resources",
+          phoneNumber: "+62 812-1111-0008",
+          location: "Jakarta",
+          joinDate: "2024-01-25",
+          lastActive: "30 minutes ago",
+          plan: "Basic",
+        },
+        columns: [
+          { value: "Larasati", td: "Larasati" },
+          { value: "larasati@email.com", td: "larasati@email.com" },
+          { value: "Active", td: "Active" },
+          { value: "HR", td: "HR" },
+          { value: "Human Resources", td: "Human Resources" },
+          { value: "+62 812-1111-0008", td: "+62 812-1111-0008" },
+          { value: "Jakarta", td: "Jakarta" },
+          { value: "2024-01-25", td: "2024-01-25" },
+          { value: "30 minutes ago", td: "30 minutes ago" },
+          { value: "Basic", td: "Basic" },
+        ],
+      },
+      {
+        id: "9",
+        data: {
+          name: "Wirandika",
+          email: "wirandika@email.com",
+          accountStatus: "Pending",
+          role: "Support",
+          department: "Customer Support",
+          phoneNumber: "+62 812-1111-0009",
+          location: "Malang",
+          joinDate: "2024-02-14",
+          lastActive: "4 hours ago",
+          plan: "Free",
+        },
+        columns: [
+          { value: "Wirandika", td: "Wirandika" },
+          { value: "wirandika@email.com", td: "wirandika@email.com" },
+          { value: "Pending", td: "Pending" },
+          { value: "Support", td: "Support" },
+          { value: "Customer Support", td: "Customer Support" },
+          { value: "+62 812-1111-0009", td: "+62 812-1111-0009" },
+          { value: "Malang", td: "Malang" },
+          { value: "2024-02-14", td: "2024-02-14" },
+          { value: "4 hours ago", td: "4 hours ago" },
+          { value: "Free", td: "Free" },
+        ],
+      },
+      {
+        id: "10",
+        data: {
+          name: "Anindita",
+          email: "anindita@email.com",
+          accountStatus: "Active",
+          role: "Developer",
+          department: "Engineering",
+          phoneNumber: "+62 812-1111-0010",
+          location: "Semarang",
+          joinDate: "2023-10-08",
+          lastActive: "1 hour ago",
+          plan: "Pro",
+        },
+        columns: [
+          { value: "Anindita", td: "Anindita" },
+          { value: "anindita@email.com", td: "anindita@email.com" },
+          { value: "Active", td: "Active" },
+          { value: "Developer", td: "Developer" },
+          { value: "Engineering", td: "Engineering" },
+          { value: "+62 812-1111-0010", td: "+62 812-1111-0010" },
+          { value: "Semarang", td: "Semarang" },
+          { value: "2023-10-08", td: "2023-10-08" },
+          { value: "1 hour ago", td: "1 hour ago" },
+          { value: "Pro", td: "Pro" },
+        ],
+      },
+    ],
+
+    batchActions: [
+      ({ selectedItemIds, selectedItems }) => {
+        return (
+          <Button
+            disabled={isEmptyArray(selectedItems)}
+            onClick={() => {
+              console.log({ selectedItemIds, selectedItems });
+            }}
+          >
+            <AppIcon icon={IconTrash} />
+            Delete
+          </Button>
+        );
+      },
+    ] as DataViewBatchActionsGenerator[],
+
+    itemActions: [
+      {
+        key: "edit",
+        label: "Edit",
+        icon: EditIcon,
+        onClick: (item) => {
+          console.log("Edit item:", item);
+        },
+      },
+      {
+        key: "restore",
+        label: "Restore",
+        icon: Undo2Icon,
+        onClick: (item) => {
+          console.log("Restore item:", item);
+        },
+      },
+      {
+        key: "delete",
+        label: "Delete",
+        icon: TrashIcon,
+        colorPalette: "red",
+        modal: {
+          triggerComponent: (item) => (
+            <ConfirmationTrigger
+              modalKey={`demo-delete-${(item as Record<string, unknown>).id || "item"}`}
+              title={"Hapus Item"}
+              description={`Data ${(item as Record<string, unknown>).name || item.id} akan dihapus secara permanen.`}
+              confirmLabel={"Hapus"}
+              colorPalette={"red"}
+              onConfirm={() => {
+                console.log("Delete confirmed:", item);
+              }}
+            />
+          ),
+        },
+      },
+    ] as DataViewItemActionsGenerator[],
+  };
+
+  // States
+  const [pageSize, setPageSize] = useState<number>(20);
+  const [page, setPage] = useState<number>(1);
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Data Display"}
+          icon={TableIcon}
+          description={
+            "Tabel data interaktif dengan pagination, sorting, search, dan batch actions"
+          }
+        />
+
+        <VStack gap={2} bg={"bg.canvas"} px={[4, null, 10]} py={4}>
+          <HStack
+            wrap={"wrap"}
+            align={"center"}
+            justify={"space-between"}
+            gap={4}
+            p={4}
+            bg={"bg.body"}
+            rounded={theme.radii.container}
+            shadow={"sm"}
+          >
+            <P fontSize={"xl"} fontWeight={"medium"} ml={1}>
+              Feature Title
+            </P>
+
+            <HStack wrap={"wrap"} align={"center"} gap={2}>
+              <SearchInput placeholder={"Search..."} />
+
+              <Button variant={"outline"}>
+                <AppIcon icon={IconFilter2} />
+                Filter
+              </Button>
+
+              <Button variant={"outline"}>
+                <AppIcon icon={IconDownload} />
+                Export
+              </Button>
+
+              <IconButton primary>
+                <AppIcon icon={IconPlus} />
+              </IconButton>
+            </HStack>
+          </HStack>
+
+          <VStack>
+            <DataViewTable.Root
+              headers={dataList.fields}
+              items={dataList.items}
+              batchActions={dataList.batchActions}
+              itemActions={dataList.itemActions}
+              // maxH={"500px"}
+            >
+              <DataViewTable.Header />
+
+              <DataViewTable.Body />
+            </DataViewTable.Root>
+
+            <DataViewFooter
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              page={page}
+              setPage={setPage}
+              currentDataLength={dataList.items.length}
+              totalData={100}
+            />
+          </VStack>
+        </VStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+export const Utilities = () => {
+  const data = async () => {
+    const res = await fetch(
+      "https://fastly.picsum.photos/id/718/2880/1800.jpg?hmac=JZydaTGOvhjzXYg-o7Y5fytAXeTnAnCt_cadeQ3Mzjo",
+    );
+    return res.blob();
+  };
+
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={6} p={6}>
+        <DemoSectionHeader
+          title={"Utilities"}
+          icon={WrenchIcon}
+          description={
+            "Utilitas download berkas, formatting angka, dan helper pendukung"
+          }
+        />
+
+        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+          <DownloadTrigger
+            data={data}
+            fileName={"wolf-2k.jpg"}
+            mimeType={"image/jpeg"}
+          >
+            <Button>Download trigger</Button>
+          </DownloadTrigger>
+        </HStack>
+      </Container.Body>
+    </Container.Root>
+  );
+};

@@ -1,0 +1,45 @@
+// src/features/auth/hooks/use-signin.mutation.ts
+
+import { useMapLayerStore } from "@/design-system/components/map/stores/map.layer.store";
+import { authService } from "@/features/auth/services/auth.service";
+import type { SigninPayload } from "@/features/auth/types/auth.service.type";
+import { queryKeys } from "@/shared/libs/tanstack-query/query.keys";
+import { mutationToastHandlers } from "@/shared/libs/toast/toast.handler";
+import type { User } from "@/shared/types/common-response.type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+
+export const useSigninMutation = () => {
+  // Hooks
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Handlers
+  const toastHandlers = mutationToastHandlers("auth-signin", {
+    group: "Autentikasi",
+    loadingMessage: {
+      title: "Memproses masuk...",
+    },
+    successMessage: {
+      title: "Berhasil masuk!",
+    },
+  });
+
+  return useMutation<User, Error, SigninPayload>({
+    mutationFn: (payload: SigninPayload) => authService.login(payload),
+    onMutate: toastHandlers.onLoading,
+    onSuccess: (user) => {
+      toastHandlers.onSuccess();
+      queryClient.setQueryData(queryKeys.auth.me(), user);
+      queryClient.removeQueries({
+        predicate: (query) => query.queryKey[0] !== "auth",
+      });
+      useMapLayerStore.getState().resetLayers();
+      navigate({ to: "/design-system/ui" });
+    },
+
+    onError: (error) => {
+      toastHandlers.onError(error);
+    },
+  });
+};

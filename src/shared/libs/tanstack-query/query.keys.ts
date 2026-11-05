@@ -1,0 +1,174 @@
+// src/shared/libs/tanstack-query/query.keys.ts
+
+import type GeoJSON from "geojson";
+
+export const queryKeys = {
+  auth: {
+    all: ["auth"] as const,
+    me: () => [...queryKeys.auth.all, "me"] as const,
+  },
+  mitra: {
+    home: {
+      all: ["mitra", "home"] as const,
+      dataAvailability: () =>
+        [...queryKeys.mitra.home.all, "data-availability"] as const,
+      dataSummary: (period?: string) =>
+        [...queryKeys.mitra.home.all, "data-summary", period] as const,
+      cartSummary: () =>
+        [...queryKeys.mitra.home.all, "cart-summary"] as const,
+      financialFlow: (period?: string) =>
+        [...queryKeys.mitra.home.all, "financial-flow", period] as const,
+      data: (period?: string) =>
+        [...queryKeys.mitra.home.all, "data", period] as const,
+    },
+    cart: {
+      all: ["mitra", "cart"] as const,
+      summary: () => [...queryKeys.mitra.cart.all, "summary"] as const,
+      items: (params: { page: number; pageSize: number; search?: string }) =>
+        [...queryKeys.mitra.cart.all, "items", params] as const,
+    },
+    myData: {
+      all: ["mitra", "my-data"] as const,
+      list: (params?: Record<string, unknown>) =>
+        [...queryKeys.mitra.myData.all, "list", params] as const,
+    },
+    workspaces: {
+      all: ["mitra", "workspaces"] as const,
+      list: (params?: Record<string, unknown>) =>
+        [...queryKeys.mitra.workspaces.all, "list", params] as const,
+    },
+    workspace: {
+      all: ["mitra", "workspace"] as const,
+      detail: (id?: string) =>
+        [...queryKeys.mitra.workspace.all, "detail", id] as const,
+    },
+    dataRequest: {
+      all: ["mitra", "data-request"] as const,
+      catalog: (params?: Record<string, unknown>) =>
+        [...queryKeys.mitra.dataRequest.all, "catalog", params] as const,
+      policies: () =>
+        [...queryKeys.mitra.dataRequest.all, "policies"] as const,
+      byAoi: (geometry: GeoJSON.Polygon) =>
+        [...queryKeys.mitra.dataRequest.all, "by-aoi", geometry] as const,
+      uploadedAoi: (fileName: string) =>
+        [...queryKeys.mitra.dataRequest.all, "uploaded-aoi", fileName] as const,
+      geometryById: (id: string) =>
+        [...queryKeys.mitra.dataRequest.all, "geometry", id] as const,
+      adminBoundary: (levelOrHierarchy: string, name?: string) =>
+        [...queryKeys.mitra.dataRequest.all, "admin-boundary", levelOrHierarchy, name] as const,
+      kawasanCoverage: (aoiHash: string) =>
+        [...queryKeys.mitra.dataRequest.all, "kawasan-coverage", aoiHash] as const,
+      bidangFeatures: (aoiHash: string) =>
+        [...queryKeys.mitra.dataRequest.all, "bidang-features", aoiHash] as const,
+    },
+    helpCenter: {
+      all: ["mitra", "help-center"] as const,
+      tickets: (params?: Record<string, unknown>) =>
+        [...queryKeys.mitra.helpCenter.all, "tickets", params] as const,
+      statistics: (scope?: string) =>
+        [...queryKeys.mitra.helpCenter.all, "statistics", scope] as const,
+      detail: (id: string | number) =>
+        [...queryKeys.mitra.helpCenter.all, "detail", id] as const,
+      transactions: () =>
+        [...queryKeys.mitra.helpCenter.all, "transactions"] as const,
+    },
+    notification: {
+      all: ["mitra", "notification"] as const,
+      inbox: () => [...queryKeys.mitra.notification.all, "inbox"] as const,
+      inboxList: (params?: Record<string, unknown>) =>
+        [...queryKeys.mitra.notification.all, "inbox", "list", params] as const,
+      inboxUnreadCount: () =>
+        [...queryKeys.mitra.notification.all, "inbox", "unread-count"] as const,
+    },
+  },
+  internal: {
+    home: {
+      all: ["internal", "home"] as const,
+      spatialBasis: () =>
+        [...queryKeys.internal.home.all, "spatial-basis"] as const,
+      publishStatus: () =>
+        [...queryKeys.internal.home.all, "publish-status"] as const,
+      mitraRegistration: () =>
+        [...queryKeys.internal.home.all, "mitra-registration"] as const,
+      trends: (period?: string) =>
+        [...queryKeys.internal.home.all, "trends", period] as const,
+      leaderboardMitra: () =>
+        [...queryKeys.internal.home.all, "leaderboard", "mitra"] as const,
+      leaderboardLayers: () =>
+        [...queryKeys.internal.home.all, "leaderboard", "layers"] as const,
+      pricing: () =>
+        [...queryKeys.internal.home.all, "pricing"] as const,
+      policies: () =>
+        [...queryKeys.internal.home.all, "policies"] as const,
+    },
+    userManagement: {
+      all: ["internal", "user-management"] as const,
+      data: (params?: Record<string, unknown>) =>
+        [...queryKeys.internal.userManagement.all, "data", params] as const,
+      statistics: () =>
+        [...queryKeys.internal.userManagement.all, "statistics"] as const,
+      detail: (id: string | number) =>
+        [...queryKeys.internal.userManagement.all, "detail", id] as const,
+    },
+    pricing: {
+      all: ["internal", "pricing"] as const,
+      list: (params?: Record<string, unknown>) =>
+        [...queryKeys.internal.pricing.all, "list", params] as const,
+    },
+    systemPolicies: {
+      all: ["internal", "system-policies"] as const,
+    },
+    dataManagement: {
+      all: ["internal", "data-management"] as const,
+      layers: (params?: Record<string, unknown>) =>
+        [...queryKeys.internal.dataManagement.all, "layers", params] as const,
+      workspaces: (geoserverId: string) =>
+        [
+          ...queryKeys.internal.dataManagement.all,
+          "workspaces",
+          geoserverId,
+        ] as const,
+      workspaceLayers: (geoserverId: string, workspaceName: string) =>
+        [
+          ...queryKeys.internal.dataManagement.all,
+          "workspace-layers",
+          geoserverId,
+          workspaceName,
+        ] as const,
+    },
+    masterGeoserver: {
+      all: ["internal", "master-geoserver"] as const,
+      list: (params?: Record<string, unknown>) =>
+        [...queryKeys.internal.masterGeoserver.all, "list", params] as const,
+      detail: (id: string) =>
+        [...queryKeys.internal.masterGeoserver.all, "detail", id] as const,
+    },
+    mitraRegistration: {
+      all: ["internal", "mitra-registration"] as const,
+      list: (params?: Record<string, unknown>) =>
+        [...queryKeys.internal.mitraRegistration.all, "list", params] as const,
+      detail: (id: string | number) =>
+        [...queryKeys.internal.mitraRegistration.all, "detail", id] as const,
+    },
+    mitraLayerSyncJobs: {
+      all: ["internal", "mitra-layer-sync-jobs"] as const,
+      list: (params?: Record<string, unknown>) =>
+        [...queryKeys.internal.mitraLayerSyncJobs.all, "list", params] as const,
+      detail: (id: string) =>
+        [...queryKeys.internal.mitraLayerSyncJobs.all, "detail", id] as const,
+      quickView: () =>
+        [...queryKeys.internal.mitraLayerSyncJobs.all, "quick-view"] as const,
+    },
+  },
+  map: {
+    all: ["map"] as const,
+    layers: () => [...queryKeys.map.all, "layers"] as const,
+  },
+  userGuide: {
+    all: ["user-guide"] as const,
+    list: (params?: Record<string, unknown>) =>
+      [...queryKeys.userGuide.all, "list", params] as const,
+    detail: (id: string) =>
+      [...queryKeys.userGuide.all, "detail", id] as const,
+  },
+};

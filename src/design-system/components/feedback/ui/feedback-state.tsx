@@ -1,0 +1,60 @@
+// src/design-system/components/feedback/ui/feedback-state.tsx
+
+import type { FeedbackStateProps } from "@/design-system/components/feedback/types/feedback-state.type";
+import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
+import { VStack } from "@/design-system/components/layout/ui/flex-box";
+import { P } from "@/design-system/components/typography/ui/p";
+
+const FeedbackState = (props: FeedbackStateProps) => {
+  // Props
+  const { icon, iconProps, title, description, children, ...restProps } = props;
+
+  // States
+  const isTitleString = typeof title === "string";
+  const isDescriptionString = typeof description === "string";
+
+  return (
+    <VStack
+      align={"center"}
+      justify={"center"}
+      gap={4}
+      minH={"feedbackMinH"}
+      p={4}
+      m={"auto"}
+      {...restProps}
+    >
+      {icon && (
+        <AppIcon
+          icon={icon}
+          strokeWidth={1.5}
+          color={"fg.subtle"}
+          // size={"5xl"}
+          size={"lg"}
+          {...iconProps}
+        />
+      )}
+
+      <VStack align={"center"} gap={2} maxW={"300px"}>
+        {isTitleString && (
+          <P textAlign={"center"} fontWeight={"medium"} color={"fg.muted"}>
+            {title}
+          </P>
+        )}
+
+        {!isTitleString && title}
+
+        {isDescriptionString && (
+          <P textAlign={"center"} color={"fg.subtle"}>
+            {description}
+          </P>
+        )}
+
+        {!isDescriptionString && description}
+      </VStack>
+
+      {children}
+    </VStack>
+  );
+};
+
+export default FeedbackState;

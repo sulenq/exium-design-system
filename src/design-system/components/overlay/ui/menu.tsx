@@ -1,0 +1,112 @@
+// src/design-system/components/overlay/ui/menu.tsx
+
+import { Box } from "@/design-system/components/layout/ui/box";
+import type {
+  MenuContentProps,
+  MenuContextTriggerProps,
+  MenuItemProps,
+  MenuRootProps,
+  MenuTriggerProps,
+} from "@/design-system/components/overlay/types/menu.type";
+import { Portal } from "@/design-system/components/utilities/ui/portal";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import { Menu as ChakraMenu } from "@chakra-ui/react";
+
+const MenuRoot = (props: MenuRootProps) => {
+  const { positioning, ...restProps } = props;
+
+  return (
+    <ChakraMenu.Root
+      positioning={{ hideWhenDetached: true, ...positioning }}
+      {...restProps}
+    />
+  );
+};
+
+const MenuTrigger = (props: MenuTriggerProps) => {
+  return <ChakraMenu.Trigger asChild {...props} />;
+};
+
+const MenuContextTrigger = (props: MenuContextTriggerProps) => {
+  return <ChakraMenu.ContextTrigger asChild {...props} />;
+};
+
+const MenuContent = (props: MenuContentProps) => {
+  // Props
+  const { portalled = true, portalRef, positionerProps, ...restProps } = props;
+
+  // Stores
+  const { theme } = useThemeStore();
+
+  return (
+    <Portal disabled={!portalled} container={portalRef}>
+      <ChakraMenu.Positioner zIndex={"popover"} {...positionerProps}>
+        <ChakraMenu.Content
+          display={"flex"}
+          flexDir={"column"}
+          gap={"2xs"}
+          p={1}
+          bg={"bg.body"}
+          rounded={theme.radii.container}
+          border={"1px solid"}
+          borderColor={"border.subtle"}
+          shadow={"sm"}
+          _open={{
+            animation: "scale-up",
+            animationDuration: "slow",
+          }}
+          _closed={{
+            animation: "scale-down",
+            animationDuration: "moderate",
+          }}
+          {...restProps}
+        />
+      </ChakraMenu.Positioner>
+    </Portal>
+  );
+};
+
+const MenuItem = (props: MenuItemProps) => {
+  // Props
+  const { disabled, ...restProps } = props;
+
+  // Stores
+  const { theme } = useThemeStore();
+
+  return (
+    <Box cursor={disabled ? "not-allowed" : undefined}>
+      <ChakraMenu.Item
+        disabled={disabled}
+        h={"40px"}
+        rounded={theme.radii.component}
+        fontSize={"md"}
+        cursor={"pointer"}
+        pointerEvents={disabled ? "none" : "auto"}
+        userSelect={"none"}
+        transition={"200ms"}
+        _hover={{
+          bg: "bg.subtle",
+        }}
+        {...restProps}
+      />
+    </Box>
+  );
+};
+
+const MenuItemGroup = (props: ChakraMenu.ItemGroupProps) => {
+  return <ChakraMenu.ItemGroup {...props} />;
+};
+
+const MenuItemGroupLabel = (props: ChakraMenu.ItemGroupLabelProps) => {
+  return <ChakraMenu.ItemGroupLabel {...props} />;
+};
+
+export const Menu = {
+  Root: MenuRoot,
+  Trigger: MenuTrigger,
+  ContextTrigger: MenuContextTrigger,
+  Content: MenuContent,
+  Item: MenuItem,
+  ItemGroup: MenuItemGroup,
+  ItemGroupLabel: MenuItemGroupLabel,
+};

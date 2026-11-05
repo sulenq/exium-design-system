@@ -1,0 +1,392 @@
+// src/design-system/components/map/ui/map.search.tsx
+
+import {
+  Button,
+  IconButton,
+} from "@/design-system/components/button/ui/button";
+import FeedbackState from "@/design-system/components/feedback/ui/feedback-state";
+import { Loader } from "@/design-system/components/feedback/ui/loader";
+import { StateNoResult } from "@/design-system/components/feedback/ui/state.no-result";
+import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
+import { SearchInput } from "@/design-system/components/input/ui/search-input";
+import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
+import { useMapInstanceStore } from "@/design-system/components/map/stores/map.instance.store";
+import type { MapSearchResultItem } from "@/design-system/components/map/types/map.search.type";
+import { MapOverlayContainer } from "@/design-system/components/map/ui/map.overlay";
+import { Tooltip } from "@/design-system/components/overlay/ui/tooltip";
+import { ClampedP, P } from "@/design-system/components/typography/ui/p";
+import { useClickOutside } from "@/design-system/hooks/use-click-outside";
+import { useSearchParam } from "@/design-system/hooks/use-search-param";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import { t } from "@/shared/libs/i18n";
+import { isEmptyArray } from "@/shared/utils/data/array";
+import { Box, Presence } from "@chakra-ui/react";
+import { Clock, MapPin, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const SEARCH_QUERY_KEY = "map-search";
+
+export const MapSearch = () => {
+  // Stores
+  const { theme } = useThemeStore();
+
+  // Contexts
+  const map = useMapInstanceStore((state) => state.map);
+
+  // Hooks
+  const { queryValue, setQueryValue } = useSearchParam(SEARCH_QUERY_KEY);
+  const activeQuery = queryValue || "";
+
+  // States
+  const [inputValue, setInputValue] = useState<string>(activeQuery);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [debouncedQuery, setDebouncedQuery] = useState<string>(activeQuery);
+  const [prevActiveQuery, setPrevActiveQuery] = useState<string>(activeQuery);
+
+  const [recentSearches, setRecentSearches] = useState<MapSearchResultItem[]>(
+    () => {
+      try {
+        const stored = localStorage.getItem("map-recent-searches");
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.error("Failed to load recent searches", e);
+        return [];
+      }
+    },
+  );
+  const [results, setResults] = useState<MapSearchResultItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [lastFetchedQuery, setLastFetchedQuery] = useState<string>("");
+
+  // Refs
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // Click outside to close dropdown
+  const handleClickOutside = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  useClickOutside(containerRef, handleClickOutside, { enabled: isOpen });
+
+  // Handle location selection (flying to coordinate, setting input value, saving to recents)
+  function handleSelectLocation(item: MapSearchResultItem) {
+    if (!map) return;
+
+    // Put selected location name into search input
+    setInputValue(item.display_name);
+
+    // Fly to coordinates
+    map.flyTo({
+      center: [parseFloat(item.lon), parseFloat(item.lat)],
+      zoom: 14,
+    });
+
+    // Update recent searches: avoid duplicate, limit to 5 items
+    const updated = [
+      item,
+      ...recentSearches.filter((x) => x.place_id !== item.place_id),
+    ].slice(0, 5);
+
+    setRecentSearches(updated);
+    try {
+      localStorage.setItem("map-recent-searches", JSON.stringify(updated));
+    } catch (e) {
+      console.error("Failed to save recent searches", e);
+    }
+
+    // Close dropdown
+    setIsOpen(false);
+  }
+
+  // Handle removing a recent search item
+  function handleRemoveRecent(placeId: number | string, e: React.MouseEvent) {
+    e.stopPropagation();
+    const updated = recentSearches.filter((x) => x.place_id !== placeId);
+    setRecentSearches(updated);
+    try {
+      localStorage.setItem("map-recent-searches", JSON.stringify(updated));
+    } catch (err) {
+      console.error("Failed to update recent searches", err);
+    }
+  }
+
+  // Input Focus/Click Handlers
+  function handleFocus() {
+    setIsOpen(true);
+  }
+
+  // Effects — Focus input whenever search is opened
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  // Handle opening and focusing search input
+  const handleOpenSearch = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+    inputRef.current?.focus();
+  };
+
+  // Sync state if activeQuery changes externally (e.g. navigation)
+  if (activeQuery !== prevActiveQuery) {
+    setInputValue(activeQuery);
+    setDebouncedQuery(activeQuery);
+    setPrevActiveQuery(activeQuery);
+  }
+
+  // Sync debounced query value
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(inputValue);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputValue]);
+
+  // Sync debounced query value to URL
+  useEffect(() => {
+    setQueryValue(debouncedQuery || undefined);
+  }, [debouncedQuery, setQueryValue]);
+
+  // Fetch location data from Nominatim API
+  useEffect(() => {
+    if (!debouncedQuery.trim()) {
+      const timer = setTimeout(() => {
+        setResults([]);
+        setIsLoading(false);
+        setIsError(false);
+        setLastFetchedQuery("");
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+
+    let active = true;
+    const fetchLocations = async () => {
+      setIsLoading(true);
+      setIsError(false);
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+            debouncedQuery,
+          )}&format=json&limit=5`,
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch geocoding data");
+        }
+        const data = await response.json();
+        if (active) {
+          setResults(data);
+          setLastFetchedQuery(debouncedQuery);
+        }
+      } catch (err) {
+        console.error(err);
+        if (active) {
+          setIsError(true);
+          setLastFetchedQuery(debouncedQuery);
+        }
+      } finally {
+        if (active) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchLocations();
+
+    return () => {
+      active = false;
+    };
+  }, [debouncedQuery]);
+
+  // Derived Values
+  const hasInput = !!inputValue.trim();
+  const isOpened = isOpen || hasInput;
+  const hasDebouncedQuery = !!debouncedQuery.trim();
+  const showRecent = !hasDebouncedQuery;
+  const showResults = hasDebouncedQuery;
+  const showLoader =
+    isLoading || (hasDebouncedQuery && debouncedQuery !== lastFetchedQuery);
+
+  return (
+    <VStack
+      ref={containerRef}
+      gap={2}
+      w={isOpened ? "300px" : "36px"}
+      pointerEvents={"none"}
+      position={"relative"}
+    >
+      {/* Search Input Container */}
+      <Tooltip
+        content={"Cari Lokasi"}
+        positioning={{ placement: "bottom" }}
+        disabled={isOpened}
+      >
+        <MapOverlayContainer
+          overflow={"clip"}
+          w={isOpened ? "full" : "36px"}
+          transition={"width 200ms ease"}
+          cursor={isOpened ? "text" : "pointer"}
+          pointerEvents={"auto"}
+          onClick={handleOpenSearch}
+        >
+          <SearchInput
+            ref={inputRef}
+            value={inputValue}
+            onValueChange={setInputValue}
+            size={"sm"}
+            placeholder={t["common.search_location"]()}
+            w={"full"}
+            minW={"0"}
+            border={"none"}
+            layerStyle={"frosted"}
+            outline={"none"}
+            bg={"transparent"}
+            onFocus={handleFocus}
+            appIconProps={{
+              cursor: "pointer",
+              onClick: handleOpenSearch,
+            }}
+          />
+        </MapOverlayContainer>
+      </Tooltip>
+
+      {/* Floating Results/Recents Container */}
+      <Presence
+        present={isOpen}
+        animationName={{ _open: "fade-in", _closed: "fade-out" }}
+        animationDuration={"moderate"}
+      >
+        <VStack
+          position={"absolute"}
+          top={"100%"}
+          left={0}
+          right={0}
+          w={"300px"}
+          bg={"bg.body"}
+          rounded={theme.radii.component}
+          shadow={"xs"}
+          maxH={"360px"}
+          overflowY={"auto"}
+          pointerEvents={"auto"}
+          zIndex={2000}
+        >
+          {/* Recent Searches List */}
+          {showRecent && (
+            <VStack>
+              {isEmptyArray(recentSearches) ? (
+                <Box p={4}>
+                  <FeedbackState
+                    title={t["common.type_to_find"]()}
+                    description={t[
+                      "common.search_results_and_recent_appear_here"
+                    ]()}
+                    m={"auto"}
+                  />
+                </Box>
+              ) : (
+                <>
+                  <Box px={3} py={1}>
+                    <P fontSize={"sm"} fontWeight={"medium"} color={"fg.muted"}>
+                      {t["common.recent"]()}
+                    </P>
+                  </Box>
+
+                  <Box px={1} pb={1}>
+                    {recentSearches.map((item) => (
+                      <Button
+                        key={item.place_id}
+                        variant={"ghost"}
+                        w={"full"}
+                        p={2}
+                        pr={"2px"}
+                        onClick={() => handleSelectLocation(item)}
+                        justifyContent={"space-between"}
+                      >
+                        <HStack
+                          align={"center"}
+                          gap={2}
+                          flex={1}
+                          overflow={"hidden"}
+                        >
+                          <AppIcon icon={Clock} color={"fg.muted"} />
+
+                          <ClampedP textAlign={"start"}>
+                            {item.display_name}
+                          </ClampedP>
+                        </HStack>
+
+                        <IconButton
+                          as={"span"}
+                          size={"sm"}
+                          onClick={(e) => handleRemoveRecent(item.place_id, e)}
+                        >
+                          <AppIcon icon={X} />
+                        </IconButton>
+                      </Button>
+                    ))}
+                  </Box>
+                </>
+              )}
+            </VStack>
+          )}
+
+          {/* Search Results List */}
+          {showResults && (
+            <VStack gap={0} py={1}>
+              {showLoader && (
+                <HStack align={"center"} justify={"center"} py={4} gap={4}>
+                  <Loader />
+
+                  <P color={"fg.muted"}>{t["common.searching"]()}</P>
+                </HStack>
+              )}
+
+              {isError && !showLoader && (
+                <Box px={3} py={3}>
+                  <P color={"fg.error"}>{t["common.error"]()}</P>
+                </Box>
+              )}
+
+              {!showLoader && !isError && isEmptyArray(results) && (
+                <Box px={3} py={3}>
+                  <StateNoResult query={debouncedQuery} />
+                </Box>
+              )}
+
+              {!showLoader && !isError && !isEmptyArray(results) && (
+                <Box px={1}>
+                  {results.map((item) => (
+                    <Button
+                      key={item.place_id}
+                      variant={"ghost"}
+                      w={"full"}
+                      p={2}
+                      onClick={() => handleSelectLocation(item)}
+                      _hover={{ bg: "bg.muted" }}
+                      justifyContent={"flex-start"}
+                    >
+                      <HStack gap={2} overflow={"hidden"} w={"full"}>
+                        <AppIcon icon={MapPin} color={"fg.muted"} />
+
+                        <ClampedP textAlign={"start"}>
+                          {item.display_name}
+                        </ClampedP>
+                      </HStack>
+                    </Button>
+                  ))}
+                </Box>
+              )}
+            </VStack>
+          )}
+        </VStack>
+      </Presence>
+    </VStack>
+  );
+};

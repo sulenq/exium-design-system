@@ -1,0 +1,469 @@
+// src/design-system/components/navigation/ui/v-navs.tsx
+
+import { Fragment, useMemo } from "react";
+
+import { Collapsible } from "@/design-system/components/disclosure/ui/collapsible";
+import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
+import { Box } from "@/design-system/components/layout/ui/box";
+import { VStack } from "@/design-system/components/layout/ui/flex-box";
+import { Separator } from "@/design-system/components/layout/ui/separator";
+import type {
+  VNavIconProps,
+  VNavNodeProps,
+  VNavsProps,
+} from "@/design-system/components/navigation/types/v-navs.type";
+import { NavButton } from "@/design-system/components/navigation/ui/nav";
+import { findActivePath } from "@/design-system/components/navigation/utils/navs.utils";
+import { Menu } from "@/design-system/components/overlay/ui/menu";
+import { Tooltip } from "@/design-system/components/overlay/ui/tooltip";
+import { P } from "@/design-system/components/typography/ui/p";
+import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import { t } from "@/shared/libs/i18n";
+import { ChevronDownIcon } from "lucide-react";
+import { useState } from "react";
+
+export const VNavs = <TNavKey extends string>(props: VNavsProps<TNavKey>) => {
+  // Props
+  const {
+    groups,
+    navs,
+    activeKey,
+    expanded = true,
+    onNavClick,
+    navNodeProps,
+    ...restProps
+  } = props;
+
+  // Hooks
+  const isSmallViewport = useIsSmallViewport();
+
+  // Derived Values — jalur ancestor menuju activeKey, dihitung sekali per render.
+  const activePathKeys = useMemo(() => {
+    for (const group of groups) {
+      const path = findActivePath(group.items, activeKey);
+      if (path) return new Set(path);
+    }
+    return new Set<TNavKey>();
+  }, [groups, activeKey]);
+
+  return (
+    <VStack align={"stretch"} gap={0} {...restProps}>
+      {groups.map((group, groupIndex) => {
+        const isFirstGroup = groupIndex === 0;
+        const groupTitle =
+          group.title || (group.titleKey ? t[group.titleKey]() : null);
+
+        return (
+          <Fragment key={groupIndex}>
+            {!isFirstGroup && !isSmallViewport && <Separator my={"sm"} />}
+
+            <VStack align={expanded ? "stretch" : "start"} overflow={"clip"}>
+              {expanded && groupTitle && (
+                <P fontSize={"sm"} color={"fg.subtle"} px={2} mb={2}>
+                  {groupTitle}
+                </P>
+              )}
+
+              <VStack gap={1} align={expanded ? "stretch" : "center"}>
+                {group.items.map((node) => (
+                  <VNavNode
+                    key={node.key}
+                    node={node}
+                    navs={navs}
+                    activeKey={activeKey}
+                    activePathKeys={activePathKeys}
+                    expanded={expanded}
+                    onNavClick={onNavClick}
+                    navNodeProps={navNodeProps}
+                  />
+                ))}
+              </VStack>
+            </VStack>
+          </Fragment>
+        );
+      })}
+    </VStack>
+  );
+};
+
+const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
+  // Props
+  const {
+    node,
+    navs,
+    activeKey,
+    activePathKeys,
+    expanded,
+    onNavClick,
+    depth = 0,
+    isLastChild = false,
+    navNodeProps,
+  } = props;
+
+  // Stores
+  const { theme } = useThemeStore();
+
+  // Hooks
+  const isSmallViewport = useIsSmallViewport();
+
+  // Constants
+  const nav = navs[node.key];
+  const navTitle = nav.title || (nav.titleKey ? t[nav.titleKey]() : "");
+  const hasChildren = !!node.children?.length;
+  const isSubNav = depth > 0;
+  const resolvedNavNodeProps =
+    typeof navNodeProps === "function"
+      ? navNodeProps(node, nav)
+      : (navNodeProps ?? {});
+
+  // Derived Values
+  const isActive = activeKey === node.key;
+  const isAncestorActive = activePathKeys.has(node.key) && !isActive;
+  const activeChildIndex = hasChildren
+    ? node.children!.findIndex(
+        (child) => child.key === activeKey || activePathKeys.has(child.key),
+      )
+    : -1;
+
+  // States
+  const [isOpen, setIsOpen] = useState(isAncestorActive);
+  const [prevIsAncestorActive, setPrevIsAncestorActive] =
+    useState(isAncestorActive);
+  const opened = isOpen;
+
+  // Auto-open when newly became an active ancestor from outside
+  if (!prevIsAncestorActive && isAncestorActive) {
+    setPrevIsAncestorActive(true);
+    setIsOpen(true);
+  } else if (prevIsAncestorActive && !isAncestorActive) {
+    setPrevIsAncestorActive(false);
+  }
+
+  // Rail mode, no children → icon-only button
+  if (!expanded && !hasChildren) {
+    return (
+      <Tooltip
+        content={navTitle}
+        positioning={{
+          placement: "right",
+        }}
+      >
+        <NavButton
+          aria-label={navTitle}
+          variant={"ghost"}
+          color={isActive ? `${theme.colorPalette}.fg` : undefined}
+          _hover={{
+            bg: "bg.muted",
+            ...resolvedNavNodeProps._hover,
+          }}
+          {...resolvedNavNodeProps}
+          onClick={() => onNavClick?.(node.key)}
+        >
+          <NavIcon
+            nav={nav}
+            color={isActive ? `${theme.colorPalette}.fg` : "fg.muted"}
+          />
+        </NavButton>
+      </Tooltip>
+    );
+  }
+
+  // Rail mode + has children → icon-only trigger + Chakra Menu popup
+  if (!expanded && hasChildren) {
+    return (
+      <Menu.Root
+        positioning={{
+          placement: "right-start",
+          gutter: 8,
+        }}
+      >
+        <Menu.Trigger asChild>
+          <NavButton
+            aria-label={navTitle}
+            variant={"ghost"}
+            color={
+              isActive || isAncestorActive
+                ? `${theme.colorPalette}.fg`
+                : undefined
+            }
+            _hover={{
+              bg: "bg.muted",
+              ...resolvedNavNodeProps._hover,
+            }}
+            {...resolvedNavNodeProps}
+          >
+            <NavIcon
+              nav={nav}
+              color={
+                isActive || isAncestorActive
+                  ? `${theme.colorPalette}.fg`
+                  : "fg.muted"
+              }
+            />
+          </NavButton>
+        </Menu.Trigger>
+
+        <Menu.Content minW={"180px"}>
+          <Menu.ItemGroup>
+            <Menu.ItemGroupLabel
+              px={3}
+              py={1.5}
+              fontSize={"xs"}
+              fontWeight={"semibold"}
+              color={"fg.muted"}
+              textTransform={"uppercase"}
+              letterSpacing={"wider"}
+            >
+              {navTitle}
+            </Menu.ItemGroupLabel>
+
+            {node.children!.map((child) => {
+              const childNav = navs[child.key];
+              const isChildActive = activeKey === child.key;
+
+              return (
+                <Menu.Item
+                  key={child.key}
+                  value={child.key}
+                  onClick={() => onNavClick?.(child.key)}
+                  color={isChildActive ? `${theme.colorPalette}.fg` : undefined}
+                >
+                  {childNav.icon && (
+                    <AppIcon
+                      icon={childNav.icon}
+                      color={
+                        isChildActive ? `${theme.colorPalette}.fg` : "fg.muted"
+                      }
+                    />
+                  )}
+
+                  {childNav.title ||
+                    (childNav.titleKey ? t[childNav.titleKey]() : "")}
+                </Menu.Item>
+              );
+            })}
+          </Menu.ItemGroup>
+        </Menu.Content>
+      </Menu.Root>
+    );
+  }
+
+  // Expanded, no children → icon + label button
+  if (!hasChildren) {
+    return (
+      <Box pos={"relative"} w={"full"}>
+        {isSubNav && (
+          <>
+            {/* Upper vertical line and curve turning into this sub-nav button */}
+            <Box
+              pos={"absolute"}
+              left={"-15px"}
+              top={"0px"}
+              w={"14px"}
+              h={"20px"}
+              borderLeft={"1.5px solid"}
+              borderBottom={"1.5px solid"}
+              borderBottomLeftRadius={"8px"}
+              borderColor={"border"}
+              pointerEvents={"none"}
+              zIndex={0}
+            />
+
+            {/* Continuation line downwards to the next sub-nav, only if not the last child */}
+            {!isLastChild && (
+              <Box
+                pos={"absolute"}
+                left={"-15px"}
+                top={"20px"}
+                bottom={"-4px"}
+                w={"1.5px"}
+                bg={"border"}
+                pointerEvents={"none"}
+                zIndex={0}
+              />
+            )}
+          </>
+        )}
+
+        <Tooltip
+          content={navTitle}
+          positioning={{
+            placement: "right",
+          }}
+        >
+          <NavButton
+            aria-label={navTitle}
+            variant={"ghost"}
+            bg={"transparent"}
+            color={isActive ? `${theme.colorPalette}.fg` : undefined}
+            h={"40px"}
+            w={"full"}
+            rounded={isSmallViewport ? 0 : theme.radii.component}
+            _hover={{
+              bg: "bg.muted",
+              ...resolvedNavNodeProps._hover,
+            }}
+            {...resolvedNavNodeProps}
+            onClick={() => onNavClick?.(node.key)}
+          >
+            <NavIcon
+              nav={nav}
+              color={isActive ? `${theme.colorPalette}.fg` : "fg.muted"}
+            />
+
+            <P
+              fontWeight={isActive ? "semibold" : "medium"}
+              color={isActive ? `${theme.colorPalette}.fg` : undefined}
+              lineClamp={1}
+            >
+              {navTitle}
+            </P>
+          </NavButton>
+        </Tooltip>
+      </Box>
+    );
+  }
+
+  // Expanded + children → Collapsible, children container with vertical line
+  return (
+    <Collapsible.Root opened={opened} onOpenChange={(e) => setIsOpen(e.open)}>
+      <Collapsible.Trigger
+        _open={{
+          bg: "transparent",
+        }}
+      >
+        <Tooltip
+          content={navTitle}
+          positioning={{
+            placement: "right",
+          }}
+        >
+          <NavButton
+            aria-expanded={opened}
+            size={"md"}
+            variant={"ghost"}
+            bg={"transparent"}
+            color={
+              isActive || isAncestorActive
+                ? `${theme.colorPalette}.fg`
+                : undefined
+            }
+            h={"40px"}
+            w={"full"}
+            rounded={isSmallViewport ? 0 : theme.radii.component}
+            _open={{
+              bg: "transparent",
+            }}
+            _expanded={{
+              bg: "transparent",
+            }}
+            _hover={{
+              bg: "bg.muted",
+              ...resolvedNavNodeProps._hover,
+            }}
+            {...resolvedNavNodeProps}
+          >
+            <NavIcon
+              nav={nav}
+              color={
+                isActive || isAncestorActive
+                  ? `${theme.colorPalette}.fg`
+                  : "fg.muted"
+              }
+            />
+
+            <P
+              fontWeight={isActive || isAncestorActive ? "semibold" : "medium"}
+              color={
+                isActive || isAncestorActive
+                  ? `${theme.colorPalette}.fg`
+                  : undefined
+              }
+              lineClamp={1}
+            >
+              {navTitle}
+            </P>
+
+            <AppIcon
+              icon={ChevronDownIcon}
+              size={"sm"}
+              ml={"auto"}
+              color={
+                isActive || isAncestorActive
+                  ? `${theme.colorPalette}.fg`
+                  : "fg.muted"
+              }
+              transform={opened ? "rotate(180deg)" : undefined}
+              transition={"transform 150ms ease"}
+            />
+          </NavButton>
+        </Tooltip>
+      </Collapsible.Trigger>
+
+      <Collapsible.Content>
+        <VStack
+          pos={"relative"}
+          pl={"14px"}
+          py={1}
+          ml={`calc(18px * ${depth + 1})`}
+        >
+          {/* Active continuous path from top with curve into active sub-nav */}
+          {activeChildIndex !== -1 && (
+            <Box
+              as={"svg"}
+              pos={"absolute"}
+              left={"-1px"}
+              top={0}
+              w={"15px"}
+              h={`${activeChildIndex * 44 + 28}px`}
+              overflow={"visible"}
+              pointerEvents={"none"}
+              color={`${theme.colorPalette}.solid`}
+              zIndex={2}
+            >
+              <path
+                d={`M 0 0 V ${activeChildIndex * 44 + 16} Q 0 ${
+                  activeChildIndex * 44 + 24
+                } 8 ${activeChildIndex * 44 + 24} H 15`}
+                fill={"none"}
+                stroke={"currentColor"}
+                strokeWidth={"1.5"}
+                strokeLinecap={"round"}
+                style={{
+                  transition: "d 200ms cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              />
+            </Box>
+          )}
+
+          <VStack gap={1} align={"stretch"}>
+            {node.children!.map((child, index) => (
+              <VNavNode
+                key={child.key}
+                node={child}
+                navs={navs}
+                activeKey={activeKey}
+                activePathKeys={activePathKeys}
+                expanded={expanded}
+                onNavClick={onNavClick}
+                depth={depth + 1}
+                isLastChild={index === node.children!.length - 1}
+                navNodeProps={navNodeProps}
+              />
+            ))}
+          </VStack>
+        </VStack>
+      </Collapsible.Content>
+    </Collapsible.Root>
+  );
+};
+
+const NavIcon = (props: VNavIconProps) => {
+  // Props
+  const { nav, ...restProps } = props;
+
+  return (
+    nav.icon && <AppIcon icon={nav.icon} color={"fg.muted"} {...restProps} />
+  );
+};

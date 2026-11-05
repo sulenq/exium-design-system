@@ -1,0 +1,131 @@
+/* src/app.css */
+
+.debug {
+  border: 1px solid red !important;
+}
+
+.debug2 {
+  border: 1px solid blue !important;
+}
+
+[data-modal-purging="true"] *,
+[data-modal-purging="true"] *::before,
+[data-modal-purging="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Scroll */
+.noScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
+.scrollX {
+  overflow-x: auto;
+  scrollbar-gutter: auto;
+}
+.scrollY,
+.scrollYAlt {
+  overflow-y: auto;
+  scrollbar-gutter: auto;
+}
+
+/* Scroll for WebKit (Chrome, Edge, Safari) */
+.scrollX::-webkit-scrollbar {
+  height: 6px;
+}
+.scrollY::-webkit-scrollbar,
+.scrollYAlt::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollX::-webkit-scrollbar-corner,
+.scrollY::-webkit-scrollbar-corner,
+.scrollYAlt::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+.scrollX::-webkit-scrollbar-thumb,
+.scrollY::-webkit-scrollbar-thumb,
+.scrollYAlt::-webkit-scrollbar-thumb {
+  background-color: var(--d3);
+  /* background-color: transparent; */
+  transition: background-color 0.3s;
+  border-radius: 3px;
+}
+.scrollX.scrolling::-webkit-scrollbar-thumb,
+.scrollY.scrolling::-webkit-scrollbar-thumb,
+.scrollYAlt.scrolling::-webkit-scrollbar-thumb {
+  background-color: var(--d2);
+}
+.scrollX::-webkit-scrollbar-thumb:hover,
+.scrollY::-webkit-scrollbar-thumb:hover,
+.scrollYAlt::-webkit-scrollbar-thumb:hover {
+  background-color: var(--d3);
+}
+.scrollX::-webkit-scrollbar-track,
+.scrollY::-webkit-scrollbar-track,
+.scrollYAlt::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Text Selection */
+::selection {
+  background-color: var(--chakra-colors-blue-solid, #2563eb);
+  color: #ffffff;
+}
+
+/* Recharts Focus Outline Removal & Smooth Hover Feedback */
+.recharts-surface,
+.recharts-pie-sector,
+.recharts-sector,
+.recharts-bar-rectangle,
+.recharts-bar-rectangles,
+.recharts-rectangle,
+.recharts-active-dot,
+.recharts-dot,
+.recharts-area-area,
+.recharts-wrapper *:focus {
+  outline: none !important;
+}
+
+/* Global Smooth Transitions for Chart Interactive Elements */
+.recharts-pie-sector,
+.recharts-sector,
+.recharts-bar-rectangle path,
+.recharts-bar-rectangle rect,
+.recharts-rectangle,
+.recharts-bar-rectangles rect,
+.recharts-active-dot circle,
+.recharts-dot circle {
+  transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+  transform-origin: center;
+}
+
+/* Global Hover Effects for All Chart Types (Pie/Donut, Bar, Area/Line Dots) */
+.recharts-pie-sector:hover,
+.recharts-sector:hover,
+.recharts-bar-rectangle:hover path,
+.recharts-bar-rectangle:hover rect,
+.recharts-rectangle:hover,
+.recharts-bar-rectangles rect:hover {
+  opacity: 0.82;
+  filter: brightness(1.08) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.16));
+  cursor: pointer;
+}
+
+.recharts-active-dot circle:hover,
+.recharts-dot circle:hover {
+  filter: brightness(1.15) drop-shadow(0 0 6px currentColor);
+  cursor: pointer;
+}

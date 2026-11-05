@@ -1,0 +1,43 @@
+// src/design-system/components/data-display/ui/data-view-page-size.tsx
+
+import type { DataViewPageSizeProps } from "@/design-system/components/data-display/types/data-view.type";
+import Select from "@/design-system/components/input/ui/select";
+import { Span } from "@/design-system/components/typography/ui/span";
+import { t } from "@/shared/libs/i18n";
+
+export const DEFAULT_PAGE_SIZE_OPTIONS = [20, 40, 60, 100];
+
+export const DataViewPageSize = (props: DataViewPageSizeProps) => {
+  // Props
+  const {
+    pageSize,
+    setPageSize,
+    options = DEFAULT_PAGE_SIZE_OPTIONS,
+    title = t["common.page_size"](),
+    ...restProps
+  } = props;
+
+  const selectOptions = options.map((option) => {
+    return {
+      label: `${option}`,
+      value: String(option),
+    };
+  });
+
+  return (
+    <Select
+      value={String(pageSize)}
+      options={selectOptions}
+      onValueChange={(val) => {
+        setPageSize?.(parseInt(val, 10));
+      }}
+      clearable={false}
+      suffixLabel={<Span ml={1}>{"/page"}</Span>}
+      variant={"ghost"}
+      title={title}
+      minW={"120px"}
+      w={"120px"}
+      {...restProps}
+    />
+  );
+};

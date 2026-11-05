@@ -1,0 +1,353 @@
+// src/design-system/components/map/constants/map.basemap-options.ts
+
+import type {
+  BasemapOption,
+  BasemapKey,
+} from "@/design-system/components/map/types/map.basemap-select.type";
+import { PATH_CONFIG } from "@/shared/constants/paths";
+import type maplibregl from "maplibre-gl";
+
+export const OPENFREEMAP_LIBERTY_STYLE_URL =
+  "https://tiles.openfreemap.org/styles/liberty";
+
+// -----------------------------------------------------------------
+// Max zoom per provider — declared once, reused in both the style's
+// source/layer config AND the option's `maxZoom` field below, so there's
+// only one number to update per provider.
+//
+// - CARTO raster (Positron/Dark Matter): officially supports z0–20.
+// - Esri World Imagery: real-world satellite coverage varies by region —
+//   many areas in Indonesia & globally have no data past z18 (returning
+//   a "Map data not yet available" placeholder tile on z19+). Setting maxzoom
+//   to 18 ensures MapLibre automatically overzooms/rescales the crisp z18
+//   satellite tiles when zooming up to z24 without showing placeholder error tiles.
+// - Vector styles (OpenFreeMap Liberty) don't have this problem — geometry
+//   scales without quality loss, so no cap needed here.
+
+const SOURCE_ESRI_MAX_ZOOM = 19;
+
+const ESRI_SATELLITE_STYLE: maplibregl.StyleSpecification = {
+  version: 8,
+  name: "Esri Satellite",
+  sources: {
+    "esri-satellite": {
+      type: "raster",
+      tiles: [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      ],
+      tileSize: 256,
+      maxzoom: SOURCE_ESRI_MAX_ZOOM,
+      attribution:
+        'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a> &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    },
+    "terrain-dem": {
+      type: "raster-dem",
+      tiles: [
+        "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+      ],
+      encoding: "terrarium",
+      tileSize: 256,
+      maxzoom: 18,
+    },
+  },
+  layers: [
+    {
+      id: "esri-satellite-layer",
+      type: "raster",
+      source: "esri-satellite",
+      minzoom: 0,
+      maxzoom: 24,
+    },
+  ],
+};
+
+const TOPO_STYLE: maplibregl.StyleSpecification = {
+  version: 8,
+  name: "OpenTopoMap Terrain",
+  sources: {
+    opentopomap: {
+      type: "raster",
+      tiles: [
+        "https://a.tile.opentopomap.org/{z}/{x}/{y}.png",
+        "https://b.tile.opentopomap.org/{z}/{x}/{y}.png",
+        "https://c.tile.opentopomap.org/{z}/{x}/{y}.png",
+      ],
+      tileSize: 256,
+      maxzoom: 17,
+      attribution:
+        "Kartografi &copy; OpenTopoMap (CC-BY-SA), SRTM | Map data &copy; OpenStreetMap contributors",
+    },
+    "terrain-dem": {
+      type: "raster-dem",
+      tiles: [
+        "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+      ],
+      encoding: "terrarium",
+      tileSize: 256,
+      maxzoom: 15,
+    },
+  },
+  layers: [
+    {
+      id: "opentopomap-layer",
+      type: "raster",
+      source: "opentopomap",
+      minzoom: 0,
+      maxzoom: 24,
+    },
+  ],
+};
+
+const PETADASAR_STYLE: maplibregl.StyleSpecification = {
+  version: 8,
+  name: "Peta Dasar ATR/BPN",
+  sources: {
+    petadasar: {
+      type: "raster",
+      tiles: ["https://petadasar.atrbpn.go.id/main/wms/{x}/{y}/{z}"],
+      tileSize: 256,
+      maxzoom: 20,
+      attribution:
+        '&copy; <a href="https://petadasar.atrbpn.go.id" target="_blank" rel="noopener noreferrer">Kementerian ATR/BPN</a>',
+    },
+    "terrain-dem": {
+      type: "raster-dem",
+      tiles: [
+        "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+      ],
+      encoding: "terrarium",
+      tileSize: 256,
+      maxzoom: 15,
+    },
+  },
+  layers: [
+    {
+      id: "petadasar-layer",
+      type: "raster",
+      source: "petadasar",
+      minzoom: 0,
+      maxzoom: 24,
+    },
+  ],
+};
+
+const GRID_PETADASAR_STYLE: maplibregl.StyleSpecification = {
+  version: 8,
+  name: "Grid Petadasar ATR/BPN",
+  sources: {
+    "grid-petadasar": {
+      type: "raster",
+      tiles: ["https://petadasar.atrbpn.go.id/main/tmi/{x}/{y}/{z}"],
+      tileSize: 256,
+      maxzoom: 20,
+      attribution:
+        '&copy; <a href="https://petadasar.atrbpn.go.id" target="_blank" rel="noopener noreferrer">Kementerian ATR/BPN</a>',
+    },
+    "terrain-dem": {
+      type: "raster-dem",
+      tiles: [
+        "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+      ],
+      encoding: "terrarium",
+      tileSize: 256,
+      maxzoom: 15,
+    },
+  },
+  layers: [
+    {
+      id: "grid-petadasar-layer",
+      type: "raster",
+      source: "grid-petadasar",
+      minzoom: 0,
+      maxzoom: 24,
+    },
+  ],
+};
+
+const RBI_STYLE: maplibregl.StyleSpecification = {
+  version: 8,
+  name: "Rupabumi Indonesia (RBI)",
+  sources: {
+    rbi: {
+      type: "raster",
+      tiles: [
+        "https://geoservices.big.go.id/rbi/rest/services/BASEMAP/Rupabumi_Indonesia/MapServer/tile/{z}/{y}/{x}",
+      ],
+      tileSize: 256,
+      maxzoom: 20,
+      attribution:
+        '&copy; <a href="https://geoservices.big.go.id" target="_blank" rel="noopener noreferrer">Badan Informasi Geospasial (BIG)</a>',
+    },
+    "terrain-dem": {
+      type: "raster-dem",
+      tiles: [
+        "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+      ],
+      encoding: "terrarium",
+      tileSize: 256,
+      maxzoom: 15,
+    },
+  },
+  layers: [
+    {
+      id: "rbi-layer",
+      type: "raster",
+      source: "rbi",
+      minzoom: 0,
+      maxzoom: 24,
+    },
+  ],
+};
+
+export const MAP_BASEMAP_MAP = {
+  "plain-light": {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/plain_light.png`,
+    label: "Plain Light",
+    description: "Gaya terang polos 3D berbasis Liberty",
+    attributions: [
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>',
+    ],
+    style: {
+      light: OPENFREEMAP_LIBERTY_STYLE_URL,
+      dark: OPENFREEMAP_LIBERTY_STYLE_URL,
+    },
+    maxZoom: 24,
+  },
+
+  "plain-dark": {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/plain_dark.png`,
+    label: "Plain Dark",
+    description: "Gaya gelap polos 3D berbasis Liberty",
+    attributions: [
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>',
+    ],
+    style: {
+      light: OPENFREEMAP_LIBERTY_STYLE_URL,
+      dark: OPENFREEMAP_LIBERTY_STYLE_URL,
+    },
+    maxZoom: 24,
+  },
+
+  "plain-adaptive": {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/plain_adaptive.png`,
+    label: "Plain Adaptive",
+    description: "Polos adaptif 3D mengikuti tema aplikasi (Terang/Gelap)",
+    attributions: [
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>',
+    ],
+    style: {
+      light: OPENFREEMAP_LIBERTY_STYLE_URL,
+      dark: OPENFREEMAP_LIBERTY_STYLE_URL,
+    },
+    maxZoom: 24,
+  },
+
+  color: {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/colorful.png`,
+    label: "Color",
+    description: "Gaya peta penuh warna OpenFreeMap Liberty",
+    attributions: [
+      '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>',
+    ],
+    style: {
+      light: OPENFREEMAP_LIBERTY_STYLE_URL,
+      dark: OPENFREEMAP_LIBERTY_STYLE_URL,
+    },
+    maxZoom: 24,
+  },
+
+  satellite: {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/satellite.png`,
+    label: "Satellite",
+    description: "Citra satelit Esri World Imagery",
+    attributions: [
+      'Tiles &copy; <a href="https://www.esri.com/" target="_blank" rel="noopener noreferrer">Esri</a>',
+      "Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    ],
+    style: {
+      light: ESRI_SATELLITE_STYLE,
+      dark: ESRI_SATELLITE_STYLE,
+    },
+    maxZoom: 24,
+  },
+
+  topo: {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/topo.png`,
+    label: "Topo",
+    description: "Peta topografi 3D dengan kontur ketinggian",
+    attributions: [
+      'Kartografi &copy; <a href="https://opentopomap.org" target="_blank" rel="noopener noreferrer">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC-BY-SA</a>)',
+      'Data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+      'DEM &copy; <a href="https://github.com/tilezen/joerd" target="_blank" rel="noopener noreferrer">Tilezen Joerd</a>',
+    ],
+    style: {
+      light: TOPO_STYLE,
+      dark: TOPO_STYLE,
+    },
+    maxZoom: 24,
+  },
+
+  petadasar: {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/satellite.png`,
+    label: "Peta Dasar",
+    description: "Peta Dasar Kementerian ATR/BPN",
+    hidden: true,
+    attributions: [
+      '&copy; <a href="https://petadasar.atrbpn.go.id" target="_blank" rel="noopener noreferrer">Kementerian ATR/BPN</a>',
+    ],
+    style: {
+      light: PETADASAR_STYLE,
+      dark: PETADASAR_STYLE,
+    },
+    maxZoom: 24,
+  },
+
+  "grid-petadasar": {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/satellite.png`,
+    label: "Grid Peta Dasar",
+    description: "Grid Indeks Peta Dasar Kementerian ATR/BPN",
+    hidden: true,
+    attributions: [
+      '&copy; <a href="https://petadasar.atrbpn.go.id" target="_blank" rel="noopener noreferrer">Kementerian ATR/BPN</a>',
+    ],
+    style: {
+      light: GRID_PETADASAR_STYLE,
+      dark: GRID_PETADASAR_STYLE,
+    },
+    maxZoom: 24,
+  },
+
+  rbi: {
+    thumbnail: `${PATH_CONFIG.images}/base_map_styles/satellite.png`,
+    label: "RBI BIG",
+    description: "Peta Rupa Bumi Indonesia - Badan Informasi Geospasial",
+    hidden: true,
+    attributions: [
+      '&copy; <a href="https://geoservices.big.go.id" target="_blank" rel="noopener noreferrer">Badan Informasi Geospasial (BIG)</a>',
+    ],
+    style: {
+      light: RBI_STYLE,
+      dark: RBI_STYLE,
+    },
+    maxZoom: 24,
+  },
+} as const satisfies Record<BasemapKey, BasemapOption>;
+
+export const MAP_BASEMAP_OPTIONS_LIST = (
+  Object.keys(MAP_BASEMAP_MAP) as BasemapKey[]
+).filter((key) => !(MAP_BASEMAP_MAP[key] as BasemapOption).hidden);
+
+// -----------------------------------------------------------------
+
+export const getBasemapOption = (key: BasemapKey): BasemapOption =>
+  MAP_BASEMAP_MAP[key];
+
+export const getBaseLayerStyle = (
+  key: BasemapKey,
+  colorMode: "light" | "dark",
+): string | maplibregl.StyleSpecification =>
+  MAP_BASEMAP_MAP[key].style[colorMode];
