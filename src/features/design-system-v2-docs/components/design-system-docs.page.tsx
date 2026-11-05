@@ -135,7 +135,7 @@ export const DesignSystemDocsPage = () => {
         </HStack>
 
         {/* Content Body Scroll Area */}
-        <Box flex={1} overflowY={"auto"} p={[4, 8]}>
+        <Box flex={1} overflowY={"auto"} p={4}>
           {activeNavKey === "overview" || !currentSpec ? (
             <DemoPage />
           ) : (
