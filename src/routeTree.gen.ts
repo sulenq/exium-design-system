@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DesignSystemUiRouteImport } from './routes/design-system/ui'
+import { Route as DesignSystemV2UiRouteImport } from './routes/design-system-v2/ui'
 import { Route as AuthCallbackKeycloakRouteImport } from './routes/auth.callback.keycloak'
 
 const DemoRoute = DemoRouteImport.update({
@@ -29,6 +30,11 @@ const DesignSystemUiRoute = DesignSystemUiRouteImport.update({
   path: '/design-system/ui',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DesignSystemV2UiRoute = DesignSystemV2UiRouteImport.update({
+  id: '/design-system-v2/ui',
+  path: '/design-system-v2/ui',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthCallbackKeycloakRoute = AuthCallbackKeycloakRouteImport.update({
   id: '/auth/callback/keycloak',
   path: '/auth/callback/keycloak',
@@ -38,12 +44,14 @@ const AuthCallbackKeycloakRoute = AuthCallbackKeycloakRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/design-system-v2/ui': typeof DesignSystemV2UiRoute
   '/design-system/ui': typeof DesignSystemUiRoute
   '/auth/callback/keycloak': typeof AuthCallbackKeycloakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/design-system-v2/ui': typeof DesignSystemV2UiRoute
   '/design-system/ui': typeof DesignSystemUiRoute
   '/auth/callback/keycloak': typeof AuthCallbackKeycloakRoute
 }
@@ -51,18 +59,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/design-system-v2/ui': typeof DesignSystemV2UiRoute
   '/design-system/ui': typeof DesignSystemUiRoute
   '/auth/callback/keycloak': typeof AuthCallbackKeycloakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo' | '/design-system/ui' | '/auth/callback/keycloak'
+  fullPaths:
+    | '/'
+    | '/demo'
+    | '/design-system-v2/ui'
+    | '/design-system/ui'
+    | '/auth/callback/keycloak'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo' | '/design-system/ui' | '/auth/callback/keycloak'
+  to:
+    | '/'
+    | '/demo'
+    | '/design-system-v2/ui'
+    | '/design-system/ui'
+    | '/auth/callback/keycloak'
   id:
     | '__root__'
     | '/'
     | '/demo'
+    | '/design-system-v2/ui'
     | '/design-system/ui'
     | '/auth/callback/keycloak'
   fileRoutesById: FileRoutesById
@@ -70,6 +90,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRoute: typeof DemoRoute
+  DesignSystemV2UiRoute: typeof DesignSystemV2UiRoute
   DesignSystemUiRoute: typeof DesignSystemUiRoute
   AuthCallbackKeycloakRoute: typeof AuthCallbackKeycloakRoute
 }
@@ -97,6 +118,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesignSystemUiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/design-system-v2/ui': {
+      id: '/design-system-v2/ui'
+      path: '/design-system-v2/ui'
+      fullPath: '/design-system-v2/ui'
+      preLoaderRoute: typeof DesignSystemV2UiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/callback/keycloak': {
       id: '/auth/callback/keycloak'
       path: '/auth/callback/keycloak'
@@ -110,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRoute: DemoRoute,
+  DesignSystemV2UiRoute: DesignSystemV2UiRoute,
   DesignSystemUiRoute: DesignSystemUiRoute,
   AuthCallbackKeycloakRoute: AuthCallbackKeycloakRoute,
 }
