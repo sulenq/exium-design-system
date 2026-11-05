@@ -1,9 +1,9 @@
-// src/design-system-v2/constants/theme.ts
+// src/design-system-v2/constants/theme-system.ts
 
 const DIALOG_OFFSET_X_VAR = "--dialog-offset-x";
 const DIALOG_OFFSET_Y_VAR = "--dialog-offset-y";
 
-export const theme = {
+export const themeSystem = {
   breakpoints: {
     sm: "350px",
     md: "750px",

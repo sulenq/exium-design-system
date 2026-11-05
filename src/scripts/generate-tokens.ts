@@ -2,7 +2,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { theme } from "../design-system-v2/constants/theme.ts";
+import { themeSystem } from "../design-system-v2/constants/theme-system.ts";
 
 function generateTokens() {
   const rootVars: string[] = [];
@@ -10,13 +10,13 @@ function generateTokens() {
   const themeVars: string[] = [];
 
   // 1. Breakpoints
-  if (theme.breakpoints) {
-    for (const [bp, val] of Object.entries(theme.breakpoints)) {
+  if (themeSystem.breakpoints) {
+    for (const [bp, val] of Object.entries(themeSystem.breakpoints)) {
       themeVars.push(`  --breakpoint-${bp}: ${val};`);
     }
   }
 
-  const tokens = theme.tokens as Record<string, Record<string, unknown>>;
+  const tokens = themeSystem.tokens as Record<string, Record<string, unknown>>;
   if (!tokens) return;
 
   // 2. Colors
@@ -92,7 +92,7 @@ function generateTokens() {
   }
 
   // 7. Semantic Tokens
-  const semTokens = (theme.semanticTokens as Record<string, unknown>)?.colors as Record<string, unknown>;
+  const semTokens = (themeSystem.semanticTokens as Record<string, unknown>)?.colors as Record<string, unknown>;
   if (semTokens) {
     function resolveRef(val: string): string {
       return val

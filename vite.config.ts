@@ -13,7 +13,7 @@ function tokensWatchPlugin(): Plugin {
   return {
     name: "tokens-watch-plugin",
     handleHotUpdate({ file }) {
-      if (file.endsWith("theme.ts")) {
+      if (file.endsWith("theme-system.ts")) {
         try {
           execSync(
             "node --experimental-strip-types src/scripts/generate-tokens.ts",
