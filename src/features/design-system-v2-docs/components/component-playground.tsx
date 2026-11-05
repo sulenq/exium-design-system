@@ -32,39 +32,8 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
 
   const ComponentToRender = spec.component;
 
-  const generateCodeSnippet = () => {
-    const propStrings = Object.entries(propsState)
-      .filter(([key, val]) => {
-        if (key === "children") return false;
-        if (val === undefined || val === null || val === false) return false;
-        return true;
-      })
-      .map(([key, val]) => {
-        if (typeof val === "boolean" && val === true) return key;
-        if (typeof val === "string") return `${key}="${val}"`;
-        return `${key}={${JSON.stringify(val)}}`;
-      })
-      .join(" ");
-
-    const componentName = spec.title.split(" ")[0];
-    const propsPrefix = propStrings ? ` ${propStrings}` : "";
-    const childrenVal = propsState.children;
-
-    if (
-      childrenVal !== undefined &&
-      childrenVal !== null &&
-      childrenVal !== ""
-    ) {
-      return `<${componentName}${propsPrefix}>\n  ${String(childrenVal)}\n</${componentName}>`;
-    }
-
-    return `<${componentName}${propsPrefix} />`;
-  };
-
-  const handleCopyCode = () => {
-    navigator.clipboard.writeText(
-      `${spec.importPath}\n\n${generateCodeSnippet()}`,
-    );
+  const handleCopyImport = () => {
+    navigator.clipboard.writeText(spec.importPath);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -82,21 +51,32 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         <P color={"fg.muted"}>{spec.description}</P>
       </VStack>
 
-      {/* Import Path Card */}
-      <Box
+      {/* Import Path (Tanpa border, dengan action copy langsung) */}
+      <HStack
         p={3}
         rounded={"md"}
         bg={"bg.subtle"}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
+        align={"center"}
+        justify={"space-between"}
       >
-        <P fontSize={"xs"} color={"fg.subtle"} mb={1}>
-          IMPORT PATH
-        </P>
-        <P fontFamily={"mono"} fontSize={"sm"} color={"colorPalette.fg"}>
-          {spec.importPath}
-        </P>
-      </Box>
+        <VStack align={"start"} gap={0.5}>
+          <P fontSize={"xs"} color={"fg.subtle"} fontWeight={"semibold"}>
+            {"IMPORT PATH"}
+          </P>
+          <P fontFamily={"mono"} fontSize={"sm"} color={"colorPalette.fg"}>
+            {spec.importPath}
+          </P>
+        </VStack>
+
+        <Button size={"xs"} variant={"ghost"} onClick={handleCopyImport}>
+          {copied ? (
+            <AppIcon icon={CheckIcon} size={"sm"} />
+          ) : (
+            <AppIcon icon={CopyIcon} size={"sm"} />
+          )}
+          {copied ? "Copied!" : "Copy"}
+        </Button>
+      </HStack>
 
       {/* Interactive Playground Sandbox */}
       <ComponentPlaygroundContainer>
@@ -107,13 +87,12 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         )}
       </ComponentPlaygroundContainer>
 
-      {/* Controls & Props Spec Tabs */}
-      <Tabs.Root defaultValue={"controls"} variant={"outline"}>
+      {/* Controls & Props Spec Tabs (Default variant, tanpa Generated Code) */}
+      <Tabs.Root defaultValue={"controls"}>
         <Tabs.List>
           <Tabs.Trigger value={"controls"}>{"Playground Knobs"}</Tabs.Trigger>
           <Tabs.Trigger value={"props"}>{"Props Specs"}</Tabs.Trigger>
           <Tabs.Trigger value={"a11y"}>{"A11y"}</Tabs.Trigger>
-          <Tabs.Trigger value={"code"}>{"Generated Code"}</Tabs.Trigger>
         </Tabs.List>
 
         <Tabs.Content value={"controls"} pt={4}>
@@ -191,33 +170,6 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                 </Box>
               ))}
           </SimpleGrid>
-        </Tabs.Content>
-
-        <Tabs.Content value={"code"} pt={4}>
-          <Box pos={"relative"} p={4} rounded={"md"} bg={"bg.muted"}>
-            <Button
-              size={"xs"}
-              variant={"ghost"}
-              pos={"absolute"}
-              top={2}
-              right={2}
-              onClick={handleCopyCode}
-            >
-              {copied ? (
-                <AppIcon icon={CheckIcon} size={"sm"} />
-              ) : (
-                <AppIcon icon={CopyIcon} size={"sm"} />
-              )}
-              {copied ? "Copied!" : "Copy Code"}
-            </Button>
-            <pre
-              style={{ margin: 0, fontFamily: "monospace", fontSize: "13px" }}
-            >
-              {spec.importPath}
-              {"\n\n"}
-              {generateCodeSnippet()}
-            </pre>
-          </Box>
         </Tabs.Content>
 
         <Tabs.Content value={"props"} pt={4}>
