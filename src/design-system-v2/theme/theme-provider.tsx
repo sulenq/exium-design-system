@@ -47,6 +47,15 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
     const root = window.document.documentElement;
 
     const applyTheme = (currentTheme: Theme) => {
+      // Temporarily disable CSS transitions on the entire DOM to prevent lag/flashing
+      const css = document.createElement("style");
+      css.appendChild(
+        document.createTextNode(
+          "*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}",
+        ),
+      );
+      document.head.appendChild(css);
+
       root.classList.remove("light", "dark");
 
       const resolved: "dark" | "light" =
@@ -59,6 +68,14 @@ export const ThemeProvider = (props: ThemeProviderProps) => {
       root.classList.add(resolved);
       root.setAttribute("data-theme", resolved);
       setResolvedColorMode(resolved);
+
+      // Force reflow and re-enable transitions
+      window.getComputedStyle(document.body);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.head.removeChild(css);
+        });
+      });
     };
 
     applyTheme(theme);
