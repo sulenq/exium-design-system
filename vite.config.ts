@@ -14,8 +14,12 @@ function tokensWatchPlugin(): Plugin {
     handleHotUpdate({ file }) {
       if (file.endsWith("theme.ts")) {
         try {
-          execSync("node --experimental-strip-types src/scripts/generate-tokens.ts");
-          console.log("⚡ Auto-regenerated src/styles/tokens.css from theme.ts");
+          execSync(
+            "node --experimental-strip-types src/scripts/generate-tokens.ts",
+          );
+          console.log(
+            "⚡ Auto-regenerated src/styles/tokens.css from theme.ts",
+          );
         } catch (e) {
           console.error("Failed to generate tokens:", e);
         }
