@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "vite --port 5173",
     "preview": "vite preview",
-    "build": "pnpm run i18n:compile && vite build",
+    "tokens:generate": "node --experimental-strip-types src/scripts/generate-tokens.ts",
+    "build": "pnpm run tokens:generate && pnpm run i18n:compile && vite build",
     "build:full": "pnpm run lint && pnpm run typecheck && pnpm run build",
     "build:ci": "pnpm run typecheck && pnpm run build",
     "routes": "tsr generate",
