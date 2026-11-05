@@ -16,19 +16,20 @@ function generateTokens() {
     }
   }
 
-  // 2. Base Tokens: colors
-  const colors = (theme.tokens as Record<string, unknown>)?.colors as Record<string, unknown>;
+  const tokens = theme.tokens as Record<string, Record<string, unknown>>;
+  if (!tokens) return;
+
+  // 2. Colors
+  const colors = tokens.colors;
   if (colors) {
     for (const [colorGroup, groupVal] of Object.entries(colors)) {
       if (typeof groupVal === "object" && groupVal !== null) {
         if ("value" in groupVal) {
-          // Flat color: e.g. canvasLight, bodyLight
           const val = String((groupVal as { value: string }).value);
           const kebab = colorGroup.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
           rootVars.push(`  --colors-${kebab}: ${val};`);
           themeVars.push(`  --color-${kebab}: var(--colors-${kebab});`);
         } else {
-          // Palette: e.g. neutral.50, blue.500
           for (const [shade, shadeObj] of Object.entries(groupVal as Record<string, { value: string }>)) {
             if (shadeObj && typeof shadeObj === "object" && "value" in shadeObj) {
               const val = String(shadeObj.value);
@@ -42,15 +43,64 @@ function generateTokens() {
     }
   }
 
-  // 3. Semantic Tokens: colors
+  // 3. Fonts
+  const fonts = tokens.fonts;
+  if (fonts) {
+    for (const [key, obj] of Object.entries(fonts)) {
+      if (obj && typeof obj === "object" && "value" in obj) {
+        const val = String((obj as { value: string }).value);
+        rootVars.push(`  --font-${key}: ${val};`);
+        themeVars.push(`  --font-${key}: var(--font-${key});`);
+      }
+    }
+  }
+
+  // 4. Font Sizes
+  const fontSizes = tokens.fontSizes;
+  if (fontSizes) {
+    for (const [key, obj] of Object.entries(fontSizes)) {
+      if (obj && typeof obj === "object" && "value" in obj) {
+        const val = String((obj as { value: string }).value);
+        rootVars.push(`  --text-${key}: ${val};`);
+        themeVars.push(`  --text-${key}: var(--text-${key});`);
+      }
+    }
+  }
+
+  // 5. Font Weights
+  const fontWeights = tokens.fontWeights;
+  if (fontWeights) {
+    for (const [key, obj] of Object.entries(fontWeights)) {
+      if (obj && typeof obj === "object" && "value" in obj) {
+        const val = String((obj as { value: string }).value);
+        rootVars.push(`  --font-weight-${key}: ${val};`);
+        themeVars.push(`  --font-weight-${key}: var(--font-weight-${key});`);
+      }
+    }
+  }
+
+  // 6. Durations
+  const durations = tokens.durations;
+  if (durations) {
+    for (const [key, obj] of Object.entries(durations)) {
+      if (obj && typeof obj === "object" && "value" in obj) {
+        const val = String((obj as { value: string }).value);
+        rootVars.push(`  --duration-${key}: ${val};`);
+        themeVars.push(`  --duration-${key}: var(--duration-${key});`);
+      }
+    }
+  }
+
+  // 7. Semantic Tokens
   const semTokens = (theme.semanticTokens as Record<string, unknown>)?.colors as Record<string, unknown>;
   if (semTokens) {
     function resolveRef(val: string): string {
-      // replace {colors.neutral.100} with var(--colors-neutral-100)
-      return val.replace(/\{colors\.([a-zA-Z0-9.]+)\}/g, (_, pathStr: string) => {
-        const parts = pathStr.split(".").map((p: string) => p.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase());
-        return `var(--colors-${parts.join("-")})`;
-      }).replace(/\s*!important/g, "");
+      return val
+        .replace(/\{colors\.([a-zA-Z0-9.]+)\}/g, (_, pathStr: string) => {
+          const parts = pathStr.split(".").map((p: string) => p.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase());
+          return `var(--colors-${parts.join("-")})`;
+        })
+        .replace(/\s*!important/g, "");
     }
 
     function traverseSemantic(obj: Record<string, unknown>, currentPath: string[]) {
@@ -102,7 +152,7 @@ ${themeVars.join("\n")}
 
   const outputPath = path.resolve(process.cwd(), "src/styles/tokens.css");
   fs.writeFileSync(outputPath, css, "utf-8");
-  console.log(`✔ Generated ${outputPath} with ${rootVars.length} base/light vars, ${darkVars.length} dark vars.`);
+  console.log(`✔ Generated ${outputPath} with all tokens (colors, fonts, fontWeights, fontSizes, durations).`);
 }
 
 generateTokens();

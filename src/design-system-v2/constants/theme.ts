@@ -637,19 +637,6 @@ export const theme = {
       "7xl": { value: "3.9375rem" }, // 63px
       "8xl": { value: "5rem" }, // 80px
       "9xl": { value: "6.3125rem" }, // 101px
-      // xs: { value: "0.6875rem" }, // 11px
-      // sm: { value: "0.8125rem" }, // 13px
-      // md: { value: "0.9375rem" }, // 15px
-      // lg: { value: "1.0625rem" }, // 17px
-      // xl: { value: "1.1875rem" }, // 19px
-      // "2xl": { value: "1.4375rem" }, // 23px
-      // "3xl": { value: "1.8125rem" }, // 29px
-      // "4xl": { value: "2.1875rem" }, // 35px
-      // "5xl": { value: "2.9375rem" }, // 47px
-      // "6xl": { value: "3.6875rem" }, // 59px
-      // "7xl": { value: "4.4375rem" }, // 71px
-      // "8xl": { value: "5.9375rem" }, // 95px
-      // "9xl": { value: "7.9375rem" }, // 127px
     },
     fontWeights: {
       normal: { value: "450" },
