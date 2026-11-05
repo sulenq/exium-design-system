@@ -6,7 +6,8 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { execSync } from "node:child_process";
 import path from "node:path";
-import { defineConfig, type Plugin } from "vite";
+import type { Plugin } from "vite";
+import { defineConfig } from "vite";
 
 function tokensWatchPlugin(): Plugin {
   return {
