@@ -1,15 +1,12 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-
   "app": {
     "navs": {
       "home": "Home",
-
       "data_request": "Data Request",
       "cart": "Cart",
       "my_data": "My Data",
       "transaction_history": "Transaction History",
-
       "notification": "Notification",
       "help": "Help Center",
       "profile": "Profile"
@@ -28,7 +25,6 @@
       "profile": "Profile"
     }
   },
-
   "common": {
     "searching": "Searching",
     "type_to_find": "Type to search",
@@ -89,7 +85,8 @@
     "settings": "Settings",
     "dismiss_all": "Dismiss all",
     "notifications": "Notifications",
-    "link_not_found": "Link not found"
+    "link_not_found": "Link not found",
+    "page_size": "Page Size"
   },
   "action": {
     "actions": "Actions",
@@ -194,7 +191,6 @@
     "not_found": "The requested resource could not be found.",
     "bad_request": "Invalid request parameters."
   },
-
   "file_input": {
     "replace_hint": "Uploading a new file will replace the current file.",
     "limit_reached": "Limit reached. Remove files to upload new ones.",
@@ -207,7 +203,6 @@
   "rich_text_editor": {
     "default_placeholder": "Start typing your content here"
   },
-
   "offline_alert": {
     "title": "No internet connection",
     "description": "Hang tight — we'll reconnect you automatically once your network is back"
@@ -218,7 +213,6 @@
       "description": "The page you're looking for may have been moved or doesn't exist"
     }
   },
-
   "settings": {
     "index": {
       "title": "Select a setting",
@@ -290,7 +284,6 @@
       "description": "Information about the application and version details."
     }
   },
-
   "duration": {
     "unit_millisecond": "Millisecond",
     "unit_second": "Second",

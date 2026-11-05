@@ -1730,7 +1730,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       fixedItemHeight: true,
       virtualized: true,
       page: 1,
-      pageSize: 4,
+      pageSize: 20,
     },
     propsSpec: [
       {
@@ -1803,10 +1803,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "pageSize",
         type: "number",
-        defaultValue: 4,
+        defaultValue: 20,
         description: "Jumlah data yang ditampilkan per halaman.",
         controlKind: "select",
-        options: [2, 4, 8],
+        options: [10, 20, 50, 100],
       },
     ],
     renderPlayground: (props, onPropChange) => (
@@ -3493,7 +3493,10 @@ const ALL_DEMO_ITEMS: FormattedListItem<TableDemoItem>[] = [
     columns: [
       { value: "Ahmad Dahlan", td: "Ahmad Dahlan" },
       { value: "Surveyor", td: "Surveyor" },
-      { value: "Aktif", td: <Badge colorPalette={"green"}>Aktif</Badge> },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
     ],
   },
   {
@@ -3510,36 +3513,105 @@ const ALL_DEMO_ITEMS: FormattedListItem<TableDemoItem>[] = [
   },
   {
     id: "3",
-    data: { name: "Citra Lestari", role: "Administrator", status: "Aktif" },
+    data: { name: "Citra Lestari", role: "Administrator", status: "Nonaktif" },
     columns: [
       { value: "Citra Lestari", td: "Citra Lestari" },
       { value: "Administrator", td: "Administrator" },
-      { value: "Aktif", td: <Badge colorPalette={"green"}>Aktif</Badge> },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
     ],
   },
   {
     id: "4",
-    data: { name: "Dedi Supriadi", role: "Petugas Ukur", status: "Nonaktif" },
+    data: { name: "Dedi Supriadi", role: "Petugas Ukur", status: "Aktif" },
     columns: [
       { value: "Dedi Supriadi", td: "Dedi Supriadi" },
       { value: "Petugas Ukur", td: "Petugas Ukur" },
-      { value: "Nonaktif", td: <Badge colorPalette={"gray"}>Nonaktif</Badge> },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
     ],
   },
   {
     id: "5",
-    data: { name: "Eka Wulandari", role: "Validator", status: "Aktif" },
+    data: { name: "Eka Wulandari", role: "Validator", status: "Pending" },
     columns: [
       { value: "Eka Wulandari", td: "Eka Wulandari" },
       { value: "Validator", td: "Validator" },
-      { value: "Aktif", td: <Badge colorPalette={"green"}>Aktif</Badge> },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
     ],
   },
   {
     id: "6",
-    data: { name: "Fajar Pratama", role: "Surveyor", status: "Pending" },
+    data: { name: "Fajar Pratama", role: "Surveyor", status: "Nonaktif" },
     columns: [
       { value: "Fajar Pratama", td: "Fajar Pratama" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "7",
+    data: { name: "Gita Permata", role: "Verifikator", status: "Aktif" },
+    columns: [
+      { value: "Gita Permata", td: "Gita Permata" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "8",
+    data: { name: "Hadi Kusuma", role: "Administrator", status: "Pending" },
+    columns: [
+      { value: "Hadi Kusuma", td: "Hadi Kusuma" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "9",
+    data: { name: "Indra Wijaya", role: "Petugas Ukur", status: "Nonaktif" },
+    columns: [
+      { value: "Indra Wijaya", td: "Indra Wijaya" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "10",
+    data: { name: "Joko Susilo", role: "Validator", status: "Aktif" },
+    columns: [
+      { value: "Joko Susilo", td: "Joko Susilo" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "11",
+    data: { name: "Kartika Sari", role: "Surveyor", status: "Pending" },
+    columns: [
+      { value: "Kartika Sari", td: "Kartika Sari" },
       { value: "Surveyor", td: "Surveyor" },
       {
         value: "Pending",
@@ -3548,21 +3620,471 @@ const ALL_DEMO_ITEMS: FormattedListItem<TableDemoItem>[] = [
     ],
   },
   {
-    id: "7",
-    data: { name: "Gita Permata", role: "Administrator", status: "Aktif" },
+    id: "12",
+    data: { name: "Lukman Hakim", role: "Verifikator", status: "Nonaktif" },
     columns: [
-      { value: "Gita Permata", td: "Gita Permata" },
-      { value: "Administrator", td: "Administrator" },
-      { value: "Aktif", td: <Badge colorPalette={"green"}>Aktif</Badge> },
+      { value: "Lukman Hakim", td: "Lukman Hakim" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
     ],
   },
   {
-    id: "8",
-    data: { name: "Hadi Kusuma", role: "Petugas Ukur", status: "Aktif" },
+    id: "13",
+    data: { name: "Maya Anggraini", role: "Administrator", status: "Aktif" },
     columns: [
-      { value: "Hadi Kusuma", td: "Hadi Kusuma" },
+      { value: "Maya Anggraini", td: "Maya Anggraini" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "14",
+    data: { name: "Nanda Pratama", role: "Petugas Ukur", status: "Pending" },
+    columns: [
+      { value: "Nanda Pratama", td: "Nanda Pratama" },
       { value: "Petugas Ukur", td: "Petugas Ukur" },
-      { value: "Aktif", td: <Badge colorPalette={"green"}>Aktif</Badge> },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "15",
+    data: { name: "Oki Setiawan", role: "Validator", status: "Nonaktif" },
+    columns: [
+      { value: "Oki Setiawan", td: "Oki Setiawan" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "16",
+    data: { name: "Putri Rahayu", role: "Surveyor", status: "Aktif" },
+    columns: [
+      { value: "Putri Rahayu", td: "Putri Rahayu" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "17",
+    data: { name: "Qori Fadilah", role: "Verifikator", status: "Pending" },
+    columns: [
+      { value: "Qori Fadilah", td: "Qori Fadilah" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "18",
+    data: { name: "Rian Hidayat", role: "Administrator", status: "Nonaktif" },
+    columns: [
+      { value: "Rian Hidayat", td: "Rian Hidayat" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "19",
+    data: { name: "Siti Nurhaliza", role: "Petugas Ukur", status: "Aktif" },
+    columns: [
+      { value: "Siti Nurhaliza", td: "Siti Nurhaliza" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "20",
+    data: { name: "Teguh Wibowo", role: "Validator", status: "Pending" },
+    columns: [
+      { value: "Teguh Wibowo", td: "Teguh Wibowo" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "21",
+    data: { name: "Umar Said", role: "Surveyor", status: "Nonaktif" },
+    columns: [
+      { value: "Umar Said", td: "Umar Said" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "22",
+    data: { name: "Vina Panduwinata", role: "Verifikator", status: "Aktif" },
+    columns: [
+      { value: "Vina Panduwinata", td: "Vina Panduwinata" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "23",
+    data: { name: "Wahyu Nugroho", role: "Administrator", status: "Pending" },
+    columns: [
+      { value: "Wahyu Nugroho", td: "Wahyu Nugroho" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "24",
+    data: { name: "Xavier Pratama", role: "Petugas Ukur", status: "Nonaktif" },
+    columns: [
+      { value: "Xavier Pratama", td: "Xavier Pratama" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "25",
+    data: { name: "Yusuf Mansur", role: "Validator", status: "Aktif" },
+    columns: [
+      { value: "Yusuf Mansur", td: "Yusuf Mansur" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "26",
+    data: { name: "Zainal Arifin", role: "Surveyor", status: "Pending" },
+    columns: [
+      { value: "Zainal Arifin", td: "Zainal Arifin" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "27",
+    data: { name: "Agus Setiawan", role: "Verifikator", status: "Nonaktif" },
+    columns: [
+      { value: "Agus Setiawan", td: "Agus Setiawan" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "28",
+    data: { name: "Bayu Wicaksono", role: "Administrator", status: "Aktif" },
+    columns: [
+      { value: "Bayu Wicaksono", td: "Bayu Wicaksono" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "29",
+    data: { name: "Cindy Claudia", role: "Petugas Ukur", status: "Pending" },
+    columns: [
+      { value: "Cindy Claudia", td: "Cindy Claudia" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "30",
+    data: { name: "Doni Salmanan", role: "Validator", status: "Nonaktif" },
+    columns: [
+      { value: "Doni Salmanan", td: "Doni Salmanan" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "31",
+    data: { name: "Endang Suherman", role: "Surveyor", status: "Aktif" },
+    columns: [
+      { value: "Endang Suherman", td: "Endang Suherman" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "32",
+    data: { name: "Firman Utina", role: "Verifikator", status: "Pending" },
+    columns: [
+      { value: "Firman Utina", td: "Firman Utina" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "33",
+    data: { name: "Guntur Triyoga", role: "Administrator", status: "Nonaktif" },
+    columns: [
+      { value: "Guntur Triyoga", td: "Guntur Triyoga" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "34",
+    data: { name: "Hesti Purwadinata", role: "Petugas Ukur", status: "Aktif" },
+    columns: [
+      { value: "Hesti Purwadinata", td: "Hesti Purwadinata" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "35",
+    data: { name: "Iman Santoso", role: "Validator", status: "Pending" },
+    columns: [
+      { value: "Iman Santoso", td: "Iman Santoso" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "36",
+    data: { name: "Julia Perez", role: "Surveyor", status: "Nonaktif" },
+    columns: [
+      { value: "Julia Perez", td: "Julia Perez" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "37",
+    data: { name: "Kevin Sanjaya", role: "Verifikator", status: "Aktif" },
+    columns: [
+      { value: "Kevin Sanjaya", td: "Kevin Sanjaya" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "38",
+    data: { name: "Lilis Karlina", role: "Administrator", status: "Pending" },
+    columns: [
+      { value: "Lilis Karlina", td: "Lilis Karlina" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "39",
+    data: { name: "Mirza Ghulam", role: "Petugas Ukur", status: "Nonaktif" },
+    columns: [
+      { value: "Mirza Ghulam", td: "Mirza Ghulam" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "40",
+    data: { name: "Nadia Vega", role: "Validator", status: "Aktif" },
+    columns: [
+      { value: "Nadia Vega", td: "Nadia Vega" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "41",
+    data: { name: "Onky Alexander", role: "Surveyor", status: "Pending" },
+    columns: [
+      { value: "Onky Alexander", td: "Onky Alexander" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "42",
+    data: { name: "Panji Trihatmodjo", role: "Verifikator", status: "Nonaktif" },
+    columns: [
+      { value: "Panji Trihatmodjo", td: "Panji Trihatmodjo" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "43",
+    data: { name: "Queen Latifah", role: "Administrator", status: "Aktif" },
+    columns: [
+      { value: "Queen Latifah", td: "Queen Latifah" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "44",
+    data: { name: "Raffi Ahmad", role: "Petugas Ukur", status: "Pending" },
+    columns: [
+      { value: "Raffi Ahmad", td: "Raffi Ahmad" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "45",
+    data: { name: "Sule Prikitiew", role: "Validator", status: "Nonaktif" },
+    columns: [
+      { value: "Sule Prikitiew", td: "Sule Prikitiew" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "46",
+    data: { name: "Taufik Hidayat", role: "Surveyor", status: "Aktif" },
+    columns: [
+      { value: "Taufik Hidayat", td: "Taufik Hidayat" },
+      { value: "Surveyor", td: "Surveyor" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "47",
+    data: { name: "Uut Permatasari", role: "Verifikator", status: "Pending" },
+    columns: [
+      { value: "Uut Permatasari", td: "Uut Permatasari" },
+      { value: "Verifikator", td: "Verifikator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
+    ],
+  },
+  {
+    id: "48",
+    data: { name: "Vicky Prasetyo", role: "Administrator", status: "Nonaktif" },
+    columns: [
+      { value: "Vicky Prasetyo", td: "Vicky Prasetyo" },
+      { value: "Administrator", td: "Administrator" },
+      {
+        value: "Nonaktif",
+        td: <Badge colorPalette={"gray"}>Nonaktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "49",
+    data: { name: "Wulan Guritno", role: "Petugas Ukur", status: "Aktif" },
+    columns: [
+      { value: "Wulan Guritno", td: "Wulan Guritno" },
+      { value: "Petugas Ukur", td: "Petugas Ukur" },
+      {
+        value: "Aktif",
+        td: <Badge colorPalette={"green"}>Aktif</Badge>,
+      },
+    ],
+  },
+  {
+    id: "50",
+    data: { name: "Yayan Ruhian", role: "Validator", status: "Pending" },
+    columns: [
+      { value: "Yayan Ruhian", td: "Yayan Ruhian" },
+      { value: "Validator", td: "Validator" },
+      {
+        value: "Pending",
+        td: <Badge colorPalette={"orange"}>Pending</Badge>,
+      },
     ],
   },
 ];
@@ -3585,7 +4107,7 @@ const DataTablePlaygroundDemo = ({
       : true;
   const rawPage = Number(props?.page) || 1;
   const page = Math.max(1, rawPage);
-  const pageSize = Math.max(1, Number(props?.pageSize) || 4);
+  const pageSize = Math.max(1, Number(props?.pageSize) || 20);
 
   // Handlers (sync page / pageSize back to playground knobs)
   const setPage = (nextPage: number) => {

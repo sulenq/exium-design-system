@@ -1,7 +1,6 @@
 // src/features/design-system-docs/components/design-system-docs.page.tsx
 
 import {
-  Button,
   IconButton,
 } from "@/design-system/components/button/ui/button";
 import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
@@ -17,8 +16,8 @@ import { DsDocsSidebar } from "@/features/design-system-docs/components/ds-docs-
 import { DemoPage } from "@/features/root/components/demo.page";
 import { COMPONENTS_REGISTRY } from "@/features/design-system-docs/config/components-registry";
 import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { MenuIcon, SparklesIcon } from "lucide-react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import { MenuIcon } from "lucide-react";
 import { useCallback } from "react";
 
 export const DesignSystemDocsPage = () => {
@@ -131,12 +130,6 @@ export const DesignSystemDocsPage = () => {
           </HStack>
 
           <HStack align={"center"} gap={"sm"}>
-            <Button asChild>
-              <Link to={"/demo"}>
-                <AppIcon icon={SparklesIcon} size={"sm"} />
-                {!isSmallViewport && " Full Demo Page"}
-              </Link>
-            </Button>
             <ColorModeToggleButton />
           </HStack>
         </HStack>

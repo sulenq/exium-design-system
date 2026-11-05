@@ -1,15 +1,12 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-
   "app": {
     "navs": {
       "home": "Beranda",
-
       "data_request": "Permintaan Data",
       "cart": "Keranjang",
       "my_data": "Data Saya",
       "transaction_history": "Riwayat Transaksi",
-
       "notification": "Notifikasi",
       "help": "Pusat Bantuan",
       "profile": "Profil"
@@ -27,7 +24,6 @@
       "profile": "Profil"
     }
   },
-
   "common": {
     "searching": "Sedang mencari",
     "type_to_find": "Ketik untuk mencari",
@@ -88,7 +84,8 @@
     "settings": "Pengaturan",
     "notifications": "Notifikasi",
     "dismiss_all": "Singkirkan semua",
-    "link_not_found": "Tautan tidak ditemukan"
+    "link_not_found": "Tautan tidak ditemukan",
+    "page_size": "Jumlah Data"
   },
   "action": {
     "actions": "Aksi",
@@ -193,7 +190,6 @@
     "not_found": "Sumber daya yang diminta tidak dapat ditemukan.",
     "bad_request": "Parameter permintaan tidak valid."
   },
-
   "file_input": {
     "replace_hint": "Mengunggah berkas baru akan menggantikan berkas saat ini.",
     "limit_reached": "Batas tercapai. Hapus berkas untuk mengunggah berkas baru.",
@@ -206,7 +202,6 @@
   "rich_text_editor": {
     "default_placeholder": "Mulai mengetik konten Anda di sini"
   },
-
   "offline_alert": {
     "title": "Tidak Ada Koneksi Internet",
     "description": "Tenang — kami akan otomatis terhubung kembali begitu jaringannya sudah pulih."
@@ -217,7 +212,6 @@
       "description": "Sepertinya halaman yang kamu cari sudah dipindah atau tidak pernah ada."
     }
   },
-
   "settings": {
     "index": {
       "title": "Pilih pengaturan",
@@ -289,7 +283,6 @@
       "description": "Informasi tentang aplikasi dan detail versi."
     }
   },
-
   "duration": {
     "unit_millisecond": "Milidetik",
     "unit_second": "Detik",
