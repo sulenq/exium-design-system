@@ -1,6 +1,6 @@
 // src/routes/design-system-v2/ui.tsx
 
-import { DesignSystemV2DocsPage } from "@/features/design-system-v2-docs/components/design-system-docs.page";
+import { DesignSystemDocsPage as DesignSystemV2DocsPage } from "@/features/design-system-v2-docs/components/design-system-docs.page";
 import type { DsDocsSearchParams } from "@/features/design-system-v2-docs/types/ds-docs-navs.type";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";

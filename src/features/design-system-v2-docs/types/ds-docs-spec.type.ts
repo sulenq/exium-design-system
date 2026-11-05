@@ -1,43 +1,47 @@
 // src/features/design-system-v2-docs/types/ds-docs-spec.type.ts
 
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 
 export type PropControlKind =
   | "text"
   | "number"
   | "boolean"
   | "select"
-  | "colorPalette";
+  | "color";
 
-export type ComponentPropSpec = {
+export type PropSpec = {
   name: string;
   type: string;
-  description: string;
-  defaultValue?: unknown;
   required?: boolean;
+  defaultValue?: string | number | boolean;
+  description: string;
   controlKind?: PropControlKind;
-  options?: readonly (string | number)[];
-};
-
-export type A11yGuidelineSpec = {
-  keyboardNav?: { key: string; action: string }[];
-  ariaGuidelines?: { attribute: string; description: string }[];
-  notes?: string;
+  options?: (string | number)[];
 };
 
 export type ComponentDocSpec = {
-  id: string;
+  key: string;
   title: string;
-  description: string;
   category: string;
+  description: string;
   importPath: string;
-  component: React.ComponentType<Record<string, unknown>>;
+  component: ElementType;
+  propsSpec: PropSpec[];
   defaultProps: Record<string, unknown>;
-  propsSpec: ComponentPropSpec[];
-  a11y?: A11yGuidelineSpec;
   renderPlayground?: (
-    propsState: Record<string, unknown>,
-    onPropChange: (name: string, value: unknown) => void,
+    props: Record<string, unknown>,
+    onPropChange?: (name: string, value: unknown) => void,
   ) => ReactNode;
+};
+
+export type ComponentPlaygroundContainerProps = {
+  children: ReactNode;
+  minH?: string | number;
+};
+
+export type TableDemoItem = {
+  name: string;
+  role: string;
+  status: string;
 };
 

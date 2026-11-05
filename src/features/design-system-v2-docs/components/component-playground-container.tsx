@@ -1,24 +1,29 @@
 // src/features/design-system-v2-docs/components/component-playground-container.tsx
 
 import { Box } from "@/design-system/components/layout/ui/box";
-import type { PropsWithChildren } from "react";
+import type { ComponentPlaygroundContainerProps } from "@/features/design-system-v2-docs/types/ds-docs-spec.type";
 
-export const ComponentPlaygroundContainer = ({ children }: PropsWithChildren) => {
+export const ComponentPlaygroundContainer = (
+  props: ComponentPlaygroundContainerProps,
+) => {
+  // Props
+  const { children, minH = "220px" } = props;
+
   return (
     <Box
-      p={8}
-      minH={"180px"}
-      rounded={"md"}
+      p={6}
+      rounded={"lg"}
       border={"1px solid"}
       borderColor={"border.subtle"}
-      bg={"bg.panel"}
+      bg={"bg.body"}
+      minH={minH}
       display={"flex"}
       alignItems={"center"}
       justifyContent={"center"}
-      position={"relative"}
+      w={"full"}
+      transition={"background-color 0.2s ease, border-color 0.2s ease"}
     >
       {children}
     </Box>
   );
 };
-
