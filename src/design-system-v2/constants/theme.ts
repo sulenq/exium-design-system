@@ -607,16 +607,16 @@ export const theme = {
 
     fonts: {
       heading: {
-        value: "'Host Grotesk Variable', sans-serif",
+        value: "'Nunito Sans Variable', sans-serif",
       },
       body: {
-        value: "'Host Grotesk Variable', sans-serif",
+        value: "'Nunito Sans Variable', sans-serif",
       },
       number: {
-        value: "'Host Grotesk Variable', sans-serif",
+        value: "'Nunito Sans Variable', sans-serif",
       },
 
-      hostGrotesk: { value: "'Host Grotesk Variable', sans-serif" },
+      nunitoSans: { value: "'Nunito Sans Variable', sans-serif" },
       jakarta: { value: "'Plus Jakarta Sans Variable', sans-serif" },
       figtree: { value: "'Figtree Variable', sans-serif" },
       ubuntu: { value: "'Ubuntu', sans-serif" },
