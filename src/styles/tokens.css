@@ -368,9 +368,10 @@
   --colors-pink-800: #682747;
   --colors-pink-900: #402431;
   --colors-pink-950: #2f1c25;
-  --font-heading: 'Plus Jakarta Sans Variable', sans-serif;
-  --font-body: 'Plus Jakarta Sans Variable', sans-serif;
-  --font-number: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-heading: 'Host Grotesk Variable', sans-serif;
+  --font-body: 'Host Grotesk Variable', sans-serif;
+  --font-number: 'Host Grotesk Variable', sans-serif;
+  --font-hostGrotesk: 'Host Grotesk Variable', sans-serif;
   --font-jakarta: 'Plus Jakarta Sans Variable', sans-serif;
   --font-figtree: 'Figtree Variable', sans-serif;
   --font-ubuntu: 'Ubuntu', sans-serif;
@@ -1310,6 +1311,7 @@
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-number: var(--font-number);
+  --font-hostGrotesk: var(--font-hostGrotesk);
   --font-jakarta: var(--font-jakarta);
   --font-figtree: var(--font-figtree);
   --font-ubuntu: var(--font-ubuntu);
