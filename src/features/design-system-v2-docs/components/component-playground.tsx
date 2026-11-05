@@ -42,8 +42,8 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
     <VStack align={"stretch"} gap={6} w={"full"}>
       {/* Overview Header */}
       <VStack align={"start"} gap={2}>
-        <HStack gap={2}>
-          <P fontSize={"2xl"} fontWeight={"bold"}>
+        <HStack gap={2} align={"center"}>
+          <P fontSize={"3xl"} fontWeight={"bold"}>
             {spec.title}
           </P>
           <Badge variant={"subtle"}>{spec.category}</Badge>

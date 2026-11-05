@@ -1,8 +1,6 @@
 // src/features/design-system-v2-docs/components/design-system-v2-docs.page.tsx
 
-import {
-  IconButton,
-} from "@/design-system/components/button/ui/button";
+import { IconButton } from "@/design-system/components/button/ui/button";
 import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
 import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
 import { Box } from "@/design-system/components/layout/ui/box";

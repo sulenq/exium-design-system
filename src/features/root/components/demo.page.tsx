@@ -160,6 +160,7 @@ const DemoSectionHeader = (props: DemoSectionHeaderProps) => {
     <VStack align={"center"} gap={1} w={"full"} pb={2}>
       <HStack align={"center"} gap={3}>
         <AppIcon icon={icon} size={"xl"} color={"fg.solid"} />
+
         <P
           textAlign={"center"}
           fontSize={"2xl"}

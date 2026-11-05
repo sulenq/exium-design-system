@@ -368,10 +368,9 @@
   --colors-pink-800: #682747;
   --colors-pink-900: #402431;
   --colors-pink-950: #2f1c25;
-  --font-heading: 'Nunito Sans Variable', sans-serif;
-  --font-body: 'Nunito Sans Variable', sans-serif;
-  --font-number: 'Nunito Sans Variable', sans-serif;
-  --font-nunitoSans: 'Nunito Sans Variable', sans-serif;
+  --font-heading: 'Wix Madefor Text Variable', sans-serif;
+  --font-body: 'Wix Madefor Text Variable', sans-serif;
+  --font-number: 'Wix Madefor Text Variable', sans-serif;
   --font-jakarta: 'Plus Jakarta Sans Variable', sans-serif;
   --font-figtree: 'Figtree Variable', sans-serif;
   --font-ubuntu: 'Ubuntu', sans-serif;
@@ -1311,7 +1310,6 @@
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
   --font-number: var(--font-number);
-  --font-nunitoSans: var(--font-nunitoSans);
   --font-jakarta: var(--font-jakarta);
   --font-figtree: var(--font-figtree);
   --font-ubuntu: var(--font-ubuntu);

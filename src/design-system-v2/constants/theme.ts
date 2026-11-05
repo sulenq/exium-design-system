@@ -607,16 +607,15 @@ export const theme = {
 
     fonts: {
       heading: {
-        value: "'Nunito Sans Variable', sans-serif",
+        value: "'Wix Madefor Text Variable', sans-serif",
       },
       body: {
-        value: "'Nunito Sans Variable', sans-serif",
+        value: "'Wix Madefor Text Variable', sans-serif",
       },
       number: {
-        value: "'Nunito Sans Variable', sans-serif",
+        value: "'Wix Madefor Text Variable', sans-serif",
       },
 
-      nunitoSans: { value: "'Nunito Sans Variable', sans-serif" },
       jakarta: { value: "'Plus Jakarta Sans Variable', sans-serif" },
       figtree: { value: "'Figtree Variable', sans-serif" },
       ubuntu: { value: "'Ubuntu', sans-serif" },
