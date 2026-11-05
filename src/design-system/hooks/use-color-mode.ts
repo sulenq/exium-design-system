@@ -1,6 +1,6 @@
 // src/design-system/hooks/use-color-mode.ts
 
-import { useTheme } from "@/hooks/use-theme";
+import { useTheme } from "@/design-system-v2/hooks/use-theme";
 import type {
   ColorMode,
   UseColorMode,

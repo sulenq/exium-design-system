@@ -2,8 +2,8 @@
 
 "use client";
 
-import { ThemeProvider } from "@/components/theme/theme-provider";
-import type { ThemeProviderProps } from "@/hooks/types/use-theme.type";
+import { ThemeProvider } from "@/design-system-v2/theme/theme-provider";
+import type { ThemeProviderProps } from "@/design-system-v2/hooks/types/use-theme.type";
 
 export function ColorModeProvider(props: ThemeProviderProps) {
   const { children, ...restProps } = props;

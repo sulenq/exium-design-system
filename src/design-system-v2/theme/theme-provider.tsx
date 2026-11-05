@@ -1,11 +1,11 @@
-// src/components/theme/theme-provider.tsx
+// src/design-system-v2/theme/theme-provider.tsx
 
 import { createContext, useContext, useEffect, useState } from "react";
 import type {
   Theme,
   ThemeProviderProps,
   ThemeProviderState,
-} from "@/hooks/types/use-theme.type";
+} from "@/design-system-v2/hooks/types/use-theme.type";
 
 const initialState: ThemeProviderState = {
   theme: "system",

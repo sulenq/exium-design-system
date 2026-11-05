@@ -11,12 +11,11 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "components": "@/design-system-v2/components",
+    "utils": "@/shared/libs/tailwind/tailwind-utils",
+    "ui": "@/design-system-v2/components",
+    "lib": "@/shared/libs",
+    "hooks": "@/design-system-v2/hooks"
   },
   "iconLibrary": "lucide"
 }
-
