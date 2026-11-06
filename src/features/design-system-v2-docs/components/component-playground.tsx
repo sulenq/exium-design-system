@@ -90,7 +90,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
       {/* Controls & Props Spec Tabs (Default variant, tanpa Generated Code) */}
       <Tabs.Root defaultValue={"controls"}>
         <Tabs.List>
-          <Tabs.Trigger value={"controls"}>{"Playground Knobs"}</Tabs.Trigger>
+          <Tabs.Trigger value={"controls"}>{"Playground"}</Tabs.Trigger>
           <Tabs.Trigger value={"props"}>{"Props Specs"}</Tabs.Trigger>
           <Tabs.Trigger value={"a11y"}>{"A11y"}</Tabs.Trigger>
         </Tabs.List>
@@ -100,7 +100,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
             {spec.propsSpec
               .filter((prop) => prop.controlKind !== undefined)
               .map((prop) => (
-                <Box key={prop.name} p={3} rounded={"md"} bg={"bg.subtle"}>
+                <Box key={prop.name}>
                   <P fontSize={"xs"} fontWeight={"bold"} mb={2}>
                     {prop.name}
                   </P>
