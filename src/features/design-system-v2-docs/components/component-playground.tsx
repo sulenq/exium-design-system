@@ -32,8 +32,40 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
 
   const ComponentToRender = spec.component;
 
-  const handleCopyImport = () => {
-    navigator.clipboard.writeText(spec.importPath);
+  const generateUsageCode = () => {
+    const propStrings = Object.entries(propsState)
+      .filter(([key, val]) => {
+        if (key === "children") return false;
+        if (val === undefined || val === null || val === false) return false;
+        // Don't print if it equals the default
+        if (spec.defaultProps[key] === val && val !== true) return false;
+        return true;
+      })
+      .map(([key, val]) => {
+        if (typeof val === "boolean" && val === true) return `${key}={true}`;
+        if (typeof val === "string") return `${key}={"${val}"}`;
+        return `${key}={${JSON.stringify(val)}}`;
+      })
+      .join(" ");
+
+    const componentName = spec.title.split(" ")[0];
+    const propsPrefix = propStrings ? ` ${propStrings}` : "";
+    const childrenVal = propsState.children;
+
+    let jsxCode = `<${componentName}${propsPrefix} />`;
+    if (
+      childrenVal !== undefined &&
+      childrenVal !== null &&
+      childrenVal !== ""
+    ) {
+      jsxCode = `<${componentName}${propsPrefix}>\n  {"${String(childrenVal)}"}\n</${componentName}>`;
+    }
+
+    return `${spec.importPath}\n\n${jsxCode}`;
+  };
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(generateUsageCode());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -51,24 +83,33 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         <P color={"fg.muted"}>{spec.description}</P>
       </VStack>
 
-      {/* Import Path (Tanpa border, dengan action copy langsung) */}
+      {/* Code Card (Title Code, Import + Live Component Snippet, Dynamic & Clean) */}
       <HStack
         p={3}
         rounded={"md"}
         bg={"bg.subtle"}
-        align={"center"}
+        align={"flex-start"}
         justify={"space-between"}
       >
-        <VStack align={"start"} gap={0.5}>
+        <VStack align={"start"} gap={1} flex={1} overflow={"hidden"}>
           <P fontSize={"xs"} color={"fg.subtle"} fontWeight={"semibold"}>
-            {"IMPORT PATH"}
+            {"CODE"}
           </P>
-          <P fontFamily={"mono"} fontSize={"sm"} color={"colorPalette.fg"}>
-            {spec.importPath}
-          </P>
+          <pre
+            style={{
+              margin: 0,
+              fontFamily: "monospace",
+              fontSize: "13px",
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+              color: "inherit",
+            }}
+          >
+            {generateUsageCode()}
+          </pre>
         </VStack>
 
-        <Button size={"xs"} variant={"ghost"} onClick={handleCopyImport}>
+        <Button size={"xs"} variant={"ghost"} onClick={handleCopyCode}>
           {copied ? (
             <AppIcon icon={CheckIcon} size={"sm"} />
           ) : (
