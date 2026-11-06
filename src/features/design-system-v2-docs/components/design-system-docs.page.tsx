@@ -65,8 +65,10 @@ export const DesignSystemDocsPage = () => {
 
   return (
     <HStack
-      h={"100dvh"}
+      pos={"fixed"}
+      inset={0}
       w={"full"}
+      h={"full"}
       gap={0}
       // bg={"bg.canvas"}
       align={"stretch"}
@@ -99,7 +101,15 @@ export const DesignSystemDocsPage = () => {
       )}
 
       {/* Main Content Area */}
-      <VStack flex={1} h={"full"} overflow={"hidden"} align={"stretch"} gap={0}>
+      <VStack
+        flex={1}
+        h={"full"}
+        minW={0}
+        minH={0}
+        overflow={"hidden"}
+        align={"stretch"}
+        gap={0}
+      >
         {/* Header Bar */}
         <HStack
           flexShrink={0}
@@ -133,7 +143,14 @@ export const DesignSystemDocsPage = () => {
         </HStack>
 
         {/* Content Body Scroll Area */}
-        <Box flex={1} overflowY={"auto"} p={4}>
+        <Box
+          flex={1}
+          minW={0}
+          minH={0}
+          overflowY={"auto"}
+          overscrollBehavior={"contain"}
+          p={4}
+        >
           {activeNavKey === "overview" || !currentSpec ? (
             <DemoPage />
           ) : (
