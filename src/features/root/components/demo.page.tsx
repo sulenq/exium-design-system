@@ -813,7 +813,9 @@ const ToastCard = () => {
 const ModalCard = () => {
   return (
     <DemoCard title={"Modal"} icon={EyeIcon}>
-      <OModal />
+      <Center w={"full"} py={2}>
+        <OModal />
+      </Center>
     </DemoCard>
   );
 };
@@ -821,7 +823,9 @@ const ModalCard = () => {
 const DialogCard = () => {
   return (
     <DemoCard title={"Dialog"} icon={EyeIcon}>
-      <ODialog />
+      <Center w={"full"} py={2}>
+        <ODialog />
+      </Center>
     </DemoCard>
   );
 };
@@ -829,7 +833,9 @@ const DialogCard = () => {
 const DrawerCard = () => {
   return (
     <DemoCard title={"Drawer"} icon={EyeIcon}>
-      <ODrawer />
+      <Center w={"full"} py={2}>
+        <ODrawer />
+      </Center>
     </DemoCard>
   );
 };
@@ -1054,13 +1060,18 @@ const OModal = () => {
 
       <Modal.Content>
         <Modal.Header>
-          <Modal.Title w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
+          <Modal.Title
+            w={"full"}
+            fontSize={"xl"}
+            fontWeight={"semibold"}
+            textAlign={"center"}
+          >
             Modal Header
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <P>
+          <P textAlign={"center"}>
             Modal adalah komponen dinamis yang merender dialog pada layar lebar
             dan drawer pada layar seluler secara otomatis.
           </P>
@@ -1092,12 +1103,17 @@ const ODialog = () => {
 
       <Dialog.Content>
         <Dialog.Header>
-          <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
+          <P
+            w={"full"}
+            fontSize={"xl"}
+            fontWeight={"semibold"}
+            textAlign={"center"}
+          >
             Konfirmasi
           </P>
         </Dialog.Header>
         <Dialog.Body>
-          <P>
+          <P textAlign={"center"}>
             Apakah Anda yakin ingin memproses tindakan ini? Tindakan ini tidak dapat dibatalkan.
           </P>
         </Dialog.Body>
@@ -1134,14 +1150,19 @@ const ODrawer = () => {
 
       <Drawer.Content>
         <Drawer.Header>
-          <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
+          <P
+            w={"full"}
+            fontSize={"xl"}
+            fontWeight={"semibold"}
+            textAlign={"center"}
+          >
             Drawer Panel
           </P>
         </Drawer.Header>
 
         <Drawer.Body>
-          <VStack align={"start"} gap={4}>
-            <P>
+          <VStack align={"center"} gap={4}>
+            <P textAlign={"center"}>
               Drawer adalah panel samping untuk fokus pengguna pada konfigurasi atau form panjang.
             </P>
           </VStack>
