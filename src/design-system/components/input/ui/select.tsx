@@ -42,7 +42,7 @@ export default function SelectInput(props: SelectProps) {
     placeholder = "Select option",
     clearable = true,
     size = "md",
-    iconSize = "md",
+    iconSize = "sm",
     portalled = true,
     portalRef,
     suffixLabel,
@@ -220,7 +220,6 @@ export default function SelectInput(props: SelectProps) {
             <AppIcon
               icon={XIcon}
               size={iconSize}
-              strokeWidth={2}
               cursor={"pointer"}
               color={props?.color ?? "fg"}
               mr={"-2px"}
