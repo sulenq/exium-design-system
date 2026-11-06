@@ -154,6 +154,8 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
         maxFiles={effectiveMaxFiles}
         maxFileSize={maxFileSize}
         disabled={disabled || effectiveMaxFiles <= 0}
+        w={"full"}
+        alignItems={"stretch"}
         onFileReject={(details) => {
           filesToRestoreRef.current = acceptedFilesRef.current;
           setResetKey((k) => k + 1);
@@ -296,12 +298,13 @@ const FileInputInner = (props: FileinputInnerProps) => {
     <VStack
       gap={2}
       w={"full"}
+      align={"stretch"}
       flex={isDropzoneFlex ? (dropzoneProps?.flex ?? 1) : undefined}
       h={isDropzoneFlex ? (dropzoneProps?.h ?? "full") : undefined}
     >
       {/* Existing file list */}
       {!isEmptyArray(existingFiles) && (
-        <VStack gap={2}>
+        <VStack gap={2} w={"full"} align={"stretch"}>
           {existingFiles.map((file) => (
             <ExistingFileItem
               key={file.id}
@@ -320,6 +323,7 @@ const FileInputInner = (props: FileinputInnerProps) => {
       {showInputComponent ? (
         <VStack
           w={"full"}
+          align={"stretch"}
           flex={isDropzoneFlex ? (dropzoneProps?.flex ?? 1) : undefined}
           h={isDropzoneFlex ? (dropzoneProps?.h ?? "full") : undefined}
         >
@@ -340,13 +344,15 @@ const FileInputInner = (props: FileinputInnerProps) => {
           {resolvedVariant === "dropzone" && (
             <FileUpload.Dropzone
               w={"full"}
-              minH={"220px"}
+              alignSelf={"stretch"}
+              minH={"180px"}
               p={4}
               bg={"bg.body"}
               border={"2px dashed"}
               borderColor={dragging ? "fg" : "border"}
               rounded={theme.radii.component}
               cursor={"pointer"}
+              boxSizing={"border-box"}
               flex={isDropzoneFlex ? (dropzoneProps?.flex ?? 1) : undefined}
               h={isDropzoneFlex ? (dropzoneProps?.h ?? "full") : undefined}
               _hover={{
@@ -355,8 +361,12 @@ const FileInputInner = (props: FileinputInnerProps) => {
               {...dropzoneProps}
             >
               <FileUpload.DropzoneContent
-                gap={4}
-                mt={1}
+                w={"full"}
+                gap={3}
+                display={"flex"}
+                flexDirection={"column"}
+                alignItems={"center"}
+                justifyContent={"center"}
                 transform={dragging ? "translateY(25%)" : ""}
                 transition={"200ms"}
               >

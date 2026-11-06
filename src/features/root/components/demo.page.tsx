@@ -17,13 +17,11 @@ import { DataViewTable } from "@/design-system/components/data-display/ui/data-v
 import { Accordion } from "@/design-system/components/disclosure/ui/accordion";
 import { Breadcrumb } from "@/design-system/components/disclosure/ui/breadcrumb";
 import { Carousel } from "@/design-system/components/disclosure/ui/carousel";
-import { Collapsible } from "@/design-system/components/disclosure/ui/collapsible";
 import { Steps } from "@/design-system/components/disclosure/ui/steps";
 import { Tabs } from "@/design-system/components/disclosure/ui/tabs";
 import type { EmojiVariant } from "@/design-system/components/emoji/types/emoji.type";
 import { Emoji } from "@/design-system/components/emoji/ui/emoji";
 import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
-import { DotIndicator } from "@/design-system/components/feedback/ui/indicator";
 import {
   Progress,
   ProgressCircle,
@@ -39,11 +37,9 @@ import { StateNoResult } from "@/design-system/components/feedback/ui/state.no-r
 import { StateRetry } from "@/design-system/components/feedback/ui/state.retry";
 import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
 import { useExistingFiles } from "@/design-system/components/input/hooks/use-existing-files";
-import type { FieldProps } from "@/design-system/components/input/types/field.type";
 import { Checkbox } from "@/design-system/components/input/ui/checkbox";
 import { DateInput } from "@/design-system/components/input/ui/date-input";
 import { Field } from "@/design-system/components/input/ui/field";
-import { Fieldset } from "@/design-system/components/input/ui/fieldset";
 import { FileInput } from "@/design-system/components/input/ui/file-input";
 import { FocusSelectInput } from "@/design-system/components/input/ui/focus-select";
 import { Input } from "@/design-system/components/input/ui/input";
@@ -67,8 +63,6 @@ import {
 } from "@/design-system/components/layout/ui/center";
 import { Container } from "@/design-system/components/layout/ui/container";
 import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
-import { Group } from "@/design-system/components/layout/ui/group";
 import { Splitter } from "@/design-system/components/layout/ui/splitter";
 import { Image } from "@/design-system/components/media/ui/image";
 import { ExternalLink } from "@/design-system/components/navigation/ui/link";
@@ -77,21 +71,17 @@ import { Dialog } from "@/design-system/components/overlay/ui/dialog";
 import { Drawer } from "@/design-system/components/overlay/ui/drawer";
 import { Modal } from "@/design-system/components/overlay/ui/modal";
 import { toast } from "@/design-system/components/toast";
-import { Badge } from "@/design-system/components/typography/ui/badge";
 import { P, TNum } from "@/design-system/components/typography/ui/p";
 import { RichTextEditorPresetEssential } from "@/design-system/components/typography/ui/rich-text-editor.preset";
 import { Span } from "@/design-system/components/typography/ui/span";
 import { DownloadTrigger } from "@/design-system/components/utilities/ui/download-trigger";
 import { useSplitterStore } from "@/design-system/stores/splitter-store";
-import { useThemeStore } from "@/design-system/stores/theme-store";
 import type {
   DemoPaletteItem,
-  DemoSectionHeaderProps,
 } from "@/features/root/types/demo.type";
 import { SettingsTrigger } from "@/features/settings/components/settings";
 import { getLocale, getLocaleLabel } from "@/shared/libs/i18n";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
-import { isEmptyArray } from "@/shared/utils/data/array";
 import {
   IconArrowRight,
   IconDownload,
@@ -104,12 +94,8 @@ import {
 import {
   BellIcon,
   CheckCircleIcon,
-  CheckIcon,
-  ChevronDownIcon,
   CogIcon,
   CompassIcon,
-  CopyIcon,
-  EditIcon,
   EyeIcon,
   FolderIcon,
   LayersIcon,
@@ -120,21 +106,54 @@ import {
   SparklesIcon,
   TableIcon,
   TextCursorInputIcon,
+  EditIcon,
   TrashIcon,
-  TypeIcon,
   Undo2Icon,
-  UndoIcon,
+  TypeIcon,
+  UploadIcon,
   UserIcon,
   WrenchIcon,
 } from "lucide-react";
-import { useState } from "react";
-import { useForm, type UseFormRegisterReturn } from "react-hook-form";
+import { useState, type ReactNode } from "react";
+import { useForm } from "react-hook-form";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
+
+// ---------------------------------------------------------------------------
+// Card Shell (Atomic Container for each component)
+// ---------------------------------------------------------------------------
+
+const DemoCard = ({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon?: typeof MousePointerClickIcon;
+  children: ReactNode;
+}) => {
+  return (
+    <Container.Root w={"full"}>
+      <Container.Body gap={3} p={4} align={"start"}>
+        <HStack align={"center"} gap={2} w={"full"} pb={1}>
+          {icon && <AppIcon icon={icon} size={"sm"} color={"colorPalette.fg"} />}
+          <P fontSize={"sm"} fontWeight={"semibold"}>
+            {title}
+          </P>
+        </HStack>
+        <Box w={"full"}>{children}</Box>
+      </Container.Body>
+    </Container.Root>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Main Demo Page
+// ---------------------------------------------------------------------------
 
 export const DemoPage = () => {
   return (
     <VStack align={"stretch"} gap={4} w={"full"}>
-      {/* Masonry Layout for Modular Cards */}
+      {/* Masonry Layout: Dump all individual components without grouping */}
       <Box
         w={"full"}
         css={{
@@ -154,17 +173,50 @@ export const DemoPage = () => {
           },
         }}
       >
-        <IntegratedFeatures />
-        <Branding />
-        <Typography />
-        <Navigation />
-        <Buttons />
-        <Toast />
-        <Overlay />
-        <Feedback />
-        <Inputs />
-        <Disclosure />
-        <Utilities />
+        <ButtonCard />
+        <IconButtonCard />
+        <ButtonGroupCard />
+        <InputCard />
+        <PasswordInputCard />
+        <SearchInputCard />
+        <NumberInputCard />
+        <SteppedNumberInputCard />
+        <DateInputCard />
+        <SelectCard />
+        <FocusSelectCard />
+        <PinInputCard />
+        <CheckboxCard />
+        <SwitchCard />
+        <RadioInputCard />
+        <RadioCardInputCard />
+        <SliderCard />
+        <TextareaCard />
+        <FileInputDropzoneCard />
+        <FileInputButtonCard />
+        <RichTextEditorCard />
+        <ProgressCard />
+        <ProgressCircleCard />
+        <SkeletonCard />
+        <StateNoDataCard />
+        <StateAccessDeniedCard />
+        <StateNoResultCard />
+        <StateRetryCard />
+        <EmojiCard />
+        <ToastCard />
+        <ModalCard />
+        <DialogCard />
+        <DrawerCard />
+        <AccordionCard />
+        <TabsCard />
+        <StepsCard />
+        <BreadcrumbCard />
+        <CarouselCard />
+        <ExternalLinkCard />
+        <TypographyCard />
+        <TabularNumCard />
+        <BrandingCard />
+        <ColorModeAndLocaleCard />
+        <UtilitiesCard />
       </Box>
 
       {/* Full-width expansive sections */}
@@ -175,623 +227,365 @@ export const DemoPage = () => {
   );
 };
 
-const DemoSectionHeader = (props: DemoSectionHeaderProps) => {
-  // Props
-  const { title, icon, description } = props;
+// ---------------------------------------------------------------------------
+// Atomic Component Cards
+// ---------------------------------------------------------------------------
 
+const ButtonCard = () => {
   return (
-    <VStack align={"start"} gap={1} w={"full"} pb={2}>
-      <HStack align={"center"} gap={2.5}>
-        <AppIcon icon={icon} size={"md"} color={"colorPalette.fg"} />
-
-        <P fontSize={"lg"} fontWeight={"semibold"} letterSpacing={"tight"}>
-          {title}
-        </P>
+    <DemoCard title={"Button"} icon={MousePointerClickIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
+        <Button primary={true}>Primary</Button>
+        <Button variant={"surface"}>Surface</Button>
+        <Button variant={"subtle"}>Subtle</Button>
+        <Button variant={"outline"}>Outline</Button>
+        <Button>Ghost</Button>
       </HStack>
-
-      {description && (
-        <P fontSize={"xs"} color={"fg.subtle"}>
-          {description}
-        </P>
-      )}
-    </VStack>
+    </DemoCard>
   );
 };
 
-const IntegratedFeatures = () => {
+const IconButtonCard = () => {
+  return (
+    <DemoCard title={"IconButton"} icon={MousePointerClickIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
+        <IconButton primary={true}>
+          <AppIcon icon={IconPlus} />
+        </IconButton>
+        <IconButton variant={"surface"}>
+          <AppIcon icon={IconDownload} />
+        </IconButton>
+        <IconButton variant={"subtle"}>
+          <AppIcon icon={IconFilter2} />
+        </IconButton>
+        <IconButton variant={"outline"}>
+          <AppIcon icon={IconTrash} />
+        </IconButton>
+      </HStack>
+    </DemoCard>
+  );
+};
+
+const ButtonGroupCard = () => {
+  return (
+    <DemoCard title={"ButtonGroup"} icon={MousePointerClickIcon}>
+      <VStack align={"start"} gap={2}>
+        <ButtonGroup attached={true}>
+          <Button variant={"outline"}>Left</Button>
+          <Button variant={"outline"}>Middle</Button>
+          <Button variant={"outline"}>Right</Button>
+        </ButtonGroup>
+      </VStack>
+    </DemoCard>
+  );
+};
+
+const ColorModeAndLocaleCard = () => {
+  // Hooks
   const { setLocale } = useLocale();
 
   return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Integrated Features"}
-          icon={CogIcon}
-          description={
-            "Pengaturan tema, toggle mode gelap/terang, dan pergantian bahasa"
-          }
-        />
+    <DemoCard title={"Theme & Locale"} icon={CogIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
+        <SettingsTrigger modalKey={"settings"} w={"fit"}>
+          <IconButton>
+            <AppIcon icon={CogIcon} strokeWidth={1.3} size={"lg"} />
+          </IconButton>
+        </SettingsTrigger>
 
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
-          <SettingsTrigger modalKey={"settings"} w={"fit"}>
-            <IconButton>
-              <AppIcon icon={CogIcon} strokeWidth={1.3} size={"lg"} />
-            </IconButton>
-          </SettingsTrigger>
+        <ColorModeToggleButton />
 
-          <ColorModeToggleButton />
-
-          <Button
-            onClick={() => {
-              setLocale(getLocale() === "id" ? "en" : "id");
-            }}
-          >
-            <AppIcon icon={IconLanguage} />
-            {getLocaleLabel(getLocale())}
-          </Button>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
+        <Button
+          onClick={() => {
+            setLocale(getLocale() === "id" ? "en" : "id");
+          }}
+        >
+          <AppIcon icon={IconLanguage} />
+          {getLocaleLabel(getLocale())}
+        </Button>
+      </HStack>
+    </DemoCard>
   );
 };
 
-const Branding = () => {
+const BrandingCard = () => {
   return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Branding"}
-          icon={SparklesIcon}
-          description={
-            "Identitas visual aplikasi, logo resmi, dan watermark ATR/BPN"
-          }
-        />
-
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
-          <Logo />
-
-          <BrandWatermark />
-        </HStack>
-      </Container.Body>
-    </Container.Root>
+    <DemoCard title={"Logo & Watermark"} icon={SparklesIcon}>
+      <VStack align={"start"} gap={3}>
+        <Logo />
+        <BrandWatermark />
+      </VStack>
+    </DemoCard>
   );
 };
 
-const Typography = () => {
+const TypographyCard = () => {
+  return (
+    <DemoCard title={"Typography (P)"} icon={TypeIcon}>
+      <VStack align={"start"} gap={1}>
+        <P color={"fg.solid"}>{"Solid text color"}</P>
+        <P color={"fg.emphasized"}>{"Emphasized text color"}</P>
+        <P color={"fg.muted"}>{"Muted text color"}</P>
+        <P color={"fg.subtle"}>{"Subtle text color"}</P>
+      </VStack>
+    </DemoCard>
+  );
+};
+
+const TabularNumCard = () => {
+  // States
   const [tnum, setTnum] = useState<number>(10);
 
   return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Typography"}
-          icon={TypeIcon}
-          description={
-            "Hierarki tipografi, color weights, dan angka tabular konsisten"
-          }
-        />
+    <DemoCard title={"Tabular Num (TNum)"} icon={TypeIcon}>
+      <HStack align={"center"} gap={4}>
+        <VStack align={"start"} gap={1}>
+          <HStack align={"center"} justify={"space-between"} gap={3}>
+            <P fontSize={"sm"}>Normal num:</P>
+            <P fontSize={"sm"}>{tnum}</P>
+          </HStack>
 
-        <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
-          <VStack align={"start"}>
-            <P color={"fg.solid"}>{"Default"}</P>
-            <P color={"fg.emphasized"}>{"Emphasized"}</P>
-            <P color={"fg.muted"}>{"Muted"}</P>
-            <P color={"fg.subtle"}>{"Subtle"}</P>
-          </VStack>
-
-          <VStack align={"start"} gap={2}>
-            <HStack align={"center"} gap={4}>
-              <VStack align={"start"}>
-                <HStack align={"center"} justify={"space-between"} gap={2}>
-                  <P>Normal text</P>
-                  <P>{tnum}</P>
-                </HStack>
-
-                <HStack align={"center"} justify={"space-between"} gap={2}>
-                  <P>Tabular num</P>
-                  <P>
-                    <TNum>{tnum}</TNum>
-                  </P>
-                </HStack>
-              </VStack>
-
-              <Button
-                size={"xs"}
-                variant={"outline"}
-                onClick={() => setTnum((p) => p + 1)}
-              >
-                + 1
-              </Button>
-            </HStack>
-
-            <P fontSize={"xs"} color={"fg.subtle"} w={"120px"}>
-              *Tabular num has consistent width per char
-            </P>
-          </VStack>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
-  );
-};
-
-const COLOR_PALETTES: DemoPaletteItem[] = [
-  { palette: "neutral", label: "Neutral", category: "Monochrome" },
-  { palette: "grey", label: "Grey", category: "Monochrome" },
-  { palette: "cream", label: "Cream", category: "Earth & Warm" },
-  { palette: "caramel", label: "Caramel", category: "Earth & Warm" },
-  { palette: "mocha", label: "Mocha", category: "Earth & Warm" },
-  { palette: "brown", label: "Brown", category: "Earth & Warm" },
-  { palette: "maroon", label: "Maroon", category: "Red & Warm" },
-  { palette: "red", label: "Red", category: "Red & Warm" },
-  { palette: "salmon", label: "Salmon", category: "Red & Warm" },
-  {
-    palette: "pastelOrange",
-    label: "Pastel Orange",
-    category: "Orange & Yellow",
-  },
-  { palette: "orange", label: "Orange", category: "Orange & Yellow" },
-  { palette: "gold", label: "Gold", category: "Orange & Yellow" },
-  { palette: "yellow", label: "Yellow", category: "Orange & Yellow" },
-  { palette: "lime", label: "Lime", category: "Green & Teal" },
-  { palette: "olive", label: "Olive", category: "Green & Teal" },
-  { palette: "green", label: "Green", category: "Green & Teal" },
-  { palette: "jade", label: "Jade", category: "Green & Teal" },
-  { palette: "teal", label: "Teal", category: "Green & Teal" },
-  { palette: "tealBlue", label: "Teal Blue", category: "Cyan & Blue" },
-  { palette: "cyan", label: "Cyan", category: "Cyan & Blue" },
-  { palette: "sky", label: "Sky", category: "Cyan & Blue" },
-  { palette: "powderBlue", label: "Powder Blue", category: "Cyan & Blue" },
-  { palette: "blue", label: "Blue", category: "Cyan & Blue" },
-  { palette: "sapphire", label: "Sapphire", category: "Blue & Indigo" },
-  { palette: "indigo", label: "Indigo", category: "Blue & Indigo" },
-  { palette: "discord", label: "Discord", category: "Blue & Indigo" },
-  {
-    palette: "powderLavender",
-    label: "Powder Lavender",
-    category: "Purple & Violet",
-  },
-  { palette: "lavender", label: "Lavender", category: "Purple & Violet" },
-  { palette: "purple", label: "Purple", category: "Purple & Violet" },
-  {
-    palette: "bubblegumPink",
-    label: "Bubblegum Pink",
-    category: "Pink & Magenta",
-  },
-  { palette: "pink", label: "Pink", category: "Pink & Magenta" },
-];
-
-const COLOR_STEPS = [
-  "50",
-  "100",
-  "200",
-  "300",
-  "400",
-  "500",
-  "600",
-  "700",
-  "800",
-  "900",
-  "950",
-] as const;
-
-const ColorPalettes = () => {
-  // States
-  const [copiedToken, setCopiedToken] = useState<string | null>(null);
-
-  // Handlers
-  const handleCopy = (token: string) => {
-    void navigator.clipboard.writeText(token);
-    setCopiedToken(token);
-    toast.create({
-      title: "Token disalin",
-      description: token,
-      variant: "info",
-    });
-    setTimeout(() => {
-      setCopiedToken(null);
-    }, 2000);
-  };
-
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5} align={"stretch"}>
-        <DemoSectionHeader
-          title={"Color Palettes"}
-          icon={PaletteIcon}
-          description={
-            "Koleksi token warna gradasi 50 hingga 950 di chakra-system. Klik swatch untuk menyalin token path."
-          }
-        />
-
-        <VStack align={"stretch"} gap={4} w={"full"}>
-          {COLOR_PALETTES.map((item) => {
-            return (
-              <VStack
-                key={item.palette}
-                align={"stretch"}
-                gap={2}
-                p={3}
-                rounded={"md"}
-                border={"1px solid"}
-                borderColor={"bg.canvas"}
-                bg={"bg.subtle"}
-              >
-                {/* Header row: Palette Name, Badge Category, Continuous Gradient bar */}
-                <HStack
-                  justify={"space-between"}
-                  align={"center"}
-                  wrap={"wrap"}
-                  gap={2}
-                >
-                  <HStack align={"center"} gap={2}>
-                    <P fontWeight={"semibold"} fontSize={"md"}>
-                      {item.label}
-                    </P>
-
-                    <Badge size={"xs"} colorPalette={"gray"}>
-                      {item.palette}
-                    </Badge>
-
-                    <Badge size={"xs"} colorPalette={"neutral"}>
-                      {item.category}
-                    </Badge>
-                  </HStack>
-                </HStack>
-
-                {/* 11 Swatches: 50, 100 .. 950 */}
-                <SimpleGrid
-                  columns={{ base: 4, sm: 6, md: 11 }}
-                  gap={1}
-                  w={"full"}
-                >
-                  {COLOR_STEPS.map((step) => {
-                    const tokenName = `${item.palette}.${step}`;
-                    const isCopied = copiedToken === tokenName;
-                    const stepNum = parseInt(step, 10);
-                    const isDark = stepNum >= 500;
-
-                    return (
-                      <VStack
-                        key={step}
-                        cursor={"pointer"}
-                        onClick={() => handleCopy(tokenName)}
-                        align={"center"}
-                        justify={"space-between"}
-                        h={"64px"}
-                        p={1}
-                        rounded={"sm"}
-                        bg={tokenName}
-                        border={"1px solid"}
-                        borderColor={"bg.canvas"}
-                        transition={"transform 0.1s ease, box-shadow 0.1s ease"}
-                        _hover={{
-                          transform: "scale(1.05)",
-                          zIndex: 2,
-                          shadow: "md",
-                        }}
-                        position={"relative"}
-                      >
-                        <HStack
-                          w={"full"}
-                          justify={"space-between"}
-                          align={"center"}
-                        >
-                          <P
-                            fontSize={"2xs"}
-                            fontWeight={"bold"}
-                            color={isDark ? "white" : "black"}
-                            opacity={0.85}
-                            lineHeight={1}
-                          >
-                            {`.${step}`}
-                          </P>
-
-                          <Box color={isDark ? "white" : "black"} opacity={0.7}>
-                            <AppIcon
-                              icon={isCopied ? CheckIcon : CopyIcon}
-                              size={"xs"}
-                            />
-                          </Box>
-                        </HStack>
-
-                        {step === "500" && (
-                          <Badge
-                            size={"xs"}
-                            variant={"solid"}
-                            fontSize={"2xs"}
-                            px={1}
-                            py={0}
-                            colorPalette={"neutral"}
-                            opacity={0.9}
-                          >
-                            {"BASE"}
-                          </Badge>
-                        )}
-                      </VStack>
-                    );
-                  })}
-                </SimpleGrid>
-              </VStack>
-            );
-          })}
+          <HStack align={"center"} justify={"space-between"} gap={3}>
+            <P fontSize={"sm"}>Tabular num:</P>
+            <TNum fontSize={"sm"}>{tnum}</TNum>
+          </HStack>
         </VStack>
-      </Container.Body>
-    </Container.Root>
-  );
-};
 
-const Navigation = () => {
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Navigation"}
-          icon={CompassIcon}
-          description={"Navigasi tautan internal dan tautan eksternal"}
-        />
-
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
-          <ExternalLink href={"https://youtube.com"}>youtube.com</ExternalLink>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
-  );
-};
-
-const Buttons = () => {
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Buttons"}
-          icon={MousePointerClickIcon}
-          description={
-            "Varian tombol interaktif primary, surface, subtle, outline, dan ghost"
-          }
-        />
-
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
-          <Button primary={true}>Primary</Button>
-
-          <Button variant={"surface"}>Surface</Button>
-
-          <Button variant={"subtle"}>Subtle</Button>
-
-          <Button variant={"outline"}>Outline</Button>
-
-          <Button>Default/Ghost</Button>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
-  );
-};
-
-const Toast = () => {
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Toast"}
-          icon={BellIcon}
-          description={
-            "Sistem pemberitahuan instan dengan berbagai varian dan aksi responsif"
-          }
-        />
-
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
-          <Button
-            onClick={() => {
-              toast.create({
-                variant: "success",
-                title: "All set — changes saved!",
-              });
-            }}
-          >
-            Toast success
-          </Button>
-
-          <Button
-            onClick={() => {
-              toast.create({
-                variant: "warning",
-                group: "Warning",
-                title: "Password strength: weak",
-              });
-            }}
-          >
-            Toast warning
-          </Button>
-
-          <Button
-            onClick={() => {
-              toast.create({
-                variant: "error",
-                title: "File to large",
-                description: "Max file size is 5MB",
-              });
-            }}
-          >
-            Toast error
-          </Button>
-
-          <Button
-            onClick={() => {
-              const duration = 5000;
-
-              toast.create({
-                id: "Email compose",
-                variant: "loading",
-                title: "Sending email to Jolitos",
-                quickAction: {
-                  content: (
-                    <>
-                      <AppIcon icon={UndoIcon} size={"xs"} />
-                      Undo
-                    </>
-                  ),
-                  onClick: () => {
-                    console.log("Undo");
-                  },
-                },
-                duration: duration + 100,
-              });
-
-              setTimeout(() => {
-                toast.update("Email compose", {
-                  variant: "success",
-                  title: "Email sent successfully",
-                  quickAction: undefined,
-                  duration: duration,
-                });
-              }, duration);
-            }}
-          >
-            Toast loading with quick action
-          </Button>
-
-          <Button
-            onClick={() => {
-              toast.create({
-                icon: <AppIcon icon={MessageSquareIcon} size={"sm"} />,
-                group: "Message",
-                title: "Johan sent you a message",
-                description:
-                  "Lorem ipsum dolor sit amet, adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                actions: [
-                  {
-                    content: "Mark as read",
-                    onClick: () => {
-                      console.log("Mark as read");
-                    },
-                  },
-                  {
-                    content: "Reply",
-                    onClick: () => {
-                      console.log("Reply");
-                    },
-                  },
-                  {
-                    content: "Mute",
-                    onClick: () => {
-                      console.log("Mute");
-                    },
-                  },
-                ],
-              });
-            }}
-          >
-            Toast with custom icon + actions
-          </Button>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
-  );
-};
-
-const DEFAULT_DEMO_SPLITTER_SIZE = [50, 50];
-
-const Layout = () => {
-  const splitterSize = useSplitterStore(
-    (s) => s.sizesByKey["demo-layout"] ?? DEFAULT_DEMO_SPLITTER_SIZE,
-  );
-  const setSplitterSize = useSplitterStore((s) => s.setSize);
-
-  const panelA = (
-    <Splitter.Panel
-      key={"a"}
-      id={"a"}
-      defaultSize={splitterSize[0]}
-      minSize={20}
-    >
-      <Center boxSize={"full"} textStyle={"2xl"}>
-        A
-      </Center>
-    </Splitter.Panel>
-  );
-
-  const resizeTrigger = (
-    <Splitter.ResizeTrigger
-      key={"trigger"}
-      id={"a:b"}
-      onDoubleClick={() => {
-        setSplitterSize("demo-layout", DEFAULT_DEMO_SPLITTER_SIZE);
-      }}
-    />
-  );
-
-  const panelB = (
-    <Splitter.Panel
-      key={"b"}
-      id={"b"}
-      defaultSize={splitterSize[1]}
-      minSize={20}
-    >
-      <Center boxSize={"full"} textStyle={"2xl"}>
-        B
-      </Center>
-    </Splitter.Panel>
-  );
-
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Layout"}
-          icon={LayoutGridIcon}
-          description={
-            "Komponen pembagi kontainer fleksibel, splitter, dan grid adaptif"
-          }
-        />
-
-        <HStack
-          wrap={"wrap"}
-          align={"center"}
-          justify={"start"}
-          gap={4}
-          h={"300px"}
+        <Button
+          size={"xs"}
+          variant={"outline"}
+          onClick={() => setTnum((p) => p + 1)}
         >
-          <Splitter.Root
-            direction={"horizontal"}
-            defaultLayout={DEFAULT_DEMO_SPLITTER_SIZE}
-            onLayout={(layout: number[]) =>
-              setSplitterSize("demo-layout", layout)
-            }
-            borderWidth={"1px"}
-            h={"300px"}
-            w={"full"}
-          >
-            {[panelA, resizeTrigger, panelB]}
-          </Splitter.Root>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
+          + 1
+        </Button>
+      </HStack>
+    </DemoCard>
   );
 };
 
-// -------------------------------------------------------------------------------------
-
-const FieldTemplate = (props: FieldProps) => {
-  return <Field errorText={"Invalid input"} w={"fit"} {...props} />;
+const InputCard = () => {
+  return (
+    <DemoCard title={"Input"} icon={TextCursorInputIcon}>
+      <VStack align={"stretch"} gap={2}>
+        <Field label={"Text Input"}>
+          <Input placeholder={"Ketik sesuatu..."} />
+        </Field>
+      </VStack>
+    </DemoCard>
+  );
 };
 
-const DemoFileInput = (
-  props: FieldProps & { inputProps: UseFormRegisterReturn },
-) => {
-  const { inputProps, ...restProps } = props;
+const PasswordInputCard = () => {
+  return (
+    <DemoCard title={"PasswordInput"} icon={TextCursorInputIcon}>
+      <Field label={"Password Input"}>
+        <PasswordInput withPasswordStrength={true} placeholder={"Kata sandi..."} />
+      </Field>
+    </DemoCard>
+  );
+};
+
+const SearchInputCard = () => {
+  return (
+    <DemoCard title={"SearchInput"} icon={TextCursorInputIcon}>
+      <SearchInput placeholder={"Cari data..."} />
+    </DemoCard>
+  );
+};
+
+const NumberInputCard = () => {
+  return (
+    <DemoCard title={"NumberInput"} icon={TextCursorInputIcon}>
+      <Field label={"Nominal"}>
+        <NumberInput
+          placeholder={"0"}
+          formatOptions={{
+            style: "unit",
+            unit: "inch",
+            unitDisplay: "long",
+          }}
+        />
+      </Field>
+    </DemoCard>
+  );
+};
+
+const SteppedNumberInputCard = () => {
+  return (
+    <DemoCard title={"SteppedNumberInput"} icon={TextCursorInputIcon}>
+      <SteppedNumberInput />
+    </DemoCard>
+  );
+};
+
+const DateInputCard = () => {
+  return (
+    <DemoCard title={"DateInput"} icon={TextCursorInputIcon}>
+      <Field label={"Pilih Tanggal"}>
+        <DateInput
+          modalKey={"demo-date-input"}
+          datePickerSubtitle={"Pilih tanggal jadwal"}
+        />
+      </Field>
+    </DemoCard>
+  );
+};
+
+const SelectCard = () => {
+  return (
+    <DemoCard title={"Select Input"} icon={TextCursorInputIcon}>
+      <Field label={"Pilihan Status"}>
+        <Select
+          options={[
+            { label: "Option 1", value: "option-1" },
+            { label: "Option 2", value: "option-2" },
+            { label: "Option 3", value: "option-3" },
+          ]}
+        />
+      </Field>
+    </DemoCard>
+  );
+};
+
+const FocusSelectCard = () => {
+  return (
+    <DemoCard title={"FocusSelectInput"} icon={TextCursorInputIcon}>
+      <Field label={"Focus Select"}>
+        <FocusSelectInput
+          options={[
+            { label: "Kategori A", value: "kat-a" },
+            { label: "Kategori B", value: "kat-b" },
+            { label: "Kategori C", value: "kat-c" },
+          ]}
+        />
+      </Field>
+    </DemoCard>
+  );
+};
+
+const PinInputCard = () => {
+  return (
+    <DemoCard title={"PinInput (OTP)"} icon={TextCursorInputIcon}>
+      <VStack align={"start"} gap={2}>
+        <PinInput count={4} />
+      </VStack>
+    </DemoCard>
+  );
+};
+
+const CheckboxCard = () => {
+  return (
+    <DemoCard title={"Checkbox"} icon={TextCursorInputIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
+        <Checkbox defaultChecked={true}>Aktif</Checkbox>
+        <Checkbox>Pilihan Tambahan</Checkbox>
+      </HStack>
+    </DemoCard>
+  );
+};
+
+const SwitchCard = () => {
+  return (
+    <DemoCard title={"Switch"} icon={TextCursorInputIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
+        <Switch defaultChecked={true}>Notifikasi Email</Switch>
+        <Switch>Mode Gelap</Switch>
+      </HStack>
+    </DemoCard>
+  );
+};
+
+const RadioInputCard = () => {
+  return (
+    <DemoCard title={"RadioInput"} icon={TextCursorInputIcon}>
+      <RadioInput
+        options={[
+          { label: "Pilihan Utama", value: "utama" },
+          { label: "Pilihan Kedua", value: "kedua" },
+        ]}
+      />
+    </DemoCard>
+  );
+};
+
+const RadioCardInputCard = () => {
+  return (
+    <DemoCard title={"RadioCardInput"} icon={TextCursorInputIcon}>
+      <RadioCardInput.Root defaultValue={"option-1"}>
+        <HStack gap={3} w={"full"}>
+          <RadioCardInput.Item value={"option-1"} flex={1}>
+            <RadioCardInput.ItemControl>
+              <VStack gap={1} align={"start"}>
+                <AppIcon
+                  icon={IconArrowRight}
+                  size={"lg"}
+                  color={"fg.muted"}
+                  mb={1}
+                />
+                <RadioCardInput.ItemText>Opsi 1</RadioCardInput.ItemText>
+                <RadioCardInput.ItemDescription>
+                  Penjelasan singkat opsi 1
+                </RadioCardInput.ItemDescription>
+              </VStack>
+              <RadioCardInput.ItemIndicator />
+            </RadioCardInput.ItemControl>
+          </RadioCardInput.Item>
+
+          <RadioCardInput.Item value={"option-2"} flex={1}>
+            <RadioCardInput.ItemControl>
+              <VStack gap={1} align={"start"}>
+                <AppIcon
+                  icon={IconForbid}
+                  size={"lg"}
+                  color={"fg.muted"}
+                  mb={1}
+                />
+                <RadioCardInput.ItemText>Opsi 2</RadioCardInput.ItemText>
+                <RadioCardInput.ItemDescription>
+                  Penjelasan singkat opsi 2
+                </RadioCardInput.ItemDescription>
+              </VStack>
+              <RadioCardInput.ItemIndicator />
+            </RadioCardInput.ItemControl>
+          </RadioCardInput.Item>
+        </HStack>
+      </RadioCardInput.Root>
+    </DemoCard>
+  );
+};
+
+const SliderCard = () => {
+  return (
+    <DemoCard title={"Slider"} icon={TextCursorInputIcon}>
+      <Slider defaultValue={[45]} w={"full"} />
+    </DemoCard>
+  );
+};
+
+const TextareaCard = () => {
+  return (
+    <DemoCard title={"Textarea"} icon={TextCursorInputIcon}>
+      <Field label={"Catatan Tambahan"}>
+        <Textarea placeholder={"Tuliskan deskripsi atau catatan..."} maxLength={200} />
+      </Field>
+    </DemoCard>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// FileInput: Clean dropzone & trigger button without dimension issues
+// ---------------------------------------------------------------------------
+
+const FileInputDropzoneCard = () => {
+  // Hooks
+  const { register } = useForm();
   const apiResponse = [
     {
       attachment_id: "att_001",
-      file_name: "invoice-january.pdf",
+      file_name: "dokumen-legal.pdf",
       file_size: 8000,
-      file_url: "https://cdn.example.com/files/invoice-january.pdf",
+      file_url: "https://cdn.example.com/files/dokumen-legal.pdf",
       content_type: "application/pdf",
-    },
-    {
-      attachment_id: "att_002",
-      file_name: "product-photo.jpg",
-      file_size: 1420,
-      file_url: "https://cdn.example.com/files/product-photo.jpg",
-      content_type: "image/jpeg",
     },
   ];
 
@@ -802,296 +596,451 @@ const DemoFileInput = (
       size: att.file_size,
       url: att.file_url,
       mimeType: att.content_type,
-      // markedForDelete: true,
     })),
   });
 
   return (
-    <FieldTemplate label={"Edit Mode"} w={"320px"} {...restProps}>
-      <FileInput
-        inputProps={inputProps}
-        accept={[".jpeg", ".jpg"]}
-        maxFiles={2}
-        existingFiles={existingFiles}
-        onToggleDeleteExisting={toggleMarkedForDelete}
-      />
-    </FieldTemplate>
+    <DemoCard title={"FileInput (Dropzone)"} icon={UploadIcon}>
+      <VStack w={"full"} align={"stretch"} gap={2}>
+        <FileInput
+          inputProps={register("file_dropzone")}
+          accept={[".jpeg", ".jpg", ".png", ".pdf"]}
+          maxFiles={2}
+          variant={"dropzone"}
+          existingFiles={existingFiles}
+          onToggleDeleteExisting={toggleMarkedForDelete}
+        />
+      </VStack>
+    </DemoCard>
   );
 };
 
-const DemoFileInputReplace = (
-  props: FieldProps & { inputProps: UseFormRegisterReturn },
-) => {
-  const { inputProps, ...restProps } = props;
-  const apiResponse = [
-    {
-      attachment_id: "att_001",
-      file_name: "invoice-january.pdf",
-      file_size: 8000,
-      file_url: "https://cdn.example.com/files/invoice-january.pdf",
-      content_type: "application/pdf",
-    },
-    {
-      attachment_id: "att_002",
-      file_name: "product-photo.jpg",
-      file_size: 1420,
-      file_url: "https://cdn.example.com/files/product-photo.jpg",
-      content_type: "image/jpeg",
-    },
+const FileInputButtonCard = () => {
+  // Hooks
+  const { register } = useForm();
+
+  return (
+    <DemoCard title={"FileInput (Button Trigger)"} icon={UploadIcon}>
+      <VStack w={"full"} align={"stretch"} gap={2}>
+        <FileInput
+          inputProps={register("file_btn")}
+          accept={[".jpeg", ".jpg", ".png"]}
+          variant={"button"}
+          label={"Unggah Berkas"}
+        />
+      </VStack>
+    </DemoCard>
+  );
+};
+
+const RichTextEditorCard = () => {
+  return (
+    <DemoCard title={"RichTextEditor"} icon={TextCursorInputIcon}>
+      <RichTextEditorPresetEssential />
+    </DemoCard>
+  );
+};
+
+const ProgressCard = () => {
+  return (
+    <DemoCard title={"Progress"} icon={MessageSquareIcon}>
+      <VStack align={"stretch"} gap={3}>
+        <Progress.Root value={65}>
+          <Progress.Track>
+            <Progress.Range />
+          </Progress.Track>
+        </Progress.Root>
+
+        <Progress.Root striped={true} animated={true} value={80}>
+          <Progress.Track>
+            <Progress.Range />
+          </Progress.Track>
+        </Progress.Root>
+
+        <Progress.Root value={null}>
+          <Progress.Track>
+            <Progress.Range />
+          </Progress.Track>
+        </Progress.Root>
+      </VStack>
+    </DemoCard>
+  );
+};
+
+const ProgressCircleCard = () => {
+  return (
+    <DemoCard title={"ProgressCircle"} icon={MessageSquareIcon}>
+      <HStack align={"center"} gap={4}>
+        <ProgressCircle.Root value={68} size={"xl"}>
+          <ProgressCircle.Circle>
+            <ProgressCircle.Track />
+            <ProgressCircle.Range />
+          </ProgressCircle.Circle>
+          <AbsoluteCenter>
+            <ProgressCircle.ValueText />
+          </AbsoluteCenter>
+        </ProgressCircle.Root>
+
+        <ProgressCircle.Root value={null} size={"lg"}>
+          <ProgressCircle.Circle>
+            <ProgressCircle.Track />
+            <ProgressCircle.Range strokeLinecap={"round"} />
+          </ProgressCircle.Circle>
+        </ProgressCircle.Root>
+      </HStack>
+    </DemoCard>
+  );
+};
+
+const SkeletonCard = () => {
+  return (
+    <DemoCard title={"Skeleton Loaders"} icon={MessageSquareIcon}>
+      <VStack align={"stretch"} gap={3}>
+        <HStack align={"center"} gap={3}>
+          <SkeletonCircle boxSize={"36px"} />
+          <VStack flex={1} align={"stretch"} gap={1}>
+            <SkeletonText noOfLines={2} />
+          </VStack>
+        </HStack>
+        <Skeleton w={"full"} h={"60px"} rounded={"md"} />
+      </VStack>
+    </DemoCard>
+  );
+};
+
+const StateNoDataCard = () => {
+  return (
+    <DemoCard title={"State: No Data"} icon={MessageSquareIcon}>
+      <StateNoData />
+    </DemoCard>
+  );
+};
+
+const StateAccessDeniedCard = () => {
+  return (
+    <DemoCard title={"State: Access Denied"} icon={MessageSquareIcon}>
+      <StateAccessDenied />
+    </DemoCard>
+  );
+};
+
+const StateNoResultCard = () => {
+  return (
+    <DemoCard title={"State: No Result"} icon={MessageSquareIcon}>
+      <StateNoResult />
+    </DemoCard>
+  );
+};
+
+const StateRetryCard = () => {
+  return (
+    <DemoCard title={"State: Retry"} icon={MessageSquareIcon}>
+      <StateRetry />
+    </DemoCard>
+  );
+};
+
+const EmojiCard = () => {
+  const EMOJI_KEYS: EmojiVariant[] = [
+    "happy",
+    "laugh",
+    "funny",
+    "cool",
+    "love",
+    "thumbUp",
+    "thinking",
+    "surprised",
+    "sad",
+    "cry",
   ];
 
-  const { existingFiles } = useExistingFiles({
-    initialExistingFiles: apiResponse.map((att) => ({
-      id: att.attachment_id,
-      name: att.file_name,
-      size: att.file_size,
-      url: att.file_url,
-      mimeType: att.content_type,
-      // markedForDelete: true,
-    })),
-  });
-
   return (
-    <FieldTemplate label={"Replace Mode"} w={"320px"} {...restProps}>
-      <FileInput
-        inputProps={inputProps}
-        accept={[".jpeg", ".jpg"]}
-        maxFiles={2}
-        existingFiles={existingFiles}
-      />
-    </FieldTemplate>
+    <DemoCard title={"Emoji"} icon={MessageSquareIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
+        {EMOJI_KEYS.map((key) => (
+          <Emoji key={key} variant={key} />
+        ))}
+      </HStack>
+    </DemoCard>
   );
 };
 
-const DemoRichTextEditor = (props: FieldProps) => {
+const ToastCard = () => {
   return (
-    <FieldTemplate {...props}>
-      <RichTextEditorPresetEssential />
-    </FieldTemplate>
+    <DemoCard title={"Toast"} icon={BellIcon}>
+      <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
+        <Button
+          size={"sm"}
+          variant={"outline"}
+          onClick={() => {
+            toast.create({
+              variant: "success",
+              title: "Perubahan berhasil disimpan!",
+            });
+          }}
+        >
+          Success
+        </Button>
+
+        <Button
+          size={"sm"}
+          variant={"outline"}
+          onClick={() => {
+            toast.create({
+              variant: "warning",
+              title: "Peringatan: periksa format file",
+            });
+          }}
+        >
+          Warning
+        </Button>
+
+        <Button
+          size={"sm"}
+          variant={"outline"}
+          onClick={() => {
+            toast.create({
+              variant: "error",
+              title: "Gagal memproses data",
+            });
+          }}
+        >
+          Error
+        </Button>
+      </HStack>
+    </DemoCard>
   );
 };
 
-export const Inputs = () => {
-  const {
-    register,
-    getValues,
-    //  control
-  } = useForm();
-
-  const [invalid, setInvalid] = useState<boolean>(false);
-
-  // const number1 = useWatch({
-  //   control,
-  //   name: "number1",
-  // });
-
-  // console.log("number1", number1);
-
+const ModalCard = () => {
   return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Inputs"}
-          icon={TextCursorInputIcon}
-          description={
-            "Elemen formulir, text input, password, search, slider, switch, dan date picker"
-          }
-        />
-
-        <Fieldset>
-          <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
-            <FieldTemplate invalid={invalid}>
-              <Checkbox>Checkbox</Checkbox>
-            </FieldTemplate>
-
-            <VStack>
-              <FieldTemplate label={"Text Input"} invalid={invalid}>
-                <Input
-                  placeholder={"Text input..."}
-                  w={"200px"}
-                  roundedBottom={0}
-                />
-              </FieldTemplate>
-
-              <FieldTemplate label={"Password Input"} invalid={invalid}>
-                <PasswordInput
-                  w={"200px"}
-                  withPasswordStrength
-                  roundedTop={0}
-                />
-              </FieldTemplate>
-            </VStack>
-
-            <FieldTemplate variant={"default"} invalid={invalid}>
-              <SearchInput placeholder={"Search..."} />
-            </FieldTemplate>
-
-            <FieldTemplate label={"Date Input"} invalid={invalid}>
-              <DateInput
-                modalKey={"date-input"}
-                datePickerSubtitle={"Pick a day for your leaves"}
-                w={"250px"}
-              />
-            </FieldTemplate>
-
-            <FieldTemplate label={"Select Input"} invalid={invalid}>
-              <Select
-                options={[
-                  { label: "Option 1", value: "option-1" },
-                  { label: "Option 2", value: "option-2" },
-                  { label: "Option 3", value: "option-3" },
-                  { label: "Option 4", value: "option-4" },
-                  { label: "Option 5", value: "option-5" },
-                ]}
-                w={"200px"}
-              />
-            </FieldTemplate>
-
-            <FieldTemplate label={"Focus Select Input"} invalid={invalid}>
-              <FocusSelectInput
-                options={[
-                  { label: "Option 1", value: "option-1" },
-                  { label: "Option 2", value: "option-2" },
-                  { label: "Option 3", value: "option-3" },
-                  { label: "Option 4", value: "option-4" },
-                  { label: "Option 5", value: "option-5" },
-                ]}
-                w={"200px"}
-              />
-            </FieldTemplate>
-
-            <FieldTemplate invalid={invalid}>
-              <NumberInput
-                inputProps={register("number1")}
-                placeholder={"Number input..."}
-                formatOptions={{
-                  style: "unit",
-                  unit: "inch",
-                  unitDisplay: "long",
-                }}
-                w={"200px"}
-              />
-            </FieldTemplate>
-
-            <FieldTemplate invalid={invalid}>
-              <SteppedNumberInput hiddenInputProps={register("number2")} />
-            </FieldTemplate>
-
-            <SimpleGrid columns={[1, null, 2]} gap={12}>
-              <DemoFileInput
-                invalid={invalid}
-                inputProps={register("attachments")}
-              />
-
-              <DemoFileInputReplace
-                invalid={invalid}
-                inputProps={register("attachments2")}
-              />
-            </SimpleGrid>
-
-            <FieldTemplate invalid={invalid}>
-              <PinInput />
-            </FieldTemplate>
-
-            <FieldTemplate invalid={invalid}>
-              <Switch>Switch</Switch>
-            </FieldTemplate>
-
-            <FieldTemplate invalid={invalid}>
-              <RadioInput
-                options={[
-                  { label: "Option 1", value: "option-1" },
-                  { label: "Option 2", value: "option-2" },
-                ]}
-              />
-            </FieldTemplate>
-
-            <FieldTemplate invalid={invalid}>
-              <RadioCardInput.Root defaultValue="option-1">
-                <HStack gap={4}>
-                  <RadioCardInput.Item value="option-1">
-                    <RadioCardInput.ItemControl>
-                      <VStack gap={1}>
-                        <AppIcon
-                          icon={IconArrowRight}
-                          size={"xl"}
-                          color={"fg.muted"}
-                          mb={1}
-                        />
-
-                        <RadioCardInput.ItemText>
-                          Option 1
-                        </RadioCardInput.ItemText>
-
-                        <RadioCardInput.ItemDescription>
-                          Description 1
-                        </RadioCardInput.ItemDescription>
-                      </VStack>
-
-                      <RadioCardInput.ItemIndicator />
-                    </RadioCardInput.ItemControl>
-                  </RadioCardInput.Item>
-
-                  <RadioCardInput.Item value="option-2">
-                    <RadioCardInput.ItemControl>
-                      <VStack gap={1}>
-                        <AppIcon
-                          icon={IconForbid}
-                          size={"xl"}
-                          color={"fg.muted"}
-                          mb={1}
-                        />
-
-                        <RadioCardInput.ItemText>
-                          Option 2
-                        </RadioCardInput.ItemText>
-
-                        <RadioCardInput.ItemDescription>
-                          Description 2
-                        </RadioCardInput.ItemDescription>
-                      </VStack>
-                      <RadioCardInput.ItemIndicator />
-                    </RadioCardInput.ItemControl>
-                  </RadioCardInput.Item>
-                </HStack>
-              </RadioCardInput.Root>
-            </FieldTemplate>
-
-            <FieldTemplate label={"Textarea"} invalid={invalid}>
-              <Textarea placeholder="textarea" maxLength={10} />
-            </FieldTemplate>
-
-            <FieldTemplate invalid={invalid}>
-              <Slider defaultValue={[25]} w={"200px"} />
-            </FieldTemplate>
-
-            <DemoRichTextEditor />
-          </HStack>
-        </Fieldset>
-
-        <Group justify={"start"}>
-          <Button
-            onClick={() => {
-              console.log(getValues());
-            }}
-          >
-            Log input values
-          </Button>
-
-          <Button
-            onClick={() => {
-              setInvalid((ps) => !ps);
-            }}
-          >
-            Toggle invalid <DotIndicator checked={invalid} />
-          </Button>
-        </Group>
-      </Container.Body>
-    </Container.Root>
+    <DemoCard title={"Modal"} icon={EyeIcon}>
+      <OModal />
+    </DemoCard>
   );
 };
 
-// -------------------------------------------------------------------------------------
+const DialogCard = () => {
+  return (
+    <DemoCard title={"Dialog"} icon={EyeIcon}>
+      <ODialog />
+    </DemoCard>
+  );
+};
+
+const DrawerCard = () => {
+  return (
+    <DemoCard title={"Drawer"} icon={EyeIcon}>
+      <ODrawer />
+    </DemoCard>
+  );
+};
+
+const AccordionCard = () => {
+  const items = [
+    { value: "a", title: "Item Pertama", text: "Konten penjelasan item pertama..." },
+    { value: "b", title: "Item Kedua", text: "Konten penjelasan item kedua..." },
+  ];
+
+  return (
+    <DemoCard title={"Accordion"} icon={LayersIcon}>
+      <Accordion.Root collapsible={true} multiple={true} defaultValue={["a"]} w={"full"}>
+        {items.map((item, index) => (
+          <Accordion.Item key={index} value={item.value}>
+            <Accordion.ItemTrigger>
+              <Span flex={"1"}>{item.title}</Span>
+              <Accordion.ItemIndicator />
+            </Accordion.ItemTrigger>
+            <Accordion.ItemContent>
+              <Accordion.ItemBody>{item.text}</Accordion.ItemBody>
+            </Accordion.ItemContent>
+          </Accordion.Item>
+        ))}
+      </Accordion.Root>
+    </DemoCard>
+  );
+};
+
+const TabsCard = () => {
+  const tabs = [
+    { icon: UserIcon, triggerLabel: "Pengguna" },
+    { icon: FolderIcon, triggerLabel: "Berkas" },
+    { icon: CheckCircleIcon, triggerLabel: "Tugas" },
+  ];
+
+  return (
+    <DemoCard title={"Tabs"} icon={LayersIcon}>
+      <Tabs.Root defaultValue={"pengguna"} w={"full"}>
+        <Tabs.List>
+          {tabs.map((tab, index) => (
+            <Tabs.Trigger
+              key={index}
+              value={tab.triggerLabel.toLowerCase()}
+              gap={2}
+            >
+              <AppIcon icon={tab.icon} />
+              {tab.triggerLabel}
+            </Tabs.Trigger>
+          ))}
+        </Tabs.List>
+
+        <Tabs.Content value={"pengguna"} pt={2}>
+          <P fontSize={"sm"} color={"fg.muted"}>
+            Kelola daftar pengguna aplikasi.
+          </P>
+        </Tabs.Content>
+      </Tabs.Root>
+    </DemoCard>
+  );
+};
+
+const StepsCard = () => {
+  const steps = [
+    { title: "Langkah 1", description: "Isi data pemohon" },
+    { title: "Langkah 2", description: "Unggah dokumen pendukung" },
+    { title: "Langkah 3", description: "Verifikasi & bayar" },
+  ];
+
+  return (
+    <DemoCard title={"Steps"} icon={LayersIcon}>
+      <Steps.Root count={steps.length} defaultStep={1} w={"full"}>
+        <Steps.List>
+          {steps.map((step, index) => (
+            <Steps.Item key={index} index={index} title={step.title}>
+              <Steps.Trigger>
+                <Steps.Indicator />
+                <Steps.Title>{step.title}</Steps.Title>
+              </Steps.Trigger>
+              <Steps.Separator />
+            </Steps.Item>
+          ))}
+        </Steps.List>
+
+        {steps.map((step, index) => (
+          <Steps.Content key={index} index={index}>
+            <P fontSize={"sm"}>{step.description}</P>
+          </Steps.Content>
+        ))}
+
+        <ButtonGroup size={"xs"} variant={"outline"} justify={"start"} mt={2}>
+          <Steps.PrevTrigger asChild={true}>
+            <Button>Prev</Button>
+          </Steps.PrevTrigger>
+          <Steps.NextTrigger asChild={true}>
+            <Button>Next</Button>
+          </Steps.NextTrigger>
+        </ButtonGroup>
+      </Steps.Root>
+    </DemoCard>
+  );
+};
+
+const BreadcrumbCard = () => {
+  return (
+    <DemoCard title={"Breadcrumb"} icon={LayersIcon}>
+      <Breadcrumb.Root>
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href={"#"}>Beranda</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href={"#"}>Pengaturan</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.CurrentLink>Profil</Breadcrumb.CurrentLink>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </DemoCard>
+  );
+};
+
+const CarouselCard = () => {
+  const images = [
+    "https://images.unsplash.com/photo-1656433031375-5042f5afe894?auto=format&fit=crop&q=80&w=800",
+    "https://images.unsplash.com/photo-1587466412525-87497b34fc88?auto=format&fit=crop&q=80&w=800",
+  ];
+
+  return (
+    <DemoCard title={"Carousel"} icon={LayersIcon}>
+      <Carousel.Root slideCount={images.length} w={"full"}>
+        <Carousel.Control>
+          <Carousel.PrevTrigger asChild={true}>
+            <IconButton size={"xs"}>
+              <LuArrowLeft />
+            </IconButton>
+          </Carousel.PrevTrigger>
+
+          <Carousel.IndicatorGroup>
+            {images.map((_, index) => (
+              <Carousel.Indicator key={index} index={index} />
+            ))}
+          </Carousel.IndicatorGroup>
+
+          <Carousel.NextTrigger asChild={true}>
+            <IconButton size={"xs"}>
+              <LuArrowRight />
+            </IconButton>
+          </Carousel.NextTrigger>
+        </Carousel.Control>
+
+        <Carousel.ItemGroup>
+          {images.map((image, index) => (
+            <Carousel.Item key={index} index={index}>
+              <Image
+                src={image}
+                alt={`Slide ${index + 1}`}
+                aspectRatio={16 / 9}
+                rounded={"md"}
+                objectFit={"cover"}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel.ItemGroup>
+      </Carousel.Root>
+    </DemoCard>
+  );
+};
+
+const ExternalLinkCard = () => {
+  return (
+    <DemoCard title={"ExternalLink"} icon={CompassIcon}>
+      <HStack align={"center"} gap={2}>
+        <ExternalLink href={"https://atrbpn.go.id"}>atrbpn.go.id</ExternalLink>
+      </HStack>
+    </DemoCard>
+  );
+};
+
+const UtilitiesCard = () => {
+  const data = async () => {
+    const res = await fetch(
+      "https://fastly.picsum.photos/id/718/2880/1800.jpg?hmac=JZydaTGOvhjzXYg-o7Y5fytAXeTnAnCt_cadeQ3Mzjo",
+    );
+    return res.blob();
+  };
+
+  return (
+    <DemoCard title={"DownloadTrigger"} icon={WrenchIcon}>
+      <DownloadTrigger
+        data={data}
+        fileName={"contoh-unduhan.jpg"}
+        mimeType={"image/jpeg"}
+      >
+        <Button variant={"outline"}>
+          <AppIcon icon={IconDownload} />
+          Unduh Berkas
+        </Button>
+      </DownloadTrigger>
+    </DemoCard>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Overlay Trigger Subcomponents (OModal, ODialog, ODrawer)
+// ---------------------------------------------------------------------------
 
 const OModal = () => {
   // Hooks
@@ -1108,23 +1057,22 @@ const OModal = () => {
       <Modal.Content>
         <Modal.Header>
           <Modal.Title w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
-            Header
+            Modal Header
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <P>
-            Modal is dynamic component, it render dialog component on large
-            viewport, render drawer component on small to medium viewport and
-            has its own fullscreen feature on dialog component
+            Modal adalah komponen dinamis yang merender dialog pada layar lebar
+            dan drawer pada layar seluler secara otomatis.
           </P>
         </Modal.Body>
         <Modal.Footer>
           <Button flex={1} onClick={close}>
-            Close
+            Batal
           </Button>
           <Button flex={1} primary={true}>
-            CTA
+            Simpan
           </Button>
         </Modal.Footer>
       </Modal.Content>
@@ -1147,21 +1095,20 @@ const ODialog = () => {
       <Dialog.Content>
         <Dialog.Header>
           <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
-            Header
+            Konfirmasi
           </P>
         </Dialog.Header>
         <Dialog.Body>
           <P>
-            Dialog is component that need user focus and styled like floating
-            container
+            Apakah Anda yakin ingin memproses tindakan ini? Tindakan ini tidak dapat dibatalkan.
           </P>
         </Dialog.Body>
         <Dialog.Footer>
           <Button flex={1} onClick={close}>
-            Close
+            Batal
           </Button>
           <Button flex={1} primary={true}>
-            CTA
+            Lanjutkan
           </Button>
         </Dialog.Footer>
       </Dialog.Content>
@@ -1190,63 +1137,21 @@ const ODrawer = () => {
       <Drawer.Content>
         <Drawer.Header>
           <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
-            Header
+            Drawer Panel
           </P>
         </Drawer.Header>
 
         <Drawer.Body>
           <VStack align={"start"} gap={4}>
             <P>
-              Drawer is component that need user focus and styled like "drawer"
-              or sliding container
+              Drawer adalah panel samping untuk fokus pengguna pada konfigurasi atau form panjang.
             </P>
           </VStack>
         </Drawer.Body>
 
         <Drawer.Footer>
           <Button flex={1} onClick={close}>
-            Close
-          </Button>
-
-          <ONestedDrawer />
-        </Drawer.Footer>
-      </Drawer.Content>
-    </Drawer.Root>
-  );
-};
-
-const ONestedDrawer = () => {
-  // Hooks
-  const { modalKey, isOpen, open, close } = usePopModal({
-    modalKey: "exampleDrawer.nested",
-  });
-
-  return (
-    <Drawer.Root modalKey={modalKey} opened={isOpen} open={open} close={close}>
-      <Drawer.Trigger>
-        <Button primary={true} flex={1}>
-          Open Nested
-        </Button>
-      </Drawer.Trigger>
-
-      <Drawer.Content>
-        <Drawer.Header>
-          <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
-            Header
-          </P>
-        </Drawer.Header>
-        <Drawer.Body>
-          <P>
-            Drawer is component that need user focus and styled like "drawer" or
-            sliding container
-          </P>
-        </Drawer.Body>
-        <Drawer.Footer>
-          <Button flex={1} onClick={close}>
-            Close
-          </Button>
-          <Button flex={1} primary={true}>
-            CTA
+            Tutup
           </Button>
         </Drawer.Footer>
       </Drawer.Content>
@@ -1254,432 +1159,93 @@ const ONestedDrawer = () => {
   );
 };
 
-export const Overlay = () => {
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Overlay"}
-          icon={EyeIcon}
-          description={
-            "Komponen modal popover, dialog konfirmasi, dan drawer drawer samping"
-          }
-        />
+// ---------------------------------------------------------------------------
+// Full-width expansive sections
+// ---------------------------------------------------------------------------
 
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
-          <OModal />
+const DEFAULT_DEMO_SPLITTER_SIZE = [50, 50];
 
-          <ODialog />
-
-          <ODrawer />
-        </HStack>
-      </Container.Body>
-    </Container.Root>
+const Layout = () => {
+  // Stores
+  const splitterSize = useSplitterStore(
+    (s) => s.sizesByKey["demo-layout"] ?? DEFAULT_DEMO_SPLITTER_SIZE,
   );
-};
+  const setSplitterSize = useSplitterStore((s) => s.setSize);
 
-// -------------------------------------------------------------------------------------
-
-export const Disclosure = () => {
-  const items = [
-    { value: "a", title: "First Item", text: "Some value 1..." },
-    { value: "b", title: "Second Item", text: "Some value 2..." },
-    { value: "c", title: "Third Item", text: "Some value 3..." },
-  ];
-  const images = [
-    "https://images.unsplash.com/photo-1656433031375-5042f5afe894?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2371",
-    "https://images.unsplash.com/photo-1587466412525-87497b34fc88?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2673",
-    "https://images.unsplash.com/photo-1629581688635-5d88654e5bdd?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2831",
-    "https://images.unsplash.com/photo-1661030420948-862787de0056?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2370",
-    "https://images.unsplash.com/photo-1703505841379-2f863b201212?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2371",
-    "https://images.unsplash.com/photo-1607776905497-b4f788205f6a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2370",
-  ];
-  const steps = [
-    {
-      title: "Step 1",
-      description: "Step 1 description",
-    },
-    {
-      title: "Step 2",
-      description: "Step 2 description",
-    },
-    {
-      title: "Step 3",
-      description: "Step 3 description",
-    },
-  ];
-  const tabs = [
-    { icon: UserIcon, triggerLabel: "Members" },
-    { icon: FolderIcon, triggerLabel: "Projects" },
-    { icon: CheckCircleIcon, triggerLabel: "Tasks" },
-  ];
-
-  return (
-    <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Disclosure"}
-          icon={LayersIcon}
-          description={
-            "Accordion lipat, tab menu bertingkat, breadcrumbs, dan carousel"
-          }
-        />
-
-        <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
-          <Accordion.Root
-            collapsible
-            multiple
-            defaultValue={["b"]}
-            maxW={"300px"}
-          >
-            {items.map((item, index) => (
-              <Accordion.Item key={index} value={item.value}>
-                <Accordion.ItemTrigger
-                  _open={{
-                    color: "fg.muted",
-                  }}
-                >
-                  <Span flex="1">{item.title}</Span>
-                  <Accordion.ItemIndicator />
-                </Accordion.ItemTrigger>
-
-                <Accordion.ItemContent>
-                  <Accordion.ItemBody>{item.text}</Accordion.ItemBody>
-                </Accordion.ItemContent>
-              </Accordion.Item>
-            ))}
-          </Accordion.Root>
-
-          <Breadcrumb.Root>
-            <Breadcrumb.List>
-              <Breadcrumb.Item>
-                <Breadcrumb.Link href="#">Docs</Breadcrumb.Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Separator />
-              <Breadcrumb.Item>
-                <Breadcrumb.Link href="#">Components</Breadcrumb.Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Separator />
-              <Breadcrumb.Item>
-                <Breadcrumb.CurrentLink>Props</Breadcrumb.CurrentLink>
-              </Breadcrumb.Item>
-            </Breadcrumb.List>
-          </Breadcrumb.Root>
-
-          <Carousel.Root
-            loop={true}
-            slideCount={images.length}
-            w={"350px"}
-            maxW={"350px"}
-            flexShrink={0}
-            gap={4}
-            pos={"relative"}
-          >
-            <Carousel.Control>
-              <Carousel.ItemGroup width="full">
-                {images.map((src, index) => (
-                  <Carousel.Item key={index} index={index}>
-                    <Image
-                      src={src}
-                      alt={`Product ${index + 1}`}
-                      objectFit="cover"
-                      aspectRatio={16 / 9}
-                      maxH="72vh"
-                      w="full"
-                    />
-                  </Carousel.Item>
-                ))}
-              </Carousel.ItemGroup>
-
-              <HStack
-                align={"center"}
-                justify={"space-between"}
-                w={"full"}
-                px={2}
-                pos={"absolute"}
-                top={"50%"}
-                transform={"translateY(-50%)"}
-              >
-                <Carousel.PrevTrigger asChild>
-                  <Carousel.ActionButton
-                    color={"white"}
-                    borderColor={"border.subtle"}
-                    _hover={{
-                      bg: "an1",
-                    }}
-                  >
-                    <LuArrowLeft />
-                  </Carousel.ActionButton>
-                </Carousel.PrevTrigger>
-
-                <Carousel.NextTrigger asChild>
-                  <Carousel.ActionButton
-                    color={"white"}
-                    borderColor={"border.subtle"}
-                    _hover={{
-                      bg: "an1",
-                    }}
-                  >
-                    <LuArrowRight />
-                  </Carousel.ActionButton>
-                </Carousel.NextTrigger>
-              </HStack>
-
-              <Box pos={"absolute"} bottom={4} w={"full"}>
-                <Carousel.Indicators
-                  bg={"bodyLight"}
-                  boxSize={1.5}
-                  transition={"200ms"}
-                  transformOrigin={"center"}
-                  _current={{
-                    width: 5,
-                    opacity: 1,
-                  }}
-                />
-              </Box>
-            </Carousel.Control>
-          </Carousel.Root>
-
-          <Collapsible.Root collapsedHeight={"100px"} w={"200px"}>
-            <Collapsible.Content
-            // _closed={{
-            //   shadow: "inset 0 -12px 12px -12px var(--shadow-color)",
-            //   shadowColor: "red",
-            // }}
-            >
-              <VStack padding={4}>
-                <P>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-                  consequatur saepe obcaecati facere ea, debitis neque odit nemo
-                  dicta nisi modi maxime ducimus, a vel in voluptate ratione
-                  reprehenderit odio?
-                </P>
-              </VStack>
-            </Collapsible.Content>
-
-            <Collapsible.Trigger asChild mt={4}>
-              <Button variant={"outline"} size={"sm"}>
-                <Collapsible.Context>
-                  {(api) => (api.open ? "Show Less" : "Show More")}
-                </Collapsible.Context>
-
-                <Collapsible.Indicator
-                  transition={"200ms"}
-                  _open={{ transform: "rotate(180deg)" }}
-                >
-                  <AppIcon icon={ChevronDownIcon} />
-                </Collapsible.Indicator>
-              </Button>
-            </Collapsible.Trigger>
-          </Collapsible.Root>
-
-          <Steps.Root
-            defaultStep={1}
-            count={steps.length}
-            maxW={"400px"}
-            size={"sm"}
-          >
-            <Steps.List>
-              {steps.map((step, index) => (
-                <Steps.Item key={index} index={index} title={step.title}>
-                  <Steps.Indicator />
-                  <Steps.Title>{step.title}</Steps.Title>
-                  <Steps.Separator />
-                </Steps.Item>
-              ))}
-            </Steps.List>
-
-            {steps.map((step, index) => (
-              <Steps.Content key={index} index={index}>
-                <P>{step.description}</P>
-              </Steps.Content>
-            ))}
-
-            <Steps.CompletedContent>
-              <P>All steps are complete!</P>
-            </Steps.CompletedContent>
-
-            <ButtonGroup size={"sm"} variant={"outline"} justify={"start"}>
-              <Steps.PrevTrigger asChild>
-                <Button>Prev</Button>
-              </Steps.PrevTrigger>
-
-              <Steps.NextTrigger asChild>
-                <Button>Next</Button>
-              </Steps.NextTrigger>
-            </ButtonGroup>
-          </Steps.Root>
-
-          <Tabs.Root defaultValue="members">
-            <Tabs.List>
-              {tabs.map((tab, index) => (
-                <Tabs.Trigger
-                  key={index}
-                  value={tab.triggerLabel.toLowerCase()}
-                >
-                  <AppIcon icon={tab.icon} />
-
-                  {tab.triggerLabel}
-                </Tabs.Trigger>
-              ))}
-            </Tabs.List>
-
-            {tabs.map((tab, index) => (
-              <Tabs.Content key={index} value={tab.triggerLabel.toLowerCase()}>
-                Manage your {tab.triggerLabel}
-              </Tabs.Content>
-            ))}
-          </Tabs.Root>
-        </HStack>
-      </Container.Body>
-    </Container.Root>
+  const panelA = (
+    <Splitter.Panel
+      key={"a"}
+      id={"a"}
+      defaultSize={splitterSize[0]}
+      minSize={20}
+    >
+      <Center boxSize={"full"} textStyle={"2xl"}>
+        Panel A
+      </Center>
+    </Splitter.Panel>
   );
-};
 
-export const Feedback = () => {
-  const EMOJI_KEYS: EmojiVariant[] = [
-    "poker",
-    "happy",
-    "laugh",
-    "funny",
-    "cool",
-    "love",
-    "thumbUp",
-    "speechless",
-    "rollingEyes",
-    "thinking",
-    "embarassed",
-    "surprised",
-    "scream",
-    "shout",
-    "sad",
-    "cry",
-    "sulk",
-    "angry",
-    "wicked",
-  ];
+  const resizeTrigger = (
+    <Splitter.ResizeTrigger
+      key={"trigger"}
+      id={"a:b"}
+      onDoubleClick={() => {
+        setSplitterSize("demo-layout", DEFAULT_DEMO_SPLITTER_SIZE);
+      }}
+    />
+  );
+
+  const panelB = (
+    <Splitter.Panel
+      key={"b"}
+      id={"b"}
+      defaultSize={splitterSize[1]}
+      minSize={20}
+    >
+      <Center boxSize={"full"} textStyle={"2xl"}>
+        Panel B
+      </Center>
+    </Splitter.Panel>
+  );
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Feedback"}
-          icon={MessageSquareIcon}
-          description={
-            "Indikator progress, skeleton loading, dan berbagai state visual"
-          }
-        />
-
-        <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
-          <HStack
-            w={"full"}
-            wrap={"wrap"}
-            align={"center"}
-            justify={"start"}
-            gap={6}
-          >
-            <StateNoData />
-
-            <StateAccessDenied />
-
-            <StateNoResult />
-
-            <StateRetry />
-          </HStack>
-
-          <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={6}>
-            <HStack gap={4}>
-              <ProgressCircle.Root value={16} size={"xl"}>
-                <ProgressCircle.Circle>
-                  <ProgressCircle.Track />
-                  <ProgressCircle.Range />
-                </ProgressCircle.Circle>
-
-                <AbsoluteCenter>
-                  <ProgressCircle.ValueText />
-                </AbsoluteCenter>
-              </ProgressCircle.Root>
-
-              <ProgressCircle.Root value={null}>
-                <ProgressCircle.Circle>
-                  <ProgressCircle.Track />
-                  <ProgressCircle.Range strokeLinecap={"round"} />
-                </ProgressCircle.Circle>
-
-                <AbsoluteCenter>
-                  <ProgressCircle.ValueText />
-                </AbsoluteCenter>
-              </ProgressCircle.Root>
-            </HStack>
-
-            <VStack gap={4} w={"200px"}>
-              <Progress.Root striped animated>
-                <Progress.Track>
-                  <Progress.Range />
-                </Progress.Track>
-              </Progress.Root>
-
-              <Progress.Root w={"200px"}>
-                <Progress.Track>
-                  <Progress.Range />
-                </Progress.Track>
-              </Progress.Root>
-
-              <Progress.Root w={"200px"} value={null}>
-                <Progress.Track>
-                  <Progress.Range />
-                </Progress.Track>
-              </Progress.Root>
-            </VStack>
-          </HStack>
-
-          <VStack gap={4} align={"start"}>
-            <HStack align={"center"} gap={4}>
-              <SkeletonCircle w={"40px"} h={"40px"} />
-
-              <VStack gap={2} align={"start"}>
-                <SkeletonText w={"200px"} noOfLines={2} />
-              </VStack>
-            </HStack>
-
-            <Skeleton w={"full"} h={"100px"} />
-          </VStack>
+      <Container.Body gap={3} p={4}>
+        <HStack align={"center"} gap={2} w={"full"} pb={1}>
+          <AppIcon icon={LayoutGridIcon} size={"md"} color={"colorPalette.fg"} />
+          <P fontSize={"md"} fontWeight={"semibold"}>
+            Splitter (Layout)
+          </P>
         </HStack>
 
-        <VStack
+        <HStack
+          wrap={"wrap"}
+          align={"center"}
+          justify={"start"}
           gap={4}
+          h={"240px"}
           w={"full"}
-          borderTop={"1px solid"}
-          borderColor={"border.subtle"}
-          pt={4}
-          align={"start"}
         >
-          <P fontWeight={"semibold"}>{"Emoji"}</P>
-          <VStack gap={4} w={"full"} align={"start"}>
-            <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
-              {EMOJI_KEYS.map((key) => {
-                return (
-                  <VStack gap={1} key={key}>
-                    <Emoji variant={key} boxSize={48} />
-                    <P fontSize={"2xs"} color={"fg.muted"}>
-                      {key}
-                    </P>
-                  </VStack>
-                );
-              })}
-            </HStack>
-          </VStack>
-        </VStack>
+          <Splitter.Root
+            direction={"horizontal"}
+            defaultLayout={DEFAULT_DEMO_SPLITTER_SIZE}
+            onLayout={(layout: number[]) =>
+              setSplitterSize("demo-layout", layout)
+            }
+            borderWidth={"1px"}
+            h={"240px"}
+            w={"full"}
+          >
+            {[panelA, resizeTrigger, panelB]}
+          </Splitter.Root>
+        </HStack>
       </Container.Body>
     </Container.Root>
   );
 };
 
 export const DataDisplay = () => {
-  // Stores
-  const { theme } = useThemeStore();
 
-  // Response data - dynamicaly changes depends on filters (search, perPage per page, pagination, etc.)
   const dataList = {
     fields: [
       { th: "Name", sortable: true },
@@ -1687,10 +1253,7 @@ export const DataDisplay = () => {
       { th: "Account Status", sortable: true },
       { th: "Role", sortable: true },
       { th: "Department", sortable: true },
-      { th: "Phone Number", sortable: false },
       { th: "Location", sortable: true },
-      { th: "Join Date", sortable: true },
-      { th: "Last Active", sortable: true },
       { th: "Plan", sortable: true },
     ],
 
@@ -1703,10 +1266,7 @@ export const DataDisplay = () => {
           accountStatus: "Active",
           role: "Developer",
           department: "Engineering",
-          phoneNumber: "+62 812-1111-0001",
           location: "Semarang",
-          joinDate: "2024-01-10",
-          lastActive: "2 hours ago",
           plan: "Pro",
         },
         columns: [
@@ -1715,272 +1275,45 @@ export const DataDisplay = () => {
           { value: "Active", td: "Active" },
           { value: "Developer", td: "Developer" },
           { value: "Engineering", td: "Engineering" },
-          { value: "+62 812-1111-0001", td: "+62 812-1111-0001" },
           { value: "Semarang", td: "Semarang" },
-          { value: "2024-01-10", td: "2024-01-10" },
-          { value: "2 hours ago", td: "2 hours ago" },
           { value: "Pro", td: "Pro" },
         ],
       },
       {
         id: "2",
         data: {
-          name: "Jolitos",
-          email: "jolitos@email.com",
-          accountStatus: "Suspended",
+          name: "Budi Santoso",
+          email: "budi@email.com",
+          accountStatus: "Active",
           role: "Designer",
-          department: "Product",
-          phoneNumber: "+62 812-1111-0002",
+          department: "Design",
           location: "Jakarta",
-          joinDate: "2023-11-22",
-          lastActive: "3 days ago",
-          plan: "Basic",
+          plan: "Enterprise",
         },
         columns: [
-          { value: "Jolitos", td: "Jolitos" },
-          { value: "jolitos@email.com", td: "jolitos@email.com" },
-          { value: "Suspended", td: "Suspended" },
+          { value: "Budi Santoso", td: "Budi Santoso" },
+          { value: "budi@email.com", td: "budi@email.com" },
+          { value: "Active", td: "Active" },
           { value: "Designer", td: "Designer" },
-          { value: "Product", td: "Product" },
-          { value: "+62 812-1111-0002", td: "+62 812-1111-0002" },
+          { value: "Design", td: "Design" },
           { value: "Jakarta", td: "Jakarta" },
-          { value: "2023-11-22", td: "2023-11-22" },
-          { value: "3 days ago", td: "3 days ago" },
-          { value: "Basic", td: "Basic" },
-        ],
-      },
-      {
-        id: "3",
-        data: {
-          name: "Wazawsky",
-          email: "wazawsky@email.com",
-          accountStatus: "Suspended",
-          role: "QA Engineer",
-          department: "Engineering",
-          phoneNumber: "+62 812-1111-0003",
-          location: "Bandung",
-          joinDate: "2023-08-15",
-          lastActive: "1 week ago",
-          plan: "Free",
-        },
-        columns: [
-          { value: "Wazawsky", td: "Wazawsky" },
-          { value: "wazawsky@email.com", td: "wazawsky@email.com" },
-          { value: "Suspended", td: "Suspended" },
-          { value: "QA Engineer", td: "QA Engineer" },
-          { value: "Engineering", td: "Engineering" },
-          { value: "+62 812-1111-0003", td: "+62 812-1111-0003" },
-          { value: "Bandung", td: "Bandung" },
-          { value: "2023-08-15", td: "2023-08-15" },
-          { value: "1 week ago", td: "1 week ago" },
-          { value: "Free", td: "Free" },
-        ],
-      },
-      {
-        id: "4",
-        data: {
-          name: "Rasenta",
-          email: "rasenta@email.com",
-          accountStatus: "Active",
-          role: "Product Manager",
-          department: "Product",
-          phoneNumber: "+62 812-1111-0004",
-          location: "Surabaya",
-          joinDate: "2024-02-01",
-          lastActive: "5 minutes ago",
-          plan: "Pro",
-        },
-        columns: [
-          { value: "Rasenta", td: "Rasenta" },
-          { value: "rasenta@email.com", td: "rasenta@email.com" },
-          { value: "Active", td: "Active" },
-          { value: "Product Manager", td: "Product Manager" },
-          { value: "Product", td: "Product" },
-          { value: "+62 812-1111-0004", td: "+62 812-1111-0004" },
-          { value: "Surabaya", td: "Surabaya" },
-          { value: "2024-02-01", td: "2024-02-01" },
-          { value: "5 minutes ago", td: "5 minutes ago" },
-          { value: "Pro", td: "Pro" },
-        ],
-      },
-      {
-        id: "5",
-        data: {
-          name: "Dhewangga",
-          email: "dhewangga@email.com",
-          accountStatus: "Pending",
-          role: "Marketing",
-          department: "Marketing",
-          phoneNumber: "+62 812-1111-0005",
-          location: "Yogyakarta",
-          joinDate: "2024-03-18",
-          lastActive: "1 day ago",
-          plan: "Basic",
-        },
-        columns: [
-          { value: "Dhewangga", td: "Dhewangga" },
-          { value: "dhewangga@email.com", td: "dhewangga@email.com" },
-          { value: "Pending", td: "Pending" },
-          { value: "Marketing", td: "Marketing" },
-          { value: "Marketing", td: "Marketing" },
-          { value: "+62 812-1111-0005", td: "+62 812-1111-0005" },
-          { value: "Yogyakarta", td: "Yogyakarta" },
-          { value: "2024-03-18", td: "2024-03-18" },
-          { value: "1 day ago", td: "1 day ago" },
-          { value: "Basic", td: "Basic" },
-        ],
-      },
-      {
-        id: "6",
-        data: {
-          name: "Kirania",
-          email: "kirania@email.com",
-          accountStatus: "Active",
-          role: "Developer",
-          department: "Engineering",
-          phoneNumber: "+62 812-1111-0006",
-          location: "Semarang",
-          joinDate: "2023-12-05",
-          lastActive: "10 minutes ago",
-          plan: "Pro",
-        },
-        columns: [
-          { value: "Kirania", td: "Kirania" },
-          { value: "kirania@email.com", td: "kirania@email.com" },
-          { value: "Active", td: "Active" },
-          { value: "Developer", td: "Developer" },
-          { value: "Engineering", td: "Engineering" },
-          { value: "+62 812-1111-0006", td: "+62 812-1111-0006" },
-          { value: "Semarang", td: "Semarang" },
-          { value: "2023-12-05", td: "2023-12-05" },
-          { value: "10 minutes ago", td: "10 minutes ago" },
-          { value: "Pro", td: "Pro" },
-        ],
-      },
-      {
-        id: "7",
-        data: {
-          name: "Bramasetya",
-          email: "bramasetya@email.com",
-          accountStatus: "Suspended",
-          role: "Sales",
-          department: "Sales",
-          phoneNumber: "+62 812-1111-0007",
-          location: "Medan",
-          joinDate: "2023-09-30",
-          lastActive: "2 weeks ago",
-          plan: "Free",
-        },
-        columns: [
-          { value: "Bramasetya", td: "Bramasetya" },
-          { value: "bramasetya@email.com", td: "bramasetya@email.com" },
-          { value: "Suspended", td: "Suspended" },
-          { value: "Sales", td: "Sales" },
-          { value: "Sales", td: "Sales" },
-          { value: "+62 812-1111-0007", td: "+62 812-1111-0007" },
-          { value: "Medan", td: "Medan" },
-          { value: "2023-09-30", td: "2023-09-30" },
-          { value: "2 weeks ago", td: "2 weeks ago" },
-          { value: "Free", td: "Free" },
-        ],
-      },
-      {
-        id: "8",
-        data: {
-          name: "Larasati",
-          email: "larasati@email.com",
-          accountStatus: "Active",
-          role: "HR",
-          department: "Human Resources",
-          phoneNumber: "+62 812-1111-0008",
-          location: "Jakarta",
-          joinDate: "2024-01-25",
-          lastActive: "30 minutes ago",
-          plan: "Basic",
-        },
-        columns: [
-          { value: "Larasati", td: "Larasati" },
-          { value: "larasati@email.com", td: "larasati@email.com" },
-          { value: "Active", td: "Active" },
-          { value: "HR", td: "HR" },
-          { value: "Human Resources", td: "Human Resources" },
-          { value: "+62 812-1111-0008", td: "+62 812-1111-0008" },
-          { value: "Jakarta", td: "Jakarta" },
-          { value: "2024-01-25", td: "2024-01-25" },
-          { value: "30 minutes ago", td: "30 minutes ago" },
-          { value: "Basic", td: "Basic" },
-        ],
-      },
-      {
-        id: "9",
-        data: {
-          name: "Wirandika",
-          email: "wirandika@email.com",
-          accountStatus: "Pending",
-          role: "Support",
-          department: "Customer Support",
-          phoneNumber: "+62 812-1111-0009",
-          location: "Malang",
-          joinDate: "2024-02-14",
-          lastActive: "4 hours ago",
-          plan: "Free",
-        },
-        columns: [
-          { value: "Wirandika", td: "Wirandika" },
-          { value: "wirandika@email.com", td: "wirandika@email.com" },
-          { value: "Pending", td: "Pending" },
-          { value: "Support", td: "Support" },
-          { value: "Customer Support", td: "Customer Support" },
-          { value: "+62 812-1111-0009", td: "+62 812-1111-0009" },
-          { value: "Malang", td: "Malang" },
-          { value: "2024-02-14", td: "2024-02-14" },
-          { value: "4 hours ago", td: "4 hours ago" },
-          { value: "Free", td: "Free" },
-        ],
-      },
-      {
-        id: "10",
-        data: {
-          name: "Anindita",
-          email: "anindita@email.com",
-          accountStatus: "Active",
-          role: "Developer",
-          department: "Engineering",
-          phoneNumber: "+62 812-1111-0010",
-          location: "Semarang",
-          joinDate: "2023-10-08",
-          lastActive: "1 hour ago",
-          plan: "Pro",
-        },
-        columns: [
-          { value: "Anindita", td: "Anindita" },
-          { value: "anindita@email.com", td: "anindita@email.com" },
-          { value: "Active", td: "Active" },
-          { value: "Developer", td: "Developer" },
-          { value: "Engineering", td: "Engineering" },
-          { value: "+62 812-1111-0010", td: "+62 812-1111-0010" },
-          { value: "Semarang", td: "Semarang" },
-          { value: "2023-10-08", td: "2023-10-08" },
-          { value: "1 hour ago", td: "1 hour ago" },
-          { value: "Pro", td: "Pro" },
+          { value: "Enterprise", td: "Enterprise" },
         ],
       },
     ],
 
     batchActions: [
-      ({ selectedItemIds, selectedItems }) => {
-        return (
-          <Button
-            disabled={isEmptyArray(selectedItems)}
-            onClick={() => {
-              console.log({ selectedItemIds, selectedItems });
-            }}
-          >
-            <AppIcon icon={IconTrash} />
-            Delete
-          </Button>
-        );
-      },
+      ({ selectedItemIds, clearSelectedItems }) => (
+        <Button
+          colorPalette={"red"}
+          onClick={() => {
+            clearSelectedItems();
+          }}
+        >
+          <AppIcon icon={TrashIcon} />
+          Hapus Terpilih ({selectedItemIds.length})
+        </Button>
+      ),
     ] as DataViewBatchActionsGenerator[],
 
     itemActions: [
@@ -2029,105 +1362,210 @@ export const DataDisplay = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Data Display"}
-          icon={TableIcon}
-          description={
-            "Tabel data interaktif dengan pagination, sorting, search, dan batch actions"
-          }
-        />
+      <Container.Body gap={3} p={4}>
+        <HStack align={"center"} gap={2} w={"full"} pb={1}>
+          <AppIcon icon={TableIcon} size={"md"} color={"colorPalette.fg"} />
+          <P fontSize={"md"} fontWeight={"semibold"}>
+            DataViewTable
+          </P>
+        </HStack>
 
-        <VStack gap={2} bg={"bg.canvas"} px={[4, null, 10]} py={4}>
-          <HStack
-            wrap={"wrap"}
-            align={"center"}
-            justify={"space-between"}
-            gap={4}
-            p={4}
-            bg={"bg.body"}
-            rounded={theme.radii.container}
-            shadow={"sm"}
+        <VStack align={"stretch"} gap={2} w={"full"}>
+          <DataViewTable.Root
+            headers={dataList.fields}
+            items={dataList.items}
+            batchActions={dataList.batchActions}
+            itemActions={dataList.itemActions}
           >
-            <P fontSize={"xl"} fontWeight={"medium"} ml={1}>
-              Feature Title
-            </P>
+            <DataViewTable.Header />
+            <DataViewTable.Body />
+          </DataViewTable.Root>
 
-            <HStack wrap={"wrap"} align={"center"} gap={2}>
-              <SearchInput placeholder={"Search..."} />
-
-              <Button variant={"outline"}>
-                <AppIcon icon={IconFilter2} />
-                Filter
-              </Button>
-
-              <Button variant={"outline"}>
-                <AppIcon icon={IconDownload} />
-                Export
-              </Button>
-
-              <IconButton primary>
-                <AppIcon icon={IconPlus} />
-              </IconButton>
-            </HStack>
-          </HStack>
-
-          <VStack>
-            <DataViewTable.Root
-              headers={dataList.fields}
-              items={dataList.items}
-              batchActions={dataList.batchActions}
-              itemActions={dataList.itemActions}
-              // maxH={"500px"}
-            >
-              <DataViewTable.Header />
-
-              <DataViewTable.Body />
-            </DataViewTable.Root>
-
-            <DataViewFooter
-              pageSize={pageSize}
-              setPageSize={setPageSize}
-              page={page}
-              setPage={setPage}
-              currentDataLength={dataList.items.length}
-              totalData={100}
-            />
-          </VStack>
+          <DataViewFooter
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            page={page}
+            setPage={setPage}
+            currentDataLength={dataList.items.length}
+            totalData={100}
+          />
         </VStack>
       </Container.Body>
     </Container.Root>
   );
 };
 
-export const Utilities = () => {
-  const data = async () => {
-    const res = await fetch(
-      "https://fastly.picsum.photos/id/718/2880/1800.jpg?hmac=JZydaTGOvhjzXYg-o7Y5fytAXeTnAnCt_cadeQ3Mzjo",
-    );
-    return res.blob();
+// ---------------------------------------------------------------------------
+// Color Palettes
+// ---------------------------------------------------------------------------
+
+const COLOR_PALETTES: DemoPaletteItem[] = [
+  { palette: "neutral", label: "Neutral", category: "Monochrome" },
+  { palette: "grey", label: "Grey", category: "Monochrome" },
+  { palette: "cream", label: "Cream", category: "Earth & Warm" },
+  { palette: "caramel", label: "Caramel", category: "Earth & Warm" },
+  { palette: "mocha", label: "Mocha", category: "Earth & Warm" },
+  { palette: "brown", label: "Brown", category: "Earth & Warm" },
+  { palette: "maroon", label: "Maroon", category: "Red & Warm" },
+  { palette: "red", label: "Red", category: "Red & Warm" },
+  { palette: "orange", label: "Orange", category: "Red & Warm" },
+  { palette: "amber", label: "Amber", category: "Red & Warm" },
+  { palette: "yellow", label: "Yellow", category: "Yellow & Green" },
+  { palette: "lime", label: "Lime", category: "Yellow & Green" },
+  { palette: "mint", label: "Mint", category: "Yellow & Green" },
+  { palette: "green", label: "Green", category: "Yellow & Green" },
+  { palette: "emerald", label: "Emerald", category: "Yellow & Green" },
+  { palette: "teal", label: "Teal", category: "Cyan & Blue" },
+  { palette: "cyan", label: "Cyan", category: "Cyan & Blue" },
+  { palette: "sky", label: "Sky", category: "Cyan & Blue" },
+  { palette: "blue", label: "Blue", category: "Cyan & Blue" },
+  { palette: "indigo", label: "Indigo", category: "Purple & Pink" },
+  { palette: "violet", label: "Violet", category: "Purple & Pink" },
+  { palette: "purple", label: "Purple", category: "Purple & Pink" },
+  { palette: "fuchsia", label: "Fuchsia", category: "Purple & Pink" },
+  { palette: "pink", label: "Pink", category: "Purple & Pink" },
+  { palette: "rose", label: "Rose", category: "Purple & Pink" },
+  { palette: "coral", label: "Coral", category: "Red & Warm" },
+  { palette: "olive", label: "Olive", category: "Yellow & Green" },
+  { palette: "sage", label: "Sage", category: "Yellow & Green" },
+  { palette: "forest", label: "Forest", category: "Yellow & Green" },
+  { palette: "navy", label: "Navy", category: "Cyan & Blue" },
+  { palette: "plum", label: "Plum", category: "Purple & Pink" },
+  { palette: "berry", label: "Berry", category: "Purple & Pink" },
+];
+
+const COLOR_STEPS = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+] as const;
+
+const ColorPalettes = () => {
+  // States
+  const [copiedToken, setCopiedToken] = useState<string | null>(null);
+
+  // Handlers
+  const handleCopy = (token: string) => {
+    void navigator.clipboard.writeText(token);
+    setCopiedToken(token);
+    toast.create({
+      title: "Token disalin",
+      description: token,
+      variant: "info",
+    });
+    setTimeout(() => {
+      setCopiedToken(null);
+    }, 2000);
   };
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={4} p={5}>
-        <DemoSectionHeader
-          title={"Utilities"}
-          icon={WrenchIcon}
-          description={
-            "Utilitas download berkas, formatting angka, dan helper pendukung"
-          }
-        />
-
-        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
-          <DownloadTrigger
-            data={data}
-            fileName={"wolf-2k.jpg"}
-            mimeType={"image/jpeg"}
-          >
-            <Button>Download trigger</Button>
-          </DownloadTrigger>
+      <Container.Body gap={3} p={4} align={"stretch"}>
+        <HStack align={"center"} gap={2} w={"full"} pb={1}>
+          <AppIcon icon={PaletteIcon} size={"md"} color={"colorPalette.fg"} />
+          <P fontSize={"md"} fontWeight={"semibold"}>
+            Color Palettes
+          </P>
         </HStack>
+
+        <VStack align={"stretch"} gap={3} w={"full"}>
+          {COLOR_PALETTES.map((item) => {
+            return (
+              <VStack
+                key={item.palette}
+                align={"stretch"}
+                gap={2}
+                p={3}
+                rounded={"md"}
+                border={"1px solid"}
+                borderColor={"bg.canvas"}
+                bg={"bg.subtle"}
+              >
+                <HStack
+                  justify={"space-between"}
+                  align={"center"}
+                  w={"full"}
+                  wrap={"wrap"}
+                >
+                  <HStack align={"center"} gap={2}>
+                    <Box
+                      boxSize={4}
+                      rounded={"full"}
+                      bg={`${item.palette}.500`}
+                      border={"1px solid"}
+                      borderColor={"border.subtle"}
+                    />
+                    <P fontWeight={"semibold"} fontSize={"sm"}>
+                      {item.label}
+                    </P>
+                    <P fontSize={"xs"} color={"fg.muted"}>
+                      ({item.palette})
+                    </P>
+                  </HStack>
+                  <P fontSize={"xs"} color={"fg.muted"}>
+                    {item.category}
+                  </P>
+                </HStack>
+
+                <HStack
+                  gap={1}
+                  w={"full"}
+                  h={10}
+                  rounded={"sm"}
+                  overflow={"hidden"}
+                >
+                  {COLOR_STEPS.map((step) => {
+                    const token = `colors.${item.palette}.${step}`;
+                    const isCopied = copiedToken === token;
+                    return (
+                      <Box
+                        key={step}
+                        flex={1}
+                        h={"full"}
+                        bg={`${item.palette}.${step}`}
+                        position={"relative"}
+                        cursor={"pointer"}
+                        title={`${token} — Klik untuk salin`}
+                        transition={"transform 0.15s ease"}
+                        _hover={{
+                          transform: "scaleY(1.15)",
+                          zIndex: 1,
+                        }}
+                        onClick={() => handleCopy(token)}
+                      >
+                        <Center
+                          position={"absolute"}
+                          inset={0}
+                          opacity={0}
+                          _hover={{ opacity: 1 }}
+                          bg={"blackAlpha.500"}
+                          transition={"opacity 0.15s ease"}
+                        >
+                          <P
+                            fontSize={"2xs"}
+                            fontWeight={"bold"}
+                            color={"white"}
+                            userSelect={"none"}
+                          >
+                            {isCopied ? "✓" : step}
+                          </P>
+                        </Center>
+                      </Box>
+                    );
+                  })}
+                </HStack>
+              </VStack>
+            );
+          })}
+        </VStack>
       </Container.Body>
     </Container.Root>
   );
