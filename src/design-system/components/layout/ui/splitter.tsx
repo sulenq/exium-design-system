@@ -709,19 +709,19 @@ const SplitterResizeTrigger = forwardRef<
         cursor={isVertical ? "row-resize" : "col-resize"}
         outline={"none"}
         border={"none"}
-        bg={isPlain ? "transparent" : "border.subtle"}
+        bg={"transparent"}
         style={{
           touchAction: "none",
           userSelect: "none",
           WebkitUserSelect: "none",
         }}
         css={{
-          "&:hover [data-part='highlight-bar'], &[data-separator='hover'] [data-part='highlight-bar'], &[data-separator='active'] [data-part='highlight-bar']":
+          "&:hover [data-part='line'], &[data-separator='hover'] [data-part='line'], &[data-separator='active'] [data-part='line']":
             {
               backgroundColor:
                 isPlain || transparentTrigger
                   ? "transparent"
-                  : "var(--chakra-colors-border-subtle)",
+                  : "var(--chakra-colors-border-emphasized)",
             },
           "&:hover [data-part='indicator'], &[data-separator='hover'] [data-part='indicator'], &[data-separator='active'] [data-part='indicator']":
             {
@@ -738,19 +738,29 @@ const SplitterResizeTrigger = forwardRef<
         }}
         {...restProps}
       >
-        {/* Hover highlight bar - 8px width/height hit target */}
+        {/* Thin visual line in the center of the 8px transparent hit area */}
         <Box
-          data-part={"highlight-bar"}
+          data-part={"line"}
           pos={"absolute"}
-          top={isVertical ? "-3.5px" : 0}
-          bottom={isVertical ? "-3.5px" : 0}
-          left={isVertical ? 0 : "-3.5px"}
-          right={isVertical ? 0 : "-3.5px"}
-          zIndex={0}
+          w={isVertical ? "full" : "1px"}
+          h={isVertical ? "1px" : "full"}
+          left={isVertical ? 0 : "50%"}
+          top={isVertical ? "50%" : 0}
+          transform={isVertical ? "translateY(-50%)" : "translateX(-50%)"}
+          bg={isPlain || transparentTrigger ? "transparent" : "border.subtle"}
           pointerEvents={"none"}
           transition={"background 150ms ease"}
           _groupHover={{
-            bg: isPlain || transparentTrigger ? "transparent" : "border.subtle",
+            bg:
+              isPlain || transparentTrigger
+                ? "transparent"
+                : "border.emphasized",
+          }}
+          _groupActive={{
+            bg:
+              isPlain || transparentTrigger
+                ? "transparent"
+                : "border.emphasized",
           }}
         />
         {children ?? (
