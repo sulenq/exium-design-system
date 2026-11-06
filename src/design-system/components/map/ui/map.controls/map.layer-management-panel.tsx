@@ -168,7 +168,7 @@ function MapLayerManagementPanelComponent<
                   <IconButton size={"xs"}>
                     <AppIcon icon={LayersIcon} boxSize={5} />
                   </IconButton>
-                  <CountBadge count={enabledCount} floating={true} />
+                  <CountBadge floating={true}>{enabledCount}</CountBadge>
                 </Box>
               </Tooltip>
             </MapOverlayContainer>

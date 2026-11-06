@@ -402,7 +402,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
 
   count_badge: {
     key: "count_badge",
-    title: "Count Badge",
+    title: "CountBadge",
     category: "Typography & Display",
     description:
       "Badge penghitung angka dengan pemformatan otomatis batas maksimal (misal: 99+).",
@@ -410,16 +410,17 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { CountBadge } from "@/design-system/components/typography/ui/count-badge";',
     component: CountBadge,
     defaultProps: {
-      count: 120,
+      children: 5,
       max: 99,
       size: "xs",
     },
     propsSpec: [
       {
-        name: "count",
+        name: "children",
         type: "number",
-        defaultValue: 120,
-        description: "Jumlah angka yang ditampilkan.",
+        defaultValue: undefined,
+        required: true,
+        description: "Nilai angka yang ditampilkan (wajib number). Nilai di atas max akan diformat max+.",
         controlKind: "number",
       },
       {
@@ -440,10 +441,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     renderPlayground: (props) => (
       <CountBadge
-        count={Number(props.count) || 0}
         max={Number(props.max) || 99}
         size={(props.size as "xs" | "sm" | "md") || "xs"}
-      />
+      >
+        {Number(props.children) || 0}
+      </CountBadge>
     ),
   },
 
@@ -488,7 +490,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "placeholder",
         type: "string",
-        defaultValue: "Enter text here...",
+        defaultValue: undefined,
         description: "Teks placeholder saat input kosong.",
         controlKind: "text",
       },
@@ -547,7 +549,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "defaultValue",
         type: "number",
-        defaultValue: 120000,
+        defaultValue: undefined,
         description: "Nilai awal dalam milidetik (ms).",
         controlKind: "number",
       },
@@ -622,7 +624,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "value",
         type: "number",
-        defaultValue: 10,
+        defaultValue: undefined,
         description: "Nilai numerik saat ini.",
         controlKind: "number",
       },
@@ -695,7 +697,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "placeholder",
         type: "string",
-        defaultValue: "Enter secret password...",
+        defaultValue: undefined,
         description: "Teks placeholder saat field kosong.",
         controlKind: "text",
       },
@@ -740,7 +742,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "placeholder",
         type: "string",
-        defaultValue: "Pilih status...",
+        defaultValue: undefined,
         description: "Placeholder saat belum memilih opsi.",
         controlKind: "text",
       },
@@ -782,7 +784,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "placeholder",
         type: "string",
-        defaultValue: "Pilih kategori...",
+        defaultValue: undefined,
         description: "Placeholder trigger.",
         controlKind: "text",
       },
@@ -931,7 +933,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "placeholder",
         type: "string",
-        defaultValue: "Tuliskan keterangan di sini...",
+        defaultValue: undefined,
         description: "Placeholder textarea.",
         controlKind: "text",
       },
@@ -1229,7 +1231,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "placeholder",
         type: "string",
-        defaultValue: "Cari data di sini...",
+        defaultValue: undefined,
         description: "Teks bantuan pencarian.",
         controlKind: "text",
       },
@@ -1270,14 +1272,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "label",
         type: "string",
-        defaultValue: "Nama Lengkap",
+        defaultValue: undefined,
         description: "Label field.",
         controlKind: "text",
       },
       {
         name: "helperText",
         type: "string",
-        defaultValue: "Sesuai dengan KTP",
+        defaultValue: undefined,
         description: "Pesan pembantu di bawah field.",
         controlKind: "text",
       },
@@ -1320,7 +1322,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "value",
         type: "number",
-        defaultValue: 65,
+        defaultValue: undefined,
         description: "Nilai kemajuan (0-100).",
         controlKind: "number",
       },
@@ -1831,7 +1833,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "value",
         type: "string",
-        defaultValue: "https://volatil.atrbpn.go.id",
+        defaultValue: undefined, required: true,
         description: "Nilai string yang akan disalin (wajib).",
         controlKind: "text",
       },
@@ -1932,7 +1934,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "defaultValue",
         type: "string[]",
-        defaultValue: '["item-1"]',
+        defaultValue: undefined,
         description: "Item panel yang terbuka secara default.",
         controlKind: "text",
       },
@@ -2004,7 +2006,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "defaultValue",
         type: "string",
-        defaultValue: "overview",
+        defaultValue: undefined,
         description: "Nilai tab yang aktif pertama kali.",
         controlKind: "text",
       },
@@ -2095,7 +2097,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "count",
         type: "number",
-        defaultValue: 3,
+        defaultValue: undefined, required: true,
         description: "Jumlah total langkah proses (wajib).",
         controlKind: "number",
       },
@@ -2399,7 +2401,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "modalKey",
         type: "string",
-        defaultValue: "docs-dialog",
+        defaultValue: undefined, required: true,
         description: "Kunci identitas unik modal popup (wajib).",
         controlKind: "text",
       },
@@ -2455,7 +2457,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "modalKey",
         type: "string",
-        defaultValue: "docs-drawer",
+        defaultValue: undefined, required: true,
         description: "Kunci identitas unik drawer samping (wajib).",
         controlKind: "text",
       },
@@ -2557,7 +2559,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "content",
         type: "ReactNode",
-        defaultValue: "Tooltip info bantuan",
+        defaultValue: undefined, required: true,
         description: "Teks atau konten isi tooltip (wajib).",
         controlKind: "text",
       },
@@ -3141,14 +3143,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "href",
         type: "string",
-        defaultValue: "https://atrbpn.go.id",
+        defaultValue: undefined, required: true,
         description: "Alamat URL tujuan tautan (wajib).",
         controlKind: "text",
       },
       {
         name: "children",
         type: "ReactNode",
-        defaultValue: "Kunjungi Situs ATR BPN",
+        defaultValue: undefined, required: true,
         description: "Teks atau elemen anak tautan.",
         controlKind: "text",
       },
@@ -3187,7 +3189,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "name",
         type: "string",
-        defaultValue: "Sulenq Jolitos",
+        defaultValue: undefined,
         description: "Nama pengguna untuk fallback inisial.",
         controlKind: "text",
       },
@@ -3202,7 +3204,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "src",
         type: "string",
-        defaultValue: "",
+        defaultValue: undefined,
         description: "URL gambar foto profil pengguna.",
         controlKind: "text",
       },
@@ -3253,15 +3255,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "src",
         type: "string",
-        defaultValue:
-          "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&q=80",
+        defaultValue: undefined, required: true,
         description: "URL tautan sumber gambar (wajib).",
         controlKind: "text",
       },
       {
         name: "alt",
         type: "string",
-        defaultValue: "Contoh Gambar",
+        defaultValue: undefined,
         description: "Teks alternatif deskripsi gambar (wajib).",
         controlKind: "text",
       },

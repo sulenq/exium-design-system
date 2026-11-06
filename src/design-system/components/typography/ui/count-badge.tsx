@@ -9,7 +9,7 @@ import { useMemo } from "react";
 export const CountBadge = (props: CountBadgeProps) => {
   // Props
   const {
-    count,
+    children,
     max = 99,
     floating = false,
     floatProps,
@@ -23,11 +23,11 @@ export const CountBadge = (props: CountBadgeProps) => {
 
   // Derived Values
   const formattedCount = useMemo(() => {
-    if (count > max) {
+    if (children > max) {
       return `${max}+`;
     }
-    return String(count);
-  }, [count, max]);
+    return String(children);
+  }, [children, max]);
 
   const badgeContent = (
     <Badge
