@@ -12,6 +12,7 @@ import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
 import { Badge } from "@/design-system/components/typography/ui/badge";
 import { P } from "@/design-system/components/typography/ui/p";
+import { CodeBlock } from "@/features/design-system-v2-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-v2-docs/components/component-playground-container";
 import type { ComponentDocSpec } from "@/features/design-system-v2-docs/types/ds-docs-spec.type";
 import { ColorPaletteSelect } from "@/features/shared/components/color-palette.select";
@@ -95,18 +96,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
           <P fontSize={"xs"} color={"fg.subtle"} fontWeight={"semibold"}>
             {"CODE"}
           </P>
-          <pre
-            style={{
-              margin: 0,
-              fontFamily: "monospace",
-              fontSize: "13px",
-              whiteSpace: "pre-wrap",
-              wordBreak: "break-word",
-              color: "inherit",
-            }}
-          >
-            {generateUsageCode()}
-          </pre>
+          <CodeBlock code={generateUsageCode()} language={"tsx"} />
         </VStack>
 
         <Button size={"xs"} variant={"ghost"} onClick={handleCopyCode}>

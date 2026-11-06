@@ -279,11 +279,20 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
       {
         name: "variant",
-        type: '"solid" | "subtle" | "outline" | "ghost"',
+        type: '"ghost" | "solid" | "subtle" | "outline" | "blend" | "adaptive" | "frosted" | "glass"',
         defaultValue: "outline",
         description: "Gaya visual grup.",
         controlKind: "select",
-        options: ["solid", "subtle", "outline", "ghost"],
+        options: [
+          "ghost",
+          "solid",
+          "subtle",
+          "outline",
+          "blend",
+          "adaptive",
+          "frosted",
+          "glass",
+        ],
       },
     ],
     renderPlayground: (props) => (
@@ -295,43 +304,34 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           "outline"
         }
       >
-        <Button>First</Button>
-        <Button>Second</Button>
-        <Button>Third</Button>
+        <Button>{"First"}</Button>
+        <Button>{"Second"}</Button>
+        <Button>{"Third"}</Button>
       </ButtonGroup>
     ),
   },
 
   typography: {
     key: "typography",
-    title: "Typography (P)",
+    title: "P",
     category: "Typography & Display",
     description:
-      "Komponen teks standard dengan dukungan penyesuaian font size, weight, dan warna.",
+      "Komponen teks paragraf dasar dengan parsing HTML aman (tag <b>), pemotongan teks, dan pewarisan font.",
     importPath:
       'import { P } from "@/design-system/components/typography/ui/p";',
     component: P,
     defaultProps: {
-      children: "Exium Design System Typography Example",
-      fontSize: "md",
+      children: "Contoh teks paragraf menggunakan komponen P.",
       fontWeight: "normal",
-      color: "fg.default",
+      color: "fg",
     },
     propsSpec: [
       {
         name: "children",
         type: "ReactNode",
         defaultValue: undefined,
-        description: "Konten teks yang dipaparkan.",
+        description: "Konten teks paragraf. Mendukung string HTML inline seperti <b>bold</b>.",
         controlKind: "text",
-      },
-      {
-        name: "fontSize",
-        type: '"xs" | "sm" | "md" | "lg" | "xl" | "2xl"',
-        defaultValue: "md",
-        description: "Ukuran font.",
-        controlKind: "select",
-        options: ["xs", "sm", "md", "lg", "xl", "2xl"],
       },
       {
         name: "fontWeight",
@@ -340,6 +340,13 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         description: "Ketebalan font.",
         controlKind: "select",
         options: ["normal", "medium", "semibold", "bold"],
+      },
+      {
+        name: "color",
+        type: "string",
+        defaultValue: "fg",
+        description: "Warna teks semantik.",
+        controlKind: "text",
       },
     ],
   },
