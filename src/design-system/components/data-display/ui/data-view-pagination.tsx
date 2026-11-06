@@ -35,7 +35,6 @@ export const DataViewPagination = (props: DataViewPaginationProps) => {
 
       <IconButton
         variant={"ghost"}
-        size={"xs"}
         disabled={!canGoNext}
         aria-label={"Halaman Selanjutnya"}
         title={"Halaman Selanjutnya"}

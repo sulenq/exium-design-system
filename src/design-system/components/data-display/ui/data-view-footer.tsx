@@ -54,7 +54,6 @@ export const DataViewFooter = (props: DataViewFooterProps) => {
           <DataViewPageSize
             pageSize={pageSize}
             setPageSize={setPageSize}
-            size={"xs"}
           />
         </HStack>
 
@@ -72,7 +71,6 @@ export const DataViewFooter = (props: DataViewFooterProps) => {
             page={page}
             setPage={setPage}
             totalPage={totalPage}
-            size={"xs"}
           />
         </HStack>
       </HStack>

@@ -3,6 +3,8 @@
 
 body {
   font-family: var(--font-body), sans-serif;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-normal);
 }
 
 /* Prism syntax highlighting tokens */

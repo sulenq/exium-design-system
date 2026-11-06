@@ -204,10 +204,14 @@ export default function SelectInput(props: SelectProps) {
             textOverflow={"ellipsis"}
             display={"inline-block"}
             minW={0}
-            fontSize={props?.fontSize}
+            fontSize={props?.fontSize ?? "md"}
           />
 
-          {suffixLabel && <P>{suffixLabel}</P>}
+          {suffixLabel && (
+            <Box fontSize={props?.fontSize ?? "md"}>
+              {suffixLabel}
+            </Box>
+          )}
         </HStack>
 
         <HStack

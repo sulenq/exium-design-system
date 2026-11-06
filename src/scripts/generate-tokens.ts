@@ -65,6 +65,8 @@ function generateTokens() {
         themeVars.push(`  --text-${key}: var(--text-${key});`);
       }
     }
+    // Map Tailwind's default base text size to theme's md (14px)
+    themeVars.push(`  --text-base: var(--text-md);`);
   }
 
   // 5. Font Weights

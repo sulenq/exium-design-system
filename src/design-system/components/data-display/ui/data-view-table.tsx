@@ -532,7 +532,9 @@ const DataListTableRow = memo(
           >
             {renderTdCell
               ? renderTdCell(col, item, colIndex)
-              : (col.td ?? <P>{String(col.value ?? "-")}</P>)}
+              : typeof col.td === "string" || typeof col.td === "number"
+                ? <P>{col.td}</P>
+                : (col.td ?? <P>{String(col.value ?? "-")}</P>)}
           </HStack>
         ))}
 

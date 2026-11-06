@@ -37,6 +37,7 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
       title={title}
       minW={"120px"}
       w={"120px"}
+      fontSize={"md"}
       {...restProps}
     />
   );
