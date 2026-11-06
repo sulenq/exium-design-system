@@ -32,279 +32,279 @@ function MapLayerManagementPanelComponent<
   T extends GenericMapLayer = GenericMapLayer,
 >(props: MapLayerManagementPanelProps<T>) {
   // Props
-    const {
-      title,
-      tooltipContent = "Manajemen Layer",
-      badgeLabel,
-      emptyLabel = "Tidak ada data layer yang tersedia",
-      loadingLabel = "Memuat layer...",
-      errorTitle = "Gagal Memuat Layer",
-      errorMessage = "Terjadi kesalahan saat memuat data layer.",
-      layers,
-      isLoading,
-      isError,
-      error,
-      onRetry,
-      showSymbology = true,
-      onToggleLayer,
-      onFlyToLayer,
-      children,
-    } = props;
+  const {
+    title,
+    tooltipContent = "Manajemen Layer",
+    badgeLabel,
+    emptyLabel = "Tidak ada data layer yang tersedia",
+    loadingLabel = "Memuat layer...",
+    errorTitle = "Gagal Memuat Layer",
+    errorMessage = "Terjadi kesalahan saat memuat data layer.",
+    layers,
+    isLoading,
+    isError,
+    error,
+    onRetry,
+    showSymbology = true,
+    onToggleLayer,
+    onFlyToLayer,
+    children,
+  } = props;
 
-    // Stores
-    const {
-      enabledLayerIds,
-      enabledSymbologyLayerIds,
-      layerOpacities,
-      globalOpacity,
-      layerOrder,
-      toggleLayerId,
-      toggleSymbologyLayerId,
-      setLayerOpacity,
-      setGlobalOpacity,
-      setAllLayersEnabled,
-      setLayerOrder,
-      reorderLayer,
-    } = useMapLayerStore();
+  // Stores
+  const {
+    enabledLayerIds,
+    enabledSymbologyLayerIds,
+    layerOpacities,
+    globalOpacity,
+    layerOrder,
+    toggleLayerId,
+    toggleSymbologyLayerId,
+    setLayerOpacity,
+    setGlobalOpacity,
+    setAllLayersEnabled,
+    setLayerOrder,
+    reorderLayer,
+  } = useMapLayerStore();
 
-    // Contexts
-    const isSmallViewport = useIsSmallViewport();
+  // Contexts
+  const isSmallViewport = useIsSmallViewport();
 
-    // States
-    const [isOpen, setIsOpen] = useState(false);
+  // States
+  const [isOpen, setIsOpen] = useState(false);
 
-    // Effects — Initialize layerOrder when layers loaded if empty
-    useEffect(() => {
-      if (layers && layers.length > 0 && layerOrder.length === 0) {
-        const sortedByZIndex = [...layers].sort(
-          (a, b) => (b.zIndex ?? 0) - (a.zIndex ?? 0),
-        );
-        setLayerOrder(sortedByZIndex.map((l) => l.id));
+  // Effects — Initialize layerOrder when layers loaded if empty
+  useEffect(() => {
+    if (layers && layers.length > 0 && layerOrder.length === 0) {
+      const sortedByZIndex = [...layers].sort(
+        (a, b) => (b.zIndex ?? 0) - (a.zIndex ?? 0),
+      );
+      setLayerOrder(sortedByZIndex.map((l) => l.id));
+    }
+  }, [layers, layerOrder.length, setLayerOrder]);
+
+  // Derived Values — Sorted active layers reflecting zIndex / drag order
+  const orderedLayers = useMemo(() => {
+    const raw = layers ?? [];
+    if (layerOrder.length === 0) return raw;
+
+    const layerMap = new Map(raw.map((l) => [l.id, l]));
+    const ordered: T[] = [];
+
+    // Follow layerOrder (index 0 is visually on top)
+    for (const id of layerOrder) {
+      const item = layerMap.get(id);
+      if (item) {
+        ordered.push(item);
+        layerMap.delete(id);
       }
-    }, [layers, layerOrder.length, setLayerOrder]);
+    }
 
-    // Derived Values — Sorted active layers reflecting zIndex / drag order
-    const orderedLayers = useMemo(() => {
-      const raw = layers ?? [];
-      if (layerOrder.length === 0) return raw;
+    // Append any layers not yet in layerOrder
+    for (const remaining of layerMap.values()) {
+      ordered.push(remaining);
+    }
 
-      const layerMap = new Map(raw.map((l) => [l.id, l]));
-      const ordered: T[] = [];
+    return ordered;
+  }, [layers, layerOrder]);
 
-      // Follow layerOrder (index 0 is visually on top)
-      for (const id of layerOrder) {
-        const item = layerMap.get(id);
-        if (item) {
-          ordered.push(item);
-          layerMap.delete(id);
+  const enabledCount = useMemo(() => {
+    return orderedLayers.filter((l) => Boolean(enabledLayerIds[l.id])).length;
+  }, [orderedLayers, enabledLayerIds]);
+
+  const isAllEnabled = useMemo(() => {
+    return orderedLayers.length > 0 && enabledCount === orderedLayers.length;
+  }, [orderedLayers.length, enabledCount]);
+  // Handlers
+  const handleToggleAll = useCallback(
+    (checked: boolean) => {
+      if (onToggleLayer) {
+        orderedLayers.forEach((l) => onToggleLayer(l, checked));
+      } else {
+        const layerIds = orderedLayers.map((l) => l.id);
+        setAllLayersEnabled(layerIds, checked);
+      }
+    },
+    [orderedLayers, onToggleLayer, setAllLayersEnabled],
+  );
+
+  const handleToggleItem = useCallback(
+    (layerId: string) => {
+      if (onToggleLayer) {
+        const target = orderedLayers.find((l) => l.id === layerId);
+        if (target) {
+          const nextChecked = !enabledLayerIds[layerId];
+          onToggleLayer(target, nextChecked);
+          return;
         }
       }
+      toggleLayerId(layerId);
+    },
+    [orderedLayers, onToggleLayer, enabledLayerIds, toggleLayerId],
+  );
+  return (
+    <Popover.Root
+      positioning={{
+        placement: "top-start",
+        offset: {
+          crossAxis: -2,
+        },
+      }}
+      open={isOpen}
+      onOpenChange={(e) => setIsOpen(e.open)}
+    >
+      <Popover.Trigger>
+        {typeof children === "function" ? (
+          children({ enabledCount, isOpen })
+        ) : children ? (
+          children
+        ) : (
+          <MapOverlayContainer p={"2px"}>
+            <Tooltip
+              content={tooltipContent}
+              positioning={{ placement: "bottom" }}
+            >
+              <Box position={"relative"}>
+                <IconButton size={"xs"}>
+                  <AppIcon icon={LayersIcon} boxSize={5} />
+                </IconButton>
+                <CountBadge floating={true}>{enabledCount}</CountBadge>
+              </Box>
+            </Tooltip>
+          </MapOverlayContainer>
+        )}
+      </Popover.Trigger>
 
-      // Append any layers not yet in layerOrder
-      for (const remaining of layerMap.values()) {
-        ordered.push(remaining);
-      }
+      <Popover.Content w={isSmallViewport ? "300px" : "380px"}>
+        <HeaderContainer>
+          <P fontWeight={"medium"}>{title}</P>
 
-      return ordered;
-    }, [layers, layerOrder]);
+          <Badge colorPalette={"blue"}>
+            {badgeLabel ?? `${enabledCount} aktif`}
+          </Badge>
+        </HeaderContainer>
 
-    const enabledCount = useMemo(() => {
-      return orderedLayers.filter((l) => Boolean(enabledLayerIds[l.id])).length;
-    }, [orderedLayers, enabledLayerIds]);
+        <Separator borderColor={"bg.canvas"} />
 
-    const isAllEnabled = useMemo(() => {
-      return orderedLayers.length > 0 && enabledCount === orderedLayers.length;
-    }, [orderedLayers.length, enabledCount]);
-    // Handlers
-    const handleToggleAll = useCallback(
-      (checked: boolean) => {
-        if (onToggleLayer) {
-          orderedLayers.forEach((l) => onToggleLayer(l, checked));
-        } else {
-          const layerIds = orderedLayers.map((l) => l.id);
-          setAllLayersEnabled(layerIds, checked);
-        }
-      },
-      [orderedLayers, onToggleLayer, setAllLayersEnabled],
-    );
+        <Popover.Body p={"sm"} maxH={"500px"} overflowY={"auto"}>
+          {isLoading ? (
+            <HStack align={"center"} justify={"center"} gap={"md"} p={"md"}>
+              <Loader />
 
-    const handleToggleItem = useCallback(
-      (layerId: string) => {
-        if (onToggleLayer) {
-          const target = orderedLayers.find((l) => l.id === layerId);
-          if (target) {
-            const nextChecked = !enabledLayerIds[layerId];
-            onToggleLayer(target, nextChecked);
-            return;
-          }
-        }
-        toggleLayerId(layerId);
-      },
-      [orderedLayers, onToggleLayer, enabledLayerIds, toggleLayerId],
-    );
-    return (
-      <Popover.Root
-        positioning={{
-          placement: "top-start",
-          offset: {
-            crossAxis: -2,
-          },
-        }}
-        open={isOpen}
-        onOpenChange={(e) => setIsOpen(e.open)}
-      >
-        <Popover.Trigger>
-          {typeof children === "function" ? (
-            children({ enabledCount, isOpen })
-          ) : children ? (
-            children
+              <P color={"fg.muted"}>{loadingLabel}</P>
+            </HStack>
+          ) : isError ? (
+            <Center p={"md"}>
+              <StateRetry
+                title={errorTitle}
+                description={
+                  error instanceof Error ? error.message : errorMessage
+                }
+                onRetry={() => {
+                  onRetry?.();
+                }}
+              />
+            </Center>
           ) : (
-            <MapOverlayContainer p={"2px"}>
-              <Tooltip
-                content={tooltipContent}
-                positioning={{ placement: "bottom" }}
-              >
-                <Box position={"relative"}>
-                  <IconButton size={"xs"}>
-                    <AppIcon icon={LayersIcon} boxSize={5} />
-                  </IconButton>
-                  <CountBadge floating={true}>{enabledCount}</CountBadge>
-                </Box>
-              </Tooltip>
-            </MapOverlayContainer>
-          )}
-        </Popover.Trigger>
+            <VStack gap={"xs"}>
+              {!isEmptyArray(orderedLayers) && (
+                <VStack gap={"sm"} p={1} align={"stretch"}>
+                  <HStack
+                    justify={"space-between"}
+                    align={"center"}
+                    cursor={"pointer"}
+                    onClick={() => {
+                      handleToggleAll(!isAllEnabled);
+                    }}
+                  >
+                    <P fontSize={"sm"} fontWeight={"medium"}>
+                      {"Muat Semua Layer"}
+                    </P>
 
-        <Popover.Content w={isSmallViewport ? "300px" : "380px"}>
-          <HeaderContainer>
-            <P fontWeight={"medium"}>{title}</P>
+                    <Switch
+                      size={"sm"}
+                      checked={isAllEnabled}
+                      pointerEvents={"none"}
+                    />
+                  </HStack>
 
-            <Badge colorPalette={"blue"}>
-              {badgeLabel ?? `${enabledCount} aktif`}
-            </Badge>
-          </HeaderContainer>
-
-          <Separator borderColor={"bg.canvas"} />
-
-          <Popover.Body p={"sm"} maxH={"500px"} overflowY={"auto"}>
-            {isLoading ? (
-              <HStack align={"center"} justify={"center"} gap={"md"} p={"md"}>
-                <Loader />
-
-                <P color={"fg.muted"}>{loadingLabel}</P>
-              </HStack>
-            ) : isError ? (
-              <Center p={"md"}>
-                <StateRetry
-                  title={errorTitle}
-                  description={
-                    error instanceof Error ? error.message : errorMessage
-                  }
-                  onRetry={() => {
-                    onRetry?.();
-                  }}
-                />
-              </Center>
-            ) : (
-              <VStack gap={"xs"}>
-                {!isEmptyArray(orderedLayers) && (
-                  <VStack gap={"sm"} p={1} align={"stretch"}>
-                    <HStack
-                      justify={"space-between"}
-                      align={"center"}
-                      cursor={"pointer"}
-                      onClick={() => {
-                        handleToggleAll(!isAllEnabled);
-                      }}
-                    >
+                  <VStack gap={"xs"} align={"stretch"}>
+                    <HStack justify={"space-between"} w={"full"}>
                       <P fontSize={"sm"} fontWeight={"medium"}>
-                        {"Muat Semua Layer"}
+                        {"Opasitas Semua Layer"}
                       </P>
 
-                      <Switch
-                        size={"sm"}
-                        checked={isAllEnabled}
-                        pointerEvents={"none"}
-                      />
+                      <P
+                        fontSize={"sm"}
+                        fontWeight={"semibold"}
+                        color={"fg.muted"}
+                      >
+                        {`${Math.round(globalOpacity * 100)}%`}
+                      </P>
                     </HStack>
 
-                    <VStack gap={"xs"} align={"stretch"}>
-                      <HStack justify={"space-between"} w={"full"}>
-                        <P fontSize={"sm"} fontWeight={"medium"}>
-                          {"Opasitas Semua Layer"}
-                        </P>
-
-                        <P
-                          fontSize={"sm"}
-                          fontWeight={"semibold"}
-                          color={"fg.muted"}
-                        >
-                          {`${Math.round(globalOpacity * 100)}%`}
-                        </P>
-                      </HStack>
-
-                      <Slider
-                        value={[Math.round(globalOpacity * 100)]}
-                        min={0}
-                        max={100}
-                        step={1}
-                        showValue={false}
-                        onValueChange={(details) =>
-                          setGlobalOpacity(details.value[0] / 100)
-                        }
-                      />
-                    </VStack>
+                    <Slider
+                      value={[Math.round(globalOpacity * 100)]}
+                      min={0}
+                      max={100}
+                      step={1}
+                      showValue={false}
+                      onValueChange={(details) =>
+                        setGlobalOpacity(details.value[0] / 100)
+                      }
+                    />
                   </VStack>
-                )}
-
-                {isEmptyArray(orderedLayers) && (
-                  <HStack align={"center"} justify={"center"} p={"md"}>
-                    <P color={"fg.muted"} fontSize={"sm"}>
-                      {emptyLabel}
-                    </P>
-                  </HStack>
-                )}
-
-                <VStack mt={"sm"}>
-                  {orderedLayers.map((layer, index) => {
-                    const isEnabled = Boolean(enabledLayerIds[layer.id]);
-                    const isSymbologyEnabled = Boolean(
-                      enabledSymbologyLayerIds[layer.id],
-                    );
-                    const opacity = layerOpacities[layer.id] ?? 1.0;
-                    const isFirstIndex = index === 0;
-                    const isLastIndex = index === orderedLayers.length - 1;
-
-                    return (
-                      <MapLayerManagementItem
-                        key={layer.id}
-                        layer={layer}
-                        index={index}
-                        isEnabled={isEnabled}
-                        isSymbologyEnabled={isSymbologyEnabled}
-                        showSymbology={showSymbology}
-                        opacity={opacity}
-                        onToggle={handleToggleItem}
-                        onToggleSymbology={toggleSymbologyLayerId}
-                        onOpacityChange={setLayerOpacity}
-                        onReorder={reorderLayer}
-                        onFlyTo={onFlyToLayer}
-                        pt={isFirstIndex ? 0 : "xs"}
-                        pb={isLastIndex ? 0 : "xs"}
-                        borderTop={"1px solid"}
-                        borderColor={
-                          isFirstIndex ? "transparent" : "border.subtle"
-                        }
-                      />
-                    );
-                  })}
                 </VStack>
+              )}
+
+              {isEmptyArray(orderedLayers) && (
+                <HStack align={"center"} justify={"center"} p={"md"}>
+                  <P color={"fg.muted"} fontSize={"sm"}>
+                    {emptyLabel}
+                  </P>
+                </HStack>
+              )}
+
+              <VStack mt={"sm"}>
+                {orderedLayers.map((layer, index) => {
+                  const isEnabled = Boolean(enabledLayerIds[layer.id]);
+                  const isSymbologyEnabled = Boolean(
+                    enabledSymbologyLayerIds[layer.id],
+                  );
+                  const opacity = layerOpacities[layer.id] ?? 1.0;
+                  const isFirstIndex = index === 0;
+                  const isLastIndex = index === orderedLayers.length - 1;
+
+                  return (
+                    <MapLayerManagementItem
+                      key={layer.id}
+                      layer={layer}
+                      index={index}
+                      isEnabled={isEnabled}
+                      isSymbologyEnabled={isSymbologyEnabled}
+                      showSymbology={showSymbology}
+                      opacity={opacity}
+                      onToggle={handleToggleItem}
+                      onToggleSymbology={toggleSymbologyLayerId}
+                      onOpacityChange={setLayerOpacity}
+                      onReorder={reorderLayer}
+                      onFlyTo={onFlyToLayer}
+                      pt={isFirstIndex ? 0 : "xs"}
+                      pb={isLastIndex ? 0 : "xs"}
+                      borderTop={"1px solid"}
+                      borderColor={
+                        isFirstIndex ? "transparent" : "border.subtle"
+                      }
+                    />
+                  );
+                })}
               </VStack>
-            )}
-          </Popover.Body>
-        </Popover.Content>
-      </Popover.Root>
-    );
+            </VStack>
+          )}
+        </Popover.Body>
+      </Popover.Content>
+    </Popover.Root>
+  );
 }
 
 export const MapLayerManagementPanel = memo(

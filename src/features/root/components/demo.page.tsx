@@ -133,20 +133,43 @@ import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 
 export const DemoPage = () => {
   return (
-    <VStack minH={"100dvh"} gap={4}>
-      <IntegratedFeatures />
-      <Branding />
-      <Typography />
-      <Navigation />
-      <Buttons />
-      <Toast />
+    <VStack align={"stretch"} gap={4} w={"full"}>
+      {/* Masonry Layout for Modular Cards */}
+      <Box
+        w={"full"}
+        css={{
+          columns: "1",
+          "@media (min-width: 768px)": {
+            columns: "2",
+          },
+          "@media (min-width: 1280px)": {
+            columns: "3",
+          },
+          columnGap: "16px",
+          "& > *": {
+            breakInside: "avoid",
+            marginBottom: "16px",
+            display: "inline-block",
+            width: "100%",
+          },
+        }}
+      >
+        <IntegratedFeatures />
+        <Branding />
+        <Typography />
+        <Navigation />
+        <Buttons />
+        <Toast />
+        <Overlay />
+        <Feedback />
+        <Inputs />
+        <Disclosure />
+        <Utilities />
+      </Box>
+
+      {/* Full-width expansive sections */}
       <Layout />
-      <Inputs />
-      <Overlay />
-      <Disclosure />
-      <Feedback />
       <DataDisplay />
-      <Utilities />
       <ColorPalettes />
     </VStack>
   );
@@ -157,22 +180,17 @@ const DemoSectionHeader = (props: DemoSectionHeaderProps) => {
   const { title, icon, description } = props;
 
   return (
-    <VStack align={"center"} gap={1} w={"full"} pb={2}>
-      <HStack align={"center"} gap={3}>
-        <AppIcon icon={icon} size={"xl"} color={"fg.solid"} />
+    <VStack align={"start"} gap={1} w={"full"} pb={2}>
+      <HStack align={"center"} gap={2.5}>
+        <AppIcon icon={icon} size={"md"} color={"colorPalette.fg"} />
 
-        <P
-          textAlign={"center"}
-          fontSize={"2xl"}
-          fontWeight={"semibold"}
-          letterSpacing={"tight"}
-        >
+        <P fontSize={"lg"} fontWeight={"semibold"} letterSpacing={"tight"}>
           {title}
         </P>
       </HStack>
 
       {description && (
-        <P fontSize={"sm"} color={"fg.subtle"} textAlign={"center"}>
+        <P fontSize={"xs"} color={"fg.subtle"}>
           {description}
         </P>
       )}
@@ -185,7 +203,7 @@ const IntegratedFeatures = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Integrated Features"}
           icon={CogIcon}
@@ -194,7 +212,7 @@ const IntegratedFeatures = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={2}>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
           <SettingsTrigger modalKey={"settings"} w={"fit"}>
             <IconButton>
               <AppIcon icon={CogIcon} strokeWidth={1.3} size={"lg"} />
@@ -220,7 +238,7 @@ const IntegratedFeatures = () => {
 const Branding = () => {
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Branding"}
           icon={SparklesIcon}
@@ -229,7 +247,7 @@ const Branding = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
           <Logo />
 
           <BrandWatermark />
@@ -244,7 +262,7 @@ const Typography = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Typography"}
           icon={TypeIcon}
@@ -253,17 +271,17 @@ const Typography = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={8}>
-          <VStack>
+        <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
+          <VStack align={"start"}>
             <P color={"fg.solid"}>{"Default"}</P>
             <P color={"fg.emphasized"}>{"Emphasized"}</P>
             <P color={"fg.muted"}>{"Muted"}</P>
             <P color={"fg.subtle"}>{"Subtle"}</P>
           </VStack>
 
-          <VStack gap={2}>
+          <VStack align={"start"} gap={2}>
             <HStack align={"center"} gap={4}>
-              <VStack>
+              <VStack align={"start"}>
                 <HStack align={"center"} justify={"space-between"} gap={2}>
                   <P>Normal text</P>
                   <P>{tnum}</P>
@@ -376,7 +394,7 @@ const ColorPalettes = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6} align={"stretch"}>
+      <Container.Body gap={4} p={5} align={"stretch"}>
         <DemoSectionHeader
           title={"Color Palettes"}
           icon={PaletteIcon}
@@ -505,14 +523,14 @@ const ColorPalettes = () => {
 const Navigation = () => {
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Navigation"}
           icon={CompassIcon}
           description={"Navigasi tautan internal dan tautan eksternal"}
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
           <ExternalLink href={"https://youtube.com"}>youtube.com</ExternalLink>
         </HStack>
       </Container.Body>
@@ -523,7 +541,7 @@ const Navigation = () => {
 const Buttons = () => {
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Buttons"}
           icon={MousePointerClickIcon}
@@ -532,8 +550,8 @@ const Buttons = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
-          <Button primary>Primary</Button>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
+          <Button primary={true}>Primary</Button>
 
           <Button variant={"surface"}>Surface</Button>
 
@@ -551,7 +569,7 @@ const Buttons = () => {
 const Toast = () => {
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Toast"}
           icon={BellIcon}
@@ -560,7 +578,7 @@ const Toast = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
           <Button
             onClick={() => {
               toast.create({
@@ -716,7 +734,7 @@ const Layout = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Layout"}
           icon={LayoutGridIcon}
@@ -728,7 +746,7 @@ const Layout = () => {
         <HStack
           wrap={"wrap"}
           align={"center"}
-          justify={"center"}
+          justify={"start"}
           gap={4}
           h={"300px"}
         >
@@ -871,7 +889,7 @@ export const Inputs = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Inputs"}
           icon={TextCursorInputIcon}
@@ -881,7 +899,7 @@ export const Inputs = () => {
         />
 
         <Fieldset>
-          <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={12}>
+          <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
             <FieldTemplate invalid={invalid}>
               <Checkbox>Checkbox</Checkbox>
             </FieldTemplate>
@@ -1051,7 +1069,7 @@ export const Inputs = () => {
           </HStack>
         </Fieldset>
 
-        <Group justify={"center"}>
+        <Group justify={"start"}>
           <Button
             onClick={() => {
               console.log(getValues());
@@ -1095,7 +1113,7 @@ const OModal = () => {
         </Modal.Header>
 
         <Modal.Body>
-          <P textAlign={"center"}>
+          <P>
             Modal is dynamic component, it render dialog component on large
             viewport, render drawer component on small to medium viewport and
             has its own fullscreen feature on dialog component
@@ -1105,7 +1123,7 @@ const OModal = () => {
           <Button flex={1} onClick={close}>
             Close
           </Button>
-          <Button flex={1} primary>
+          <Button flex={1} primary={true}>
             CTA
           </Button>
         </Modal.Footer>
@@ -1128,17 +1146,12 @@ const ODialog = () => {
 
       <Dialog.Content>
         <Dialog.Header>
-          <P
-            w={"full"}
-            fontSize={"xl"}
-            fontWeight={"semibold"}
-            textAlign={"center"}
-          >
+          <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
             Header
           </P>
         </Dialog.Header>
         <Dialog.Body>
-          <P textAlign={"center"}>
+          <P>
             Dialog is component that need user focus and styled like floating
             container
           </P>
@@ -1147,7 +1160,7 @@ const ODialog = () => {
           <Button flex={1} onClick={close}>
             Close
           </Button>
-          <Button flex={1} primary>
+          <Button flex={1} primary={true}>
             CTA
           </Button>
         </Dialog.Footer>
@@ -1176,19 +1189,14 @@ const ODrawer = () => {
 
       <Drawer.Content>
         <Drawer.Header>
-          <P
-            w={"full"}
-            fontSize={"xl"}
-            fontWeight={"semibold"}
-            textAlign={"center"}
-          >
+          <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
             Header
           </P>
         </Drawer.Header>
 
         <Drawer.Body>
-          <VStack align={"center"} gap={4}>
-            <P textAlign={"center"}>
+          <VStack align={"start"} gap={4}>
+            <P>
               Drawer is component that need user focus and styled like "drawer"
               or sliding container
             </P>
@@ -1216,24 +1224,19 @@ const ONestedDrawer = () => {
   return (
     <Drawer.Root modalKey={modalKey} opened={isOpen} open={open} close={close}>
       <Drawer.Trigger>
-        <Button primary flex={1}>
+        <Button primary={true} flex={1}>
           Open Nested
         </Button>
       </Drawer.Trigger>
 
       <Drawer.Content>
         <Drawer.Header>
-          <P
-            w={"full"}
-            fontSize={"xl"}
-            fontWeight={"semibold"}
-            textAlign={"center"}
-          >
+          <P w={"full"} fontSize={"xl"} fontWeight={"semibold"}>
             Header
           </P>
         </Drawer.Header>
         <Drawer.Body>
-          <P textAlign={"center"}>
+          <P>
             Drawer is component that need user focus and styled like "drawer" or
             sliding container
           </P>
@@ -1242,7 +1245,7 @@ const ONestedDrawer = () => {
           <Button flex={1} onClick={close}>
             Close
           </Button>
-          <Button flex={1} primary>
+          <Button flex={1} primary={true}>
             CTA
           </Button>
         </Drawer.Footer>
@@ -1254,7 +1257,7 @@ const ONestedDrawer = () => {
 export const Overlay = () => {
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Overlay"}
           icon={EyeIcon}
@@ -1263,7 +1266,7 @@ export const Overlay = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
           <OModal />
 
           <ODialog />
@@ -1313,7 +1316,7 @@ export const Disclosure = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Disclosure"}
           icon={LayersIcon}
@@ -1322,7 +1325,7 @@ export const Disclosure = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={10}>
+        <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
           <Accordion.Root
             collapsible
             multiple
@@ -1488,15 +1491,15 @@ export const Disclosure = () => {
 
             {steps.map((step, index) => (
               <Steps.Content key={index} index={index}>
-                <P textAlign={"center"}>{step.description}</P>
+                <P>{step.description}</P>
               </Steps.Content>
             ))}
 
             <Steps.CompletedContent>
-              <P textAlign={"center"}>All steps are complete!</P>
+              <P>All steps are complete!</P>
             </Steps.CompletedContent>
 
-            <ButtonGroup size={"sm"} variant={"outline"} justify={"center"}>
+            <ButtonGroup size={"sm"} variant={"outline"} justify={"start"}>
               <Steps.PrevTrigger asChild>
                 <Button>Prev</Button>
               </Steps.PrevTrigger>
@@ -1558,7 +1561,7 @@ export const Feedback = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Feedback"}
           icon={MessageSquareIcon}
@@ -1567,13 +1570,13 @@ export const Feedback = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={10}>
+        <HStack wrap={"wrap"} align={"start"} justify={"start"} gap={6}>
           <HStack
             w={"full"}
             wrap={"wrap"}
             align={"center"}
-            justify={"center"}
-            gap={10}
+            justify={"start"}
+            gap={6}
           >
             <StateNoData />
 
@@ -1584,7 +1587,7 @@ export const Feedback = () => {
             <StateRetry />
           </HStack>
 
-          <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={10}>
+          <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={6}>
             <HStack gap={4}>
               <ProgressCircle.Root value={16} size={"xl"}>
                 <ProgressCircle.Circle>
@@ -1630,11 +1633,11 @@ export const Feedback = () => {
             </VStack>
           </HStack>
 
-          <VStack gap={4}>
+          <VStack gap={4} align={"start"}>
             <HStack align={"center"} gap={4}>
               <SkeletonCircle w={"40px"} h={"40px"} />
 
-              <VStack gap={2}>
+              <VStack gap={2} align={"start"}>
                 <SkeletonText w={"200px"} noOfLines={2} />
               </VStack>
             </HStack>
@@ -1644,15 +1647,16 @@ export const Feedback = () => {
         </HStack>
 
         <VStack
-          gap={6}
+          gap={4}
           w={"full"}
           borderTop={"1px solid"}
           borderColor={"border.subtle"}
           pt={4}
+          align={"start"}
         >
           <P fontWeight={"semibold"}>{"Emoji"}</P>
-          <VStack gap={4} w={"full"} align={"center"}>
-            <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={8}>
+          <VStack gap={4} w={"full"} align={"start"}>
+            <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
               {EMOJI_KEYS.map((key) => {
                 return (
                   <VStack gap={1} key={key}>
@@ -2025,7 +2029,7 @@ export const DataDisplay = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Data Display"}
           icon={TableIcon}
@@ -2106,7 +2110,7 @@ export const Utilities = () => {
 
   return (
     <Container.Root w={"full"}>
-      <Container.Body gap={6} p={6}>
+      <Container.Body gap={4} p={5}>
         <DemoSectionHeader
           title={"Utilities"}
           icon={WrenchIcon}
@@ -2115,7 +2119,7 @@ export const Utilities = () => {
           }
         />
 
-        <HStack wrap={"wrap"} align={"center"} justify={"center"} gap={4}>
+        <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
           <DownloadTrigger
             data={data}
             fileName={"wolf-2k.jpg"}
