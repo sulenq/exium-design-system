@@ -75,10 +75,8 @@ import { P, TNum } from "@/design-system/components/typography/ui/p";
 import { RichTextEditorPresetEssential } from "@/design-system/components/typography/ui/rich-text-editor.preset";
 import { Span } from "@/design-system/components/typography/ui/span";
 import { DownloadTrigger } from "@/design-system/components/utilities/ui/download-trigger";
+import { COLOR_PALETTES_LIST } from "@/design-system/constants/colors";
 import { useSplitterStore } from "@/design-system/stores/splitter-store";
-import type {
-  DemoPaletteItem,
-} from "@/features/root/types/demo.type";
 import { SettingsTrigger } from "@/features/settings/components/settings";
 import { getLocale, getLocaleLabel } from "@/shared/libs/i18n";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
@@ -1399,40 +1397,6 @@ export const DataDisplay = () => {
 // Color Palettes
 // ---------------------------------------------------------------------------
 
-const COLOR_PALETTES: DemoPaletteItem[] = [
-  { palette: "neutral", label: "Neutral", category: "Monochrome" },
-  { palette: "grey", label: "Grey", category: "Monochrome" },
-  { palette: "cream", label: "Cream", category: "Earth & Warm" },
-  { palette: "caramel", label: "Caramel", category: "Earth & Warm" },
-  { palette: "mocha", label: "Mocha", category: "Earth & Warm" },
-  { palette: "brown", label: "Brown", category: "Earth & Warm" },
-  { palette: "maroon", label: "Maroon", category: "Red & Warm" },
-  { palette: "red", label: "Red", category: "Red & Warm" },
-  { palette: "orange", label: "Orange", category: "Red & Warm" },
-  { palette: "amber", label: "Amber", category: "Red & Warm" },
-  { palette: "yellow", label: "Yellow", category: "Yellow & Green" },
-  { palette: "lime", label: "Lime", category: "Yellow & Green" },
-  { palette: "mint", label: "Mint", category: "Yellow & Green" },
-  { palette: "green", label: "Green", category: "Yellow & Green" },
-  { palette: "emerald", label: "Emerald", category: "Yellow & Green" },
-  { palette: "teal", label: "Teal", category: "Cyan & Blue" },
-  { palette: "cyan", label: "Cyan", category: "Cyan & Blue" },
-  { palette: "sky", label: "Sky", category: "Cyan & Blue" },
-  { palette: "blue", label: "Blue", category: "Cyan & Blue" },
-  { palette: "indigo", label: "Indigo", category: "Purple & Pink" },
-  { palette: "violet", label: "Violet", category: "Purple & Pink" },
-  { palette: "purple", label: "Purple", category: "Purple & Pink" },
-  { palette: "fuchsia", label: "Fuchsia", category: "Purple & Pink" },
-  { palette: "pink", label: "Pink", category: "Purple & Pink" },
-  { palette: "rose", label: "Rose", category: "Purple & Pink" },
-  { palette: "coral", label: "Coral", category: "Red & Warm" },
-  { palette: "olive", label: "Olive", category: "Yellow & Green" },
-  { palette: "sage", label: "Sage", category: "Yellow & Green" },
-  { palette: "forest", label: "Forest", category: "Yellow & Green" },
-  { palette: "navy", label: "Navy", category: "Cyan & Blue" },
-  { palette: "plum", label: "Plum", category: "Purple & Pink" },
-  { palette: "berry", label: "Berry", category: "Purple & Pink" },
-];
 
 const COLOR_STEPS = [
   "50",
@@ -1477,7 +1441,7 @@ const ColorPalettes = () => {
         </HStack>
 
         <VStack align={"stretch"} gap={3} w={"full"}>
-          {COLOR_PALETTES.map((item) => {
+          {COLOR_PALETTES_LIST.map((item) => {
             return (
               <VStack
                 key={item.palette}
@@ -1511,7 +1475,7 @@ const ColorPalettes = () => {
                     </P>
                   </HStack>
                   <P fontSize={"xs"} color={"fg.muted"}>
-                    {item.category}
+                    {item.primaryHex}
                   </P>
                 </HStack>
 

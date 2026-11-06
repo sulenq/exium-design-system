@@ -183,7 +183,7 @@ export const SigninForm = (props: StackProps) => {
 
       {isDevMode && (
         <HStack w={"full"} align={"center"} justify={"center"} gap={2} pt={2}>
-          <Badge size={"xs"} variant={"surface"} colorPalette={"amber"}>
+          <Badge size={"xs"} variant={"surface"} colorPalette={"orange"}>
             <AppIcon icon={Code2Icon} size={"xs"} />
             <P fontSize={"2xs"}>{"DEV MODE ACTIVE"}</P>
           </Badge>
