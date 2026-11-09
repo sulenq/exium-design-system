@@ -132,7 +132,12 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
               .filter((prop) => prop.controlKind !== undefined)
               .map((prop) => (
                 <Box key={prop.name}>
-                  <P fontSize={"xs"} fontWeight={"medium"} color={"fg.muted"} mb={1.5}>
+                  <P
+                    fontSize={"xs"}
+                    fontWeight={"medium"}
+                    color={"fg.muted"}
+                    mb={1.5}
+                  >
                     {prop.name}
                   </P>
 
@@ -284,16 +289,162 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         </Tabs.Content>
 
         <Tabs.Content value={"a11y"} pt={4}>
-          <Box p={4} rounded={"md"} bg={"bg.subtle"}>
-            <P fontWeight={"bold"} mb={2}>
-              {"Aksesibilitas & Keyboard Navigation"}
-            </P>
-            <P fontSize={"sm"} color={"fg.muted"}>
-              {
-                "Komponen di design-system-v2 dibangun di atas primitive Radix UI yang mematuhi standar WCAG 2.2 AA (Full Keyboard Tab/Enter navigation, Focus visible, ARIA compliant)."
-              }
-            </P>
-          </Box>
+          <VStack align={"stretch"} gap={5}>
+            {/* 1. ARIA Role & Semantics */}
+            <Box>
+              <P fontSize={"sm"} fontWeight={"bold"} mb={2}>
+                {"ARIA Role & Semantics"}
+              </P>
+              <HStack gap={2} wrap={"wrap"}>
+                <Badge variant={"outline"} colorPalette={"blue"}>
+                  {spec.a11y?.role ?? (spec.category.toLowerCase().includes("button") ? 'role="button"' : spec.category.toLowerCase().includes("input") ? 'role="textbox / widget"' : spec.category.toLowerCase().includes("overlay") ? 'role="dialog"' : spec.category.toLowerCase().includes("disclosure") ? 'role="tab / region"' : 'role="generic / presentation"')}
+                </Badge>
+                <Badge variant={"subtle"} colorPalette={"green"}>
+                  {"WCAG 2.2 AA Compliant"}
+                </Badge>
+                <Badge variant={"subtle"} colorPalette={"purple"}>
+                  {"Focus Ring Visible"}
+                </Badge>
+              </HStack>
+            </Box>
+
+            {/* 2. Keyboard Navigation Table */}
+            <Box>
+              <P fontSize={"sm"} fontWeight={"bold"} mb={2}>
+                {"Keyboard Navigation"}
+              </P>
+              <Box overflowX={"auto"}>
+                <table
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    borderCollapse: "collapse",
+                    fontSize: "13px",
+                  }}
+                >
+                  <thead>
+                    <tr
+                      style={{
+                        borderBottom:
+                          "1px solid var(--chakra-colors-border-subtle)",
+                      }}
+                    >
+                      <th style={{ padding: "8px", width: "160px" }}>{"Key"}</th>
+                      <th style={{ padding: "8px" }}>{"Action"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(spec.a11y?.keyboardNav ?? (
+                      spec.category.toLowerCase().includes("button")
+                        ? [
+                            { key: "Tab", action: "Memindahkan fokus keyboard ke button." },
+                            { key: "Enter / Space", action: "Mengeksekusi handler onClick dari button." },
+                          ]
+                        : spec.category.toLowerCase().includes("input")
+                          ? [
+                              { key: "Tab", action: "Fokus masuk / keluar field input." },
+                              { key: "Enter", action: "Men-submit form atau mengonfirmasi nilai." },
+                              { key: "Escape", action: "Membatalkan input atau membersihkan pencarian (jika clearable)." },
+                            ]
+                          : spec.category.toLowerCase().includes("overlay")
+                            ? [
+                                { key: "Escape", action: "Menutup overlay/modal/drawer dan mengembalikan fokus ke trigger." },
+                                { key: "Tab", action: "Menjaga fokus berputar di dalam modal (Focus Trap)." },
+                              ]
+                            : [
+                                { key: "Tab", action: "Navigasi fokus sekuensial antar elemen interaktif." },
+                                { key: "Enter / Space", action: "Mengaktifkan elemen terpilih." },
+                              ]
+                    )).map((item) => (
+                      <tr
+                        key={item.key}
+                        style={{
+                          borderBottom:
+                            "1px solid var(--chakra-colors-border-subtle)",
+                        }}
+                      >
+                        <td style={{ padding: "8px" }}>
+                          <Badge variant={"outline"} fontFamily={"mono"}>
+                            {item.key}
+                          </Badge>
+                        </td>
+                        <td style={{ padding: "8px" }}>{item.action}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Box>
+            </Box>
+
+            {/* 3. ARIA Attributes Table */}
+            <Box>
+              <P fontSize={"sm"} fontWeight={"bold"} mb={2}>
+                {"ARIA Attributes & State Management"}
+              </P>
+              <Box overflowX={"auto"}>
+                <table
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    borderCollapse: "collapse",
+                    fontSize: "13px",
+                  }}
+                >
+                  <thead>
+                    <tr
+                      style={{
+                        borderBottom:
+                          "1px solid var(--chakra-colors-border-subtle)",
+                      }}
+                    >
+                      <th style={{ padding: "8px", width: "200px" }}>{"Attribute"}</th>
+                      <th style={{ padding: "8px" }}>{"Usage"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(spec.a11y?.ariaAttributes ?? [
+                      {
+                        attribute: "aria-label / aria-labelledby",
+                        description: "Menyediakan nama yang dapat dibaca screen reader saat label visual tidak ada atau berupa icon-only.",
+                      },
+                      {
+                        attribute: "aria-disabled / disabled",
+                        description: "Memberi tahu assistive tech bahwa elemen dalam kondisi non-aktif.",
+                      },
+                      {
+                        attribute: "aria-busy",
+                        description: "Diterapkan otomatis saat tombol atau komponen dalam kondisi loading/isPending.",
+                      },
+                    ]).map((attr) => (
+                      <tr
+                        key={attr.attribute}
+                        style={{
+                          borderBottom:
+                            "1px solid var(--chakra-colors-border-subtle)",
+                        }}
+                      >
+                        <td style={{ padding: "8px", fontFamily: "monospace", color: "#3182ce" }}>
+                          {attr.attribute}
+                        </td>
+                        <td style={{ padding: "8px" }}>{attr.description}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Box>
+            </Box>
+
+            {/* 4. Notes & Best Practices */}
+            <Box p={3} rounded={"md"} bg={"bg.subtle"} border={"1px solid"} borderColor={"border.subtle"}>
+              <P fontSize={"xs"} fontWeight={"bold"} mb={1}>
+                {"ACCESSIBILITY BEST PRACTICE"}
+              </P>
+              <P fontSize={"sm"} color={"fg.muted"}>
+                {spec.a11y?.notes ??
+                  "Komponen ini mematuhi standar aksesibilitas Chakra UI v3. Pastikan tombol tanpa teks selalu memiliki prop aria-label, rasio kontras teks minimum 4.5:1 terhadap latar belakang, dan outline fokus tidak dimatikan pada navigation mode keyboard."}
+              </P>
+            </Box>
+          </VStack>
         </Tabs.Content>
       </Tabs.Root>
     </VStack>

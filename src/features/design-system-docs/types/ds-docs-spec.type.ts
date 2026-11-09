@@ -19,6 +19,13 @@ export type PropSpec = {
   options?: (string | number)[];
 };
 
+export type A11yGuidelineSpec = {
+  role?: string;
+  keyboardNav?: { key: string; action: string }[];
+  ariaAttributes?: { attribute: string; description: string }[];
+  notes?: string;
+};
+
 export type ComponentDocSpec = {
   key: string;
   title: string;
@@ -28,6 +35,7 @@ export type ComponentDocSpec = {
   component: ElementType;
   propsSpec: PropSpec[];
   defaultProps: Record<string, unknown>;
+  a11y?: A11yGuidelineSpec;
   renderPlayground?: (
     props: Record<string, unknown>,
     onPropChange?: (name: string, value: unknown) => void,
