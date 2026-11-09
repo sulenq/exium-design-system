@@ -85,6 +85,20 @@
   color: #ffffff;
 }
 
+/* Autofill Form Controls (Override Firefox yellow and WebKit cyan/yellow bg) */
+input:autofill,
+input:-webkit-autofill,
+textarea:autofill,
+textarea:-webkit-autofill,
+select:autofill,
+select:-webkit-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  box-shadow: 0 0 0 1000px var(--chakra-colors-bg-body) inset !important;
+  transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+}
+
 /* Recharts Focus Outline Removal & Smooth Hover Feedback */
 .recharts-surface,
 .recharts-pie-sector,
