@@ -1,6 +1,6 @@
-// src/features/design-system-v2-docs/components/code-block.tsx
+// src/features/design-system-docs/components/code-block.tsx
 
-import type { CodeBlockProps } from "@/features/design-system-v2-docs/types/code-block.type";
+import type { CodeBlockProps } from "@/features/design-system-docs/types/code-block.type";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript";
 import "prismjs/components/prism-jsx";

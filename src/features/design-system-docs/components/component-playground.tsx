@@ -95,7 +95,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
       >
         <VStack gap={1} flex={1} overflow={"hidden"}>
           <HStack align={"center"} justify={"space-between"}>
-            <P fontSize={"xs"} color={"fg.subtle"} fontWeight={"semibold"}>
+            <P color={"fg.subtle"} fontWeight={"semibold"}>
               {"CODE"}
             </P>
 
