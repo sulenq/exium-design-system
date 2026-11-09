@@ -3326,9 +3326,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "icon",
         type: "ComponentType",
-        defaultValue: undefined,
+        defaultValue: "SparklesIcon",
         description: "Komponen SVG Icon dari Lucide atau Tabler Icons (wajib).",
-        controlKind: "text",
       },
       {
         name: "size",
