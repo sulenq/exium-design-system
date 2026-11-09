@@ -2,13 +2,18 @@
 
 "use client";
 
-import { ThemeProvider } from "@/design-system-v2/theme/theme-provider";
-import type { ThemeProviderProps } from "@/design-system-v2/hooks/types/use-theme.type";
+import { ThemeProvider } from "next-themes";
+import type { ThemeProviderProps } from "next-themes";
 
 export function ColorModeProvider(props: ThemeProviderProps) {
   const { children, ...restProps } = props;
   return (
-    <ThemeProvider defaultTheme={"light"} {...restProps}>
+    <ThemeProvider
+      attribute={"class"}
+      defaultTheme={"light"}
+      disableTransitionOnChange
+      {...restProps}
+    >
       {children}
     </ThemeProvider>
   );

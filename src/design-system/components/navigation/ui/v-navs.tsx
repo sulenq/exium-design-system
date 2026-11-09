@@ -307,10 +307,12 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
             {...resolvedNavNodeProps}
             onClick={() => onNavClick?.(node.key)}
           >
-            <NavIcon
-              nav={nav}
-              color={isActive ? `${theme.colorPalette}.fg` : "fg.muted"}
-            />
+            {!isSubNav && (
+              <NavIcon
+                nav={nav}
+                color={isActive ? `${theme.colorPalette}.fg` : "fg.muted"}
+              />
+            )}
 
             <P
               fontWeight={isActive ? "semibold" : "medium"}

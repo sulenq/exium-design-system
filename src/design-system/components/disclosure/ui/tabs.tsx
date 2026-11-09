@@ -47,7 +47,7 @@ const TabsRoot = forwardRef<HTMLDivElement, TabsRootProps>((props, ref) => {
 
 const TabsList = forwardRef<HTMLDivElement, TabsListProps>((props, ref) => {
   // Props
-  const { p = 0, px = 0, gap = 4, ...restProps } = props;
+  const { p = 0, px = 0, py = 0, gap = 4, ...restProps } = props;
 
   return (
     <ChakraTabs.List
@@ -55,6 +55,7 @@ const TabsList = forwardRef<HTMLDivElement, TabsListProps>((props, ref) => {
       flexShrink={0}
       p={p}
       px={px}
+      py={py}
       gap={gap}
       {...restProps}
     />
@@ -64,7 +65,7 @@ const TabsList = forwardRef<HTMLDivElement, TabsListProps>((props, ref) => {
 const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
   (props, ref) => {
     // Props
-    const { ...restProps } = props;
+    const { px = 0, ...restProps } = props;
 
     // Contexts
     const tabsContext = useTabsContext();
@@ -79,6 +80,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
       <ChakraTabs.Trigger
         ref={ref}
         fontSize={"md"}
+        px={isOutlineVariant ? undefined : px}
         roundedTop={isOutlineVariant ? theme.radii.component : undefined}
         {...restProps}
       />
