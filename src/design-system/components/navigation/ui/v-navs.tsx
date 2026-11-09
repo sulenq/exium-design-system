@@ -390,12 +390,12 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
             color={"border"}
             zIndex={1}
           >
-            {/* Single continuous vertical spine */}
+            {/* Single continuous vertical spine that stops exactly where the last child branch begins */}
             <line
               x1={"0"}
               y1={"0"}
               x2={"0"}
-              y2={`${(node.children!.length - 1) * 40 + 20}`}
+              y2={`${(node.children!.length - 1) * 40 + 12}`}
               stroke={"currentColor"}
               strokeWidth={"1.5"}
             />
