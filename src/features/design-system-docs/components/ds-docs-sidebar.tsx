@@ -123,15 +123,15 @@ const DsDocsSidebarHeader = ({
   return (
     <HStack align={"center"} justify={"space-between"} w={"full"}>
       <HStack align={"center"} gap={"sm"}>
-        <Logo boxSize={20} ml={1.5} flexShrink={0} />
+        <Logo boxSize={18} ml={1.5} flexShrink={0} />
 
         <ClampedP
           w={expanded ? "" : 0}
+          fontSize={"lg"}
           fontWeight={"semibold"}
           color={`${theme.colorPalette}.fg`}
-          lineHeight={1.2}
         >
-          Exium System
+          exium
         </ClampedP>
       </HStack>
 

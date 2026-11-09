@@ -276,7 +276,7 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
                 pos={"absolute"}
                 left={"-15px"}
                 top={"20px"}
-                bottom={"-4px"}
+                bottom={"0px"}
                 w={"1.5px"}
                 bg={"border"}
                 pointerEvents={"none"}
@@ -407,7 +407,7 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
         <VStack
           pos={"relative"}
           pl={"14px"}
-          py={1}
+          py={0}
           ml={`calc(18px * ${depth + 1})`}
         >
           {/* Active continuous path from top with curve into active sub-nav */}
@@ -418,16 +418,16 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
               left={"-1px"}
               top={0}
               w={"15px"}
-              h={`${activeChildIndex * 44 + 28}px`}
+              h={`${activeChildIndex * 40 + 20}px`}
               overflow={"visible"}
               pointerEvents={"none"}
               color={`${theme.colorPalette}.solid`}
               zIndex={2}
             >
               <path
-                d={`M 0 0 V ${activeChildIndex * 44 + 16} Q 0 ${
-                  activeChildIndex * 44 + 24
-                } 8 ${activeChildIndex * 44 + 24} H 15`}
+                d={`M 0 0 V ${activeChildIndex * 40 + 12} Q 0 ${
+                  activeChildIndex * 40 + 20
+                } 8 ${activeChildIndex * 40 + 20} H 15`}
                 fill={"none"}
                 stroke={"currentColor"}
                 strokeWidth={"1.5"}
@@ -439,7 +439,7 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
             </Box>
           )}
 
-          <VStack gap={1} align={"stretch"}>
+          <VStack gap={0} align={"stretch"}>
             {node.children!.map((child, index) => (
               <VNavNode
                 key={child.key}
