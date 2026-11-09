@@ -97,7 +97,7 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
     expanded,
     onNavClick,
     depth = 0,
-    isLastChild = false,
+    isLastChild: _isLastChild = false,
     navNodeProps,
   } = props;
 
@@ -253,39 +253,6 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
   if (!hasChildren) {
     return (
       <Box pos={"relative"} w={"full"}>
-        {isSubNav && (
-          <>
-            {/* Upper vertical line and curve turning into this sub-nav button */}
-            <Box
-              pos={"absolute"}
-              left={"-15px"}
-              top={"0px"}
-              w={"14px"}
-              h={"20px"}
-              borderLeft={"1.5px solid"}
-              borderBottom={"1.5px solid"}
-              borderBottomLeftRadius={"8px"}
-              borderColor={"border"}
-              pointerEvents={"none"}
-              zIndex={0}
-            />
-
-            {/* Continuation line downwards to the next sub-nav, only if not the last child */}
-            {!isLastChild && (
-              <Box
-                pos={"absolute"}
-                left={"-15px"}
-                top={"20px"}
-                bottom={"0px"}
-                w={"1.5px"}
-                bg={"border"}
-                pointerEvents={"none"}
-                zIndex={0}
-              />
-            )}
-          </>
-        )}
-
         <Tooltip
           content={navTitle}
           positioning={{
@@ -410,6 +377,44 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
           py={0}
           ml={`calc(18px * ${depth + 1})`}
         >
+          {/* Base continuous hierarchy tree SVG */}
+          <Box
+            as={"svg"}
+            pos={"absolute"}
+            left={"-1px"}
+            top={0}
+            w={"15px"}
+            h={`${node.children!.length * 40}px`}
+            overflow={"visible"}
+            pointerEvents={"none"}
+            color={"border"}
+            zIndex={1}
+          >
+            {/* Single continuous vertical spine */}
+            <line
+              x1={"0"}
+              y1={"0"}
+              x2={"0"}
+              y2={`${(node.children!.length - 1) * 40 + 20}`}
+              stroke={"currentColor"}
+              strokeWidth={"1.5"}
+            />
+
+            {/* Exact smooth branch curves for each child */}
+            {node.children!.map((_, index) => (
+              <path
+                key={index}
+                d={`M 0 ${index * 40 + 12} Q 0 ${index * 40 + 20} 8 ${
+                  index * 40 + 20
+                } H 15`}
+                fill={"none"}
+                stroke={"currentColor"}
+                strokeWidth={"1.5"}
+                strokeLinecap={"round"}
+              />
+            ))}
+          </Box>
+
           {/* Active continuous path from top with curve into active sub-nav */}
           {activeChildIndex !== -1 && (
             <Box
