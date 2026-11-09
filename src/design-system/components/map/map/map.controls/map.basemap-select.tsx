@@ -1,0 +1,220 @@
+// src/design-system/components/map/ui/map.controls/map.basemap-select.tsx
+
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Slider } from "@/design-system/components/input/slider/slider";
+import { InfoTip } from "@/design-system/components/input/toggle-tip/toggle-tip";
+import { Circle } from "@/design-system/components/layout/box/box";
+import { Center } from "@/design-system/components/layout/center/center";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Grid } from "@/design-system/components/layout/grid/grid";
+import { Separator } from "@/design-system/components/layout/separator/separator";
+import {
+  MAP_BASEMAP_MAP,
+  MAP_BASEMAP_OPTIONS_LIST,
+  getBasemapOption,
+} from "@/design-system/components/map/constants/map.basemap-options";
+import { useMapBaseMapStore } from "@/design-system/components/map/stores/map.base-map.store";
+import { MapOverlayContainer } from "@/design-system/components/map/map/map.overlay";
+import { Image } from "@/design-system/components/media/image/image";
+import { Popover } from "@/design-system/components/overlay/popover/popover";
+import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
+import { HeaderContainer } from "@/design-system/components/shell/header-container/header-container";
+import { P } from "@/design-system/components/typography/p/p";
+import { useColorMode } from "@/design-system/hooks/use-color-mode";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import { MoonIcon, SunIcon } from "lucide-react";
+
+export const MapBasemapSelect = () => {
+  // Stores
+  const { activeStyleKey, setActiveStyleKey, opacity, setOpacity } =
+    useMapBaseMapStore();
+  const { theme } = useThemeStore();
+
+  // Hooks
+  const { colorMode } = useColorMode();
+
+  // Constants
+  const activeStyle = getBasemapOption(activeStyleKey);
+  const plainAdaptiveProps = {
+    light: {
+      thumbnail: MAP_BASEMAP_MAP["plain-light"].thumbnail,
+      icon: SunIcon,
+    },
+    dark: {
+      thumbnail: MAP_BASEMAP_MAP["plain-dark"].thumbnail,
+      icon: MoonIcon,
+    },
+  };
+
+  // Derived Values
+  const isActiveStylePlainAdaptive = activeStyleKey === "plain-adaptive";
+
+  return (
+    <Popover.Root
+      positioning={{
+        placement: "top-start",
+        offset: {
+          crossAxis: -2,
+        },
+      }}
+    >
+      <Popover.Trigger>
+        <MapOverlayContainer p={"2px"}>
+          <Tooltip
+            content={"Gaya Peta Base"}
+            positioning={{ placement: "top" }}
+          >
+            <Center pos={"relative"} cursor={"pointer"}>
+              <Image
+                src={
+                  isActiveStylePlainAdaptive
+                    ? plainAdaptiveProps[colorMode].thumbnail
+                    : activeStyle.thumbnail
+                }
+                aspectRatio={1}
+                objectFit={"cover"}
+                w={["64px", null, "70px"]}
+                rounded={`calc(${theme.radii.component} - 2px)`}
+              />
+
+              {isActiveStylePlainAdaptive && (
+                <Circle
+                  bg={"bg.body"}
+                  pos={"absolute"}
+                  left={-2}
+                  bottom={-2}
+                  p={"2xs"}
+                >
+                  <AppIcon
+                    icon={plainAdaptiveProps[colorMode].icon}
+                    size={"xs"}
+                    color={"fg.muted"}
+                  />
+                </Circle>
+              )}
+            </Center>
+          </Tooltip>
+        </MapOverlayContainer>
+      </Popover.Trigger>
+
+      <Popover.Content>
+        <HeaderContainer>
+          <P fontWeight={"medium"}>{"Peta Dasar"}</P>
+        </HeaderContainer>
+
+        <Separator borderColor={"bg.canvas"} />
+
+        <Popover.Body
+          className={"noScrollbar"}
+          w={["full", null, "400px"]}
+          px={"xs"}
+          py={"md"}
+          overflowY={"auto"}
+        >
+          <Grid
+            gridTemplateColumns={"repeat(auto-fill, minmax(100px, 1fr))"}
+            gapY={4}
+          >
+            {MAP_BASEMAP_OPTIONS_LIST.map((styleKey) => {
+              const isSelected = activeStyleKey === styleKey;
+              const item = getBasemapOption(styleKey);
+              const isPlainAdaptive = styleKey === "plain-adaptive";
+
+              return (
+                <VStack
+                  key={styleKey}
+                  align={"center"}
+                  gap={2}
+                  transition={"200ms"}
+                >
+                  <Center pos={"relative"}>
+                    <Image
+                      src={
+                        isPlainAdaptive
+                          ? plainAdaptiveProps[colorMode].thumbnail
+                          : item.thumbnail
+                      }
+                      aspectRatio={1}
+                      w={"112px"}
+                      objectFit={"cover"}
+                      rounded={`calc(${theme.radii.component} - 2px)`}
+                      cursor={"pointer"}
+                      outline={isSelected ? "2px solid" : undefined}
+                      outlineColor={`${theme.colorPalette}.focusRing`}
+                      outlineOffset={"2px"}
+                      onClick={() => setActiveStyleKey(styleKey)}
+                    />
+
+                    {isPlainAdaptive && (
+                      // <AppIcon
+                      //   icon={plainAdaptiveProps[colorMode].icon}
+                      //   size={"lg"}
+                      //   pos={"absolute"}
+                      //   left={1}
+                      //   bottom={1}
+                      //   color={"fg.inverted"}
+                      // />
+
+                      <Circle
+                        bg={"bg.body"}
+                        pos={"absolute"}
+                        left={-2}
+                        bottom={-2}
+                        p={"2xs"}
+                      >
+                        <AppIcon
+                          icon={plainAdaptiveProps[colorMode].icon}
+                          size={"sm"}
+                          color={"fg.muted"}
+                        />
+                      </Circle>
+                    )}
+                  </Center>
+
+                  <HStack align={"center"} justify={"center"} gap={1}>
+                    <P fontSize={"sm"} whiteSpace={"nowrap"} lineHeight={"1.2"}>
+                      {item.label}
+                    </P>
+
+                    <InfoTip
+                      variant={"icon"}
+                      appIconProps={{
+                        size: "xs",
+                        color: "fg.subtle",
+                      }}
+                    >
+                      {item.description}
+                    </InfoTip>
+                  </HStack>
+                </VStack>
+              );
+            })}
+          </Grid>
+
+          <Separator borderColor={"bg.canvas"} my={"sm"} />
+
+          <VStack gap={"xs"} align={"stretch"} px={"xs"} pb={"2xs"}>
+            <HStack justify={"space-between"} gap={"md"} w={"full"}>
+              <P fontSize={"sm"} fontWeight={"medium"}>
+                {"Opasitas Peta Dasar"}
+              </P>
+
+              <P fontSize={"sm"} fontWeight={"semibold"} color={"fg.muted"}>
+                {`${Math.round(opacity * 100)}%`}
+              </P>
+            </HStack>
+
+            <Slider
+              value={[Math.round(opacity * 100)]}
+              min={0}
+              max={100}
+              step={1}
+              showValue={false}
+              onValueChange={(details) => setOpacity(details.value[0] / 100)}
+            />
+          </VStack>
+        </Popover.Body>
+      </Popover.Content>
+    </Popover.Root>
+  );
+};

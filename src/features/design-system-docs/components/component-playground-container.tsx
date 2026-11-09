@@ -1,6 +1,6 @@
 // src/features/design-system-docs/components/component-playground-container.tsx
 
-import { Box } from "@/design-system/components/layout/ui/box";
+import { Box } from "@/design-system/components/layout/box/box";
 import type { ComponentPlaygroundContainerProps } from "@/features/design-system-docs/types/ds-docs-spec.type";
 
 export const ComponentPlaygroundContainer = (

@@ -4,7 +4,7 @@ import { useMapInstanceStore } from "@/design-system/components/map/stores/map.i
 import type {
   FlyToLayerOptions,
   FlyToLayerTarget,
-} from "@/design-system/components/map/types/map.layer-management.type";
+} from "@/design-system/components/map/map/map.layer-management.type";
 import { fitBoundsSafe, flyToSafe } from "@/design-system/components/map/utils/map-camera";
 import { useCallback } from "react";
 

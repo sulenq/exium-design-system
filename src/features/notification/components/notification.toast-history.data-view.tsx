@@ -1,11 +1,11 @@
 // src/features/notification/components/notification.toast-history.data-view.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
-import { Loader } from "@/design-system/components/feedback/ui/loader";
-import { StateNoData } from "@/design-system/components/feedback/ui/state.no-data";
-import { Center } from "@/design-system/components/layout/ui/center";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
+import { Button } from "@/design-system/components/button/button/button";
+import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
+import { Loader } from "@/design-system/components/feedback/loader/loader";
+import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
+import { Center } from "@/design-system/components/layout/center/center";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { NotificationGroupStackCard } from "@/features/notification/components/notification.item";
 import type { NotificationToastHistoryContentProps } from "@/features/notification/types/notification.type";
 import { t } from "@/shared/libs/i18n";

@@ -1,11 +1,11 @@
 // src/features/auth/components/ui/signin-shell.tsx
 
-import { Logo } from "@/design-system/components/branding/ui/logo";
-import { OutlineContourPerspective } from "@/design-system/components/decorative/ui/outline-contour-perspective";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
-import { PageContainer } from "@/design-system/components/layout/ui/page-container";
-import { P, PSerif } from "@/design-system/components/typography/ui/p";
+import { Logo } from "@/design-system/components/branding/logo/logo";
+import { OutlineContourPerspective } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
+import { PageContainer } from "@/design-system/components/layout/page-container/page-container";
+import { P, PSerif } from "@/design-system/components/typography/p/p";
 import { APP_CONFIG } from "@/design-system/constants/_meta";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import type { SigninShellProps } from "@/features/auth/types/signin.type";

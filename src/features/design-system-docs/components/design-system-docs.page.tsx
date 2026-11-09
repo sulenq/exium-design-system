@@ -1,13 +1,13 @@
 // src/features/design-system-docs/components/design-system-docs.page.tsx
 
-import { IconButton } from "@/design-system/components/button/ui/button";
-import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { VScrollContainer } from "@/design-system/components/layout/ui/scroll-container";
+import { IconButton } from "@/design-system/components/button/button/button";
+import { ColorModeToggleButton } from "@/design-system/components/button/color-mode/color-mode";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
-import { Drawer } from "@/design-system/components/overlay/ui/drawer";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
+import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { ComponentPlayground } from "@/features/design-system-docs/components/component-playground";
 import { DsDocsSidebar } from "@/features/design-system-docs/components/ds-docs-sidebar";

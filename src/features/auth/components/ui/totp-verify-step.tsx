@@ -1,11 +1,11 @@
 // src/features/auth/components/ui/totp-verify-step.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { PinInput } from "@/design-system/components/input/ui/pin-input";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { PinInput } from "@/design-system/components/input/pin-input/pin-input";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { P } from "@/design-system/components/typography/p/p";
 import { useInternalTotpVerifyMutation } from "@/features/auth/hooks/use-internal-auth.mutation";
 import type { TotpVerifyStepProps } from "@/features/auth/types/totp.type";
 import { ApiError } from "@/shared/libs/api-client/api-error";

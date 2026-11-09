@@ -7,7 +7,7 @@ import { useToastVisibleStore } from "@/design-system/components/toast/stores/to
 import type {
   HistoryEntry,
   HistoryStore,
-} from "@/design-system/components/toast/types/toast.type";
+} from "@/design-system/components/toast/toast/toast.type";
 
 export function isExpired(entry: HistoryEntry, ttl: number | null): boolean {
   if (ttl === null) return false;

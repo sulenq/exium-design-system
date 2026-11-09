@@ -1,22 +1,22 @@
 // src/features/auth/components/ui/reset-password-modal.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { Alert } from "@/design-system/components/feedback/ui/alert";
-import { FocusAlertView } from "@/design-system/components/focus-alert/ui/focus-alert";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Field } from "@/design-system/components/input/ui/field";
-import { Fieldset } from "@/design-system/components/input/ui/fieldset";
-import { Input } from "@/design-system/components/input/ui/input";
-import { PasswordInput } from "@/design-system/components/input/ui/password-input";
-import { PinInput } from "@/design-system/components/input/ui/pin-input";
-import { RadioIndicator } from "@/design-system/components/input/ui/radio-indicator";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Separator } from "@/design-system/components/layout/ui/separator";
+import { Button } from "@/design-system/components/button/button/button";
+import { Alert } from "@/design-system/components/feedback/alert/alert";
+import { FocusAlertView } from "@/design-system/components/focus-alert/focus-alert/focus-alert";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Field } from "@/design-system/components/input/field/field";
+import { Fieldset } from "@/design-system/components/input/fieldset/fieldset";
+import { Input } from "@/design-system/components/input/input/input";
+import { PasswordInput } from "@/design-system/components/input/password-input/password-input";
+import { PinInput } from "@/design-system/components/input/pin-input/pin-input";
+import { RadioIndicator } from "@/design-system/components/input/radio-indicator/radio-indicator";
+import { Box } from "@/design-system/components/layout/box/box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Separator } from "@/design-system/components/layout/separator/separator";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
-import { Modal } from "@/design-system/components/overlay/ui/modal";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Modal } from "@/design-system/components/overlay/modal/modal";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 
 import { useAuthSession } from "@/features/auth/hooks/use-auth-session";

@@ -1,18 +1,18 @@
 // src/features/design-system-docs/components/component-playground.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { Tabs } from "@/design-system/components/disclosure/ui/tabs";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Input } from "@/design-system/components/input/ui/input";
-import { NumberInput } from "@/design-system/components/input/ui/number-input";
-import SelectInput from "@/design-system/components/input/ui/select";
-import { Switch } from "@/design-system/components/input/ui/switch";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { Kbd } from "@/design-system/components/typography/ui/kbd";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Button } from "@/design-system/components/button/button/button";
+import { Tabs } from "@/design-system/components/disclosure/tabs/tabs";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Input } from "@/design-system/components/input/input/input";
+import { NumberInput } from "@/design-system/components/input/number-input/number-input";
+import SelectInput from "@/design-system/components/input/select/select";
+import { Switch } from "@/design-system/components/input/switch/switch";
+import { Box } from "@/design-system/components/layout/box/box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { Kbd } from "@/design-system/components/typography/kbd/kbd";
+import { P } from "@/design-system/components/typography/p/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-docs/components/component-playground-container";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";

@@ -1,80 +1,80 @@
 // src/features/root/components/demo.page.tsx
 
-import { BrandWatermark } from "@/design-system/components/branding/ui/brand-watermark";
-import { Logo } from "@/design-system/components/branding/ui/logo";
+import { BrandWatermark } from "@/design-system/components/branding/brand-watermark/brand-watermark";
+import { Logo } from "@/design-system/components/branding/logo/logo";
 import {
   Button,
   IconButton,
-} from "@/design-system/components/button/ui/button";
-import { ButtonGroup } from "@/design-system/components/button/ui/button-group";
-import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
+} from "@/design-system/components/button/button/button";
+import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";
+import { ColorModeToggleButton } from "@/design-system/components/button/color-mode/color-mode";
 import type {
   DataViewBatchActionsGenerator,
   DataViewItemActionsGenerator,
-} from "@/design-system/components/data-display/types/data-view.type";
-import { DataViewFooter } from "@/design-system/components/data-display/ui/data-view-footer";
-import { DataViewTable } from "@/design-system/components/data-display/ui/data-view-table";
-import { Accordion } from "@/design-system/components/disclosure/ui/accordion";
-import { Breadcrumb } from "@/design-system/components/disclosure/ui/breadcrumb";
-import { Carousel } from "@/design-system/components/disclosure/ui/carousel";
-import { Steps } from "@/design-system/components/disclosure/ui/steps";
-import { Tabs } from "@/design-system/components/disclosure/ui/tabs";
-import type { EmojiVariant } from "@/design-system/components/emoji/types/emoji.type";
-import { Emoji } from "@/design-system/components/emoji/ui/emoji";
-import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
+} from "@/design-system/components/data-display/data-view/data-view.type";
+import { DataViewFooter } from "@/design-system/components/data-display/data-view/data-view-footer";
+import { DataViewTable } from "@/design-system/components/data-display/data-view/data-view-table";
+import { Accordion } from "@/design-system/components/disclosure/accordion/accordion";
+import { Breadcrumb } from "@/design-system/components/disclosure/breadcrumb/breadcrumb";
+import { Carousel } from "@/design-system/components/disclosure/carousel/carousel";
+import { Steps } from "@/design-system/components/disclosure/steps/steps";
+import { Tabs } from "@/design-system/components/disclosure/tabs/tabs";
+import type { EmojiVariant } from "@/design-system/components/emoji/emoji/emoji.type";
+import { Emoji } from "@/design-system/components/emoji/emoji/emoji";
+import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
 import {
   Progress,
   ProgressCircle,
-} from "@/design-system/components/feedback/ui/progress";
+} from "@/design-system/components/feedback/progress/progress";
 import {
   Skeleton,
   SkeletonCircle,
   SkeletonText,
-} from "@/design-system/components/feedback/ui/skeleton";
-import { StateAccessDenied } from "@/design-system/components/feedback/ui/state.access-denied";
-import { StateNoData } from "@/design-system/components/feedback/ui/state.no-data";
-import { StateNoResult } from "@/design-system/components/feedback/ui/state.no-result";
-import { StateRetry } from "@/design-system/components/feedback/ui/state.retry";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
+} from "@/design-system/components/feedback/skeleton/skeleton";
+import { StateAccessDenied } from "@/design-system/components/feedback/state-access-denied/state.access-denied";
+import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
+import { StateNoResult } from "@/design-system/components/feedback/state-no-result/state.no-result";
+import { StateRetry } from "@/design-system/components/feedback/state-retry/state.retry";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useExistingFiles } from "@/design-system/components/input/hooks/use-existing-files";
-import { Checkbox } from "@/design-system/components/input/ui/checkbox";
-import { DateInput } from "@/design-system/components/input/ui/date-input";
-import { Field } from "@/design-system/components/input/ui/field";
-import { FileInput } from "@/design-system/components/input/ui/file-input";
-import { FocusSelectInput } from "@/design-system/components/input/ui/focus-select";
-import { Input } from "@/design-system/components/input/ui/input";
+import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
+import { DateInput } from "@/design-system/components/input/date-input/date-input";
+import { Field } from "@/design-system/components/input/field/field";
+import { FileInput } from "@/design-system/components/input/file-input/file-input";
+import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
+import { Input } from "@/design-system/components/input/input/input";
 import {
   NumberInput,
   SteppedNumberInput,
-} from "@/design-system/components/input/ui/number-input";
-import { PasswordInput } from "@/design-system/components/input/ui/password-input";
-import { PinInput } from "@/design-system/components/input/ui/pin-input";
-import { RadioCardInput } from "@/design-system/components/input/ui/radio-card-input";
-import { RadioInput } from "@/design-system/components/input/ui/radio-input";
-import { SearchInput } from "@/design-system/components/input/ui/search-input";
-import Select from "@/design-system/components/input/ui/select";
-import { Slider } from "@/design-system/components/input/ui/slider";
-import { Switch } from "@/design-system/components/input/ui/switch";
-import { Textarea } from "@/design-system/components/input/ui/textarea";
-import { Box } from "@/design-system/components/layout/ui/box";
+} from "@/design-system/components/input/number-input/number-input";
+import { PasswordInput } from "@/design-system/components/input/password-input/password-input";
+import { PinInput } from "@/design-system/components/input/pin-input/pin-input";
+import { RadioCardInput } from "@/design-system/components/input/radio-card-input/radio-card-input";
+import { RadioInput } from "@/design-system/components/input/radio-input/radio-input";
+import { SearchInput } from "@/design-system/components/input/search-input/search-input";
+import Select from "@/design-system/components/input/select/select";
+import { Slider } from "@/design-system/components/input/slider/slider";
+import { Switch } from "@/design-system/components/input/switch/switch";
+import { Textarea } from "@/design-system/components/input/textarea/textarea";
+import { Box } from "@/design-system/components/layout/box/box";
 import {
   AbsoluteCenter,
   Center,
-} from "@/design-system/components/layout/ui/center";
-import { Container } from "@/design-system/components/layout/ui/container";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Splitter } from "@/design-system/components/layout/ui/splitter";
-import { Image } from "@/design-system/components/media/ui/image";
-import { ExternalLink } from "@/design-system/components/navigation/ui/link";
+} from "@/design-system/components/layout/center/center";
+import { Container } from "@/design-system/components/layout/container/container";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Splitter } from "@/design-system/components/layout/splitter/splitter";
+import { Image } from "@/design-system/components/media/image/image";
+import { ExternalLink } from "@/design-system/components/navigation/link/link";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
-import { Dialog } from "@/design-system/components/overlay/ui/dialog";
-import { Drawer } from "@/design-system/components/overlay/ui/drawer";
-import { Modal } from "@/design-system/components/overlay/ui/modal";
+import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
+import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
+import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { toast } from "@/design-system/components/toast";
-import { P, TNum } from "@/design-system/components/typography/ui/p";
-import { RichTextEditorPresetEssential } from "@/design-system/components/typography/ui/rich-text-editor.preset";
-import { Span } from "@/design-system/components/typography/ui/span";
-import { DownloadTrigger } from "@/design-system/components/utilities/ui/download-trigger";
+import { P, TNum } from "@/design-system/components/typography/p/p";
+import { RichTextEditorPresetEssential } from "@/design-system/components/typography/rich-text-editor/rich-text-editor.preset";
+import { Span } from "@/design-system/components/typography/span/span";
+import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";
 import { COLOR_PALETTES_LIST } from "@/design-system/constants/colors";
 import { useSplitterStore } from "@/design-system/stores/splitter-store";
 import { SettingsTrigger } from "@/features/settings/components/settings";

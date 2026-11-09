@@ -3,7 +3,7 @@
 import type {
   FocusSelectInputProps,
   FocusSelectOption,
-} from "@/design-system/components/input/types/focus-select.type";
+} from "@/design-system/components/input/focus-select/focus-select.type";
 
 export type StatusFilterSelectProps = Omit<
   FocusSelectInputProps,

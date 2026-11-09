@@ -1,6 +1,6 @@
 // src/design-system/components/data-display/utils/countdown.utils.ts
 
-import type { CountdownParts } from "@/design-system/components/data-display/types/countdown.type";
+import type { CountdownParts } from "@/design-system/components/data-display/countdown/countdown.type";
 
 const SECOND_IN_MS = 1000;
 const MINUTE_IN_SECONDS = 60;

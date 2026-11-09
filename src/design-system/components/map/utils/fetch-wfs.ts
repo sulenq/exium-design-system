@@ -5,7 +5,7 @@ import type {
   GeoServerFeatureCollection,
   RawGeoServerResponse,
   WfsVersion,
-} from "@/design-system/components/map/types/map.fetch-wfs.type";
+} from "@/design-system/components/map/map/map.fetch-wfs.type";
 import { normalizeGeometryCoordinates } from "@/design-system/components/map/utils/geometry";
 import {
   getApiBaseWmsProxyUrl,

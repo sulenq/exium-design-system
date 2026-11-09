@@ -1,12 +1,12 @@
 // src/features/design-system-docs/components/overview-docs.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Box } from "@/design-system/components/layout/box/box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { P } from "@/design-system/components/typography/p/p";
 import { Link } from "@tanstack/react-router";
 import {
   ExternalLink,

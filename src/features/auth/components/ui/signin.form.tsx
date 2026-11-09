@@ -1,16 +1,16 @@
 // src/features/auth/components/ui/signin.form.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Field } from "@/design-system/components/input/ui/field";
-import { Fieldset } from "@/design-system/components/input/ui/fieldset";
-import { Input } from "@/design-system/components/input/ui/input";
-import { PasswordInput } from "@/design-system/components/input/ui/password-input";
-import type { StackProps } from "@/design-system/components/layout/types/flex-box.type";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Separator } from "@/design-system/components/layout/ui/separator";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Field } from "@/design-system/components/input/field/field";
+import { Fieldset } from "@/design-system/components/input/fieldset/fieldset";
+import { Input } from "@/design-system/components/input/input/input";
+import { PasswordInput } from "@/design-system/components/input/password-input/password-input";
+import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Separator } from "@/design-system/components/layout/separator/separator";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { P } from "@/design-system/components/typography/p/p";
 import { ResetPasswordTrigger } from "@/features/auth/components/ui/reset-password-modal";
 import { UserSessionActions } from "@/features/auth/components/ui/user-session-actions";
 import { UserSessionCard } from "@/features/auth/components/ui/user-session-card";

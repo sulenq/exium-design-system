@@ -5,7 +5,7 @@ import type {
   DataViewTableSortConfig,
   DataViewTableSortHandler,
   UseDataListSortOptions,
-} from "@/design-system/components/data-display/types/data-view-table.type";
+} from "@/design-system/components/data-display/data-view/data-view-table.type";
 
 const sortHandlers: Record<string, DataViewTableSortHandler> = {
   string: (aValue, bValue, direction) =>

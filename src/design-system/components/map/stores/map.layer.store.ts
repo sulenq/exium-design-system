@@ -1,6 +1,6 @@
 // src/design-system/components/map/stores/map.layer.store.ts
 
-import type { MapLayerState } from "@/design-system/components/map/types/map.type";
+import type { MapLayerState } from "@/design-system/components/map/map/map.type";
 import { create } from "zustand";
 
 // Clean up any legacy persisted map-layer-store from localStorage

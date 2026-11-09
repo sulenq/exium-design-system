@@ -3,7 +3,7 @@
 import type {
   BasemapOption,
   BasemapKey,
-} from "@/design-system/components/map/types/map.basemap-select.type";
+} from "@/design-system/components/map/map/map.basemap-select.type";
 import { PATH_CONFIG } from "@/shared/constants/paths";
 import type maplibregl from "maplibre-gl";
 

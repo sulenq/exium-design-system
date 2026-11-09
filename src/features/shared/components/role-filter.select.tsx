@@ -1,7 +1,7 @@
 // src/features/shared/components/role-filter.select.tsx
 
-import type { FocusSelectOption } from "@/design-system/components/input/types/focus-select.type";
-import { FocusSelectInput } from "@/design-system/components/input/ui/focus-select";
+import type { FocusSelectOption } from "@/design-system/components/input/focus-select/focus-select.type";
+import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
 import type { RoleFilterSelectProps } from "@/features/shared/types/role-filter-select.type";
 
 export const DEFAULT_ROLE_FILTER_OPTIONS: FocusSelectOption[] = [

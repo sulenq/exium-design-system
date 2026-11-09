@@ -2,12 +2,12 @@
 
 "use client";
 
-import { IconButton } from "@/design-system/components/button/ui/button";
-import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { VNavs } from "@/design-system/components/navigation/ui/v-navs";
-import { P } from "@/design-system/components/typography/ui/p";
+import { IconButton } from "@/design-system/components/button/button/button";
+import { ColorModeToggleButton } from "@/design-system/components/button/color-mode/color-mode";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";
+import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { SettingsSearchButton } from "@/features/settings/components/settings.search";
 import { SETTINGS_NAV_GROUPS_LIST } from "@/features/settings/constants/settings.nav-groups";

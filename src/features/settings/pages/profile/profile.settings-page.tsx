@@ -2,7 +2,7 @@
 
 "use client";
 
-import { VStack } from "@/design-system/components/layout/ui/flex-box";
+import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import type { ProfileSettingsPageProps } from "@/features/settings/types/settings.type";
 
 export const ProfileSettingsPage = (props: ProfileSettingsPageProps) => {

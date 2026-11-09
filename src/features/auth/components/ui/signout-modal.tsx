@@ -1,6 +1,6 @@
 // src/features/auth/components/ui/signout-modal.tsx
 
-import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
+import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
 import { useSignoutMutation } from "@/features/auth/hooks/use-signout.mutation";
 import type { SignoutTriggerProps } from "@/features/auth/types/signout-modal.type";
 import { LogOutIcon } from "lucide-react";

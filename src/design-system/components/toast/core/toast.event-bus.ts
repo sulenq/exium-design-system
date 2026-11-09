@@ -4,7 +4,7 @@ import type {
   ToastEventListener,
   ToastEventMap,
   ToastEventName,
-} from "@/design-system/components/toast/types/toast.type";
+} from "@/design-system/components/toast/toast/toast.type";
 
 /**
  * Extending the engine (analytics, sound, telemetry, cross-tab sync, etc)

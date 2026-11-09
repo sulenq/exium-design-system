@@ -1,8 +1,8 @@
 // src/features/auth/components/ui/user-session-actions.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { VStack } from "@/design-system/components/layout/ui/flex-box";
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { SignoutTrigger } from "@/features/auth/components/ui/signout-modal";
 import { useSignoutMutation } from "@/features/auth/hooks/use-signout.mutation";
 import type { UserSessionActionsProps } from "@/features/auth/types/user-session-card.type";

@@ -1,0 +1,56 @@
+// src/design-system/components/typography/ui/count-badge.tsx
+
+import { Float } from "@/design-system/components/layout/float/float";
+import type { CountBadgeProps } from "@/design-system/components/typography/count-badge/count-badge.type";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import { useMemo } from "react";
+
+export const CountBadge = (props: CountBadgeProps) => {
+  // Props
+  const {
+    children,
+    max = 99,
+    floating = false,
+    floatProps,
+    colorPalette,
+    size = "xs",
+    ...restProps
+  } = props;
+
+  // Stores
+  const { theme } = useThemeStore();
+
+  // Derived Values
+  const formattedCount = useMemo(() => {
+    if (children > max) {
+      return `${max}+`;
+    }
+    return String(children);
+  }, [children, max]);
+
+  const badgeContent = (
+    <Badge
+      colorPalette={colorPalette ?? theme.colorPalette}
+      size={size}
+      rounded={"full"}
+      px={1.5}
+      py={0.5}
+      fontSize={"2xs"}
+      fontWeight={"semibold"}
+      {...restProps}
+    >
+      {formattedCount}
+    </Badge>
+  );
+
+  if (floating) {
+    return (
+      <Float placement={"top-end"} {...floatProps}>
+        {badgeContent}
+      </Float>
+    );
+  }
+
+  return badgeContent;
+};

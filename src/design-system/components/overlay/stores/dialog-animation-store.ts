@@ -3,7 +3,7 @@
 import type {
   DialogAnimationStore,
   Point,
-} from "@/design-system/components/overlay/types/dialog.type";
+} from "@/design-system/components/overlay/dialog/dialog.type";
 import { create } from "zustand";
 
 export const DIALOG_OFFSET_X_VAR = "--dialog-offset-x";

@@ -1,0 +1,22 @@
+// src/design-system/components/input/types/toggle-tip.type.ts
+
+import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
+import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
+import type {
+  PopoverContentProps,
+  PopoverRootProps,
+} from "@/design-system/components/overlay/popover/popover.type";
+
+export type ToggleTipProps = PopoverRootProps & {
+  showArrow?: boolean;
+  portalled?: boolean;
+  portalRef?: React.RefObject<HTMLElement | null>;
+  content?: React.ReactNode;
+  contentProps?: PopoverContentProps;
+};
+
+export type InfoTipProps = Partial<ToggleTipProps> & {
+  iconButtonProps?: IconButtonProps;
+  appIconProps?: AppIconProps;
+  variant?: "iconButton" | "icon";
+};

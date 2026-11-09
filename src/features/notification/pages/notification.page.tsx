@@ -1,14 +1,14 @@
 // src/features/notification/pages/notification.page.tsx
 
-import { Tabs } from "@/design-system/components/disclosure/ui/tabs";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { Container } from "@/design-system/components/layout/ui/container";
-import { HStack } from "@/design-system/components/layout/ui/flex-box";
-import { AppContentContainer } from "@/design-system/components/layout/ui/page-container";
-import { Separator } from "@/design-system/components/layout/ui/separator";
-import { AppNavTitle } from "@/design-system/components/shell/ui/app-nav-title";
-import { Badge } from "@/design-system/components/typography/ui/badge";
+import { Tabs } from "@/design-system/components/disclosure/tabs/tabs";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Box } from "@/design-system/components/layout/box/box";
+import { Container } from "@/design-system/components/layout/container/container";
+import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { AppContentContainer } from "@/design-system/components/layout/page-container/page-container";
+import { Separator } from "@/design-system/components/layout/separator/separator";
+import { AppNavTitle } from "@/design-system/components/shell/app-nav-title/app-nav-title";
+import { Badge } from "@/design-system/components/typography/badge/badge";
 import { useSearchParam } from "@/design-system/hooks/use-search-param";
 import { NotificationInboxDataView } from "@/features/notification/components/notification.inbox.data-view";
 import { NotificationToastHistoryDataView } from "@/features/notification/components/notification.toast-history.data-view";

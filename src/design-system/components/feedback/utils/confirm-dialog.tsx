@@ -1,15 +1,15 @@
 // src/design-system/components/feedback/utils/confirm-dialog.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import type { ConfirmDialogOptions } from "@/design-system/components/feedback/types/confirm-dialog.type";
+import { Button } from "@/design-system/components/button/button/button";
+import type { ConfirmDialogOptions } from "@/design-system/components/feedback/confirm-dialog/confirm-dialog.type";
 import { focusAlert } from "@/design-system/components/focus-alert/utils/focus-alert";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Circle } from "@/design-system/components/layout/ui/box";
-import { VStack } from "@/design-system/components/layout/ui/flex-box";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Circle } from "@/design-system/components/layout/box/box";
+import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
-import { Modal } from "@/design-system/components/overlay/ui/modal";
-import { Heading } from "@/design-system/components/typography/ui/heading";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Modal } from "@/design-system/components/overlay/modal/modal";
+import { Heading } from "@/design-system/components/typography/heading/heading";
+import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
 import { AlertTriangleIcon } from "lucide-react";
 import { useState } from "react";

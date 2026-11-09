@@ -1,0 +1,90 @@
+// src/design-system/components/overlay/types/modal.type.ts
+
+import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
+import type { PProps } from "@/design-system/components/typography/p/p.type";
+import {
+  Dialog as ChakraDialog,
+  Drawer as ChakraDrawer,
+} from "@chakra-ui/react";
+import type { RefObject } from "react";
+
+export type PopModalTriggerProps = ModalTriggerProps & {
+  modalKey: string;
+};
+
+export type ModalRootProps = (
+  | Omit<ChakraDrawer.RootProps, "open" | "placement">
+  | Omit<ChakraDialog.RootProps, "open" | "placement">
+) & {
+  modalKey: string;
+  opened: boolean;
+  open?: () => void;
+  close?: () => void;
+  dialogClickOriginAnimation?: boolean;
+  drawerPlacement?: ChakraDrawer.RootProps["placement"];
+  drawerSwipeToDismiss?: boolean;
+};
+
+export type ModalTriggerProps = (
+  | ChakraDrawer.TriggerProps
+  | ChakraDialog.TriggerProps
+) & {};
+
+export type ModalBackdropProps = (
+  | ChakraDrawer.BackdropProps
+  | ChakraDialog.BackdropProps
+) & {};
+
+export type ModalContentProps = (
+  | ChakraDrawer.ContentProps
+  | ChakraDialog.ContentProps
+) & {
+  portalled?: boolean;
+  portalRef?: RefObject<HTMLElement | null>;
+  backdrop?: boolean;
+};
+
+export type ModalCloseTriggerProps = (
+  | ChakraDrawer.ContentProps
+  | ChakraDialog.ContentProps
+) & {};
+
+export type ModalCloseButtonProps = IconButtonProps & {
+  closeTriggerProps?: ModalCloseTriggerProps;
+};
+
+export type ModalHeaderProps = (
+  | ChakraDrawer.HeaderProps
+  | ChakraDialog.HeaderProps
+) & {};
+
+import type { VScrollContainerProps } from "@/design-system/components/layout/scroll-container/scroll-container.type";
+
+export type ModalBodyProps = VScrollContainerProps & {};
+
+export type ModalFooterProps = (
+  | ChakraDrawer.FooterProps
+  | ChakraDialog.FooterProps
+) & {};
+
+export type ModalTitleProps = PProps & {};
+
+export type ModalContextValue = {
+  modalKey: string;
+  opened: boolean;
+  open?: () => void;
+  close?: () => void;
+  fullscreen: boolean;
+  setFullscreen: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+  isSmallViewport: boolean;
+  closeOnInteractOutside?: boolean;
+};
+
+export type UsePopModalOptions = {
+  modalKey: string;
+  depth?: number;
+};
+
+export type FullscreenAnimator = (next: boolean) => void;
+
+

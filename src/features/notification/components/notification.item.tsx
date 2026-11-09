@@ -1,8 +1,8 @@
 // src/features/notification/components/notification.item.tsx
 
 import { getToastConfig } from "@/design-system/components/toast/core/toast.config";
-import { ToastItem } from "@/design-system/components/toast/ui/toast.item";
-import { ToastStack } from "@/design-system/components/toast/ui/toast.stack";
+import { ToastItem } from "@/design-system/components/toast/toast/toast.item";
+import { ToastStack } from "@/design-system/components/toast/toast/toast.stack";
 import type { NotificationGroupStackCardProps } from "@/features/notification/types/notification.type";
 import { memo } from "react";
 

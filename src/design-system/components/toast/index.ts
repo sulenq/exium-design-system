@@ -14,5 +14,5 @@ export {
   useVisibleToastGroup,
 } from "@/design-system/components/toast/hooks/use-visible-toasts";
 
-export { Toaster } from "@/design-system/components/toast/ui/toaster";
-export { NotificationCenter } from "@/design-system/components/toast/ui/notification-center";
+export { Toaster } from "@/design-system/components/toast/toast/toaster";
+export { NotificationCenter } from "@/design-system/components/toast/toast/notification-center";

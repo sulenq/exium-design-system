@@ -9,7 +9,7 @@ import {
 import type {
   HistoryEntry,
   HistoryGroupStack,
-} from "@/design-system/components/toast/types/toast.type";
+} from "@/design-system/components/toast/toast/toast.type";
 
 export function useToastHistory() {
   // Subscribe to entries for reactivity

@@ -1,80 +1,83 @@
 // src/features/design-system-docs/config/components-registry.tsx
 
-import { BrandWatermark } from "@/design-system/components/branding/ui/brand-watermark";
-import { Logo } from "@/design-system/components/branding/ui/logo";
-import { Button } from "@/design-system/components/button/ui/button";
-import { ButtonGroup } from "@/design-system/components/button/ui/button-group";
-import { Clipboard } from "@/design-system/components/data-display/ui/clipboard";
-import { Countdown } from "@/design-system/components/data-display/ui/countdown";
+import { BrandWatermark } from "@/design-system/components/branding/brand-watermark/brand-watermark";
+import { Logo } from "@/design-system/components/branding/logo/logo";
+import { Button } from "@/design-system/components/button/button/button";
+import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";
+import { Clipboard } from "@/design-system/components/data-display/clipboard/clipboard";
+import { Countdown } from "@/design-system/components/data-display/countdown/countdown";
 import type {
   FormattedListItem,
   FormattedTableHeader,
-} from "@/design-system/components/data-display/types/data-view-table.type";
+} from "@/design-system/components/data-display/data-view/data-view-table.type";
 import type {
   DataViewBatchActionsGenerator,
   DataViewItemActionsGenerator,
-} from "@/design-system/components/data-display/types/data-view.type";
-import { DataViewFooter } from "@/design-system/components/data-display/ui/data-view-footer";
-import { DataViewTable } from "@/design-system/components/data-display/ui/data-view-table";
-import { Accordion } from "@/design-system/components/disclosure/ui/accordion";
-import { Breadcrumb } from "@/design-system/components/disclosure/ui/breadcrumb";
-import { Carousel } from "@/design-system/components/disclosure/ui/carousel";
-import { Collapsible } from "@/design-system/components/disclosure/ui/collapsible";
-import { Steps } from "@/design-system/components/disclosure/ui/steps";
-import { Tabs } from "@/design-system/components/disclosure/ui/tabs";
-import type { EmojiVariant } from "@/design-system/components/emoji/types/emoji.type";
-import { Emoji } from "@/design-system/components/emoji/ui/emoji";
-import { EmojiPoker } from "@/design-system/components/emoji/ui/emoji.poker";
-import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
-import { Alert } from "@/design-system/components/feedback/ui/alert";
+} from "@/design-system/components/data-display/data-view/data-view.type";
+import { DataViewFooter } from "@/design-system/components/data-display/data-view/data-view-footer";
+import { DataViewTable } from "@/design-system/components/data-display/data-view/data-view-table";
+import { Accordion } from "@/design-system/components/disclosure/accordion/accordion";
+import { Breadcrumb } from "@/design-system/components/disclosure/breadcrumb/breadcrumb";
+import { Carousel } from "@/design-system/components/disclosure/carousel/carousel";
+import { Collapsible } from "@/design-system/components/disclosure/collapsible/collapsible";
+import { Steps } from "@/design-system/components/disclosure/steps/steps";
+import { Tabs } from "@/design-system/components/disclosure/tabs/tabs";
+import type { EmojiVariant } from "@/design-system/components/emoji/emoji/emoji.type";
+import { Emoji } from "@/design-system/components/emoji/emoji/emoji";
+import { EmojiPoker } from "@/design-system/components/emoji/emoji/emoji.poker";
+import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
+import { Alert } from "@/design-system/components/feedback/alert/alert";
 import {
   Progress,
   ProgressRoot,
-} from "@/design-system/components/feedback/ui/progress";
-import { Skeleton } from "@/design-system/components/feedback/ui/skeleton";
-import { StateNoData } from "@/design-system/components/feedback/ui/state.no-data";
-import { FocusAlertItem } from "@/design-system/components/focus-alert/ui/focus-alert";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Checkbox } from "@/design-system/components/input/ui/checkbox";
-import { DurationInput } from "@/design-system/components/input/ui/duration-input";
-import { Field } from "@/design-system/components/input/ui/field";
-import { FocusSelectInput } from "@/design-system/components/input/ui/focus-select";
-import { Input } from "@/design-system/components/input/ui/input";
-import { NumberInput } from "@/design-system/components/input/ui/number-input";
-import { PasswordInput } from "@/design-system/components/input/ui/password-input";
-import { PinInput } from "@/design-system/components/input/ui/pin-input";
-import { RadioCardInput } from "@/design-system/components/input/ui/radio-card-input";
-import { RadioInput } from "@/design-system/components/input/ui/radio-input";
-import { SearchInput } from "@/design-system/components/input/ui/search-input";
-import { SegmentGroupInput } from "@/design-system/components/input/ui/segment-group-input";
-import SelectInput from "@/design-system/components/input/ui/select";
-import { Slider } from "@/design-system/components/input/ui/slider";
-import { Switch } from "@/design-system/components/input/ui/switch";
-import { Textarea } from "@/design-system/components/input/ui/textarea";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { Card } from "@/design-system/components/layout/ui/card";
-import { Container } from "@/design-system/components/layout/ui/container";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
-import { Separator } from "@/design-system/components/layout/ui/separator";
-import { Avatar } from "@/design-system/components/media/ui/avatar";
-import { Image } from "@/design-system/components/media/ui/image";
-import { ExternalLink } from "@/design-system/components/navigation/ui/link";
-import { Sidebar } from "@/design-system/components/navigation/ui/sidebar";
+} from "@/design-system/components/feedback/progress/progress";
+import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";
+import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
+import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-alert/focus-alert";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
+import { DurationInput } from "@/design-system/components/input/duration-input/duration-input";
+import { Field } from "@/design-system/components/input/field/field";
+import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
+import { Input } from "@/design-system/components/input/input/input";
+import { NumberInput } from "@/design-system/components/input/number-input/number-input";
+import { PasswordInput } from "@/design-system/components/input/password-input/password-input";
+import { PinInput } from "@/design-system/components/input/pin-input/pin-input";
+import { RadioCardInput } from "@/design-system/components/input/radio-card-input/radio-card-input";
+import { RadioInput } from "@/design-system/components/input/radio-input/radio-input";
+import { SearchInput } from "@/design-system/components/input/search-input/search-input";
+import { SegmentGroupInput } from "@/design-system/components/input/segment-group/segment-group-input";
+import SelectInput from "@/design-system/components/input/select/select";
+import { Slider } from "@/design-system/components/input/slider/slider";
+import { Switch } from "@/design-system/components/input/switch/switch";
+import { Textarea } from "@/design-system/components/input/textarea/textarea";
+import { Box } from "@/design-system/components/layout/box/box";
+import { Card } from "@/design-system/components/layout/card/card";
+import { Container } from "@/design-system/components/layout/container/container";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
+import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
+import { Separator } from "@/design-system/components/layout/separator/separator";
+import { Avatar } from "@/design-system/components/media/avatar/avatar";
+import { Image } from "@/design-system/components/media/image/image";
+import { ExternalLink } from "@/design-system/components/navigation/link/link";
+import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
-import { Dialog } from "@/design-system/components/overlay/ui/dialog";
-import { Drawer } from "@/design-system/components/overlay/ui/drawer";
-import { Menu } from "@/design-system/components/overlay/ui/menu";
-import { Popover } from "@/design-system/components/overlay/ui/popover";
-import { Tooltip } from "@/design-system/components/overlay/ui/tooltip";
+import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
+import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
+import { Menu } from "@/design-system/components/overlay/menu/menu";
+import { Popover } from "@/design-system/components/overlay/popover/popover";
+import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { toast } from "@/design-system/components/toast";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { CountBadge } from "@/design-system/components/typography/ui/count-badge";
-import { Heading } from "@/design-system/components/typography/ui/heading";
-import { Kbd } from "@/design-system/components/typography/ui/kbd";
-import { P } from "@/design-system/components/typography/ui/p";
-import { Span } from "@/design-system/components/typography/ui/span";
-import { DownloadTrigger } from "@/design-system/components/utilities/ui/download-trigger";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { CountBadge } from "@/design-system/components/typography/count-badge/count-badge";
+import { Heading } from "@/design-system/components/typography/heading/heading";
+import { Kbd } from "@/design-system/components/typography/kbd/kbd";
+import { P } from "@/design-system/components/typography/p/p";
+import { Span } from "@/design-system/components/typography/span/span";
+import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";
 import { COLOR_PALETTE_OPTIONS } from "@/design-system/constants/colors";
 import type {
   ComponentDocSpec,
@@ -102,7 +105,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Identitas visual resmi aplikasi Exium / ATR BPN dengan adaptasi tema warna.",
     importPath:
-      'import { Logo } from "@/design-system/components/branding/ui/logo";',
+      'import { Logo } from "@/design-system/components/branding/logo/logo";',
     component: Logo,
     defaultProps: {
       boxSize: 32,
@@ -125,7 +128,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Branding",
     description: "Teks watermark hak cipta resmi dengan tautan terintegrasi.",
     importPath:
-      'import { BrandWatermark } from "@/design-system/components/branding/ui/brand-watermark";',
+      'import { BrandWatermark } from "@/design-system/components/branding/brand-watermark/brand-watermark";',
     component: BrandWatermark,
     defaultProps: {
       textAlign: "center",
@@ -163,7 +166,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen interaktif utama untuk aksi pengguna dengan variasi saiz, gaya, dan status loading.",
     importPath:
-      'import { Button } from "@/design-system/components/button/ui/button";',
+      'import { Button } from "@/design-system/components/button/button/button";',
     component: Button,
     defaultProps: {
       children: "Click Me",
@@ -228,7 +231,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Buttons & Actions",
     description: "Membungkus sekumpulan Button agar menyatu secara visual.",
     importPath:
-      'import { ButtonGroup } from "@/design-system/components/button/ui/button-group";\nimport { Button } from "@/design-system/components/button/ui/button";',
+      'import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";\nimport { Button } from "@/design-system/components/button/button/button";',
     component: ButtonGroup,
     defaultProps: {
       attached: true,
@@ -283,7 +286,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen teks standard dengan dukungan penyesuaian font size, weight, dan warna.",
     importPath:
-      'import { P } from "@/design-system/components/typography/ui/p";',
+      'import { P } from "@/design-system/components/typography/p/p";',
     component: P,
     defaultProps: {
       children: "Exium Design System Typography Example",
@@ -324,7 +327,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Typography & Display",
     description: "Label ringkas untuk menunjukkan status, kategori, atau tag.",
     importPath:
-      'import { Badge } from "@/design-system/components/typography/ui/badge";',
+      'import { Badge } from "@/design-system/components/typography/badge/badge";',
     component: Badge,
     defaultProps: {
       children: "Badge Label",
@@ -374,7 +377,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Elemen judul semantik dengan styling tegas dan line-height teratur.",
     importPath:
-      'import { Heading } from "@/design-system/components/typography/ui/heading";',
+      'import { Heading } from "@/design-system/components/typography/heading/heading";',
     component: Heading,
     defaultProps: {
       children: "Exium Design System Heading",
@@ -406,7 +409,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Badge penghitung angka dengan pemformatan otomatis batas maksimal (misal: 99+).",
     importPath:
-      'import { CountBadge } from "@/design-system/components/typography/ui/count-badge";',
+      'import { CountBadge } from "@/design-system/components/typography/count-badge/count-badge";',
     component: CountBadge,
     defaultProps: {
       children: 5,
@@ -455,7 +458,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Typography & Display",
     description: "Elemen penunjuk tombol pintasan keyboard pengguna.",
     importPath:
-      'import { Kbd } from "@/design-system/components/typography/ui/kbd";',
+      'import { Kbd } from "@/design-system/components/typography/kbd/kbd";',
     component: Kbd,
     defaultProps: {
       children: "Ctrl + K",
@@ -478,7 +481,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input teks standar dengan validasi native maxLength dan integrasi toast peringatan.",
     importPath:
-      'import { Input } from "@/design-system/components/input/ui/input";',
+      'import { Input } from "@/design-system/components/input/input/input";',
     component: Input,
     defaultProps: {
       placeholder: "Enter text here...",
@@ -537,7 +540,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input durasi 2-segmen (nilai numerik dan unit waktu). Nilai hakiki disimpan dalam milidetik (ms) dan mendukung floating label terintegrasi.",
     importPath:
-      'import { DurationInput } from "@/design-system/components/input/ui/duration-input";',
+      'import { DurationInput } from "@/design-system/components/input/duration-input/duration-input";',
     component: DurationInput,
     defaultProps: {
       defaultValue: 120000,
@@ -603,7 +606,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input angka terstruktur dengan tombol stepper stepper atas/bawah, min/max limiter, dan format angka.",
     importPath:
-      'import { NumberInput } from "@/design-system/components/input/ui/number-input";',
+      'import { NumberInput } from "@/design-system/components/input/number-input/number-input";',
     component: NumberInput,
     defaultProps: {
       value: 10,
@@ -679,7 +682,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input kata laluan aman dengan tombol toggle visibilitas show/hide terintegrasi.",
     importPath:
-      'import { PasswordInput } from "@/design-system/components/input/ui/password-input";',
+      'import { PasswordInput } from "@/design-system/components/input/password-input/password-input";',
     component: PasswordInput,
     defaultProps: {
       placeholder: "Enter secret password...",
@@ -724,7 +727,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen dropdown pilihan tunggal dengan portalling, filter, dan dukungan startElement.",
     importPath:
-      'import SelectInput from "@/design-system/components/input/ui/select";',
+      'import SelectInput from "@/design-system/components/input/select/select";',
     component: SelectInput,
     defaultProps: {
       placeholder: "Pilih status...",
@@ -765,7 +768,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input pemilihan interaktif modal terfokus dengan search realtime dan dynamic custom option.",
     importPath:
-      'import { FocusSelectInput } from "@/design-system/components/input/ui/focus-select";',
+      'import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";',
     component: FocusSelectInput,
     defaultProps: {
       placeholder: "Pilih kategori...",
@@ -827,7 +830,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Form Inputs",
     description: "Elemen kotak pilihan tunggal atau ganda.",
     importPath:
-      'import { Checkbox } from "@/design-system/components/input/ui/checkbox";',
+      'import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";',
     component: Checkbox,
     defaultProps: {
       children: "Accept Terms & Conditions",
@@ -866,7 +869,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Form Inputs",
     description: "Toggle switch dua status (On/Off).",
     importPath:
-      'import { Switch } from "@/design-system/components/input/ui/switch";',
+      'import { Switch } from "@/design-system/components/input/switch/switch";',
     component: Switch,
     defaultProps: {
       children: "Enable Notifications",
@@ -915,7 +918,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Bidang input teks multi-baris dengan perlindungan gradien floating label dan notifikasi batas karakter.",
     importPath:
-      'import { Textarea } from "@/design-system/components/input/ui/textarea";',
+      'import { Textarea } from "@/design-system/components/input/textarea/textarea";',
     component: Textarea,
     defaultProps: {
       placeholder: "Tuliskan keterangan di sini...",
@@ -950,7 +953,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Form Inputs",
     description: "Pilihan opsi tunggal eksklusif dengan radio group styling.",
     importPath:
-      'import { RadioInput } from "@/design-system/components/input/ui/radio-input";',
+      'import { RadioInput } from "@/design-system/components/input/radio-input/radio-input";',
     component: RadioInput,
     defaultProps: {
       defaultValue: "opt1",
@@ -1005,7 +1008,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Pilihan opsi berbentuk kartu interaktif dengan border dan indikator terintegrasi.",
     importPath:
-      'import { RadioCardInput } from "@/design-system/components/input/ui/radio-card-input";',
+      'import { RadioCardInput } from "@/design-system/components/input/radio-card-input/radio-card-input";',
     component: RadioCardInput.Root,
     defaultProps: {
       defaultValue: "standard",
@@ -1080,7 +1083,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Kontrol tersegmentasi horizontal bergaya tab switcher untuk pilihan cepat.",
     importPath:
-      'import { SegmentGroupInput } from "@/design-system/components/input/ui/segment-group-input";',
+      'import { SegmentGroupInput } from "@/design-system/components/input/segment-group/segment-group-input";',
     component: SegmentGroupInput,
     defaultProps: {
       defaultValue: "grid",
@@ -1135,7 +1138,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Kontrol penggeser numerik dengan thumb interaktif dan rentang nilai presisi.",
     importPath:
-      'import { Slider } from "@/design-system/components/input/ui/slider";',
+      'import { Slider } from "@/design-system/components/input/slider/slider";',
     component: Slider,
     defaultProps: {
       defaultValue: [40],
@@ -1179,7 +1182,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input digit kode OTP / PIN keamanan dengan fokus otomatis per kotak digit.",
     importPath:
-      'import { PinInput } from "@/design-system/components/input/ui/pin-input";',
+      'import { PinInput } from "@/design-system/components/input/pin-input/pin-input";',
     component: PinInput,
     defaultProps: {
       count: 4,
@@ -1213,7 +1216,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Input pencarian terintegrasi dengan icon kaca pembesar dan tombol reset cepat.",
     importPath:
-      'import { SearchInput } from "@/design-system/components/input/ui/search-input";',
+      'import { SearchInput } from "@/design-system/components/input/search-input/search-input";',
     component: SearchInput,
     defaultProps: {
       placeholder: "Cari data di sini...",
@@ -1253,7 +1256,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Wrapper form terintegrasi dengan label mengambang, helper text, error handling, dan tag optional.",
     importPath:
-      'import { Field } from "@/design-system/components/input/ui/field";',
+      'import { Field } from "@/design-system/components/input/field/field";',
     component: Field,
     defaultProps: {
       label: "Nama Lengkap",
@@ -1302,7 +1305,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Feedback & Status",
     description: "Bar kemajuan untuk indikator proses dan loading.",
     importPath:
-      'import { Progress } from "@/design-system/components/feedback/ui/progress";',
+      'import { Progress } from "@/design-system/components/feedback/progress/progress";',
     component: ProgressRoot,
     defaultProps: {
       value: 65,
@@ -1366,7 +1369,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Placeholder pemuatan konten visual saat data sedang di-fetch secara asinkron.",
     importPath:
-      'import { Skeleton } from "@/design-system/components/feedback/ui/skeleton";',
+      'import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";',
     component: Skeleton,
     defaultProps: {
       loaded: false,
@@ -1483,7 +1486,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen pemberitahuan status penting (info, success, warning, error) dengan ikon indikator.",
     importPath:
-      'import { Alert } from "@/design-system/components/feedback/ui/alert";',
+      'import { Alert } from "@/design-system/components/feedback/alert/alert";',
     component: Alert.Root,
     defaultProps: {
       status: "info",
@@ -1578,7 +1581,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen ilustratif untuk halaman data kosong atau kondisi belum ada data.",
     importPath:
-      'import { StateNoData } from "@/design-system/components/feedback/ui/state.no-data";',
+      'import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";',
     component: StateNoData,
     defaultProps: {
       title: "Tidak Ada Data",
@@ -1690,7 +1693,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Modal peringatan terpusat prioritas tinggi dengan animasi ikon besar dan aksi konfirmasi.",
     importPath:
-      'import { FocusAlertItem } from "@/design-system/components/focus-alert/ui/focus-alert";',
+      'import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-alert/focus-alert";',
     component: Box,
     defaultProps: {
       variant: "neutral",
@@ -1715,7 +1718,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Tabel data virtualized responsif dengan sorting, pagination, checkbox batch, dan menu aksi baris.",
     importPath:
-      'import { DataViewTable } from "@/design-system/components/data-display/ui/data-view-table";\nimport { DataViewFooter } from "@/design-system/components/data-display/ui/data-view-footer";',
+      'import { DataViewTable } from "@/design-system/components/data-display/data-view/data-view-table";\nimport { DataViewFooter } from "@/design-system/components/data-display/data-view/data-view-footer";',
     component: DataViewTable.Root,
     defaultProps: {
       withNumbering: true,
@@ -1814,7 +1817,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen salin teks satu klik ke papan klip dengan status umpan balik instan.",
     importPath:
-      'import { Clipboard } from "@/design-system/components/data-display/ui/clipboard";',
+      'import { Clipboard } from "@/design-system/components/data-display/clipboard/clipboard";',
     component: Clipboard.Root,
     defaultProps: {
       value: "https://volatil.atrbpn.go.id",
@@ -1861,7 +1864,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Penghitung mundur waktu terformat dengan threshold perubahan warna saat mendekati batas akhir.",
     importPath:
-      'import { Countdown } from "@/design-system/components/data-display/ui/countdown";',
+      'import { Countdown } from "@/design-system/components/data-display/countdown/countdown";',
     component: Countdown,
     defaultProps: {
       warningThresholdDays: 3,
@@ -1917,7 +1920,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen panel lipat collapsible berlapis untuk menghemat ruang vertikal.",
     importPath:
-      'import { Accordion } from "@/design-system/components/disclosure/ui/accordion";',
+      'import { Accordion } from "@/design-system/components/disclosure/accordion/accordion";',
     component: Accordion.Root,
     defaultProps: {
       collapsible: true,
@@ -1987,7 +1990,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Navigasi tab switching dengan animasi underline indicator halus.",
     importPath:
-      'import { Tabs } from "@/design-system/components/disclosure/ui/tabs";',
+      'import { Tabs } from "@/design-system/components/disclosure/tabs/tabs";',
     component: Tabs.Root,
     defaultProps: {
       variant: "line",
@@ -2078,7 +2081,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Disclosure & Navigation",
     description: "Indikator alur proses bertahap bertingkat (wizard/stepper).",
     importPath:
-      'import { Steps } from "@/design-system/components/disclosure/ui/steps";',
+      'import { Steps } from "@/design-system/components/disclosure/steps/steps";',
     component: Steps.Root,
     defaultProps: {
       defaultStep: 1,
@@ -2155,7 +2158,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Elemen ekspansi buka/tutup sederhana dengan animasi transisi.",
     importPath:
-      'import { Collapsible } from "@/design-system/components/disclosure/ui/collapsible";',
+      'import { Collapsible } from "@/design-system/components/disclosure/collapsible/collapsible";',
     component: Collapsible.Root,
     defaultProps: {
       defaultOpen: true,
@@ -2207,7 +2210,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Navigasi remah roti untuk menunjukkan hierarki rute halaman pengguna.",
     importPath:
-      'import { Breadcrumb } from "@/design-system/components/disclosure/ui/breadcrumb";',
+      'import { Breadcrumb } from "@/design-system/components/disclosure/breadcrumb/breadcrumb";',
     component: Breadcrumb.Root,
     defaultProps: {
       separator: "/",
@@ -2260,7 +2263,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Slider tayangan bergambar atau konten kartu bergerak dengan navigasi tombol dan indikator titik.",
     importPath:
-      'import { Carousel } from "@/design-system/components/disclosure/ui/carousel";',
+      'import { Carousel } from "@/design-system/components/disclosure/carousel/carousel";',
     component: Carousel.Root,
     defaultProps: {
       slideCount: 4,
@@ -2388,7 +2391,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen modal mengambang dengan transisi, backdrop, dan kontrol tombol tutup.",
     importPath:
-      'import { Dialog } from "@/design-system/components/overlay/ui/dialog";',
+      'import { Dialog } from "@/design-system/components/overlay/dialog/dialog";',
     component: Dialog.Root,
     defaultProps: {
       size: "md",
@@ -2446,7 +2449,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Panel geser dari tepi layar untuk form samping, filter, atau menu sekunder.",
     importPath:
-      'import { Drawer } from "@/design-system/components/overlay/ui/drawer";',
+      'import { Drawer } from "@/design-system/components/overlay/drawer/drawer";',
     component: Drawer.Root,
     defaultProps: {
       placement: "end",
@@ -2494,7 +2497,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     category: "Overlays & Modals",
     description: "Panel mengambang interaktif terikat pada elemen pemicu.",
     importPath:
-      'import { Popover } from "@/design-system/components/overlay/ui/popover";',
+      'import { Popover } from "@/design-system/components/overlay/popover/popover";',
     component: Popover.Root,
     defaultProps: {
       modal: false,
@@ -2547,7 +2550,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Pesan informasi singkat saat pengguna mengarahkan kursor (hover) di atas elemen.",
     importPath:
-      'import { Tooltip } from "@/design-system/components/overlay/ui/tooltip";',
+      'import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";',
     component: Tooltip,
     defaultProps: {
       content: "Tooltip info bantuan",
@@ -2612,7 +2615,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Menu dropdown aksi pilihan dengan navigasi keyboard dan pemisahan kategori.",
     importPath:
-      'import { Menu } from "@/design-system/components/overlay/ui/menu";',
+      'import { Menu } from "@/design-system/components/overlay/menu/menu";',
     component: Menu.Root,
     defaultProps: {
       size: "md",
@@ -2664,7 +2667,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen dasar kontainer layout serbaguna dengan dukungan token tema Chakra.",
     importPath:
-      'import { Box } from "@/design-system/components/layout/ui/box";',
+      'import { Box } from "@/design-system/components/layout/box/box";',
     component: Box,
     defaultProps: {
       p: 4,
@@ -2719,7 +2722,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Kontainer susunan fleksibel vertikal (VStack) atau horizontal (HStack) dengan alignment presisi.",
     importPath:
-      'import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";',
+      'import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";',
     component: HStack,
     defaultProps: {
       direction: "horizontal",
@@ -2822,7 +2825,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Grid responsif yang mudah digunakan untuk menyusun kartu dan elemen multi-kolom.",
     importPath:
-      'import { SimpleGrid } from "@/design-system/components/layout/ui/grid";',
+      'import { SimpleGrid } from "@/design-system/components/layout/grid/grid";',
     component: SimpleGrid,
     defaultProps: {
       columns: 3,
@@ -2875,7 +2878,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Kartu presentasi informasi modular dengan container token styling.",
     importPath:
-      'import { Card } from "@/design-system/components/layout/ui/card";',
+      'import { Card } from "@/design-system/components/layout/card/card";',
     component: Card.Root,
     defaultProps: {
       variant: "outline",
@@ -2928,7 +2931,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Kontainer pembungkus halaman dengan header terintegrasi dan responsivitas adaptif.",
     importPath:
-      'import { Container } from "@/design-system/components/layout/ui/container";',
+      'import { Container } from "@/design-system/components/layout/container/container";',
     component: Container.Root,
     defaultProps: {
       withContext: false,
@@ -2972,7 +2975,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Garis pemisah visual horizontal atau vertikal antar bagian antarmuka.",
     importPath:
-      'import { Separator } from "@/design-system/components/layout/ui/separator";',
+      'import { Separator } from "@/design-system/components/layout/separator/separator";',
     component: Separator,
     defaultProps: {
       orientation: "horizontal",
@@ -3052,7 +3055,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Bilah navigasi samping vertikal dengan toggle perluasan (expand/collapse) dan penyimpanan state.",
     importPath:
-      'import { Sidebar } from "@/design-system/components/navigation/ui/sidebar";',
+      'import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";',
     component: Sidebar.Root,
     defaultProps: {
       expanded: true,
@@ -3202,7 +3205,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Tautan eksternal dengan target _blank dan styling underline saat di-hover.",
     importPath:
-      'import { ExternalLink } from "@/design-system/components/navigation/ui/link";',
+      'import { ExternalLink } from "@/design-system/components/navigation/link/link";',
     component: ExternalLink,
     defaultProps: {
       href: "https://atrbpn.go.id",
@@ -3248,7 +3251,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Gambar profil pengguna dengan fallback inisial nama otomatis dan status pemuatan.",
     importPath:
-      'import { Avatar } from "@/design-system/components/media/ui/avatar";',
+      'import { Avatar } from "@/design-system/components/media/avatar/avatar";',
     component: Avatar,
     defaultProps: {
       name: "Sulenq Jolitos",
@@ -3313,7 +3316,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen gambar responsif dengan penanganan rasio aspek dan border rounded.",
     importPath:
-      'import { Image } from "@/design-system/components/media/ui/image";',
+      'import { Image } from "@/design-system/components/media/image/image";',
     component: Image,
     defaultProps: {
       src: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&q=80",
@@ -3384,7 +3387,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen ikon serbaguna pembungkus Phosphor, Lucide, & Tabler Icons dengan token saiz dan weight seragam.",
     importPath:
-      'import { AppIcon } from "@/design-system/components/icon/ui/app-icon";',
+      'import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";',
     component: AppIcon,
     defaultProps: {
       size: "xl",
@@ -3484,7 +3487,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Utilitas pengunduh berkas otomatis (DownloadTrigger) dan helper ekosistem.",
     importPath:
-      'import { DownloadTrigger } from "@/design-system/components/utilities/ui/download-trigger";',
+      'import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";',
     component: Box,
     defaultProps: {
       fileName: "exium-doc.txt",

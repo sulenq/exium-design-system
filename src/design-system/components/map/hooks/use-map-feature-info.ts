@@ -4,7 +4,7 @@ import { MAP_EVENTS_MAP } from "@/design-system/components/map/constants/map.con
 import { useMapDrawStore } from "@/design-system/components/map/stores/map.draw.store";
 import { useMapFeatureInfoStore } from "@/design-system/components/map/stores/map.feature-info.store";
 import { useMapLayerStore } from "@/design-system/components/map/stores/map.layer.store";
-import type { MapLayerConfig } from "@/design-system/components/map/types/map.type";
+import type { MapLayerConfig } from "@/design-system/components/map/map/map.type";
 import { fetchWfs } from "@/design-system/components/map/utils/fetch-wfs";
 import { normalizeGeometryCoordinates } from "@/design-system/components/map/utils/geometry";
 import { fetchWmsGetFeatureInfo } from "@/design-system/components/map/utils/wms-get-feature-info";

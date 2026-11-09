@@ -9,7 +9,7 @@ import {
   type MapLayerConfig,
   type MapLibreRasterSource,
   type WmsRasterLayerConfig,
-} from "@/design-system/components/map/types/map.type";
+} from "@/design-system/components/map/map/map.type";
 
 import { toast } from "@/design-system/components/toast";
 import { normalizeApiUrl } from "@/shared/utils/url/url.utils";

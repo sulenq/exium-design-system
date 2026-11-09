@@ -1,4 +1,4 @@
-import type { IgtLayersResponse } from "@/design-system/components/map/types/map.type";
+import type { IgtLayersResponse } from "@/design-system/components/map/map/map.type";
 import { apiClient } from "@/shared/libs/api-client/api-client";
 import { isDummyDataEnabled } from "@/shared/utils/env/env.utils";
 

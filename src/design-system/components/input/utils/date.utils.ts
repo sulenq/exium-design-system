@@ -7,7 +7,7 @@ import type {
   FieldOrder,
   ValidationOptions,
   ValidationResult,
-} from "@/design-system/components/input/types/date-picker.type";
+} from "@/design-system/components/input/date-picker/date-picker.type";
 import {
   CalendarDate,
   getLocalTimeZone,

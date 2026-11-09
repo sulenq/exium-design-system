@@ -1,0 +1,83 @@
+// src/design-system/components/data-display/ui/countdown.tsx
+
+import type { CountdownProps } from "@/design-system/components/data-display/countdown/countdown.type";
+import {
+  formatCountdownParts,
+  getCountdownParts,
+} from "@/design-system/components/data-display/utils/countdown.utils";
+import { P, TNum } from "@/design-system/components/typography/p/p";
+import { useEffect, useState } from "react";
+
+const COUNTDOWN_INTERVAL_MS = 1000;
+
+export const Countdown = (props: CountdownProps) => {
+  const {
+    finishedAt,
+    format,
+    warningThresholdDays = 3,
+    warningThresholdHours,
+    dangerThresholdMinutes,
+    color,
+    dangerColor = "fg.error",
+    finishColor = "fg",
+    ...restProps
+  } = props;
+  const [countdown, setCountdown] = useState(() =>
+    getCountdownParts(finishedAt),
+  );
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const nextCountdown = getCountdownParts(finishedAt);
+      setCountdown(nextCountdown);
+      return nextCountdown.isFinished;
+    };
+
+    if (updateCountdown()) return;
+
+    const intervalId = window.setInterval(() => {
+      if (updateCountdown()) window.clearInterval(intervalId);
+    }, COUNTDOWN_INTERVAL_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, [finishedAt]);
+
+  // Derived Values — Color based on remaining time threshold
+  const totalMinutesRemaining =
+    countdown.days * 24 * 60 + countdown.hours * 60 + countdown.minutes;
+
+  const isDanger =
+    !countdown.isFinished &&
+    dangerThresholdMinutes !== undefined &&
+    totalMinutesRemaining < dangerThresholdMinutes;
+
+  const isNearExpiry =
+    !countdown.isFinished &&
+    !isDanger &&
+    (warningThresholdHours !== undefined
+      ? countdown.days === 0 && countdown.hours < warningThresholdHours
+      : warningThresholdDays > 0 && countdown.days < warningThresholdDays);
+
+  const dynamicColor =
+    color ??
+    (countdown.isFinished
+      ? finishColor
+      : isDanger
+        ? dangerColor
+        : isNearExpiry
+          ? "orange.fg"
+          : undefined);
+
+  return (
+    <P
+      whiteSpace={"nowrap"}
+      color={dynamicColor}
+      fontWeight={
+        isDanger || isNearExpiry || countdown.isFinished ? "medium" : undefined
+      }
+      {...restProps}
+    >
+      <TNum>{formatCountdownParts(countdown, format)}</TNum>
+    </P>
+  );
+};

@@ -1,6 +1,6 @@
 // src/shared/constants/dummy-data/dummy-igt-layers.ts
 
-import type { IgtLayersResponse } from "@/design-system/components/map/types/map.type";
+import type { IgtLayersResponse } from "@/design-system/components/map/map/map.type";
 import { createPaginationMeta } from "@/shared/types/common-response.type";
 
 export const DUMMY_IGT_LAYERS: IgtLayersResponse = {

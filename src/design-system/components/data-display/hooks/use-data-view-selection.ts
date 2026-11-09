@@ -3,7 +3,7 @@
 import type {
   DataViewTableOnSelectedItemChange,
   FormattedListItem,
-} from "@/design-system/components/data-display/types/data-view-table.type";
+} from "@/design-system/components/data-display/data-view/data-view-table.type";
 import { useMemo, useState } from "react";
 
 export function useDataViewSelection(

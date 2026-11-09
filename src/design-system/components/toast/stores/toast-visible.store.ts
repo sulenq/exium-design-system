@@ -3,7 +3,7 @@
 import type {
   ToastItemData,
   VisibleToastStore,
-} from "@/design-system/components/toast/types/toast.type";
+} from "@/design-system/components/toast/toast/toast.type";
 import { create } from "zustand";
 
 export const useToastVisibleStore = create<VisibleToastStore>((set, get) => ({

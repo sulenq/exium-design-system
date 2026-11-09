@@ -1,0 +1,14 @@
+// src/design-system/components/input/types/search-input.type.ts
+
+import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
+import type { InputGroupProps } from "@/design-system/components/input/input-group/input-group.type";
+import type { InputProps } from "@/design-system/components/input/input/input.type";
+
+export type SearchInputProps = InputProps & {
+  queryKey?: string;
+  value?: string;
+  debounceMs?: number;
+  onValueChange?: (value: string) => void;
+  inputGroupProps?: Omit<InputGroupProps, "children">;
+  appIconProps?: AppIconProps;
+};

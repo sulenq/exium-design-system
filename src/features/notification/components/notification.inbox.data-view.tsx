@@ -3,17 +3,17 @@
 import {
   Button,
   IconButton,
-} from "@/design-system/components/button/ui/button";
-import { ConfirmationTrigger } from "@/design-system/components/feedback/ui/confirmation-trigger";
-import { Skeleton } from "@/design-system/components/feedback/ui/skeleton";
-import { StateNoData } from "@/design-system/components/feedback/ui/state.no-data";
-import { StateRetry } from "@/design-system/components/feedback/ui/state.retry";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Box, Circle } from "@/design-system/components/layout/ui/box";
-import { Center } from "@/design-system/components/layout/ui/center";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Badge } from "@/design-system/components/typography/ui/badge";
-import { ClampedP, P } from "@/design-system/components/typography/ui/p";
+} from "@/design-system/components/button/button/button";
+import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
+import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";
+import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
+import { StateRetry } from "@/design-system/components/feedback/state-retry/state.retry";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Box, Circle } from "@/design-system/components/layout/box/box";
+import { Center } from "@/design-system/components/layout/center/center";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Badge } from "@/design-system/components/typography/badge/badge";
+import { ClampedP, P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { resolveInboxUI } from "@/features/notification/constants/inbox-code-resolver";
 import {

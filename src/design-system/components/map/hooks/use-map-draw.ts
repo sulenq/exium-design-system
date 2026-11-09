@@ -12,7 +12,7 @@ import {
   MAP_CONFIG,
   MAP_EVENTS_MAP,
 } from "@/design-system/components/map/constants/map.config";
-import type { DrawPoint } from "@/design-system/components/map/types/map.type";
+import type { DrawPoint } from "@/design-system/components/map/map/map.type";
 
 const DRAW_SOURCE_ID = "map-draw-source";
 

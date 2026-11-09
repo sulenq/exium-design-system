@@ -1,14 +1,14 @@
 // src/features/settings/components/settings.active-page.tsx
 
-import { IconButton } from "@/design-system/components/button/ui/button";
-import FeedbackState from "@/design-system/components/feedback/ui/feedback-state";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import type { StackProps } from "@/design-system/components/layout/types/flex-box.type";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { VScrollContainer } from "@/design-system/components/layout/ui/scroll-container";
-import { Dialog } from "@/design-system/components/overlay/ui/dialog";
-import { Modal } from "@/design-system/components/overlay/ui/modal";
-import { P } from "@/design-system/components/typography/ui/p";
+import { IconButton } from "@/design-system/components/button/button/button";
+import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
+import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
+import { Modal } from "@/design-system/components/overlay/modal/modal";
+import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { SettingsSearchButton } from "@/features/settings/components/settings.search";
 import { SETTINGS_PAGES_MAP } from "@/features/settings/constants/settings.pages";

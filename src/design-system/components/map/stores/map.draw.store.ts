@@ -5,7 +5,7 @@ import type {
   DrawGeometryType,
   DrawPoint,
   MapDrawStore,
-} from "@/design-system/components/map/types/map.type";
+} from "@/design-system/components/map/map/map.type";
 
 const initialState = {
   geometryType: "polygon" as DrawGeometryType,

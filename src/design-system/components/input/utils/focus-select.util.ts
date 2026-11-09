@@ -1,7 +1,7 @@
 // src/design-system/components/input/utils/focus-select.util.ts
 
-import type { AppIconProps } from "@/design-system/components/icon/types/app-icon.type";
-import type { ButtonProps } from "@/design-system/components/button/types/button.type";
+import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
+import type { ButtonProps } from "@/design-system/components/button/button/button.type";
 
 /**
  * Standard Chakra button height mapping by size.

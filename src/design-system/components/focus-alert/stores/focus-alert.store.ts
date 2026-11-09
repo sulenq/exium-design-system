@@ -1,7 +1,7 @@
 // src/design-system/components/focus-alert/stores/focus-alert.store.ts
 
 import { create } from "zustand";
-import type { FocusAlerterStore } from "@/design-system/components/focus-alert/types/focus-alert.type";
+import type { FocusAlerterStore } from "@/design-system/components/focus-alert/focus-alert/focus-alert.type";
 
 export const useFocusAlerterStore = create<FocusAlerterStore>((set) => ({
   alerts: [],

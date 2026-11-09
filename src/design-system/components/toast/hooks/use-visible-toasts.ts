@@ -8,7 +8,7 @@ import { getToastConfig } from "@/design-system/components/toast/core/toast.conf
 import type {
   ToastGroupStack,
   ToastItemData,
-} from "@/design-system/components/toast/types/toast.type";
+} from "@/design-system/components/toast/toast/toast.type";
 
 function orderRecords(
   records: ToastItemData[],

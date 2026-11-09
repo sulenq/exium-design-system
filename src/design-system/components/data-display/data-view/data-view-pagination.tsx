@@ -1,0 +1,48 @@
+// src/design-system/components/data-display/ui/data-view-pagination.tsx
+
+import { IconButton } from "@/design-system/components/button/button/button";
+import type { DataViewPaginationProps } from "@/design-system/components/data-display/data-view/data-view.type";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { P, TNum } from "@/design-system/components/typography/p/p";
+import { formatNumber } from "@/shared/utils/formatter/number.formatter";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+
+export const DataViewPagination = (props: DataViewPaginationProps) => {
+  // Props
+  const { page, setPage, totalPage, ...restProps } = props;
+
+  // Derived Values
+  const canGoPrev = page > 1;
+  const canGoNext = totalPage ? page < totalPage : false;
+
+  return (
+    <HStack align={"center"} gap={2}>
+      <IconButton
+        variant={"ghost"}
+        disabled={!canGoPrev}
+        aria-label={"Halaman Sebelumnya"}
+        title={"Halaman Sebelumnya"}
+        onClick={() => setPage?.(page - 1)}
+        {...restProps}
+      >
+        <AppIcon icon={ChevronLeftIcon} />
+      </IconButton>
+
+      <P whiteSpace={"nowrap"}>
+        <TNum>{formatNumber(page)}</TNum>
+      </P>
+
+      <IconButton
+        variant={"ghost"}
+        disabled={!canGoNext}
+        aria-label={"Halaman Selanjutnya"}
+        title={"Halaman Selanjutnya"}
+        onClick={() => setPage?.(page + 1)}
+        {...restProps}
+      >
+        <AppIcon icon={ChevronRightIcon} />
+      </IconButton>
+    </HStack>
+  );
+};

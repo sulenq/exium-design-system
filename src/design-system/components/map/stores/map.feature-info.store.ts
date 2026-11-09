@@ -1,6 +1,6 @@
 // src/design-system/components/map/stores/map.feature-info.store.ts
 
-import type { MapFeatureInfoState } from "@/design-system/components/map/types/map.feature-info.type";
+import type { MapFeatureInfoState } from "@/design-system/components/map/map/map.feature-info.type";
 import { create } from "zustand";
 
 export const useMapFeatureInfoStore = create<MapFeatureInfoState>((set) => ({

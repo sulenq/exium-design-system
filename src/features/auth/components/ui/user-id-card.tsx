@@ -1,13 +1,13 @@
 // src/features/auth/components/ui/user-id-card.tsx
 
-import { Logo } from "@/design-system/components/branding/ui/logo";
-import { Button } from "@/design-system/components/button/ui/button";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Box, Circle } from "@/design-system/components/layout/ui/box";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { VMaskedContainer } from "@/design-system/components/layout/ui/masked-container";
-import { Image } from "@/design-system/components/media/ui/image";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Logo } from "@/design-system/components/branding/logo/logo";
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Box, Circle } from "@/design-system/components/layout/box/box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { VMaskedContainer } from "@/design-system/components/layout/masked-container/masked-container";
+import { Image } from "@/design-system/components/media/image/image";
+import { P } from "@/design-system/components/typography/p/p";
 import { APP_CONFIG } from "@/design-system/constants/_meta";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { SignoutTrigger } from "@/features/auth/components/ui/signout-modal";

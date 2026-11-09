@@ -2,13 +2,13 @@
 
 "use client";
 
-import { Logo } from "@/design-system/components/branding/ui/logo";
-import { Carousel } from "@/design-system/components/disclosure/ui/carousel";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Image } from "@/design-system/components/media/ui/image";
-import { P } from "@/design-system/components/typography/ui/p";
+import { Logo } from "@/design-system/components/branding/logo/logo";
+import { Carousel } from "@/design-system/components/disclosure/carousel/carousel";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Box } from "@/design-system/components/layout/box/box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Image } from "@/design-system/components/media/image/image";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import type { FeaturesCarouselProps } from "@/features/branding/types/branding.type";
 import { PATH_CONFIG } from "@/shared/constants/paths";

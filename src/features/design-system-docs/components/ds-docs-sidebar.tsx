@@ -1,14 +1,14 @@
 // src/features/design-system-docs/components/ds-docs-sidebar.tsx
 
-import { StateNoResult } from "@/design-system/components/feedback/ui/state.no-result";
-import { Logo } from "@/design-system/components/branding/ui/logo";
-import { SearchInput } from "@/design-system/components/input/ui/search-input";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { HStack } from "@/design-system/components/layout/ui/flex-box";
-import { Sidebar } from "@/design-system/components/navigation/ui/sidebar";
-import { VNavs } from "@/design-system/components/navigation/ui/v-navs";
-import { Drawer } from "@/design-system/components/overlay/ui/drawer";
-import { ClampedP } from "@/design-system/components/typography/ui/p";
+import { StateNoResult } from "@/design-system/components/feedback/state-no-result/state.no-result";
+import { Logo } from "@/design-system/components/branding/logo/logo";
+import { SearchInput } from "@/design-system/components/input/search-input/search-input";
+import { Box } from "@/design-system/components/layout/box/box";
+import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";
+import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";
+import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
+import { ClampedP } from "@/design-system/components/typography/p/p";
 import { useSidebarStore } from "@/design-system/stores/sidebar-store";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { DS_NAV_GROUPS_LIST } from "@/features/design-system-docs/constants/ds.nav-groups";
@@ -19,7 +19,7 @@ import type {
 } from "@/features/design-system-docs/types/ds-docs-navs.type";
 import type { NavItem } from "@/shared/types/nav.type";
 import { useMemo, useState } from "react";
-import { VScrollContainer } from "@/design-system/components/layout/ui/scroll-container";
+import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 
 const DS_SIDEBAR_KEY = "ds-docs";
 const DEFAULT_SIDEBAR_EXPANDED = true;

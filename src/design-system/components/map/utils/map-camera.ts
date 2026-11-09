@@ -3,7 +3,7 @@
 import type {
   FitBoundsSafeOptions,
   FlyToSafeOptions,
-} from "@/design-system/components/map/types/map.utils.type";
+} from "@/design-system/components/map/map/map.utils.type";
 import * as turf from "@turf/turf";
 import type GeoJSON from "geojson";
 import type maplibregl from "maplibre-gl";

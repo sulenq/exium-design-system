@@ -3,11 +3,11 @@
 import "@/app.css";
 import { ChakraSystemProvider } from "@/design-system/chakra/providers/chakra-system.provider";
 import { ColorModeProvider } from "@/design-system/chakra/providers/color-mode-provider";
-import { NotFoundPage } from "@/design-system/components/error-boundary/ui/not-found.page";
-import { FocusAlerter } from "@/design-system/components/focus-alert/ui/focus-alerter";
+import { NotFoundPage } from "@/design-system/components/error-boundary/not-found/not-found.page";
+import { FocusAlerter } from "@/design-system/components/focus-alert/focus-alert/focus-alerter";
 import { Toaster } from "@/design-system/components/toast";
-import { LocaleProvider as ChakraLocaleProvider } from "@/design-system/components/utilities/ui/chakra-locale-provider";
-import { OfflineAlert } from "@/design-system/components/utilities/ui/offline-alert";
+import { LocaleProvider as ChakraLocaleProvider } from "@/design-system/components/utilities/chakra-locale-provider/chakra-locale-provider";
+import { OfflineAlert } from "@/design-system/components/utilities/offline-alert/offline-alert";
 import { APP_CONFIG } from "@/design-system/constants/_meta";
 import { LocaleProvider } from "@/shared/libs/i18n/locale-provider";
 import { queryClient } from "@/shared/libs/tanstack-query/query.client";

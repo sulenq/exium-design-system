@@ -1,13 +1,13 @@
 // src/features/auth/components/ui/user-profile-popover.tsx
 
-import { Button } from "@/design-system/components/button/ui/button";
-import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Switch } from "@/design-system/components/input/ui/switch";
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Separator } from "@/design-system/components/layout/ui/separator";
-import { Avatar } from "@/design-system/components/media/ui/avatar";
-import { Popover } from "@/design-system/components/overlay/ui/popover";
-import { ClampedP, P } from "@/design-system/components/typography/ui/p";
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Switch } from "@/design-system/components/input/switch/switch";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Separator } from "@/design-system/components/layout/separator/separator";
+import { Avatar } from "@/design-system/components/media/avatar/avatar";
+import { Popover } from "@/design-system/components/overlay/popover/popover";
+import { ClampedP, P } from "@/design-system/components/typography/p/p";
 import { useColorMode } from "@/design-system/hooks/use-color-mode";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { ResetPasswordTrigger } from "@/features/auth/components/ui/reset-password-modal";

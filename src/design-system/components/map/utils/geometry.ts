@@ -1,7 +1,7 @@
 // src/design-system/components/map/utils/geometry.ts
 
-import type { PixelPoint } from "@/design-system/components/map/types/map.utils.type";
-import type { DrawPoint } from "@/design-system/components/map/types/map.type";
+import type { PixelPoint } from "@/design-system/components/map/map/map.utils.type";
+import type { DrawPoint } from "@/design-system/components/map/map/map.type";
 import type GeoJSON from "geojson";
 
 /** Determines whether a click position is close enough (in screen px) to the first vertex to close the polygon. */

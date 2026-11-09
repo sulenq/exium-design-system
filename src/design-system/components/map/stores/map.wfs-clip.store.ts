@@ -3,7 +3,7 @@
 import type {
   WfsClipStatus,
   WfsClipStore,
-} from "@/design-system/components/map/types/map.wfs-clip.type";
+} from "@/design-system/components/map/map/map.wfs-clip.type";
 import { create } from "zustand";
 
 const initialState = {

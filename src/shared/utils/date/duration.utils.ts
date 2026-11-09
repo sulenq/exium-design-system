@@ -3,7 +3,7 @@
 import type {
   DurationUnit,
   DurationValue,
-} from "@/design-system/components/input/types/duration-input.type";
+} from "@/design-system/components/input/duration-input/duration-input.type";
 import { t } from "@/shared/libs/i18n";
 
 export const DURATION_UNIT_TO_MS: Record<DurationUnit, number> = {

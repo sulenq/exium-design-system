@@ -1,0 +1,355 @@
+// src/design-system/components/layout/ui/scroll-container.tsx
+
+import { IconButton } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import type {
+  HScrollContainerProps,
+  ScrollButtonProps,
+  VScrollContainerProps,
+} from "@/design-system/components/layout/scroll-container/scroll-container.type";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Box } from "@chakra-ui/react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+} from "lucide-react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+
+export const VScrollContainer = forwardRef<
+  HTMLDivElement,
+  VScrollContainerProps
+>((props, ref) => {
+  // Props
+  const {
+    children,
+    borderColor = "an1",
+    showTopBorderOnScroll = true,
+    showBottomBorderOnScroll = false,
+    showScrollButtons = false,
+    enableScroll = false,
+    ...restProps
+  } = props;
+
+  // Refs
+  const containerRef = useRef<HTMLDivElement>(null);
+  useImperativeHandle(ref, () => containerRef.current as HTMLDivElement);
+
+  // States
+  const [scrollTop, setScrollTop] = useState<number>(0);
+  const [showUp, setShowUp] = useState(false);
+  const [showDown, setShowDown] = useState(false);
+
+  const updateScrollState = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const { scrollTop: currentScrollTop, scrollHeight, clientHeight } = el;
+    setShowUp(currentScrollTop > 5);
+    setShowDown(currentScrollTop < scrollHeight - clientHeight - 5);
+    setScrollTop(currentScrollTop);
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      updateScrollState();
+    };
+
+    if (enableScroll) {
+      el.style.overscrollBehavior = "contain";
+    } else {
+      el.style.overscrollBehavior = "";
+    }
+
+    el.addEventListener("scroll", handleScroll);
+    updateScrollState();
+
+    const observer = new ResizeObserver(() => updateScrollState());
+    observer.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+      el.style.overscrollBehavior = "";
+    };
+  }, [enableScroll, updateScrollState]);
+
+  const scroll = (direction: "up" | "down") => {
+    const el = containerRef.current;
+    if (!el) return;
+    const amount = el.clientHeight * 0.8;
+    el.scrollBy({
+      top: direction === "up" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <VStack
+      role={"group"}
+      flex={1}
+      position={"relative"}
+      overflow={"hidden"}
+      w={"full"}
+      minH={0}
+      h={"full"}
+    >
+      {showScrollButtons && showUp && (
+        <ScrollButton
+          direction={"up"}
+          position={"absolute"}
+          top={2}
+          left={"50%"}
+          transform={"translateX(-50%)"}
+          zIndex={2}
+          onClick={() => scroll("up")}
+        />
+      )}
+
+      {showScrollButtons && showDown && (
+        <ScrollButton
+          direction={"down"}
+          position={"absolute"}
+          bottom={2}
+          left={"50%"}
+          transform={"translateX(-50%)"}
+          zIndex={2}
+          onClick={() => scroll("down")}
+        />
+      )}
+
+      <VStack
+        ref={containerRef}
+        tabIndex={-1}
+        overflowY={"auto"}
+        minH={0}
+        flex={1}
+        borderTop={showTopBorderOnScroll ? "1px solid" : undefined}
+        borderBottom={showBottomBorderOnScroll ? "1px solid" : undefined}
+        borderTopColor={
+          showTopBorderOnScroll && (scrollTop !== 0 || showUp)
+            ? borderColor
+            : "transparent"
+        }
+        borderBottomColor={
+          showBottomBorderOnScroll && showDown ? borderColor : "transparent"
+        }
+        transition={"200ms"}
+        h={"full"}
+        w={"full"}
+        {...restProps}
+      >
+        {children}
+      </VStack>
+    </VStack>
+  );
+});
+
+export const HScrollContainer = forwardRef<
+  HTMLDivElement,
+  HScrollContainerProps
+>((props, ref) => {
+  // Props
+  const {
+    children,
+    borderColor = "an1",
+    showLeftBorderOnScroll = false,
+    showRightBorderOnScroll = true,
+    showScrollButtons = false,
+    enableScroll = false,
+    ...restProps
+  } = props;
+
+  // Refs
+  const containerRef = useRef<HTMLDivElement>(null);
+  useImperativeHandle(ref, () => containerRef.current as HTMLDivElement);
+  const scrollVelocity = useRef(0);
+  const rafId = useRef<number | null>(null);
+
+  // States
+  const [scrollLeft, setScrollLeft] = useState<number>(0);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+
+  const updateScrollState = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const { scrollLeft: currentScrollLeft, scrollWidth, clientWidth } = el;
+    setShowLeft(currentScrollLeft > 5);
+    setShowRight(currentScrollLeft < scrollWidth - clientWidth - 5);
+    setScrollLeft(currentScrollLeft);
+  }, []);
+
+  const ensureRaf = (el: HTMLDivElement) => {
+    if (rafId.current != null) return;
+    const step = () => {
+      if (!el) return;
+      el.scrollLeft += scrollVelocity.current;
+      scrollVelocity.current *= 0.85;
+
+      updateScrollState();
+
+      if (Math.abs(scrollVelocity.current) > 0.5) {
+        rafId.current = requestAnimationFrame(step);
+      } else {
+        rafId.current = null;
+      }
+    };
+    rafId.current = requestAnimationFrame(step);
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    const el = containerRef.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.8;
+    el.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onWheel = (ev: WheelEvent) => {
+      const canScroll = el.scrollWidth > el.clientWidth;
+      if (!canScroll) return;
+
+      const absX = Math.abs(ev.deltaX);
+      const absY = Math.abs(ev.deltaY);
+      const isVerticalIntent = absY > absX;
+
+      if (!isVerticalIntent) return;
+
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      let multiplier = 1;
+      if (ev.deltaMode === 1) multiplier = 16;
+      else if (ev.deltaMode === 2) multiplier = window.innerHeight;
+
+      scrollVelocity.current += ev.deltaY * 0.25 * multiplier;
+      ensureRaf(el);
+    };
+
+    const onScroll = () => {
+      updateScrollState();
+    };
+
+    if (enableScroll) {
+      el.style.overscrollBehavior = "contain";
+      el.addEventListener("wheel", onWheel, { passive: false });
+    } else {
+      el.style.overscrollBehavior = "";
+    }
+
+    el.addEventListener("scroll", onScroll);
+    updateScrollState();
+
+    const observer = new ResizeObserver(() => updateScrollState());
+    observer.observe(el);
+
+    return () => {
+      el.removeEventListener("wheel", onWheel as EventListener);
+      el.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+        rafId.current = null;
+      }
+      el.style.overscrollBehavior = "";
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enableScroll, updateScrollState]);
+
+  return (
+    <Box position={"relative"} w={"full"} role={"group"}>
+      {showScrollButtons && showLeft && (
+        <ScrollButton
+          direction={"left"}
+          position={"absolute"}
+          left={2}
+          top={"50%"}
+          transform={"translateY(-50%)"}
+          zIndex={2}
+          onClick={() => scroll("left")}
+        />
+      )}
+
+      {showScrollButtons && showRight && (
+        <ScrollButton
+          direction={"right"}
+          position={"absolute"}
+          right={2}
+          top={"50%"}
+          transform={"translateY(-50%)"}
+          zIndex={2}
+          onClick={() => scroll("right")}
+        />
+      )}
+
+      <HStack
+        className={"noScrollbar"}
+        ref={containerRef}
+        overflowX={"auto"}
+        overflowY={"hidden"}
+        borderLeft={showLeftBorderOnScroll ? "1px solid" : undefined}
+        borderRight={showRightBorderOnScroll ? "1px solid" : undefined}
+        borderLeftColor={
+          showLeftBorderOnScroll && (showLeft || scrollLeft !== 0)
+            ? borderColor
+            : "transparent"
+        }
+        borderRightColor={
+          showRightBorderOnScroll && showRight ? borderColor : "transparent"
+        }
+        transition={"200ms"}
+        w={"full"}
+        {...restProps}
+      >
+        {children}
+      </HStack>
+    </Box>
+  );
+});
+
+const DIRECTION_ICON_MAP = {
+  left: ChevronLeft,
+  right: ChevronRight,
+  up: ChevronUp,
+  down: ChevronDown,
+} as const;
+
+export const ScrollButton = (props: ScrollButtonProps) => {
+  const { direction, ...restProps } = props;
+
+  const IconComponent = DIRECTION_ICON_MAP[direction];
+
+  return (
+    <IconButton
+      size={"xs"}
+      variant={"frosted"}
+      rounded={"full"}
+      aria-label={`Scroll ${direction}`}
+      border={"1px solid"}
+      borderColor={"border.subtle"}
+      shadow={"sm"}
+      {...restProps}
+    >
+      <AppIcon icon={IconComponent} />
+    </IconButton>
+  );
+};

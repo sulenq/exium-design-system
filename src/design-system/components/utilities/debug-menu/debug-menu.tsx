@@ -1,0 +1,41 @@
+// src/design-system/components/utilities/ui/debug-menu.tsx
+
+"use client";
+
+import {
+  Button,
+  IconButton,
+} from "@/design-system/components/button/button/button";
+import { ColorModeToggleTrigger } from "@/design-system/components/button/color-mode/color-mode";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Switch } from "@/design-system/components/input/switch/switch";
+import { Box } from "@/design-system/components/layout/box/box";
+import { Popover } from "@/design-system/components/overlay/popover/popover";
+import { useColorMode } from "@/design-system/hooks/use-color-mode";
+import { CodeIcon } from "lucide-react";
+
+export const DebugMenu = () => {
+  // Hooks
+  const { colorMode } = useColorMode();
+
+  return (
+    <Box pos={"fixed"} left={"15px"} bottom={"25px"} zIndex={"toast"}>
+      <Popover.Root>
+        <Popover.Trigger>
+          <IconButton variant={"solid"} colorPalette={"red"} size={"xs"}>
+            <AppIcon icon={CodeIcon} />
+          </IconButton>
+        </Popover.Trigger>
+
+        <Popover.Content w={"260px"}>
+          <ColorModeToggleTrigger>
+            <Button justifyContent={"space-between"} gap={4}>
+              Toggle dark mode
+              <Switch checked={colorMode === "dark"} />
+            </Button>
+          </ColorModeToggleTrigger>
+        </Popover.Content>
+      </Popover.Root>
+    </Box>
+  );
+};

@@ -1,0 +1,59 @@
+// src/design-system/components/input/types/focus-select.type.ts
+
+import type { ButtonProps } from "@/design-system/components/button/button/button.type";
+import type React from "react";
+
+export type FocusSelectOption = {
+  label: string;
+  value: string;
+  description?: string;
+  startElement?: React.ReactNode | React.ComponentType;
+  icon?: React.ComponentType;
+};
+
+export type FocusSelectTriggerRenderParams = {
+  selectedOption?: FocusSelectOption;
+  value: string;
+  placeholder: string;
+  disabled?: boolean;
+  clearable?: boolean;
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+  handleClear: (e: React.MouseEvent) => void;
+};
+
+export type FocusSelectInputProps = Omit<
+  ButtonProps,
+  "onChange" | "value" | "defaultValue" | "children"
+> & {
+  modalKey?: string;
+  label?: string;
+  title?: string;
+  placeholder?: string;
+  options: FocusSelectOption[];
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string, option?: FocusSelectOption) => void;
+  clearable?: boolean;
+  suffixLabel?: React.ReactNode;
+  iconSize?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
+  isFetching?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  onRetry?: () => void;
+  errorTitle?: string;
+  errorMessage?: string;
+  /** When true, typing in the search input dynamically creates a custom option at the top of the list. Defaults to false. */
+  customOption?: boolean;
+  /** Optional custom trigger node or render function receiving trigger state */
+  trigger?:
+    | React.ReactNode
+    | ((params: FocusSelectTriggerRenderParams) => React.ReactNode);
+  children?:
+    | React.ReactNode
+    | ((params: FocusSelectTriggerRenderParams) => React.ReactNode);
+  /** When true, automatically focuses the search input when modal opens. Defaults to false. */
+  autoFocusSearch?: boolean;
+  renderOption?: (option: FocusSelectOption) => React.ReactNode;
+};
