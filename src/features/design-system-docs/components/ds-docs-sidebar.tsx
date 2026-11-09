@@ -130,6 +130,7 @@ const DsDocsSidebarHeader = ({
           fontSize={"lg"}
           fontWeight={"semibold"}
           color={`${theme.colorPalette}.fg`}
+          mb={"3px"}
         >
           exium
         </ClampedP>

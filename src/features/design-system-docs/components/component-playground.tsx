@@ -127,7 +127,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         <Tabs.List>
           <Tabs.Trigger value={"controls"}>{"Playground"}</Tabs.Trigger>
           <Tabs.Trigger value={"props"}>{"Props Specs"}</Tabs.Trigger>
-          <Tabs.Trigger value={"a11y"}>{"A11y"}</Tabs.Trigger>
+          <Tabs.Trigger value={"a11y"}>{"A11y (Accessibility)"}</Tabs.Trigger>
         </Tabs.List>
 
         <Tabs.Content value={"controls"} pt={4}>
@@ -415,7 +415,13 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                         <td style={{ padding: "8px" }}>
                           <HStack gap={1} wrap={"wrap"}>
                             {item.key.split("/").map((singleKey) => (
-                              <Kbd key={singleKey.trim()} size={"md"}>
+                              <Kbd
+                                key={singleKey.trim()}
+                                size={"md"}
+                                variant={"outline"}
+                                bg={"transparent"}
+                                color={"fg.muted"}
+                              >
                                 {singleKey.trim()}
                               </Kbd>
                             ))}
