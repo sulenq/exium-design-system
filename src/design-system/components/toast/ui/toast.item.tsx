@@ -41,28 +41,28 @@ import { memo, useState } from "react";
 export const TOAST_VARIANT_MAP: ToastVariantMap = {
   success: {
     icon: <AppIcon icon={CheckCircleIcon} size={"sm"} />,
-    bg: "bg.success",
-    color: "fg.success",
+    bg: "green.solid",
+    color: "bg.body",
   },
   error: {
     icon: <AppIcon icon={XCircleIcon} size={"sm"} />,
-    bg: "bg.error",
-    color: "fg.error",
+    bg: "red.solid",
+    color: "bg.body",
   },
   warning: {
     icon: <AppIcon icon={AlertCircleIcon} size={"sm"} />,
-    bg: "bg.warning",
-    color: "fg.warning",
+    bg: "orange.solid",
+    color: "bg.body",
   },
   info: {
     icon: <AppIcon icon={InfoIcon} size={"sm"} />,
-    bg: "bg.subtle",
-    color: "fg",
+    bg: "blue.solid",
+    color: "bg.body",
   },
   loading: {
-    icon: <Loader />,
-    bg: "bg.subtle",
-    color: "fg",
+    icon: <Loader size={"xs"} color={"bg.body"} />,
+    bg: "neutral.solid",
+    color: "bg.body",
   },
   custom: {
     icon: null,
@@ -183,7 +183,6 @@ export const ToastItem = memo(function ToastItem(
                 minW={0}
                 mr={toastData.description ? 0 : 1}
                 fontWeight={"medium"}
-                color={TOAST_VARIANT_MAP[toastData.variant].color}
                 lineClamp={
                   (stackExpanded && !toastData.description) || toastItemExpanded
                     ? 0
