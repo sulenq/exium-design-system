@@ -19,6 +19,7 @@ import type {
 } from "@/features/design-system-docs/types/ds-docs-navs.type";
 import type { NavItem } from "@/shared/types/nav.type";
 import { useMemo, useState } from "react";
+import { VScrollContainer } from "@/design-system/components/layout/ui/scroll-container";
 
 const DS_SIDEBAR_KEY = "ds-docs";
 const DEFAULT_SIDEBAR_EXPANDED = true;
@@ -75,36 +76,36 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
         />
       </Sidebar.Header>
 
-      <Sidebar.Separator mx={-1} />
-
       <Sidebar.Body>
-        {/* Filter Input (Only when expanded) */}
-        {expanded && (
-          <Box p={"sm"} flexShrink={0} w={"full"}>
-            <SearchInput
-              size={"sm"}
-              placeholder={"Filter components..."}
-              onValueChange={setSearchQuery}
-              w={"full"}
-              minW={"0"}
-            />
-          </Box>
-        )}
+        <VScrollContainer>
+          {/* Filter Input (Only when expanded) */}
+          {expanded && (
+            <Box p={"sm"} flexShrink={0} w={"full"}>
+              <SearchInput
+                size={"sm"}
+                placeholder={"Filter components..."}
+                onValueChange={setSearchQuery}
+                w={"full"}
+                minW={"0"}
+              />
+            </Box>
+          )}
 
-        {/* VNavs or No Result State */}
-        {filteredGroups.length === 0 ? (
-          <StateNoResult query={searchQuery} minH={"200px"} py={"md"} />
-        ) : (
-          <VNavs<DsNavKey>
-            flex={1}
-            groups={filteredGroups}
-            navs={DS_NAVS_MAP as unknown as Record<DsNavKey, NavItem>}
-            activeKey={activeNavKey}
-            expanded={expanded}
-            onNavClick={onSelectNav}
-            p={3}
-          />
-        )}
+          {/* VNavs or No Result State */}
+          {filteredGroups.length === 0 ? (
+            <StateNoResult query={searchQuery} minH={"200px"} py={"md"} />
+          ) : (
+            <VNavs<DsNavKey>
+              flex={1}
+              groups={filteredGroups}
+              navs={DS_NAVS_MAP as unknown as Record<DsNavKey, NavItem>}
+              activeKey={activeNavKey}
+              expanded={expanded}
+              onNavClick={onSelectNav}
+              p={3}
+            />
+          )}
+        </VScrollContainer>
       </Sidebar.Body>
     </Sidebar.Root>
   );

@@ -1,21 +1,19 @@
 // src/features/design-system-docs/components/design-system-docs.page.tsx
 
-import {
-  IconButton,
-} from "@/design-system/components/button/ui/button";
+import { IconButton } from "@/design-system/components/button/ui/button";
 import { ColorModeToggleButton } from "@/design-system/components/button/ui/color-mode";
 import { AppIcon } from "@/design-system/components/icon/ui/app-icon";
-import { Box } from "@/design-system/components/layout/ui/box";
 import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
+import { VScrollContainer } from "@/design-system/components/layout/ui/scroll-container";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Drawer } from "@/design-system/components/overlay/ui/drawer";
 import { P } from "@/design-system/components/typography/ui/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { ComponentPlayground } from "@/features/design-system-docs/components/component-playground";
 import { DsDocsSidebar } from "@/features/design-system-docs/components/ds-docs-sidebar";
-import { DemoPage } from "@/features/root/components/demo.page";
 import { COMPONENTS_REGISTRY } from "@/features/design-system-docs/config/components-registry";
 import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
+import { DemoPage } from "@/features/root/components/demo.page";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { MenuIcon } from "lucide-react";
 import { useCallback } from "react";
@@ -119,8 +117,6 @@ export const DesignSystemDocsPage = () => {
           justify={"space-between"}
           h={"60px"}
           px={"md"}
-          borderBottom={"1px solid"}
-          borderColor={"border.subtle"}
         >
           <HStack align={"center"} gap={"sm"}>
             {isSmallViewport && (
@@ -134,9 +130,7 @@ export const DesignSystemDocsPage = () => {
               </IconButton>
             )}
 
-            <P fontWeight={"bold"} fontSize={["sm", "md"]}>
-              Exium Design System Documentation
-            </P>
+            <P fontWeight={"semibold"}>Exium Design System Documentation</P>
           </HStack>
 
           <HStack align={"center"} gap={"sm"}>
@@ -145,20 +139,13 @@ export const DesignSystemDocsPage = () => {
         </HStack>
 
         {/* Content Body Scroll Area */}
-        <Box
-          flex={1}
-          minW={0}
-          minH={0}
-          overflowY={"auto"}
-          overscrollBehavior={"contain"}
-          p={[4, 8]}
-        >
+        <VScrollContainer flex={1} minW={0} minH={0} p={4}>
           {activeNavKey === "overview" || !currentSpec ? (
             <DemoPage />
           ) : (
             <ComponentPlayground key={currentSpec.key} spec={currentSpec} />
           )}
-        </Box>
+        </VScrollContainer>
       </VStack>
     </HStack>
   );
