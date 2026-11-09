@@ -9,6 +9,25 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
     items: [{ key: "overview" }],
   },
   {
+    title: "Foundation",
+    items: [
+      { key: "principles" },
+      { key: "design_tokens" },
+      { key: "colors" },
+      { key: "typography_foundation" },
+      { key: "spacing_sizing" },
+      { key: "radius_borders" },
+      { key: "elevation_shadows" },
+      { key: "z_index" },
+      { key: "breakpoints_layout" },
+      { key: "iconography" },
+      { key: "motion" },
+      { key: "theming_dark_mode" },
+      { key: "accessibility" },
+      { key: "internationalization" },
+    ],
+  },
+  {
     title: "Components",
     items: [
       {
@@ -114,6 +133,31 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_utilities",
         children: [{ key: "utilities" }],
       },
+    ],
+  },
+  {
+    title: "Hooks",
+    items: [
+      { key: "use_disclosure" },
+      { key: "use_media_query" },
+      { key: "use_viewport_mode" },
+      { key: "use_url_overlay" },
+      { key: "use_master_detail_nav" },
+      { key: "use_controllable_state" },
+      { key: "use_debounce" },
+      { key: "use_copy_to_clipboard" },
+      { key: "use_is_mounted" },
+      { key: "use_event_listener" },
+      { key: "use_hotkeys" },
+    ],
+  },
+  {
+    title: "Utils",
+    items: [
+      { key: "cn_util" },
+      { key: "formatters" },
+      { key: "a11y_helpers" },
+      { key: "common_zod_schemas" },
     ],
   },
 ];

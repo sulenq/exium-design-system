@@ -364,4 +364,126 @@ export const DS_NAVS_MAP = {
     icon: DownloadIcon,
     title: "Download",
   },
+
+  // Foundation
+  principles: {
+    icon: Sparkles,
+    title: "Principles",
+  },
+  design_tokens: {
+    icon: Code2,
+    title: "Design Tokens",
+  },
+  colors: {
+    icon: Sliders,
+    title: "Colors",
+  },
+  typography_foundation: {
+    icon: Type,
+    title: "Typography",
+  },
+  spacing_sizing: {
+    icon: Layout,
+    title: "Spacing & Sizing",
+  },
+  radius_borders: {
+    icon: Box,
+    title: "Radius & Borders",
+  },
+  elevation_shadows: {
+    icon: Layers,
+    title: "Elevation & Shadows",
+  },
+  z_index: {
+    icon: Layers,
+    title: "Z-index",
+  },
+  breakpoints_layout: {
+    icon: LayoutGrid,
+    title: "Breakpoints & Layout",
+  },
+  iconography: {
+    icon: Sparkles,
+    title: "Iconography",
+  },
+  motion: {
+    icon: Clock,
+    title: "Motion",
+  },
+  theming_dark_mode: {
+    icon: ToggleRightIcon,
+    title: "Theming & Dark Mode",
+  },
+  accessibility: {
+    icon: HelpCircle,
+    title: "Accessibility",
+  },
+  internationalization: {
+    icon: Compass,
+    title: "Internationalization",
+  },
+
+  // Hooks
+  use_disclosure: {
+    icon: Code2,
+    title: "useDisclosure",
+  },
+  use_media_query: {
+    icon: Code2,
+    title: "useMediaQuery",
+  },
+  use_viewport_mode: {
+    icon: Code2,
+    title: "useViewportMode",
+  },
+  use_url_overlay: {
+    icon: Code2,
+    title: "useUrlOverlay",
+  },
+  use_master_detail_nav: {
+    icon: Code2,
+    title: "useMasterDetailNav",
+  },
+  use_controllable_state: {
+    icon: Code2,
+    title: "useControllableState",
+  },
+  use_debounce: {
+    icon: Code2,
+    title: "useDebounce",
+  },
+  use_copy_to_clipboard: {
+    icon: Code2,
+    title: "useCopyToClipboard",
+  },
+  use_is_mounted: {
+    icon: Code2,
+    title: "useIsMounted",
+  },
+  use_event_listener: {
+    icon: Code2,
+    title: "useEventListener",
+  },
+  use_hotkeys: {
+    icon: Code2,
+    title: "useHotkeys",
+  },
+
+  // Utils
+  cn_util: {
+    icon: Wrench,
+    title: "cn",
+  },
+  formatters: {
+    icon: Wrench,
+    title: "Formatters",
+  },
+  a11y_helpers: {
+    icon: Wrench,
+    title: "A11y Helpers",
+  },
+  common_zod_schemas: {
+    icon: Wrench,
+    title: "Common Zod Schemas",
+  },
 } as const satisfies Record<string, NavItem>;
