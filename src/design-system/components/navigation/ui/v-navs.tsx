@@ -296,7 +296,10 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
 
   // Expanded + children → Collapsible, children container with vertical line
   return (
-    <Collapsible.Root opened={opened} onOpenChange={(e) => setIsOpen(e.open)}>
+    <Collapsible.Root
+      opened={opened}
+      onOpenChange={(e: { open: boolean }) => setIsOpen(e.open)}
+    >
       <Collapsible.Trigger
         _open={{
           bg: "transparent",
