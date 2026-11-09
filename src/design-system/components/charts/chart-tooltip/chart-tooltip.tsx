@@ -3,7 +3,7 @@
 import type {
   ChartTooltipContentProps,
   ChartTooltipProps,
-} from "@/design-system/components/charts/chart-tooltip/chart-tooltip.type.type";
+} from "@/design-system/components/charts/chart-tooltip/chart-tooltip.type";
 import { Circle } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
