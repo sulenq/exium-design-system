@@ -3388,7 +3388,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     component: AppIcon,
     defaultProps: {
       size: "xl",
-      colorPalette: "blue",
+      color: "blue.fg",
     },
     propsSpec: [
       {
@@ -3407,50 +3407,74 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["xs", "sm", "md", "lg", "xl", "2xl"],
       },
       {
-        name: "colorPalette",
+        name: "color",
         type: "string",
-        defaultValue: "blue",
-        description: "Skema warna ikon.",
+        defaultValue: "blue.fg",
+        description:
+          "Warna token teks/ikon (contoh: blue.fg, fg.muted, red.solid).",
         controlKind: "select",
-        options: COLOR_PALETTE_OPTIONS,
+        options: [
+          "blue.fg",
+          "green.fg",
+          "red.fg",
+          "orange.fg",
+          "purple.fg",
+          "fg",
+          "fg.muted",
+          "fg.subtle",
+        ],
+      },
+      {
+        name: "weight",
+        type: '"thin" | "light" | "regular" | "bold" | "fill" | "duotone"',
+        defaultValue: "regular",
+        description: "Ketebalan/varian ikon khusus Phosphor Icons.",
       },
     ],
-    renderPlayground: (props) => (
-      <HStack gap={6} colorPalette={(props.colorPalette as string) || "blue"}>
-        <VStack gap={1} align={"center"}>
-          <AppIcon
-            icon={PhosphorSparkleIcon}
-            weight={"regular"}
-            size={(props.size as "xl") || "xl"}
-          />
-          <P fontSize={"xs"} color={"fg.muted"}>
-            {"regular"}
-          </P>
-        </VStack>
+    renderPlayground: (props) => {
+      const selectedColor = (props.color as string) || "blue.fg";
+      const selectedSize = (props.size as "xl") || "xl";
 
-        <VStack gap={1} align={"center"}>
-          <AppIcon
-            icon={PhosphorSparkleIcon}
-            weight={"fill"}
-            size={(props.size as "xl") || "xl"}
-          />
-          <P fontSize={"xs"} color={"fg.muted"}>
-            {"fill"}
-          </P>
-        </VStack>
+      return (
+        <HStack gap={6}>
+          <VStack gap={1} align={"center"}>
+            <AppIcon
+              icon={PhosphorSparkleIcon}
+              weight={"regular"}
+              size={selectedSize}
+              color={selectedColor}
+            />
+            <P fontSize={"xs"} color={"fg.muted"}>
+              {"regular"}
+            </P>
+          </VStack>
 
-        <VStack gap={1} align={"center"}>
-          <AppIcon
-            icon={PhosphorSparkleIcon}
-            weight={"duotone"}
-            size={(props.size as "xl") || "xl"}
-          />
-          <P fontSize={"xs"} color={"fg.muted"}>
-            {"duotone"}
-          </P>
-        </VStack>
-      </HStack>
-    ),
+          <VStack gap={1} align={"center"}>
+            <AppIcon
+              icon={PhosphorSparkleIcon}
+              weight={"fill"}
+              size={selectedSize}
+              color={selectedColor}
+            />
+            <P fontSize={"xs"} color={"fg.muted"}>
+              {"fill"}
+            </P>
+          </VStack>
+
+          <VStack gap={1} align={"center"}>
+            <AppIcon
+              icon={PhosphorSparkleIcon}
+              weight={"duotone"}
+              size={selectedSize}
+              color={selectedColor}
+            />
+            <P fontSize={"xs"} color={"fg.muted"}>
+              {"duotone"}
+            </P>
+          </VStack>
+        </HStack>
+      );
+    },
   },
 
   utilities: {
