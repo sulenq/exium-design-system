@@ -10,6 +10,7 @@ export const AppIcon = (props: AppIconProps) => {
     icon = CircleQuestionMarkIcon,
     size = "md",
     boxSize,
+    weight,
     ...restProps
   } = props;
 
@@ -27,7 +28,8 @@ export const AppIcon = (props: AppIconProps) => {
   };
 
   // Derived Values
-  const IconComponent = icon;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const IconComponent = icon as any;
 
   return (
     <Icon
@@ -35,7 +37,7 @@ export const AppIcon = (props: AppIconProps) => {
       strokeWidth={1.75}
       {...restProps}
     >
-      <IconComponent />
+      <IconComponent {...(weight ? { weight } : {})} />
     </Icon>
   );
 };

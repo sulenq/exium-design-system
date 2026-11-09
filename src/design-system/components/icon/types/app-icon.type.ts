@@ -14,7 +14,19 @@ export type AppIconSize =
   | "4xl"
   | "5xl";
 
+export type PhosphorIconWeight =
+  | "thin"
+  | "light"
+  | "regular"
+  | "bold"
+  | "fill"
+  | "duotone";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AppIconComponent = ComponentType<any>;
+
 export type AppIconProps = IconProps & {
-  icon?: ComponentType;
+  icon?: AppIconComponent;
   size?: AppIconSize;
+  weight?: PhosphorIconWeight;
 };
