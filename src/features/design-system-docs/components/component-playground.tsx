@@ -11,6 +11,7 @@ import { Box } from "@/design-system/components/layout/ui/box";
 import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
 import { Badge } from "@/design-system/components/typography/ui/badge";
+import { Kbd } from "@/design-system/components/typography/ui/kbd";
 import { P } from "@/design-system/components/typography/ui/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-docs/components/component-playground-container";
@@ -92,21 +93,24 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         align={"flex-start"}
         justify={"space-between"}
       >
-        <VStack align={"start"} gap={1} flex={1} overflow={"hidden"}>
-          <P fontSize={"xs"} color={"fg.subtle"} fontWeight={"semibold"}>
-            {"CODE"}
-          </P>
+        <VStack gap={1} flex={1} overflow={"hidden"}>
+          <HStack align={"center"} justify={"space-between"}>
+            <P fontSize={"xs"} color={"fg.subtle"} fontWeight={"semibold"}>
+              {"CODE"}
+            </P>
+
+            <Button size={"xs"} variant={"ghost"} onClick={handleCopyCode}>
+              {copied ? (
+                <AppIcon icon={CheckIcon} size={"sm"} />
+              ) : (
+                <AppIcon icon={CopyIcon} size={"sm"} />
+              )}
+              {copied ? "Copied!" : "Copy"}
+            </Button>
+          </HStack>
+
           <CodeBlock code={generateUsageCode()} language={"tsx"} />
         </VStack>
-
-        <Button size={"xs"} variant={"ghost"} onClick={handleCopyCode}>
-          {copied ? (
-            <AppIcon icon={CheckIcon} size={"sm"} />
-          ) : (
-            <AppIcon icon={CopyIcon} size={"sm"} />
-          )}
-          {copied ? "Copied!" : "Copy"}
-        </Button>
       </HStack>
 
       {/* Interactive Playground Sandbox */}
@@ -297,7 +301,16 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
               </P>
               <HStack gap={2} wrap={"wrap"}>
                 <Badge variant={"outline"} colorPalette={"blue"}>
-                  {spec.a11y?.role ?? (spec.category.toLowerCase().includes("button") ? 'role="button"' : spec.category.toLowerCase().includes("input") ? 'role="textbox / widget"' : spec.category.toLowerCase().includes("overlay") ? 'role="dialog"' : spec.category.toLowerCase().includes("disclosure") ? 'role="tab / region"' : 'role="generic / presentation"')}
+                  {spec.a11y?.role ??
+                    (spec.category.toLowerCase().includes("button")
+                      ? 'role="button"'
+                      : spec.category.toLowerCase().includes("input")
+                        ? 'role="textbox / widget"'
+                        : spec.category.toLowerCase().includes("overlay")
+                          ? 'role="dialog"'
+                          : spec.category.toLowerCase().includes("disclosure")
+                            ? 'role="tab / region"'
+                            : 'role="generic / presentation"')}
                 </Badge>
                 <Badge variant={"subtle"} colorPalette={"green"}>
                   {"WCAG 2.2 AA Compliant"}
@@ -329,33 +342,69 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                           "1px solid var(--chakra-colors-border-subtle)",
                       }}
                     >
-                      <th style={{ padding: "8px", width: "160px" }}>{"Key"}</th>
+                      <th style={{ padding: "8px", width: "160px" }}>
+                        {"Key"}
+                      </th>
                       <th style={{ padding: "8px" }}>{"Action"}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(spec.a11y?.keyboardNav ?? (
-                      spec.category.toLowerCase().includes("button")
+                    {(
+                      spec.a11y?.keyboardNav ??
+                      (spec.category.toLowerCase().includes("button")
                         ? [
-                            { key: "Tab", action: "Memindahkan fokus keyboard ke button." },
-                            { key: "Enter / Space", action: "Mengeksekusi handler onClick dari button." },
+                            {
+                              key: "Tab",
+                              action: "Memindahkan fokus keyboard ke button.",
+                            },
+                            {
+                              key: "Enter / Space",
+                              action:
+                                "Mengeksekusi handler onClick dari button.",
+                            },
                           ]
                         : spec.category.toLowerCase().includes("input")
                           ? [
-                              { key: "Tab", action: "Fokus masuk / keluar field input." },
-                              { key: "Enter", action: "Men-submit form atau mengonfirmasi nilai." },
-                              { key: "Escape", action: "Membatalkan input atau membersihkan pencarian (jika clearable)." },
+                              {
+                                key: "Tab",
+                                action: "Fokus masuk / keluar field input.",
+                              },
+                              {
+                                key: "Enter",
+                                action:
+                                  "Men-submit form atau mengonfirmasi nilai.",
+                              },
+                              {
+                                key: "Escape",
+                                action:
+                                  "Membatalkan input atau membersihkan pencarian (jika clearable).",
+                              },
                             ]
                           : spec.category.toLowerCase().includes("overlay")
                             ? [
-                                { key: "Escape", action: "Menutup overlay/modal/drawer dan mengembalikan fokus ke trigger." },
-                                { key: "Tab", action: "Menjaga fokus berputar di dalam modal (Focus Trap)." },
+                                {
+                                  key: "Escape",
+                                  action:
+                                    "Menutup overlay/modal/drawer dan mengembalikan fokus ke trigger.",
+                                },
+                                {
+                                  key: "Tab",
+                                  action:
+                                    "Menjaga fokus berputar di dalam modal (Focus Trap).",
+                                },
                               ]
                             : [
-                                { key: "Tab", action: "Navigasi fokus sekuensial antar elemen interaktif." },
-                                { key: "Enter / Space", action: "Mengaktifkan elemen terpilih." },
-                              ]
-                    )).map((item) => (
+                                {
+                                  key: "Tab",
+                                  action:
+                                    "Navigasi fokus sekuensial antar elemen interaktif.",
+                                },
+                                {
+                                  key: "Enter / Space",
+                                  action: "Mengaktifkan elemen terpilih.",
+                                },
+                              ])
+                    ).map((item) => (
                       <tr
                         key={item.key}
                         style={{
@@ -364,9 +413,13 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                         }}
                       >
                         <td style={{ padding: "8px" }}>
-                          <Badge variant={"outline"} fontFamily={"mono"}>
-                            {item.key}
-                          </Badge>
+                          <HStack gap={1} wrap={"wrap"}>
+                            {item.key.split("/").map((singleKey) => (
+                              <Kbd key={singleKey.trim()} size={"md"}>
+                                {singleKey.trim()}
+                              </Kbd>
+                            ))}
+                          </HStack>
                         </td>
                         <td style={{ padding: "8px" }}>{item.action}</td>
                       </tr>
@@ -397,25 +450,32 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                           "1px solid var(--chakra-colors-border-subtle)",
                       }}
                     >
-                      <th style={{ padding: "8px", width: "200px" }}>{"Attribute"}</th>
+                      <th style={{ padding: "8px", width: "200px" }}>
+                        {"Attribute"}
+                      </th>
                       <th style={{ padding: "8px" }}>{"Usage"}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(spec.a11y?.ariaAttributes ?? [
-                      {
-                        attribute: "aria-label / aria-labelledby",
-                        description: "Menyediakan nama yang dapat dibaca screen reader saat label visual tidak ada atau berupa icon-only.",
-                      },
-                      {
-                        attribute: "aria-disabled / disabled",
-                        description: "Memberi tahu assistive tech bahwa elemen dalam kondisi non-aktif.",
-                      },
-                      {
-                        attribute: "aria-busy",
-                        description: "Diterapkan otomatis saat tombol atau komponen dalam kondisi loading/isPending.",
-                      },
-                    ]).map((attr) => (
+                    {(
+                      spec.a11y?.ariaAttributes ?? [
+                        {
+                          attribute: "aria-label / aria-labelledby",
+                          description:
+                            "Menyediakan nama yang dapat dibaca screen reader saat label visual tidak ada atau berupa icon-only.",
+                        },
+                        {
+                          attribute: "aria-disabled / disabled",
+                          description:
+                            "Memberi tahu assistive tech bahwa elemen dalam kondisi non-aktif.",
+                        },
+                        {
+                          attribute: "aria-busy",
+                          description:
+                            "Diterapkan otomatis saat tombol atau komponen dalam kondisi loading/isPending.",
+                        },
+                      ]
+                    ).map((attr) => (
                       <tr
                         key={attr.attribute}
                         style={{
@@ -423,7 +483,13 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                             "1px solid var(--chakra-colors-border-subtle)",
                         }}
                       >
-                        <td style={{ padding: "8px", fontFamily: "monospace", color: "#3182ce" }}>
+                        <td
+                          style={{
+                            padding: "8px",
+                            fontFamily: "monospace",
+                            color: "#3182ce",
+                          }}
+                        >
                           {attr.attribute}
                         </td>
                         <td style={{ padding: "8px" }}>{attr.description}</td>
@@ -435,7 +501,13 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
             </Box>
 
             {/* 4. Notes & Best Practices */}
-            <Box p={3} rounded={"md"} bg={"bg.subtle"} border={"1px solid"} borderColor={"border.subtle"}>
+            <Box
+              p={3}
+              rounded={"md"}
+              bg={"bg.subtle"}
+              border={"1px solid"}
+              borderColor={"border.subtle"}
+            >
               <P fontSize={"xs"} fontWeight={"bold"} mb={1}>
                 {"ACCESSIBILITY BEST PRACTICE"}
               </P>

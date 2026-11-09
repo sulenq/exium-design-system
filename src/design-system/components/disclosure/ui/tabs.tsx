@@ -46,7 +46,19 @@ const TabsRoot = forwardRef<HTMLDivElement, TabsRootProps>((props, ref) => {
 });
 
 const TabsList = forwardRef<HTMLDivElement, TabsListProps>((props, ref) => {
-  return <ChakraTabs.List ref={ref} flexShrink={0} {...props} />;
+  // Props
+  const { p = 0, px = 0, gap = 4, ...restProps } = props;
+
+  return (
+    <ChakraTabs.List
+      ref={ref}
+      flexShrink={0}
+      p={p}
+      px={px}
+      gap={gap}
+      {...restProps}
+    />
+  );
 });
 
 const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(

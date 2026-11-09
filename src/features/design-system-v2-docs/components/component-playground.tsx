@@ -132,7 +132,12 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
               .filter((prop) => prop.controlKind !== undefined)
               .map((prop) => (
                 <Box key={prop.name}>
-                  <P fontSize={"xs"} fontWeight={"medium"} color={"fg.muted"} mb={1.5}>
+                  <P
+                    fontSize={"xs"}
+                    fontWeight={"medium"}
+                    color={"fg.muted"}
+                    mb={1.5}
+                  >
                     {prop.name}
                   </P>
 
