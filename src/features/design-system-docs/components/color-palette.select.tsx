@@ -1,4 +1,4 @@
-// src/features/shared/components/color-palette.select.tsx
+// src/features/design-system-docs/components/color-palette.select.tsx
 
 import type { FocusSelectOption } from "@/design-system/components/input/focus-select/focus-select.type";
 import type { SelectOption } from "@/design-system/components/input/select/select.type";
@@ -8,7 +8,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { COLOR_PALETTES_LIST } from "@/design-system/constants/colors";
-import type { ColorPaletteSelectProps } from "@/features/shared/types/color-palette-select.type";
+import type { ColorPaletteSelectProps } from "@/features/design-system-docs/types/color-palette-select.type";
 import { useMemo } from "react";
 
 export const ColorPaletteSelect = (props: ColorPaletteSelectProps) => {

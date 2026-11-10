@@ -470,10 +470,6 @@ export const DS_NAVS_MAP = {
   },
 
   // Utils
-  cn_util: {
-    icon: Wrench,
-    title: "cn",
-  },
   formatters: {
     icon: Wrench,
     title: "Formatters",

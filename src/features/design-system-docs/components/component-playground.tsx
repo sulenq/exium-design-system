@@ -16,7 +16,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-docs/components/component-playground-container";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import { ColorPaletteSelect } from "@/features/shared/components/color-palette.select";
+import { ColorPaletteSelect } from "@/features/design-system-docs/components/color-palette.select";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import { useState } from "react";
 

@@ -154,7 +154,6 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
   {
     title: "Utils",
     items: [
-      { key: "cn_util" },
       { key: "formatters" },
       { key: "a11y_helpers" },
       { key: "common_zod_schemas" },

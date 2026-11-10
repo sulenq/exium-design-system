@@ -10,10 +10,13 @@ import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { ComponentPlayground } from "@/features/design-system-docs/components/component-playground";
+import { DemoPage } from "@/features/design-system-docs/components/demo/demo.page";
 import { DsDocsSidebar } from "@/features/design-system-docs/components/ds-docs-sidebar";
+import { FoundationDocs } from "@/features/design-system-docs/components/foundation/foundation-docs";
+import { HookDocs } from "@/features/design-system-docs/components/foundation/hook-docs";
+import { UtilDocs } from "@/features/design-system-docs/components/foundation/util-docs";
 import { COMPONENTS_REGISTRY } from "@/features/design-system-docs/config/components-registry";
 import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
-import { DemoPage } from "@/features/root/components/demo.page";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { MenuIcon } from "lucide-react";
 import { useCallback } from "react";
@@ -28,6 +31,26 @@ export const DesignSystemDocsPage = () => {
   // Derived Values
   const activeNavKey: DsNavKey = (search.component as DsNavKey) || "overview";
   const currentSpec = COMPONENTS_REGISTRY[activeNavKey];
+
+  const isFoundation = [
+    "principles",
+    "design_tokens",
+    "colors",
+    "typography_foundation",
+    "spacing_sizing",
+    "radius_borders",
+    "elevation_shadows",
+    "z_index",
+    "breakpoints_layout",
+    "iconography",
+    "motion",
+    "theming_dark_mode",
+    "accessibility",
+    "internationalization",
+  ].includes(activeNavKey);
+
+  const isHook = activeNavKey.startsWith("use_");
+  const isUtil = ["formatters", "a11y_helpers", "common_zod_schemas"].includes(activeNavKey);
 
   // Callbacks
   const handleSelectNav = useCallback(
@@ -140,10 +163,15 @@ export const DesignSystemDocsPage = () => {
 
         {/* Content Body Scroll Area */}
         <VScrollContainer flex={1} minW={0} minH={0} p={4}>
-          {activeNavKey === "overview" || !currentSpec ? (
-            <DemoPage />
-          ) : (
+          {activeNavKey === "overview" && <DemoPage />}
+          {isFoundation && <FoundationDocs navKey={activeNavKey} />}
+          {isHook && <HookDocs navKey={activeNavKey} />}
+          {isUtil && <UtilDocs navKey={activeNavKey} />}
+          {!isFoundation && !isHook && !isUtil && activeNavKey !== "overview" && currentSpec && (
             <ComponentPlayground key={currentSpec.key} spec={currentSpec} />
+          )}
+          {!isFoundation && !isHook && !isUtil && activeNavKey !== "overview" && !currentSpec && (
+            <DemoPage />
           )}
         </VScrollContainer>
       </VStack>
