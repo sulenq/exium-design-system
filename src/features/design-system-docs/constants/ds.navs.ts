@@ -363,61 +363,61 @@ export const DS_NAVS_MAP = {
     title: "Download",
   },
 
-  // Foundation
+  // Foundation Categories
+  cat_design_tokens: {
+    icon: SwatchesIcon,
+    title: "Design Tokens & Styles",
+  },
+  cat_spatial_layout: {
+    icon: SquaresFourIcon,
+    title: "Layout & Spatial",
+  },
+  cat_standards: {
+    icon: CompassIcon,
+    title: "Standards & Behavior",
+  },
+
+  // Foundation - Items
   principles: {
-    icon: SparkleIcon,
     title: "Principles",
   },
   design_tokens: {
-    icon: CodeIcon,
     title: "Design Tokens",
   },
   colors: {
-    icon: SwatchesIcon,
     title: "Colors",
   },
   typography_foundation: {
-    icon: TextTIcon,
     title: "Typography",
   },
+  theming_dark_mode: {
+    title: "Theming & Dark Mode",
+  },
+  iconography: {
+    title: "Iconography",
+  },
   spacing_sizing: {
-    icon: SquaresFourIcon,
     title: "Spacing & Sizing",
   },
   radius_borders: {
-    icon: CubeIcon,
     title: "Radius & Borders",
   },
   elevation_shadows: {
-    icon: StackIcon,
     title: "Elevation & Shadows",
   },
   z_index: {
-    icon: StackIcon,
     title: "Z-index",
   },
   breakpoints_layout: {
-    icon: SquaresFourIcon,
     title: "Breakpoints & Layout",
   },
-  iconography: {
-    icon: SparkleIcon,
-    title: "Iconography",
-  },
   motion: {
-    icon: ClockIcon,
     title: "Motion",
   },
-  theming_dark_mode: {
-    icon: ToggleRightIcon,
-    title: "Theming & Dark Mode",
-  },
   accessibility: {
-    icon: QuestionIcon,
     title: "Accessibility",
   },
   internationalization: {
-    icon: CompassIcon,
     title: "Internationalization",
   },
 

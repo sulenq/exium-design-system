@@ -11,20 +11,35 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
   {
     title: "Foundation",
     items: [
-      { key: "principles" },
-      { key: "design_tokens" },
-      { key: "colors" },
-      { key: "typography_foundation" },
-      { key: "spacing_sizing" },
-      { key: "radius_borders" },
-      { key: "elevation_shadows" },
-      { key: "z_index" },
-      { key: "breakpoints_layout" },
-      { key: "iconography" },
-      { key: "motion" },
-      { key: "theming_dark_mode" },
-      { key: "accessibility" },
-      { key: "internationalization" },
+      {
+        key: "cat_design_tokens",
+        children: [
+          { key: "principles" },
+          { key: "design_tokens" },
+          { key: "theming_dark_mode" },
+          { key: "colors" },
+          { key: "typography_foundation" },
+          { key: "iconography" },
+        ],
+      },
+      {
+        key: "cat_spatial_layout",
+        children: [
+          { key: "spacing_sizing" },
+          { key: "radius_borders" },
+          { key: "elevation_shadows" },
+          { key: "z_index" },
+          { key: "breakpoints_layout" },
+        ],
+      },
+      {
+        key: "cat_standards",
+        children: [
+          { key: "motion" },
+          { key: "accessibility" },
+          { key: "internationalization" },
+        ],
+      },
     ],
   },
   {
