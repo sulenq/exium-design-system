@@ -169,8 +169,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Button } from "@/design-system/components/button/button/button";',
     component: Button,
     defaultProps: {
-      children: "Click Me",
-      variant: "solid",
+      children: "Button",
       size: "md",
       colorPalette: "blue",
       loading: false,
@@ -183,14 +182,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         defaultValue: undefined,
         description: "Label atau elemen anak di dalam button.",
         controlKind: "text",
-      },
-      {
-        name: "variant",
-        type: '"solid" | "subtle" | "outline" | "ghost" | "surface"',
-        defaultValue: "solid",
-        description: "Gaya visual button.",
-        controlKind: "select",
-        options: ["solid", "subtle", "outline", "ghost", "surface"],
       },
       {
         name: "size",
@@ -223,6 +214,25 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    renderPlayground: (props) => {
+      const variants = ["solid", "subtle", "outline", "ghost"] as const;
+      return (
+        <HStack gap={3} wrap={"wrap"} justify={"center"}>
+          {variants.map((variant) => (
+            <Button
+              key={variant}
+              variant={variant}
+              size={(props.size as "xs" | "sm" | "md" | "lg" | "xl") || "md"}
+              colorPalette={String(props.colorPalette || "blue")}
+              loading={Boolean(props.loading)}
+              disabled={Boolean(props.disabled)}
+            >
+              {String(props.children || "Button")}
+            </Button>
+          ))}
+        </HStack>
+      );
+    },
   },
 
   button_group: {
