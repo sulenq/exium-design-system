@@ -1,12 +1,12 @@
 // src/design-system/constants/_meta.ts
 
 export const APP_CONFIG = {
-  title: "Volatil",
+  title: "Exium",
   description: "",
-  poweredBy: "Volatil",
-  link: "https://volatil.go.id",
-  defaultTitle: "Volatil",
-  titleTemplate: "%s | Volatil",
+  poweredBy: "Exium",
+  link: "https://exium.id",
+  defaultTitle: "Exium",
+  titleTemplate: "%s | Exium",
   version: "1.0.0",
   lastUpdated: "2025-09-13",
 } as const;
