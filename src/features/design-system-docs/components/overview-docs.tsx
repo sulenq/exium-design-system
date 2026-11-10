@@ -25,7 +25,7 @@ export const OverviewDocs = ({
     <VStack align={"stretch"} gap={6} w={"full"}>
       <VStack align={"start"} gap={2}>
         <HStack gap={2} align={"center"}>
-          <Heading size={"xl"} fontWeight={"bold"}>
+          <Heading fontSize={"3xl"} fontWeight={"bold"}>
             Exium Design System Documentation
           </Heading>
           <Badge>v1.0.0</Badge>

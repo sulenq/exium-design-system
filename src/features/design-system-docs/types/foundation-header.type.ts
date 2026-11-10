@@ -5,3 +5,4 @@ export type FoundationHeaderProps = {
   badge?: string;
   description: string;
 };
+

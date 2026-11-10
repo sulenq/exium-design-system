@@ -1,99 +1,100 @@
+// src/features/design-system-docs/constants/ds.navs.ts
+
 import type { NavItem } from "@/shared/types/nav.type";
 import {
-  ArrowsOutIcon as Maximize2,
-  ArrowSquareOutIcon as ExternalLink,
-  BellIcon as Bell,
-  CaretDownIcon as ChevronDown,
-  ChatIcon as MessageSquare,
-  CheckSquareIcon as CheckSquare,
-  ClockIcon as Clock,
-  CodeIcon as Code2,
-  CompassIcon as Compass,
-  CopyIcon as Copy,
-  CubeIcon as Box,
-  CursorClickIcon as MousePointerClick,
-  DownloadSimpleIcon as DownloadIcon,
-  FadersHorizontalIcon as Sliders,
-  FileTextIcon as FileText,
-  FlameIcon as Flame,
-  FunnelIcon as Filter,
-  HashIcon as Hash,
-  ImageIcon as ImageIcon,
-  InfoIcon as Info,
-  KeyIcon as KeyRound,
-  LayoutIcon as Layout,
-  ListIcon as List,
-  LockIcon as LockIcon,
-  MagnifyingGlassIcon as SearchIcon,
-  NavigationArrowIcon as Navigation,
-  QuestionIcon as HelpCircle,
-  RadioIcon as Radio,
-  SmileyIcon as Smile,
-  SparkleIcon as Sparkles,
-  SquaresFourIcon as LayoutGrid,
-  StackIcon as Layers,
-  TextAlignLeftIcon as SquareDashedText,
-  TextboxIcon as FormInput,
-  TextHIcon as HeadingIcon,
-  TextTIcon as Type,
-  ToggleLeftIcon as ToggleLeft,
-  ToggleRightIcon as ToggleRightIcon,
-  UserIcon as User,
-  WarningCircleIcon as AlertCircle,
-  WarningCircleIcon as CircleAlert,
-  WarningIcon as TriangleAlertIcon,
-  WrenchIcon as Wrench,
+  ArrowsOutIcon,
+  ArrowSquareOutIcon,
+  BellIcon,
+  CaretDownIcon,
+  ChatTextIcon,
+  CheckSquareIcon,
+  ClockIcon,
+  CodeIcon,
+  CompassIcon,
+  CopyIcon,
+  CubeIcon,
+  CursorClickIcon,
+  DownloadSimpleIcon,
+  FileTextIcon,
+  FlameIcon,
+  FunnelIcon,
+  HashIcon,
+  ImageIcon,
+  InfoIcon,
+  KeyIcon,
+  ListIcon,
+  LockIcon,
+  MagnifyingGlassIcon,
+  NavigationArrowIcon,
+  QuestionIcon,
+  RadioIcon,
+  SlidersHorizontalIcon,
+  SmileyIcon,
+  SparkleIcon,
+  SquaresFourIcon,
+  StackIcon,
+  SwatchesIcon,
+  TextAlignLeftIcon,
+  TextboxIcon,
+  TextHIcon,
+  TextTIcon,
+  ToggleLeftIcon,
+  ToggleRightIcon,
+  UserIcon,
+  WarningCircleIcon,
+  WarningIcon,
+  WrenchIcon,
 } from "@phosphor-icons/react";
 
 export const DS_NAVS_MAP = {
   overview: {
-    icon: Info,
+    icon: InfoIcon,
     title: "Overview & Specs",
   },
 
   // Categories (Parent Nodes)
   cat_branding: {
-    icon: Sparkles,
+    icon: SparkleIcon,
     title: "Branding",
   },
   cat_buttons: {
-    icon: MousePointerClick,
+    icon: CursorClickIcon,
     title: "Buttons & Actions",
   },
   cat_typography: {
-    icon: Type,
+    icon: TextTIcon,
     title: "Typography & Display",
   },
   cat_inputs: {
-    icon: FormInput,
+    icon: TextboxIcon,
     title: "Form Inputs",
   },
   cat_feedback: {
-    icon: Sliders,
+    icon: SlidersHorizontalIcon,
     title: "Feedback & Status",
   },
   cat_focus_alert: {
-    icon: AlertCircle,
+    icon: WarningCircleIcon,
     title: "Focus Alert",
   },
   cat_data_display: {
-    icon: LayoutGrid,
+    icon: SquaresFourIcon,
     title: "Data Display",
   },
   cat_disclosure: {
-    icon: Layers,
+    icon: StackIcon,
     title: "Disclosure & Navigation",
   },
   cat_overlay: {
-    icon: Maximize2,
+    icon: ArrowsOutIcon,
     title: "Overlays & Modals",
   },
   cat_layout: {
-    icon: Box,
+    icon: CubeIcon,
     title: "Layout & Structure",
   },
   cat_navigation: {
-    icon: Navigation,
+    icon: NavigationArrowIcon,
     title: "Navigation & Shell",
   },
   cat_media: {
@@ -101,63 +102,63 @@ export const DS_NAVS_MAP = {
     title: "Media & Icons",
   },
   cat_utilities: {
-    icon: Wrench,
+    icon: WrenchIcon,
     title: "Utilities & System",
   },
 
   // Components - Branding
   logo: {
-    icon: Sparkles,
+    icon: SparkleIcon,
     title: "Logo",
   },
   brand_watermark: {
-    icon: Flame,
+    icon: FlameIcon,
     title: "Brand Watermark",
   },
 
   // Components - Buttons & Actions
   button: {
-    icon: MousePointerClick,
+    icon: CursorClickIcon,
     title: "Button",
   },
   button_group: {
-    icon: Layers,
+    icon: StackIcon,
     title: "Button Group",
   },
 
   // Components - Typography & Display
   typography: {
-    icon: Type,
+    icon: TextTIcon,
     title: "P & Typography",
   },
   heading: {
-    icon: HeadingIcon,
+    icon: TextHIcon,
     title: "Heading",
   },
   badge: {
-    icon: FileText,
+    icon: FileTextIcon,
     title: "Badge",
   },
   count_badge: {
-    icon: Hash,
+    icon: HashIcon,
     title: "Count Badge",
   },
   kbd: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "Kbd",
   },
 
   // Components - Form Inputs
   input: {
-    icon: FormInput,
+    icon: TextboxIcon,
     title: "Input",
   },
   duration_input: {
-    icon: Clock,
+    icon: ClockIcon,
     title: "Duration Input",
   },
   number_input: {
-    icon: Hash,
+    icon: HashIcon,
     title: "Number Input",
   },
   password_input: {
@@ -165,15 +166,15 @@ export const DS_NAVS_MAP = {
     title: "Password Input",
   },
   select: {
-    icon: ChevronDown,
+    icon: CaretDownIcon,
     title: "Select Input",
   },
   focus_select: {
-    icon: Filter,
+    icon: FunnelIcon,
     title: "Focus Select Input",
   },
   checkbox: {
-    icon: CheckSquare,
+    icon: CheckSquareIcon,
     title: "Checkbox",
   },
   switch: {
@@ -181,101 +182,102 @@ export const DS_NAVS_MAP = {
     title: "Switch",
   },
   radio_input: {
-    icon: Radio,
+    icon: RadioIcon,
     title: "Radio Input",
   },
   radio_card: {
-    icon: LayoutGrid,
+    icon: SquaresFourIcon,
     title: "Radio Card",
   },
   segment_group: {
-    icon: ToggleLeft,
+    icon: ToggleLeftIcon,
     title: "Segment Group",
   },
   slider: {
-    icon: Sliders,
+    icon: SlidersHorizontalIcon,
     title: "Slider",
   },
   pin_input: {
-    icon: KeyRound,
+    icon: KeyIcon,
     title: "Pin Input",
   },
   search_input: {
-    icon: SearchIcon,
+    icon: MagnifyingGlassIcon,
     title: "Search Input",
   },
   textarea: {
-    icon: SquareDashedText,
+    icon: TextAlignLeftIcon,
     title: "Textarea",
   },
   field: {
-    icon: FileText,
+    icon: FileTextIcon,
     title: "Field & Fieldset",
   },
 
   // Components - Feedback & Status
   alert: {
-    icon: CircleAlert,
+    icon: WarningCircleIcon,
     title: "Alert",
   },
   focus_alert: {
-    icon: TriangleAlertIcon,
+    icon: WarningIcon,
     title: "Focus Alert Modal",
   },
+
   progress: {
-    icon: Sliders,
+    icon: SlidersHorizontalIcon,
     title: "Progress & Circle",
   },
   skeleton: {
-    icon: Box,
+    icon: CubeIcon,
     title: "Skeleton Loader",
   },
   toast: {
-    icon: Bell,
+    icon: BellIcon,
     title: "Toast Notification",
   },
   state_display: {
-    icon: HelpCircle,
+    icon: QuestionIcon,
     title: "State Feedback (No Data)",
   },
   emoji: {
-    icon: Smile,
+    icon: SmileyIcon,
     title: "Emoji",
   },
 
   // Components - Data Display
   data_table: {
-    icon: LayoutGrid,
+    icon: SquaresFourIcon,
     title: "DataView Table",
   },
   clipboard: {
-    icon: Copy,
+    icon: CopyIcon,
     title: "Clipboard",
   },
   countdown: {
-    icon: Clock,
+    icon: ClockIcon,
     title: "Countdown",
   },
 
   // Components - Disclosure
   accordion: {
-    icon: Layers,
+    icon: StackIcon,
     title: "Accordion",
   },
   tabs: {
-    icon: Layers,
+    icon: StackIcon,
     title: "Tabs",
   },
   steps: {
-    icon: List,
+    icon: ListIcon,
     title: "Steps",
   },
   collapsible: {
-    icon: ChevronDown,
+    icon: CaretDownIcon,
     title: "Collapsible",
   },
   breadcrumb: {
-    icon: Compass,
+    icon: CompassIcon,
     title: "Breadcrumb",
   },
   carousel: {
@@ -285,65 +287,65 @@ export const DS_NAVS_MAP = {
 
   // Components - Overlays & Modals
   dialog: {
-    icon: Maximize2,
+    icon: ArrowsOutIcon,
     title: "Dialog Modal",
   },
   drawer: {
-    icon: Layout,
+    icon: SquaresFourIcon,
     title: "Drawer",
   },
   popover: {
-    icon: MessageSquare,
+    icon: ChatTextIcon,
     title: "Popover",
   },
   tooltip: {
-    icon: Info,
+    icon: InfoIcon,
     title: "Tooltip",
   },
   menu: {
-    icon: List,
+    icon: ListIcon,
     title: "Menu",
   },
 
   // Components - Layout & Structure
   box: {
-    icon: Box,
+    icon: CubeIcon,
     title: "Box",
   },
   flex_box: {
-    icon: Layout,
+    icon: SquaresFourIcon,
     title: "HStack / VStack",
   },
   grid: {
-    icon: LayoutGrid,
+    icon: SquaresFourIcon,
     title: "Simple Grid",
   },
   card: {
-    icon: Box,
+    icon: CubeIcon,
     title: "Card",
   },
   container: {
-    icon: Box,
+    icon: CubeIcon,
     title: "Container",
   },
   separator: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "Separator",
   },
 
   // Components - Navigation & Shell
   sidebar: {
-    icon: Layout,
+    icon: SquaresFourIcon,
     title: "Sidebar",
   },
   link: {
-    icon: ExternalLink,
+    icon: ArrowSquareOutIcon,
     title: "Link",
   },
 
   // Components - Media & Icons
   avatar: {
-    icon: User,
+    icon: UserIcon,
     title: "Avatar",
   },
   image: {
@@ -351,59 +353,59 @@ export const DS_NAVS_MAP = {
     title: "Image",
   },
   app_icon: {
-    icon: Sparkles,
+    icon: SparkleIcon,
     title: "App Icon",
   },
 
   // Components - Utilities
   utilities: {
-    icon: DownloadIcon,
+    icon: DownloadSimpleIcon,
     title: "Download",
   },
 
   // Foundation
   principles: {
-    icon: Sparkles,
+    icon: SparkleIcon,
     title: "Principles",
   },
   design_tokens: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "Design Tokens",
   },
   colors: {
-    icon: Sliders,
+    icon: SwatchesIcon,
     title: "Colors",
   },
   typography_foundation: {
-    icon: Type,
+    icon: TextTIcon,
     title: "Typography",
   },
   spacing_sizing: {
-    icon: Layout,
+    icon: SquaresFourIcon,
     title: "Spacing & Sizing",
   },
   radius_borders: {
-    icon: Box,
+    icon: CubeIcon,
     title: "Radius & Borders",
   },
   elevation_shadows: {
-    icon: Layers,
+    icon: StackIcon,
     title: "Elevation & Shadows",
   },
   z_index: {
-    icon: Layers,
+    icon: StackIcon,
     title: "Z-index",
   },
   breakpoints_layout: {
-    icon: LayoutGrid,
+    icon: SquaresFourIcon,
     title: "Breakpoints & Layout",
   },
   iconography: {
-    icon: Sparkles,
+    icon: SparkleIcon,
     title: "Iconography",
   },
   motion: {
-    icon: Clock,
+    icon: ClockIcon,
     title: "Motion",
   },
   theming_dark_mode: {
@@ -411,71 +413,71 @@ export const DS_NAVS_MAP = {
     title: "Theming & Dark Mode",
   },
   accessibility: {
-    icon: HelpCircle,
+    icon: QuestionIcon,
     title: "Accessibility",
   },
   internationalization: {
-    icon: Compass,
+    icon: CompassIcon,
     title: "Internationalization",
   },
 
   // Hooks
   use_disclosure: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useDisclosure",
   },
   use_media_query: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useMediaQuery",
   },
   use_viewport_mode: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useViewportMode",
   },
   use_url_overlay: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useUrlOverlay",
   },
   use_master_detail_nav: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useMasterDetailNav",
   },
   use_controllable_state: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useControllableState",
   },
   use_debounce: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useDebounce",
   },
   use_copy_to_clipboard: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useCopyToClipboard",
   },
   use_is_mounted: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useIsMounted",
   },
   use_event_listener: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useEventListener",
   },
   use_hotkeys: {
-    icon: Code2,
+    icon: CodeIcon,
     title: "useHotkeys",
   },
 
   // Utils
   formatters: {
-    icon: Wrench,
+    icon: WrenchIcon,
     title: "Formatters",
   },
   a11y_helpers: {
-    icon: Wrench,
+    icon: WrenchIcon,
     title: "A11y Helpers",
   },
   common_zod_schemas: {
-    icon: Wrench,
+    icon: WrenchIcon,
     title: "Common Zod Schemas",
   },
 } as const satisfies Record<string, NavItem>;
