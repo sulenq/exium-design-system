@@ -1,6 +1,9 @@
 // src/features/design-system-docs/components/foundation/foundation-header.tsx
 
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";

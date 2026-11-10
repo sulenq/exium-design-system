@@ -1,47 +1,47 @@
 // src/design-system/constants/colors.ts
 
 export const COLOR_PALETTES_LIST = [
-  { palette: "neutral", label: "Neutral", primaryHex: "#717171" },
-  { palette: "grey", label: "Grey", primaryHex: "#717171" },
+  { palette: "neutral", label: "Neutral", primaryHex: "#808080" },
+  { palette: "grey", label: "Grey", primaryHex: "#707D8F" },
 
-  { palette: "cream", label: "Cream", primaryHex: "#D7BF8C" },
-  { palette: "caramel", label: "Caramel", primaryHex: "#C47B27" },
-  { palette: "brown", label: "Brown", primaryHex: "#795548" },
+  { palette: "cream", label: "Cream", primaryHex: "#BD9042" },
+  { palette: "caramel", label: "Caramel", primaryHex: "#D68529" },
+  { palette: "brown", label: "Brown", primaryHex: "#A86C57" },
 
-  { palette: "maroon", label: "Maroon", primaryHex: "#800000" },
-  { palette: "red", label: "Red", primaryHex: "#ef4444" },
-  { palette: "salmon", label: "Salmon", primaryHex: "#FF6242" },
+  { palette: "maroon", label: "Maroon", primaryHex: "#D22D48" },
+  { palette: "red", label: "Red", primaryHex: "#EB1414" },
+  { palette: "salmon", label: "Salmon", primaryHex: "#ED3612" },
 
-  { palette: "pastelOrange", label: "Pastel Orange", primaryHex: "#FF8E62" },
-  { palette: "orange", label: "Orange", primaryHex: "#FF8E62" },
-  { palette: "gold", label: "Gold", primaryHex: "#D1B000" },
-  { palette: "yellow", label: "Yellow", primaryHex: "#ffcc00" },
+  { palette: "pastelOrange", label: "Pastel Orange", primaryHex: "#F2520D" },
+  { palette: "orange", label: "Orange", primaryHex: "#F98006" },
+  { palette: "gold", label: "Gold", primaryHex: "#F2AD0D" },
+  { palette: "yellow", label: "Yellow", primaryHex: "#FAC905" },
 
-  { palette: "lime", label: "Lime", primaryHex: "#CDDC39" },
-  { palette: "olive", label: "Olive", primaryHex: "#879F30" },
-  { palette: "green", label: "Green", primaryHex: "#4CAF50" },
-  { palette: "jade", label: "Jade", primaryHex: "#00A86B" },
-  { palette: "teal", label: "Teal", primaryHex: "#009688" },
+  { palette: "lime", label: "Lime", primaryHex: "#C3DB24" },
+  { palette: "olive", label: "Olive", primaryHex: "#96C23D" },
+  { palette: "green", label: "Green", primaryHex: "#26D968" },
+  { palette: "jade", label: "Jade", primaryHex: "#1FE0A6" },
+  { palette: "teal", label: "Teal", primaryHex: "#19E6D1" },
 
-  { palette: "tealBlue", label: "Teal Blue", primaryHex: "#16B3AC" },
-  { palette: "cyan", label: "Cyan", primaryHex: "#06b6d4" },
-  { palette: "sky", label: "Sky", primaryHex: "#0EA5E9" },
-  { palette: "powderBlue", label: "Powder Blue", primaryHex: "#769cc2" },
-  { palette: "blue", label: "Blue", primaryHex: "#1860a9" },
-  { palette: "sapphire", label: "Sapphire", primaryHex: "#1939B7" },
-  { palette: "indigo", label: "Indigo", primaryHex: "#3F51B5" },
-  { palette: "discord", label: "Discord", primaryHex: "#5865F2" },
+  { palette: "tealBlue", label: "Teal Blue", primaryHex: "#1FDAE0" },
+  { palette: "cyan", label: "Cyan", primaryHex: "#0DCCF2" },
+  { palette: "sky", label: "Sky", primaryHex: "#0DA6F2" },
+  { palette: "powderBlue", label: "Powder Blue", primaryHex: "#427FBD" },
+  { palette: "blue", label: "Blue", primaryHex: "#1471EB" },
+  { palette: "sapphire", label: "Sapphire", primaryHex: "#1C44E3" },
+  { palette: "indigo", label: "Indigo", primaryHex: "#3947C6" },
+  { palette: "discord", label: "Discord", primaryHex: "#1224ED" },
 
   {
     palette: "powderLavender",
     label: "Powder Lavender",
-    primaryHex: "#8E8CD8",
+    primaryHex: "#483DC2",
   },
-  { palette: "lavender", label: "Lavender", primaryHex: "#7A42FF" },
-  { palette: "purple", label: "Purple", primaryHex: "#9C27B0" },
+  { palette: "lavender", label: "Lavender", primaryHex: "#530FF0" },
+  { palette: "purple", label: "Purple", primaryHex: "#9F20DF" },
 
-  { palette: "bubblegumPink", label: "Bubblegum Pink", primaryHex: "#FF4ABB" },
-  { palette: "pink", label: "Pink", primaryHex: "#ec4899" },
+  { palette: "bubblegumPink", label: "Bubblegum Pink", primaryHex: "#F20DAD" },
+  { palette: "pink", label: "Pink", primaryHex: "#E81780" },
 ];
 
 export const COLOR_PALETTE_OPTIONS = COLOR_PALETTES_LIST.map((c) => c.palette);
