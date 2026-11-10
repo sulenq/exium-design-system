@@ -222,7 +222,7 @@ export const chakraConfig = defineConfig({
         },
 
         mocha: {
-          50: { value: "hsl(22, 36%, 97%)" },
+          50: { value: "hsla(24, 51%, 68%, 1.00)" },
           100: { value: "hsl(22, 37%, 93%)" },
           200: { value: "hsl(22, 39%, 86%)" },
           300: { value: "hsl(22, 40%, 76%)" },
