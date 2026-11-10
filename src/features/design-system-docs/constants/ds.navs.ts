@@ -421,71 +421,75 @@ export const DS_NAVS_MAP = {
     title: "Internationalization",
   },
 
-  // Hooks
-  use_disclosure: {
+  // Hooks Categories
+  cat_state_disclosure_hooks: {
     icon: CodeIcon,
+    title: "State & Disclosure",
+  },
+  cat_viewport_dom_hooks: {
+    icon: SquaresFourIcon,
+    title: "Viewport & DOM",
+  },
+  cat_inputs_search_hooks: {
+    icon: TextboxIcon,
+    title: "Inputs & Navigation",
+  },
+
+  // Hooks - Items
+  use_disclosure: {
     title: "useDisclosure",
   },
   use_pop_disclosure: {
-    icon: CodeIcon,
     title: "usePopDisclosure",
   },
   use_color_mode: {
-    icon: CodeIcon,
     title: "useColorMode",
   },
   use_is_small_viewport: {
-    icon: CodeIcon,
     title: "useIsSmallViewport",
   },
   use_viewport: {
-    icon: CodeIcon,
     title: "useViewport",
   },
   use_debounced_value: {
-    icon: CodeIcon,
     title: "useDebouncedValue",
   },
   use_click_outside: {
-    icon: CodeIcon,
     title: "useClickOutside",
   },
   use_is_mounted: {
-    icon: CodeIcon,
     title: "useIsMounted",
   },
   use_focus_search: {
-    icon: CodeIcon,
     title: "useFocusSearch",
   },
   use_merged_refs: {
-    icon: CodeIcon,
     title: "useMergedRefs",
   },
   use_ref_dimension: {
-    icon: CodeIcon,
     title: "useRefDimension",
   },
   use_search_param: {
-    icon: CodeIcon,
     title: "useSearchParam",
   },
   use_search_input: {
-    icon: CodeIcon,
     title: "useSearchInput",
   },
 
-  // Utils
-  formatters: {
+  // Utils Categories
+  cat_core_utils: {
     icon: WrenchIcon,
+    title: "Formatting & System",
+  },
+
+  // Utils - Items
+  formatters: {
     title: "Formatters",
   },
   a11y_helpers: {
-    icon: WrenchIcon,
     title: "A11y Helpers",
   },
   common_zod_schemas: {
-    icon: WrenchIcon,
     title: "Common Zod Schemas",
   },
 } as const satisfies Record<string, NavItem>;

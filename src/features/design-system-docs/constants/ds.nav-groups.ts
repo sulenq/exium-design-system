@@ -153,27 +153,47 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
   {
     title: "Hooks",
     items: [
-      { key: "use_disclosure" },
-      { key: "use_pop_disclosure" },
-      { key: "use_color_mode" },
-      { key: "use_is_small_viewport" },
-      { key: "use_viewport" },
-      { key: "use_debounced_value" },
-      { key: "use_click_outside" },
-      { key: "use_is_mounted" },
-      { key: "use_focus_search" },
-      { key: "use_merged_refs" },
-      { key: "use_ref_dimension" },
-      { key: "use_search_param" },
-      { key: "use_search_input" },
+      {
+        key: "cat_state_disclosure_hooks",
+        children: [
+          { key: "use_disclosure" },
+          { key: "use_pop_disclosure" },
+          { key: "use_color_mode" },
+          { key: "use_is_mounted" },
+        ],
+      },
+      {
+        key: "cat_viewport_dom_hooks",
+        children: [
+          { key: "use_is_small_viewport" },
+          { key: "use_viewport" },
+          { key: "use_ref_dimension" },
+          { key: "use_click_outside" },
+          { key: "use_merged_refs" },
+        ],
+      },
+      {
+        key: "cat_inputs_search_hooks",
+        children: [
+          { key: "use_debounced_value" },
+          { key: "use_focus_search" },
+          { key: "use_search_param" },
+          { key: "use_search_input" },
+        ],
+      },
     ],
   },
   {
     title: "Utils",
     items: [
-      { key: "formatters" },
-      { key: "a11y_helpers" },
-      { key: "common_zod_schemas" },
+      {
+        key: "cat_core_utils",
+        children: [
+          { key: "formatters" },
+          { key: "a11y_helpers" },
+          { key: "common_zod_schemas" },
+        ],
+      },
     ],
   },
 ];
