@@ -36,6 +36,10 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
   const ComponentToRender = spec.component;
 
   const generateUsageCode = () => {
+    if (spec.generateCode) {
+      return `${spec.importPath}\n\n${spec.generateCode(propsState)}`;
+    }
+
     const propStrings = Object.entries(propsState)
       .filter(([key, val]) => {
         if (key === "children") return false;

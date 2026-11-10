@@ -36,6 +36,7 @@ export type ComponentDocSpec = {
   propsSpec: PropSpec[];
   defaultProps: Record<string, unknown>;
   a11y?: A11yGuidelineSpec;
+  generateCode?: (props: Record<string, unknown>) => string;
   renderPlayground?: (
     props: Record<string, unknown>,
     onPropChange?: (name: string, value: unknown) => void,

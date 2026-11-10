@@ -246,7 +246,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     defaultProps: {
       attached: true,
       size: "md",
-      variant: "outline",
     },
     propsSpec: [
       {
@@ -264,27 +263,22 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "select",
         options: ["xs", "sm", "md", "lg"],
       },
-      {
-        name: "variant",
-        type: '"solid" | "subtle" | "outline" | "ghost"',
-        defaultValue: "outline",
-        description: "Gaya visual grup.",
-        controlKind: "select",
-        options: ["solid", "subtle", "outline", "ghost"],
-      },
     ],
+    generateCode: (props) => {
+      const sizeProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const attachedProp =
+        props.attached === false ? ` attached={false}` : " attached={true}";
+      return `<ButtonGroup${attachedProp}${sizeProp}>\n  <Button variant={"outline"}>{"First"}</Button>\n  <Button variant={"outline"}>{"Second"}</Button>\n  <Button variant={"outline"}>{"Third"}</Button>\n</ButtonGroup>`;
+    },
     renderPlayground: (props) => (
       <ButtonGroup
         attached={Boolean(props.attached)}
         size={(props.size as "xs" | "sm" | "md" | "lg") || "md"}
-        variant={
-          (props.variant as "solid" | "subtle" | "outline" | "ghost") ||
-          "outline"
-        }
       >
-        <Button>First</Button>
-        <Button>Second</Button>
-        <Button>Third</Button>
+        <Button variant={"outline"}>First</Button>
+        <Button variant={"outline"}>Second</Button>
+        <Button variant={"outline"}>Third</Button>
       </ButtonGroup>
     ),
   },
