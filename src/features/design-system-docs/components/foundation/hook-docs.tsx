@@ -22,11 +22,16 @@ const { open, onOpen, onClose, onToggle } = useDisclosure();`,
     description: "Synchronize modal, dialog, drawer, and focus-alert states with URL search params (activeModalKey) for browser back-button dismissal and multi-depth navigation.",
     usage: `import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 
-const { modalKey, isOpen, open, close, toggle } = usePopDisclosure({
+// Basic usage
+const { modalKey, isOpen, open, close, toggle, activeKey, isKeyOpen } = usePopDisclosure({
   modalKey: "profile-modal",
   depth: 1,
-});`,
-    returns: "{ modalKey: string, isOpen: boolean, open: (subKey?: string) => void, close: () => void, toggle: () => void, depth?: number }",
+});
+
+// Nested modal navigation with dot separator
+open("edit"); // sets activeModalKey to "profile-modal.edit"
+const isEditOpen = isKeyOpen("profile-modal.edit");`,
+    returns: "{ modalKey: string, isOpen: boolean, activeKey?: string, open: (subKey?: string) => void, close: () => void, toggle: () => void, isKeyOpen: (key: string) => boolean, depth?: number }",
   },
   use_color_mode: {
     title: "useColorMode",

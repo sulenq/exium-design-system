@@ -1,6 +1,7 @@
-// src/design-system/components/overlay/types/modal.type.ts
+// src/design-system/components/overlay/modal/modal.type.ts
 
 import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
+import type { VScrollContainerProps } from "@/design-system/components/layout/scroll-container/scroll-container.type";
 import type { PProps } from "@/design-system/components/typography/p/p.type";
 import {
   Dialog as ChakraDialog,
@@ -58,8 +59,6 @@ export type ModalHeaderProps = (
   | ChakraDialog.HeaderProps
 ) & {};
 
-import type { VScrollContainerProps } from "@/design-system/components/layout/scroll-container/scroll-container.type";
-
 export type ModalBodyProps = VScrollContainerProps & {};
 
 export type ModalFooterProps = (
@@ -85,9 +84,19 @@ export type UsePopDisclosureOptions = {
   depth?: number;
 };
 
+export type UsePopDisclosureReturn = {
+  modalKey: string;
+  isOpen: boolean;
+  activeKey?: string;
+  open: (subKey?: string) => void;
+  toggle: () => void;
+  close: () => void;
+  isKeyOpen: (key: string) => boolean;
+  depth?: number;
+};
+
 // Deprecated alias for backwards compatibility
 export type UsePopModalOptions = UsePopDisclosureOptions;
+export type UsePopModalReturn = UsePopDisclosureReturn;
 
 export type FullscreenAnimator = (next: boolean) => void;
-
-

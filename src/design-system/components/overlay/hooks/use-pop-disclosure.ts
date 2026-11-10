@@ -1,12 +1,17 @@
 // src/design-system/components/overlay/hooks/use-pop-disclosure.ts
 
-import type { UsePopDisclosureOptions } from "@/design-system/components/overlay/modal/modal.type";
+import type {
+  UsePopDisclosureOptions,
+  UsePopDisclosureReturn,
+} from "@/design-system/components/overlay/modal/modal.type";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 export const MODAL_SEARCH_PARAM_KEY = "activeModalKey";
 
-export function usePopDisclosure(options: UsePopDisclosureOptions) {
+export function usePopDisclosure(
+  options: UsePopDisclosureOptions,
+): UsePopDisclosureReturn {
   // Options
   const { modalKey, depth } = options;
 
@@ -24,11 +29,13 @@ export function usePopDisclosure(options: UsePopDisclosureOptions) {
   // param changes, not on any other search param mutation
   const activeModalKey = useSearch({
     strict: false,
-    select: (s) => (s as Record<string, unknown>)?.activeModalKey as string | undefined,
+    select: (s) =>
+      (s as Record<string, unknown>)?.activeModalKey as string | undefined,
   });
 
   const navigate = useNavigate();
 
+  // Manage body scroll/pointer cleanup when modal is unmounted
   useEffect(() => {
     if (!activeModalKey) {
       document.body.style.overflow = "";
@@ -36,13 +43,25 @@ export function usePopDisclosure(options: UsePopDisclosureOptions) {
     }
   }, [activeModalKey]);
 
+  // Matches either exact key OR nested child key (separated by dot '.')
   const isOpen = useMemo(() => {
     if (typeof activeModalKey !== "string") return false;
 
     return (
-      activeModalKey === modalKey || activeModalKey.startsWith(modalKey + ".")
+      activeModalKey === modalKey || activeModalKey.startsWith(`${modalKey}.`)
     );
   }, [modalKey, activeModalKey]);
+
+  // Helper function to check if any specific key is currently active
+  const isKeyOpen = useCallback(
+    (checkKey: string): boolean => {
+      if (typeof activeModalKey !== "string") return false;
+      return (
+        activeModalKey === checkKey || activeModalKey.startsWith(`${checkKey}.`)
+      );
+    },
+    [activeModalKey],
+  );
 
   const open = useCallback(
     (subKey?: string) => {
@@ -61,7 +80,7 @@ export function usePopDisclosure(options: UsePopDisclosureOptions) {
   const close = useCallback(() => {
     const now = Date.now();
 
-    if (now - lastCloseAtRef.current < 300) {
+    if (now - lastCloseAtRef.current < 200) {
       return;
     }
 
@@ -77,27 +96,23 @@ export function usePopDisclosure(options: UsePopDisclosureOptions) {
 
   const toggle = useCallback(() => {
     if (isOpen) {
-      navigate({
-        to: ".",
-        resetScroll: false,
-        search: (old) => old,
-      });
+      close();
       return;
     }
     open();
-  }, [isOpen, navigate, open]);
+  }, [isOpen, close, open]);
 
   return {
     modalKey,
     isOpen,
+    activeKey: activeModalKey,
     open,
     toggle,
     close,
+    isKeyOpen,
     depth,
   };
 }
 
 // Deprecated alias for backwards compatibility
 export const usePopModal = usePopDisclosure;
-
-

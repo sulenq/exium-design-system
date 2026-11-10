@@ -77,27 +77,14 @@ const DrawerRoot = (props: DrawerRootProps) => {
     ...restProps
   } = props;
 
-  // Derived Values
-  const nestingLevel = modalKey.split(".").length;
-  const isNested = nestingLevel > 1;
-  const delayMs = nestingLevel;
-
   // States
-  const [delayedOpened, setDelayedOpened] = useState(() =>
-    isNested && opened ? false : opened,
-  );
+  const [delayedOpened, setDelayedOpened] = useState(opened);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   useFirstMountEffect(
     {
       onFirstMount: () => {
-        if (!isNested || !opened) return;
-
-        const timeoutId = setTimeout(() => {
-          setDelayedOpened(true);
-        }, delayMs);
-
-        return () => clearTimeout(timeoutId);
+        setDelayedOpened(opened);
       },
       onUpdate: () => {
         setDelayedOpened(opened);
@@ -108,7 +95,7 @@ const DrawerRoot = (props: DrawerRootProps) => {
         }
       },
     },
-    [opened, isNested, delayMs],
+    [opened],
   );
 
   // Resolved Values
