@@ -1,10 +1,11 @@
 // src/features/design-system-docs/components/foundation/util-docs.tsx
 
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { Badge } from "@/design-system/components/typography/badge/badge";
+import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
+import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
 import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
 
 const UTILS_SPECS_MAP: Record<
@@ -50,33 +51,42 @@ export const UtilDocs = ({ navKey }: { navKey: DsNavKey }) => {
   };
 
   return (
-    <VStack align={"stretch"} gap={6} w={"full"}>
-      <VStack align={"start"} gap={2}>
-        <HStack gap={2} align={"center"}>
-          <P fontSize={"3xl"} fontWeight={"bold"}>
-            {spec.title}
-          </P>
-          <Badge variant={"subtle"}>{"Util"}</Badge>
-        </HStack>
-        <P color={"fg.muted"}>{spec.description}</P>
-      </VStack>
+    <VStack gap={"lg"}>
+      <FoundationHeader
+        title={spec.title}
+        badge={"Util"}
+        description={spec.description}
+      />
 
-      <Box p={4} rounded={"lg"} border={"1px solid"} borderColor={"border.subtle"} bg={"bg.body"}>
-        <P fontWeight={"bold"} mb={2}>
-          {"Usage Example"}
-        </P>
-        <CodeBlock code={spec.usage} language={"tsx"} />
+      <Box
+        rounded={"lg"}
+        border={"1px solid"}
+        borderColor={"border.subtle"}
+        bg={"bg.body"}
+      >
+        <VStack gap={"sm"} p={"md"}>
+          <Heading size={"sm"} fontWeight={"bold"}>
+            {"Usage Example"}
+          </Heading>
+          <CodeBlock code={spec.usage} language={"tsx"} />
+        </VStack>
       </Box>
 
-      <Box p={4} rounded={"lg"} border={"1px solid"} borderColor={"border.subtle"} bg={"bg.body"}>
-        <P fontWeight={"bold"} mb={1}>
-          {"Architectural Note"}
-        </P>
-        <P fontSize={"sm"} color={"fg.muted"}>
-          {spec.note}
-        </P>
+      <Box
+        rounded={"lg"}
+        border={"1px solid"}
+        borderColor={"border.subtle"}
+        bg={"bg.body"}
+      >
+        <VStack gap={"xs"} p={"md"}>
+          <Heading size={"sm"} fontWeight={"bold"}>
+            {"Architectural Note"}
+          </Heading>
+          <P fontSize={"sm"} color={"fg.muted"}>
+            {spec.note}
+          </P>
+        </VStack>
       </Box>
     </VStack>
   );
 };
-

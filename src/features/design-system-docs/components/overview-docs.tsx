@@ -6,6 +6,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { Badge } from "@/design-system/components/typography/badge/badge";
+import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { Link } from "@tanstack/react-router";
 import {
@@ -23,13 +24,13 @@ export const OverviewDocs = ({
   return (
     <VStack align={"stretch"} gap={6} w={"full"}>
       <VStack align={"start"} gap={2}>
-        <HStack gap={2}>
-          <P fontSize={"3xl"} fontWeight={"bold"}>
+        <HStack gap={2} align={"center"}>
+          <Heading size={"xl"} fontWeight={"bold"}>
             Exium Design System Documentation
-          </P>
+          </Heading>
           <Badge>v1.0.0</Badge>
         </HStack>
-        <P color={"fg.muted"} fontSize={"md"}>
+        <P color={"fg.muted"}>
           Koleksi komponen UI modular, berskala tinggi, dan seragam berlandaskan
           Chakra UI v3 & Lucide/Tabler Icons.
         </P>
@@ -64,9 +65,9 @@ export const OverviewDocs = ({
         </Button>
       </HStack>
 
-      <P fontSize={"lg"} fontWeight={"bold"} mt={2}>
+      <Heading size={"md"} fontWeight={"bold"} mt={2}>
         Featured Categories
-      </P>
+      </Heading>
 
       <SimpleGrid columns={[1, 2, 3]} gap={4}>
         <Box

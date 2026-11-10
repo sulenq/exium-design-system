@@ -11,6 +11,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { Badge } from "@/design-system/components/typography/badge/badge";
+import { Heading } from "@/design-system/components/typography/heading/heading";
 import { Kbd } from "@/design-system/components/typography/kbd/kbd";
 import { P } from "@/design-system/components/typography/p/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
@@ -77,9 +78,9 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
       {/* Overview Header */}
       <VStack align={"start"} gap={2}>
         <HStack gap={2} align={"center"}>
-          <P fontSize={"3xl"} fontWeight={"bold"}>
+          <Heading size={"xl"} fontWeight={"bold"}>
             {spec.title}
-          </P>
+          </Heading>
           <Badge variant={"subtle"}>{spec.category}</Badge>
         </HStack>
         <P color={"fg.muted"}>{spec.description}</P>
