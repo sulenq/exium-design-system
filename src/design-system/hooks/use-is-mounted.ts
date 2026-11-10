@@ -1,10 +1,10 @@
-// src/design-system/hooks/use-mount-timeout.ts
+// src/design-system/hooks/use-is-mounted.ts
 
-import type { UseMountTimeoutOptions } from "@/design-system/hooks/types/use-mount-timeout.type";
+import type { UseIsMountedOptions } from "@/design-system/hooks/types/use-is-mounted.type";
 import { useEffect, useState } from "react";
 
-export const useMountTimeout = (
-  options?: number | UseMountTimeoutOptions,
+export const useIsMounted = (
+  options?: number | UseIsMountedOptions,
 ): boolean => {
   // Resolved Options
   const hasExplicitIsOpen =
@@ -56,3 +56,6 @@ export const useMountTimeout = (
 
   return isMounted;
 };
+
+// Deprecated alias for backwards compatibility
+export const useMountTimeout = useIsMounted;

@@ -7,7 +7,7 @@ import type {
   ContainerRootProps,
 } from "@/design-system/components/layout/container/container.type";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { useRefDimension } from "@/design-system/hooks/use-ref-dimenssion";
+import { useRefDimension } from "@/design-system/hooks/use-ref-dimension";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { createContext, useContext, useMemo, useRef } from "react";
 

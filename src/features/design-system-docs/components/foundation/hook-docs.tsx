@@ -6,106 +6,128 @@ import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
-import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
+import type { HookDocSpec, HookDocsProps } from "@/features/design-system-docs/types/hook-docs.type";
 
-const HOOKS_SPECS_MAP: Record<
-  string,
-  { title: string; description: string; usage: string; returns: string }
-> = {
+const HOOKS_SPECS_MAP: Record<string, HookDocSpec> = {
   use_disclosure: {
     title: "useDisclosure",
     description: "Manage boolean open/closed state with toggle, open, and close callbacks.",
-    usage: `import { useDisclosure } from "@chakra-ui/react";
+    usage: `import { useDisclosure } from "@/design-system/hooks";
 
 const { open, onOpen, onClose, onToggle } = useDisclosure();`,
     returns: "{ open: boolean, onOpen: () => void, onClose: () => void, onToggle: () => void }",
   },
-  use_media_query: {
-    title: "useMediaQuery",
-    description: "Listen for responsive CSS media query matches reactively.",
-    usage: `import { useMediaQuery } from "@chakra-ui/react";
+  use_pop_disclosure: {
+    title: "usePopDisclosure",
+    description: "Synchronize modal, dialog, drawer, and focus-alert states with URL search params (activeModalKey) for browser back-button dismissal and multi-depth navigation.",
+    usage: `import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 
-const [isLarge] = useMediaQuery("(min-width: 960px)");`,
-    returns: "boolean[]",
+const { modalKey, isOpen, open, close, toggle } = usePopDisclosure({
+  modalKey: "profile-modal",
+  depth: 1,
+});`,
+    returns: "{ modalKey: string, isOpen: boolean, open: (subKey?: string) => void, close: () => void, toggle: () => void, depth?: number }",
   },
-  use_viewport_mode: {
-    title: "useViewportMode",
-    description: "Check whether current viewport is small/mobile or desktop mode.",
+  use_color_mode: {
+    title: "useColorMode",
+    description: "Read and toggle between light and dark color modes reactively.",
+    usage: `import { useColorMode, useColorModeValue } from "@/design-system/hooks/use-color-mode";
+
+const { colorMode, toggleColorMode } = useColorMode();
+const bg = useColorModeValue("white", "black");`,
+    returns: "{ colorMode: 'light' | 'dark', setColorMode: (mode) => void, toggleColorMode: () => void }",
+  },
+  use_is_small_viewport: {
+    title: "useIsSmallViewport",
+    description: "Determine whether the current viewport is mobile/small viewport based on the design system layout breakpoint.",
     usage: `import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 
 const isSmall = useIsSmallViewport();`,
     returns: "boolean",
   },
-  use_url_overlay: {
-    title: "useUrlOverlay (usePopModal)",
-    description: "Synchronize modal, dialog, and drawer states with URL search params (activeModalKey) for browser back-button dismissal.",
-    usage: `import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+  use_viewport: {
+    title: "useViewport",
+    description: "Responsive viewport dimensions, orientation, and responsive breakpoint match checks.",
+    usage: `import { useViewport } from "@/design-system/hooks/use-viewport";
 
-const modal = usePopModal({ modalKey: "profile-modal" });
-// modal.isOpen, modal.open(), modal.close()`,
-    returns: "{ isOpen: boolean, open: () => void, close: () => void }",
+const { width, height, isMobile, isTablet, isDesktop } = useViewport();`,
+    returns: "ViewportState",
   },
-  use_master_detail_nav: {
-    title: "useMasterDetailNav",
-    description: "Coordinates master list and detail overlay panels across responsive viewports.",
-    usage: `import { useSearch, useNavigate } from "@tanstack/react-router";
-
-// Coordinates selection state via router search params`,
-    returns: "Navigation state & handlers",
-  },
-  use_controllable_state: {
-    title: "useControllableState",
-    description: "Manage state that can be either controlled or uncontrolled.",
-    usage: `import { useControllableState } from "@chakra-ui/react";
-
-const [val, setVal] = useControllableState({
-  value: props.value,
-  defaultValue: "default",
-  onChange: props.onChange,
-});`,
-    returns: "[T, (next: T) => void]",
-  },
-  use_debounce: {
-    title: "useDebounce (useDebouncedValue)",
-    description: "Delay updating a value until user input pauses.",
+  use_debounced_value: {
+    title: "useDebouncedValue",
+    description: "Delay updating a rapidly changing value (e.g. search keyword) until the specified delay in milliseconds has elapsed.",
     usage: `import { useDebouncedValue } from "@/design-system/hooks/use-debounced-value";
 
 const debouncedQuery = useDebouncedValue(searchQuery, 300);`,
-    returns: "Debounced value",
+    returns: "T (debounced value)",
   },
-  use_copy_to_clipboard: {
-    title: "useCopyToClipboard",
-    description: "Copy text to clipboard with ephemeral success status.",
-    usage: `// Uses navigator.clipboard.writeText with copied feedback timeout`,
-    returns: "{ copied: boolean, copy: (text: string) => Promise<void> }",
+  use_click_outside: {
+    title: "useClickOutside",
+    description: "Listen for clicks or taps outside a referenced container element and trigger a dismiss callback.",
+    usage: `import { useClickOutside } from "@/design-system/hooks/use-click-outside";
+
+const containerRef = useRef<HTMLDivElement>(null);
+useClickOutside(containerRef, () => {
+  setIsOpen(false);
+});`,
+    returns: "void",
   },
   use_is_mounted: {
     title: "useIsMounted",
-    description: "Check if component is currently mounted to prevent memory leaks on unmounted state updates.",
-    usage: `import { useMountTimeout } from "@/design-system/hooks/use-mount-timeout";
+    description: "Check if component is mounted or delayed-mount to safely avoid React memory leaks or coordinate entrance transitions.",
+    usage: `import { useIsMounted } from "@/design-system/hooks/use-is-mounted";
 
-const isMounted = useMountTimeout(0);`,
+const isMounted = useIsMounted({ mountDelay: 50 });`,
     returns: "boolean",
   },
-  use_event_listener: {
-    title: "useEventListener (useClickOutside)",
-    description: "Listen to document or window events with auto-cleanup on unmount.",
-    usage: `import { useClickOutside } from "@/design-system/hooks/use-click-outside";
-
-useClickOutside(ref, () => handleClose());`,
-    returns: "void",
-  },
-  use_hotkeys: {
-    title: "useHotkeys",
-    description: "Bind keyboard shortcuts (e.g. Mod+K for search) with accessibility focus trapping.",
+  use_focus_search: {
+    title: "useFocusSearch",
+    description: "Bind search hotkeys (e.g. '/' or 'Cmd+K') to automatically focus the search input field.",
     usage: `import { useFocusSearch } from "@/design-system/hooks/use-focus-search";
 
-useFocusSearch(inputRef); // Focuses input on '/' or hotkey`,
+const inputRef = useRef<HTMLInputElement>(null);
+useFocusSearch(inputRef);`,
     returns: "void",
+  },
+  use_merged_refs: {
+    title: "useMergedRefs",
+    description: "Combine multiple React refs (forwarded ref, local ref, measure ref) into a single unified ref callback.",
+    usage: `import { useMergedRefs } from "@/design-system/hooks/use-merge-refs";
+
+const mergedRef = useMergedRefs({ refs: [localRef, forwardedRef] });`,
+    returns: "RefCallback<T>",
+  },
+  use_ref_dimension: {
+    title: "useRefDimension",
+    description: "Real-time element bounding dimension tracking with ResizeObserver and requestAnimationFrame throttling.",
+    usage: `import { useRefDimension } from "@/design-system/hooks/use-ref-dimension";
+
+const { width, height } = useRefDimension(containerRef);`,
+    returns: "{ width: number, height: number }",
+  },
+  use_search_param: {
+    title: "useSearchParam",
+    description: "Direct URL search query parameter accessor and updater synchronized with the router state.",
+    usage: `import { useSearchParam } from "@/design-system/hooks/use-search-param";
+
+const [tab, setTab] = useSearchParam("tab");`,
+    returns: "[string | undefined, (value: string | undefined) => void]",
+  },
+  use_search_input: {
+    title: "useSearchInput",
+    description: "Complete search input controller hook combining query state, debouncing, and list filtering.",
+    usage: `import { useSearchInput } from "@/design-system/hooks/use-search-input";
+
+const { query, setQuery, filteredItems } = useSearchInput({
+  items,
+  filterFn: (item, q) => item.name.includes(q),
+});`,
+    returns: "SearchInputController<T>",
   },
 };
 
-export const HookDocs = ({ navKey }: { navKey: DsNavKey }) => {
+export const HookDocs = (props: HookDocsProps) => {
+  const { navKey } = props;
   const spec = HOOKS_SPECS_MAP[navKey] ?? {
     title: navKey,
     description: "Design system hook reference.",

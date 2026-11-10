@@ -426,45 +426,53 @@ export const DS_NAVS_MAP = {
     icon: CodeIcon,
     title: "useDisclosure",
   },
-  use_media_query: {
+  use_pop_disclosure: {
     icon: CodeIcon,
-    title: "useMediaQuery",
+    title: "usePopDisclosure",
   },
-  use_viewport_mode: {
+  use_color_mode: {
     icon: CodeIcon,
-    title: "useViewportMode",
+    title: "useColorMode",
   },
-  use_url_overlay: {
+  use_is_small_viewport: {
     icon: CodeIcon,
-    title: "useUrlOverlay",
+    title: "useIsSmallViewport",
   },
-  use_master_detail_nav: {
+  use_viewport: {
     icon: CodeIcon,
-    title: "useMasterDetailNav",
+    title: "useViewport",
   },
-  use_controllable_state: {
+  use_debounced_value: {
     icon: CodeIcon,
-    title: "useControllableState",
+    title: "useDebouncedValue",
   },
-  use_debounce: {
+  use_click_outside: {
     icon: CodeIcon,
-    title: "useDebounce",
-  },
-  use_copy_to_clipboard: {
-    icon: CodeIcon,
-    title: "useCopyToClipboard",
+    title: "useClickOutside",
   },
   use_is_mounted: {
     icon: CodeIcon,
     title: "useIsMounted",
   },
-  use_event_listener: {
+  use_focus_search: {
     icon: CodeIcon,
-    title: "useEventListener",
+    title: "useFocusSearch",
   },
-  use_hotkeys: {
+  use_merged_refs: {
     icon: CodeIcon,
-    title: "useHotkeys",
+    title: "useMergedRefs",
+  },
+  use_ref_dimension: {
+    icon: CodeIcon,
+    title: "useRefDimension",
+  },
+  use_search_param: {
+    icon: CodeIcon,
+    title: "useSearchParam",
+  },
+  use_search_input: {
+    icon: CodeIcon,
+    title: "useSearchInput",
   },
 
   // Utils

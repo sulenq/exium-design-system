@@ -80,10 +80,13 @@ export type ModalContextValue = {
   closeOnInteractOutside?: boolean;
 };
 
-export type UsePopModalOptions = {
+export type UsePopDisclosureOptions = {
   modalKey: string;
   depth?: number;
 };
+
+// Deprecated alias for backwards compatibility
+export type UsePopModalOptions = UsePopDisclosureOptions;
 
 export type FullscreenAnimator = (next: boolean) => void;
 
