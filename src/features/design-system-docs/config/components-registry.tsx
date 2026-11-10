@@ -4356,22 +4356,30 @@ const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
         <Drawer.Body>
           <VStack gap={"md"}>
             <P color={"fg.muted"}>
-              Panel geser samping untuk form, filter detail, atau konfigurasi sekunder aplikasi.
+              Panel geser samping untuk form, filter detail, atau konfigurasi
+              sekunder aplikasi.
             </P>
             <P color={"fg.muted"}>
-              Desain sistem Exium menyediakan drawer dengan adaptasi responsif, gesture swipe to dismiss pada mobile, dan integrasi riwayat URL.
+              Desain sistem Exium menyediakan drawer dengan adaptasi responsif,
+              gesture swipe to dismiss pada mobile, dan integrasi riwayat URL.
             </P>
             <P color={"fg.muted"}>
-              Konten panjang ini disiapkan untuk mendemonstrasikan scroll container di dalam body drawer, menjaga header dan footer tetap terpasang rapi (fixed).
+              Konten panjang ini disiapkan untuk mendemonstrasikan scroll
+              container di dalam body drawer, menjaga header dan footer tetap
+              terpasang rapi (fixed).
             </P>
             <P color={"fg.muted"}>
-              Baris tambahan 1: Navigasi URL otomatis menyinkronkan query param overlay sehingga tombol back pada peramban berfungsi secara native.
+              Baris tambahan 1: Navigasi URL otomatis menyinkronkan query param
+              overlay sehingga tombol back pada peramban berfungsi secara
+              native.
             </P>
             <P color={"fg.muted"}>
-              Baris tambahan 2: Ukuran default menggunakan token xs yang kompak, elegan, dan proporsional untuk formulir data entri.
+              Baris tambahan 2: Ukuran default menggunakan token xs yang kompak,
+              elegan, dan proporsional untuk formulir data entri.
             </P>
             <P color={"fg.muted"}>
-              Baris tambahan 3: Tombol aksi pada footer diatur full-width agar mudah dijangkau oleh pengguna baik di desktop maupun layar sentuh.
+              Baris tambahan 3: Tombol aksi pada footer diatur full-width agar
+              mudah dijangkau oleh pengguna baik di desktop maupun layar sentuh.
             </P>
           </VStack>
         </Drawer.Body>
@@ -4418,22 +4426,33 @@ const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
         <Dialog.Body>
           <VStack gap={"md"}>
             <P color={"fg.muted"}>
-              Ini adalah contoh dialog modal terpusat dari Exium Design System dengan animasi origin klik halus dan backdrop blur.
+              Ini adalah contoh dialog modal terpusat dari Exium Design System
+              dengan animasi origin klik halus dan backdrop blur.
             </P>
             <P color={"fg.muted"}>
-              Dengan opsi scrollBehavior={scrollBehavior}, jika konten di dalam body melebihi batas ketinggian viewport, scroll container internal akan aktif secara otomatis tanpa merusak tata letak dialog.
+              Dengan opsi scrollBehavior={scrollBehavior}, jika konten di dalam
+              body melebihi batas ketinggian viewport, scroll container internal
+              akan aktif secara otomatis tanpa merusak tata letak dialog.
             </P>
             <P color={"fg.muted"}>
-              Scroll test paragraf 1: Exium Design System mengutamakan konsistensi UX pada overlay dengan menyinkronkan state ke query param URL ?overlay=.
+              Scroll test paragraf 1: Exium Design System mengutamakan
+              konsistensi UX pada overlay dengan menyinkronkan state ke query
+              param URL ?overlay=.
             </P>
             <P color={"fg.muted"}>
-              Scroll test paragraf 2: Setiap modal anak yang bersarang (nested) mewarisi prefix induk dengan notasi titik (.childKey) agar tidak memicu unmount pada dialog induk.
+              Scroll test paragraf 2: Setiap modal anak yang bersarang (nested)
+              mewarisi prefix induk dengan notasi titik (.childKey) agar tidak
+              memicu unmount pada dialog induk.
             </P>
             <P color={"fg.muted"}>
-              Scroll test paragraf 3: Ukuran modal standar kini menggunakan default xs untuk tampilan yang ringkas, bersih, dan fokus pada konten esensial.
+              Scroll test paragraf 3: Ukuran modal standar kini menggunakan
+              default xs untuk tampilan yang ringkas, bersih, dan fokus pada
+              konten esensial.
             </P>
             <P color={"fg.muted"}>
-              Scroll test paragraf 4: Tombol aksi utama maupun pembatalan di area footer menggunakan lebar penuh (full width) untuk ergonomi klik maksimal.
+              Scroll test paragraf 4: Tombol aksi utama maupun pembatalan di
+              area footer menggunakan lebar penuh (full width) untuk ergonomi
+              klik maksimal.
             </P>
           </VStack>
         </Dialog.Body>
