@@ -1,6 +1,6 @@
 ---
 name: exium-overlay
-description: "Guidelines, state conventions, and modalKey hierarchical routing patterns for Modal, Dialog, Drawer, Popover, Menu, Tooltip, ActionBar, and FocusSelect overlays using usePopModal."
+description: "Guidelines, state conventions, and modalKey hierarchical routing patterns for Modal, Dialog, Drawer, Popover, Menu, Tooltip, ActionBar, and FocusSelect overlays using usePopDisclosure."
 ---
 
 # Exium Overlay Components (Modal / Dialog / Drawer / Popover / Menu / Tooltip / ActionBar)
@@ -9,7 +9,7 @@ Located in `@/design-system/components/overlay/ui/`.
 
 ## Core Architectural Principle
 
-All overlays in this application are controlled by URL search parameters via `usePopModal` using the search param `activeModalKey`.
+All overlays in this application are controlled by URL search parameters via `usePopDisclosure` (or `usePopModal` legacy alias) using the search param `overlay`.
 This guarantees URL synchronicity, browser back button support, and deep-linking capabilities.
 
 ---
@@ -29,11 +29,11 @@ This guarantees URL synchronicity, browser back button support, and deep-linking
 
 ## 2. The `modalKey` Hierarchical Pattern (Nested Overlays)
 
-`usePopModal` determines if a modal is open with the following logic:
+`usePopDisclosure` determines if a modal is open with the following logic:
 
 ```ts
 isOpen =
-  activeModalKey === modalKey || activeModalKey.startsWith(modalKey + ".");
+  overlay === modalKey || overlay.startsWith(modalKey + ".");
 ```
 
 ### 🔴 Critical Rule: Nested Overlays MUST Inherit & Extend Parent `modalKey`
@@ -42,8 +42,8 @@ When a Modal/Dialog/Drawer contains child overlays (e.g. `FocusSelect`, `Spatial
 
 1. **The child `modalKey` MUST be prefixed with the parent's unique `modalKey` using dot notation (`${parentModalKey}.${childKey}`)**.
 2. **NEVER use an isolated/standalone `modalKey` for a child inside a modal!**
-   - If child uses `'spatial-basis'`, when child opens, `activeModalKey` becomes `'spatial-basis'`.
-   - The parent modal checks `activeModalKey.startsWith('parentModal.')`, which evaluates to `false`.
+   - If child uses `'spatial-basis'`, when child opens, `overlay` becomes `'spatial-basis'`.
+   - The parent modal checks `overlay.startsWith('parentModal.')`, which evaluates to `false`.
    - Result: **The parent unmounts/closes immediately, destroying both parent and child overlays simultaneously.**
 
 ### ✅ Pattern Examples

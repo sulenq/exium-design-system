@@ -80,7 +80,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
       const targetUrl = billingCode
         ? `/mitra/billing/${billingCode}`
         : orderRef
-          ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+          ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
           : "/mitra/transaction-history";
 
       return {
@@ -98,7 +98,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
     case "ORDER_PAID": {
       const orderRef = meta.orderId ?? meta.billingCode;
       const targetUrl = orderRef
-        ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+        ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
         : "/mitra/transaction-history";
 
       return {
@@ -115,7 +115,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
     case "ORDER_PROVISIONING": {
       const orderRef = meta.orderId ?? meta.billingCode;
       const targetUrl = orderRef
-        ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+        ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
         : "/mitra/transaction-history";
 
       return {
@@ -131,7 +131,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
     case "ORDER_PENDING_REVIEW": {
       const orderRef = meta.orderId ?? meta.billingCode;
       const targetUrl = orderRef
-        ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+        ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
         : "/mitra/transaction-history";
 
       return {
@@ -148,7 +148,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
     case "ORDER_PENDING_TTE": {
       const orderRef = meta.orderId ?? meta.billingCode;
       const targetUrl = orderRef
-        ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+        ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
         : "/mitra/transaction-history";
 
       return {
@@ -166,7 +166,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
       const targetUrl = workspaceRef
         ? `/mitra/my-data/${workspaceRef}`
         : meta.orderId
-          ? `/mitra/transaction-history?activeModalKey=transaction-detail-${meta.orderId}`
+          ? `/mitra/transaction-history?overlay=transaction-detail-${meta.orderId}`
           : "/mitra/my-data";
 
       return {
@@ -184,7 +184,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
     case "ORDER_REJECTED": {
       const orderRef = meta.orderId ?? meta.billingCode;
       const targetUrl = orderRef
-        ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+        ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
         : "/mitra/transaction-history";
 
       return {
@@ -200,7 +200,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
     case "ORDER_CANCELLED": {
       const orderRef = meta.orderId ?? meta.billingCode;
       const targetUrl = orderRef
-        ? `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`
+        ? `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`
         : "/mitra/transaction-history";
 
       return {
@@ -367,14 +367,14 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
       // Handle legacy BE URLs
       if (fallbackUrl?.startsWith("/mitra/orders/")) {
         const orderId = fallbackUrl.replace("/mitra/orders/", "").split("?")[0];
-        fallbackUrl = `/mitra/transaction-history?activeModalKey=transaction-detail-${orderId}`;
+        fallbackUrl = `/mitra/transaction-history?overlay=transaction-detail-${orderId}`;
       } else if (
         (item.actionLabel === "Cek Status Verifikasi" ||
           item.title?.includes("Verifikasi Layer Spasial")) &&
         (meta.orderId || meta.billingCode)
       ) {
         const orderRef = meta.orderId ?? meta.billingCode;
-        fallbackUrl = `/mitra/transaction-history?activeModalKey=transaction-detail-${orderRef}`;
+        fallbackUrl = `/mitra/transaction-history?overlay=transaction-detail-${orderRef}`;
       }
 
       return {

@@ -66,12 +66,24 @@ import { ClampedP } from "@/design-system/components/typography/ui/p";
 - Submit lewat semantic form: `<VStack as={"form"} onSubmit={form.handleSubmit(onSubmit)}>` dengan `<Button type={"submit"}>`. Dengan begitu `Enter` otomatis men-submit tanpa `onKeyDown` manual.
 - PinInput, OTP, dan TOTP: saat semua digit terisi (`onValueComplete`), panggil `form.handleSubmit(onSubmit)()`. Jika verifikasi gagal, user cukup menekan `Enter` untuk submit ulang.
 
-### 1.6 Overlay
+### 1.6 Overlay & `modalKey` Hierarchy (Aturan Mutlak)
 
-- `Modal`, `Dialog`, `Drawer`, dan overlay lain mengontrol open/close lewat `usePopModal`. Hook ini menyinkronkan state dengan URL search params (`activeModalKey`) sehingga tombol back browser menutup overlay. Jangan kontrol hanya dengan `useState` lokal.
+- `Modal`, `Dialog`, `Drawer`, `FocusAlert`, dan overlay lain mengontrol open/close lewat `usePopDisclosure` (atau `usePopModal` sebagai alias legacy). Hook ini menyinkronkan state dengan URL search param **`overlay`** (`?overlay=...`) sehingga tombol back browser menutup overlay dan mendukung deep-linking. Dilarang mengontrol modal hanya dengan `useState` lokal.
+- **Uniqueness Modal Key**:
+  - Di layar atau tabel dengan baris banyak, setiap trigger modal WAJIB memiliki `modalKey` unik (misal: `modalKey={`layer-edit-${item.id}`}`). Dilarang memakai key statis tanpa ID karena akan memicu tabrakan state.
+- **Hierarki Nested Overlay (Aturan Titik `.`)**:
+  - Jika sebuah Modal/Dialog/Drawer memiliki child overlay di dalamnya (misal: `FocusSelect`, `ConfirmationTrigger`, dialog konfirmasi, atau step sub-modal), **child `modalKey` WAJIB meng-include / mewarisi parent `modalKey` dengan pemisah titik (`.`)**:
+    ```tsx
+    // Parent:
+    const { modalKey, open } = usePopDisclosure({ modalKey: "layer-edit" });
+
+    // Child di dalam parent modal:
+    <ConfirmationTrigger modalKey={`${modalKey}.confirm-delete`} />
+    ```
+  - **DILARANG KERAS** menggunakan `modalKey` anak yang berdiri sendiri (tanpa prefix parent) di dalam modal yang sedang terbuka. Jika anak tidak menyertakan parent (`modalKey="confirm-delete"`), URL `?overlay=` akan berganti ke key anak dan menyebabkan parent langsung unmount / tertutup seketika.
 
 ```tsx
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 ```
 
 ### 1.7 Data dan API

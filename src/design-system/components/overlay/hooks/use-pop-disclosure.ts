@@ -7,7 +7,11 @@ import type {
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-export const MODAL_SEARCH_PARAM_KEY = "activeModalKey";
+export const OVERLAY_SEARCH_PARAM_KEY = "overlay";
+/**
+ * @deprecated Use OVERLAY_SEARCH_PARAM_KEY ("overlay") instead.
+ */
+export const MODAL_SEARCH_PARAM_KEY = OVERLAY_SEARCH_PARAM_KEY;
 
 export function usePopDisclosure(
   options: UsePopDisclosureOptions,
@@ -25,42 +29,44 @@ export function usePopDisclosure(
     depthRef.current = depth;
   }, [modalKey, depth]);
 
-  // Select only activeModalKey — component re-renders only when this specific
-  // param changes, not on any other search param mutation
-  const activeModalKey = useSearch({
+  // Select only overlay (with activeModalKey fallback for legacy links)
+  const activeOverlayKey = useSearch({
     strict: false,
-    select: (s) =>
-      (s as Record<string, unknown>)?.activeModalKey as string | undefined,
+    select: (s) => {
+      const state = s as Record<string, unknown> | undefined;
+      return (state?.overlay ?? state?.activeModalKey) as string | undefined;
+    },
   });
 
   const navigate = useNavigate();
 
-  // Manage body scroll/pointer cleanup when modal is unmounted
+  // Manage body scroll/pointer cleanup when overlay is closed
   useEffect(() => {
-    if (!activeModalKey) {
+    if (!activeOverlayKey) {
       document.body.style.overflow = "";
       document.body.style.pointerEvents = "";
     }
-  }, [activeModalKey]);
+  }, [activeOverlayKey]);
 
   // Matches either exact key OR nested child key (separated by dot '.')
   const isOpen = useMemo(() => {
-    if (typeof activeModalKey !== "string") return false;
+    if (typeof activeOverlayKey !== "string") return false;
 
     return (
-      activeModalKey === modalKey || activeModalKey.startsWith(`${modalKey}.`)
+      activeOverlayKey === modalKey || activeOverlayKey.startsWith(`${modalKey}.`)
     );
-  }, [modalKey, activeModalKey]);
+  }, [modalKey, activeOverlayKey]);
 
   // Helper function to check if any specific key is currently active
   const isKeyOpen = useCallback(
     (checkKey: string): boolean => {
-      if (typeof activeModalKey !== "string") return false;
+      if (typeof activeOverlayKey !== "string") return false;
       return (
-        activeModalKey === checkKey || activeModalKey.startsWith(`${checkKey}.`)
+        activeOverlayKey === checkKey ||
+        activeOverlayKey.startsWith(`${checkKey}.`)
       );
     },
-    [activeModalKey],
+    [activeOverlayKey],
   );
 
   const open = useCallback(
@@ -71,7 +77,11 @@ export function usePopDisclosure(
       navigate({
         to: ".",
         resetScroll: false,
-        search: (old) => ({ ...old, activeModalKey: targetKey }),
+        search: (old) => {
+          const next = { ...old, [OVERLAY_SEARCH_PARAM_KEY]: targetKey };
+          delete (next as Record<string, unknown>).activeModalKey;
+          return next;
+        },
       });
     },
     [navigate],
@@ -105,7 +115,7 @@ export function usePopDisclosure(
   return {
     modalKey,
     isOpen,
-    activeKey: activeModalKey,
+    activeKey: activeOverlayKey,
     open,
     toggle,
     close,

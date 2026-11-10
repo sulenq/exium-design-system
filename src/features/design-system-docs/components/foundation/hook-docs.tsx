@@ -19,7 +19,7 @@ const { open, onOpen, onClose, onToggle } = useDisclosure();`,
   },
   use_pop_disclosure: {
     title: "usePopDisclosure",
-    description: "Synchronize modal, dialog, drawer, and focus-alert states with URL search params (activeModalKey) for browser back-button dismissal and multi-depth navigation.",
+    description: "Synchronize modal, dialog, drawer, and focus-alert states with URL search params (overlay) for browser back-button dismissal and multi-depth navigation.",
     usage: `import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 
 // Basic usage
@@ -28,8 +28,8 @@ const { modalKey, isOpen, open, close, toggle, activeKey, isKeyOpen } = usePopDi
   depth: 1,
 });
 
-// Nested modal navigation with dot separator
-open("edit"); // sets activeModalKey to "profile-modal.edit"
+// Nested overlay navigation with dot separator
+open("edit"); // sets ?overlay=profile-modal.edit
 const isEditOpen = isKeyOpen("profile-modal.edit");`,
     returns: "{ modalKey: string, isOpen: boolean, activeKey?: string, open: (subKey?: string) => void, close: () => void, toggle: () => void, isKeyOpen: (key: string) => boolean, depth?: number }",
   },

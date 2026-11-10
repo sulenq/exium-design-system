@@ -77,6 +77,7 @@ export const DesignSystemDocsPage = () => {
             nextSearch.component = key;
           }
           if (isSmallViewport && mobileDrawer.isOpen) {
+            delete nextSearch.overlay;
             delete nextSearch.activeModalKey;
           }
           return nextSearch;

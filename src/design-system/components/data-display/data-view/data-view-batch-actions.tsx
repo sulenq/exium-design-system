@@ -398,7 +398,7 @@ export const DataViewBatchActionBar = <
                                           old: Record<string, unknown>,
                                         ) => ({
                                           ...old,
-                                          activeModalKey: targetKey,
+                                          overlay: targetKey,
                                         }),
                                       });
                                     }

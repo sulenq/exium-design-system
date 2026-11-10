@@ -17,7 +17,8 @@ export function focusAlert(
 
   // 3. Open the modal programmatically by setting the URL search parameter
   const url = new URL(window.location.href);
-  url.searchParams.set("activeModalKey", modalKey);
+  url.searchParams.set("overlay", modalKey);
+  url.searchParams.delete("activeModalKey");
   window.history.pushState(null, "", url.pathname + url.search + url.hash);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }

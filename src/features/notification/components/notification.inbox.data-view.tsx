@@ -183,7 +183,7 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
       const [pathname, searchStr] = resolved.actionUrl.split("?");
 
       // If URL contains activeModalKey, push the base page first so closing the modal goes back to the page
-      if (searchStr && searchStr.includes("activeModalKey=")) {
+      if (searchStr && searchStr.includes("overlay=")) {
         await navigate({ href: pathname });
       }
 

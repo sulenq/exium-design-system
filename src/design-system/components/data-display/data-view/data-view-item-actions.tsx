@@ -648,7 +648,7 @@ export const DataListItemActionsTrigger = <
                                   resetScroll: false,
                                   search: (old: Record<string, unknown>) => ({
                                     ...old,
-                                    activeModalKey: targetKey,
+                                    overlay: targetKey,
                                   }),
                                 });
                               }

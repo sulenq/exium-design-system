@@ -9,7 +9,8 @@ export function ModalPurger() {
   const search = useSearch({
     strict: false,
   });
-  const modalKeylRef = useRef(search.activeModalKey);
+  const currentOverlayKey = search.overlay ?? search.activeModalKey;
+  const modalKeylRef = useRef(currentOverlayKey);
 
   useEffect(() => {
     const navigationEntries = performance.getEntriesByType("navigation");
@@ -35,10 +36,12 @@ export function ModalPurger() {
       navigate({
         to: ".",
         replace: false,
-        search: (prev) => ({
-          ...prev,
-          activeModalKey: undefined,
-        }),
+        search: (prev) => {
+          const next = { ...prev };
+          delete next.overlay;
+          delete next.activeModalKey;
+          return next;
+        },
       });
 
       requestAnimationFrame(() => {

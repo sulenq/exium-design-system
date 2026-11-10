@@ -5,6 +5,7 @@ import { settingsNavKeySchema } from "@/features/settings/schemas/setting-nav-ke
 import { z } from "zod";
 
 export const globalSearchParamsSchema = z.object({
-  activeModalKey: modalSchema.optional(),
+  overlay: modalSchema.optional(),
+  activeModalKey: modalSchema.optional(), // Backwards compatibility fallback
   activeSettingNavKey: settingsNavKeySchema.optional(),
 });

@@ -5,5 +5,6 @@
  */
 export {
   MODAL_SEARCH_PARAM_KEY,
+  OVERLAY_SEARCH_PARAM_KEY,
   usePopDisclosure as usePopModal,
 } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
