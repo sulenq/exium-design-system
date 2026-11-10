@@ -1820,7 +1820,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Clipboard } from "@/design-system/components/data-display/clipboard/clipboard";',
     component: Clipboard.Root,
     defaultProps: {
-      value: "https://volatil.atrbpn.go.id",
+      value: "https://exium.id",
       timeout: 2000,
     },
     propsSpec: [
@@ -1842,7 +1842,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     renderPlayground: (props) => (
       <Clipboard.Root
-        value={String(props.value || "https://volatil.atrbpn.go.id")}
+        value={String(props.value || "https://exium.id")}
         timeout={Number(props.timeout) || 2000}
       >
         <HStack gap={2}>

@@ -1,11 +1,11 @@
 version: "3.8"
 
 services:
-  volatil-frontend:
+  exium-design-system:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: volatil-frontend
+    container_name: exium-design-system
     ports:
       - "3002:3002"
     restart: always
