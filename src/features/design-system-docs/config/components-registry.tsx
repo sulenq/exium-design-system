@@ -661,7 +661,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
-    renderPlayground: (props) => (
+    renderPlayground: (props, onPropChange) => (
       <Box w={"260px"}>
         <NumberInput
           value={String(props.value ?? "10")}
@@ -670,6 +670,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           step={Number(props.step) || 1}
           size={(props.size as "xs" | "sm" | "md" | "lg") || "md"}
           disabled={Boolean(props.disabled)}
+          onValueChange={(details) => onPropChange?.("value", details.value)}
         />
       </Box>
     ),
