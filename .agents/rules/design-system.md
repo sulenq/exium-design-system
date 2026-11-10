@@ -50,7 +50,7 @@ if (isLoading) return <Skeleton />;
 - Teks biasa memakai `fontSize` default (`md`), jadi jangan menulis `fontSize={"md"}`. `sm` hanya bila perlu untuk hierarki tertentu, `xs` sangat jarang.
 - Sel atau kolom yang berisi `Badge` memakai alignment default (`"start"`), jangan di-center.
 - Semua input (`Input`, `NumberInput`, `SearchInput`, `Select`, `Field`, dan sejenisnya) selalu `w={"full"}` di dalam container atau form.
-- **Spacing (`gap`, `p`, `px`, `py`, `m`, dll)**: Wajib angka (*Numeric Scale* 4px: `1`, `2`, `3`, `4`, `6`, `8`, dst). Dilarang string semantic seperti `"xs"`, `"sm"`, `"md"`. Ukuran string t-shirt hanya sah untuk prop `size` komponen.
+- **Spacing (`gap`, `p`, `px`, `py`, `m`, dll)**: Wajib angka (_Numeric Scale_ 4px: `1`, `2`, `3`, `4`, `6`, `8`, dst). Dilarang string semantic seperti `"xs"`, `"sm"`, `"md"`. Ukuran string t-shirt hanya sah untuk prop `size` komponen.
 
 ### 1.4 Teks dan placeholder
 
@@ -74,13 +74,15 @@ import { ClampedP } from "@/design-system/components/typography/ui/p";
   - Di layar atau tabel dengan baris banyak, setiap trigger modal WAJIB memiliki `modalKey` unik (misal: `modalKey={`layer-edit-${item.id}`}`). Dilarang memakai key statis tanpa ID karena akan memicu tabrakan state.
 - **Hierarki Nested Overlay (Aturan Titik `.`)**:
   - Jika sebuah Modal/Dialog/Drawer memiliki child overlay di dalamnya (misal: `FocusSelect`, `ConfirmationTrigger`, dialog konfirmasi, atau step sub-modal), **child `modalKey` WAJIB meng-include / mewarisi parent `modalKey` dengan pemisah titik (`.`)**:
+
     ```tsx
     // Parent:
     const { modalKey, open } = usePopDisclosure({ modalKey: "layer-edit" });
 
     // Child di dalam parent modal:
-    <ConfirmationTrigger modalKey={`${modalKey}.confirm-delete`} />
+    <ConfirmationTrigger modalKey={`${modalKey}.confirm-delete`} />;
     ```
+
   - **DILARANG KERAS** menggunakan `modalKey` anak yang berdiri sendiri (tanpa prefix parent) di dalam modal yang sedang terbuka. Jika anak tidak menyertakan parent (`modalKey="confirm-delete"`), URL `?overlay=` akan berganti ke key anak dan menyebabkan parent langsung unmount / tertutup seketika.
 
 ```tsx
@@ -102,6 +104,7 @@ import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-p
 ## 2. Design Tokens dan Theme
 
 Sistem spacing di Exium menggunakan **Numeric Scale (Harmonic 4px Scale)** bawaan Chakra UI:
+
 - `1` = 4px, `2` = 8px, `3` = 12px, `4` = 16px, `5` = 20px, `6` = 24px, `8` = 32px, `10` = 40px, `12` = 48px, `16` = 64px.
 - **DILARANG** menggunakan semantic t-shirt string (`"xs"`, `"sm"`, `"md"`, `"lg"`) untuk spacing (`p`, `px`, `py`, `m`, `gap`). Selalu gunakan numeric scale: `p={4}`, `gap={2}`.
 - T-shirt size (`size={"xs"}`, `size={"sm"}`) HANYA digunakan untuk prop `size` komponen (seperti `Button`, `Dialog`, `Drawer`, `Badge`, `Input`).
@@ -146,7 +149,10 @@ import { Badge } from "@/design-system/components/typography/ui/badge";
 `Box`, `HStack`, `VStack`, `Flex`, `Separator`, `Grid`, `Card`.
 
 ```tsx
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Separator } from "@/design-system/components/layout/separator/separator";
 
