@@ -10,8 +10,7 @@
   "scripts": {
     "dev": "vite --port 5173",
     "preview": "vite preview",
-    "tokens:generate": "node --experimental-strip-types src/scripts/generate-tokens.ts",
-    "build": "pnpm run tokens:generate && pnpm run i18n:compile && vite build",
+    "build": "pnpm run i18n:compile && vite build",
     "build:full": "pnpm run lint && pnpm run typecheck && pnpm run build",
     "build:ci": "pnpm run typecheck && pnpm run build",
     "routes": "tsr generate",
@@ -25,7 +24,7 @@
     "sitemap:generate": "node src/scripts/generate-sitemap.js",
     "filepath:generate": "node src/scripts/generate-file-path-header.cjs",
     "chakra:typegen": "chakra typegen ./src/design-system/chakra/chakra-system.ts",
-    "i18n:compile": "paraglide-js compile --pro1ject ./project.inlang"
+    "i18n:compile": "paraglide-js compile --project ./project.inlang"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^4.0.0",
