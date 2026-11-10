@@ -72,7 +72,7 @@ const DrawerRoot = (props: DrawerRootProps) => {
     close,
     swipeToDismiss = true,
     placement = "bottom",
-    size = "sm",
+    size = "xs",
     closeOnInteractOutside = true,
     ...restProps
   } = props;

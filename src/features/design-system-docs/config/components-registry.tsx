@@ -2394,7 +2394,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Dialog } from "@/design-system/components/overlay/dialog/dialog";',
     component: Dialog.Root,
     defaultProps: {
-      size: "md",
+      size: "xs",
       placement: "center",
       scrollBehavior: "inside",
     },
@@ -2408,16 +2408,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "text",
       },
       {
-        name: "opened",
-        type: "boolean",
-        defaultValue: false,
-        description: "Status keterbukaan modal dialog (wajib).",
-        controlKind: "boolean",
-      },
-      {
         name: "size",
         type: '"xs" | "sm" | "md" | "lg" | "xl" | "full"',
-        defaultValue: "md",
+        defaultValue: "xs",
         description: "Ukuran lebar modal dialog.",
         controlKind: "select",
         options: ["xs", "sm", "md", "lg", "xl", "full"],
@@ -2453,7 +2446,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     component: Drawer.Root,
     defaultProps: {
       placement: "end",
-      size: "md",
+      size: "xs",
     },
     propsSpec: [
       {
@@ -2463,13 +2456,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         required: true,
         description: "Kunci identitas unik drawer samping (wajib).",
         controlKind: "text",
-      },
-      {
-        name: "opened",
-        type: "boolean",
-        defaultValue: false,
-        description: "Status visibilitas terbuka drawer (wajib).",
-        controlKind: "boolean",
       },
       {
         name: "placement",
@@ -2482,7 +2468,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "size",
         type: '"xs" | "sm" | "md" | "lg" | "xl" | "full"',
-        defaultValue: "md",
+        defaultValue: "xs",
         description: "Dimensi ketebalan drawer.",
         controlKind: "select",
         options: ["xs", "sm", "md", "lg", "xl", "full"],
@@ -4344,7 +4330,7 @@ const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
   const placement =
     (props?.placement as "start" | "end" | "top" | "bottom") || "end";
   const size =
-    (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "md";
+    (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs";
 
   const { modalKey, isOpen, open, close } = usePopModal({
     modalKey: "docs-drawer",
@@ -4368,13 +4354,30 @@ const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
           </P>
         </Drawer.Header>
         <Drawer.Body>
-          <P color={"fg.muted"}>
-            Panel geser samping untuk form atau info tambahan.
-          </P>
+          <VStack gap={"md"}>
+            <P color={"fg.muted"}>
+              Panel geser samping untuk form, filter detail, atau konfigurasi sekunder aplikasi.
+            </P>
+            <P color={"fg.muted"}>
+              Desain sistem Exium menyediakan drawer dengan adaptasi responsif, gesture swipe to dismiss pada mobile, dan integrasi riwayat URL.
+            </P>
+            <P color={"fg.muted"}>
+              Konten panjang ini disiapkan untuk mendemonstrasikan scroll container di dalam body drawer, menjaga header dan footer tetap terpasang rapi (fixed).
+            </P>
+            <P color={"fg.muted"}>
+              Baris tambahan 1: Navigasi URL otomatis menyinkronkan query param overlay sehingga tombol back pada peramban berfungsi secara native.
+            </P>
+            <P color={"fg.muted"}>
+              Baris tambahan 2: Ukuran default menggunakan token xs yang kompak, elegan, dan proporsional untuk formulir data entri.
+            </P>
+            <P color={"fg.muted"}>
+              Baris tambahan 3: Tombol aksi pada footer diatur full-width agar mudah dijangkau oleh pengguna baik di desktop maupun layar sentuh.
+            </P>
+          </VStack>
         </Drawer.Body>
         <Drawer.Footer>
-          <Button variant={"ghost"} onClick={close}>
-            Tutup
+          <Button w={"full"} variant={"outline"} onClick={close}>
+            Tutup Drawer
           </Button>
         </Drawer.Footer>
       </Drawer.Content>
@@ -4384,7 +4387,7 @@ const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
 
 const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
   const size =
-    (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "md";
+    (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs";
   const placement = (props?.placement as "center" | "top") || "center";
   const scrollBehavior =
     (props?.scrollBehavior as "inside" | "outside") || "inside";
@@ -4413,13 +4416,30 @@ const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
           </P>
         </Dialog.Header>
         <Dialog.Body>
-          <P textAlign={"center"} color={"fg.muted"}>
-            Ini adalah contoh dialog modal terpusat dari Exium Design System.
-          </P>
+          <VStack gap={"md"}>
+            <P color={"fg.muted"}>
+              Ini adalah contoh dialog modal terpusat dari Exium Design System dengan animasi origin klik halus dan backdrop blur.
+            </P>
+            <P color={"fg.muted"}>
+              Dengan opsi scrollBehavior={scrollBehavior}, jika konten di dalam body melebihi batas ketinggian viewport, scroll container internal akan aktif secara otomatis tanpa merusak tata letak dialog.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 1: Exium Design System mengutamakan konsistensi UX pada overlay dengan menyinkronkan state ke query param URL ?overlay=.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 2: Setiap modal anak yang bersarang (nested) mewarisi prefix induk dengan notasi titik (.childKey) agar tidak memicu unmount pada dialog induk.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 3: Ukuran modal standar kini menggunakan default xs untuk tampilan yang ringkas, bersih, dan fokus pada konten esensial.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 4: Tombol aksi utama maupun pembatalan di area footer menggunakan lebar penuh (full width) untuk ergonomi klik maksimal.
+            </P>
+          </VStack>
         </Dialog.Body>
         <Dialog.Footer>
-          <Button variant={"ghost"} onClick={close}>
-            Tutup
+          <Button w={"full"} variant={"outline"} onClick={close}>
+            Tutup Dialog
           </Button>
         </Dialog.Footer>
       </Dialog.Content>
