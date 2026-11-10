@@ -1377,7 +1377,7 @@ export const chakraConfig = defineConfig({
         gold: {
           contrast: {
             value: {
-              base: "{colors.gold.50}",
+              base: "{colors.gold.900}",
               _dark: "{colors.gold.900}",
             },
           },
