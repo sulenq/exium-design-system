@@ -2400,14 +2400,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     },
     propsSpec: [
       {
-        name: "modalKey",
-        type: "string",
-        defaultValue: undefined,
-        required: true,
-        description: "Kunci identitas unik modal popup (wajib).",
-        controlKind: "text",
-      },
-      {
         name: "size",
         type: '"xs" | "sm" | "md" | "lg" | "xl" | "full"',
         defaultValue: "xs",
@@ -2449,14 +2441,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       size: "xs",
     },
     propsSpec: [
-      {
-        name: "modalKey",
-        type: "string",
-        defaultValue: undefined,
-        required: true,
-        description: "Kunci identitas unik drawer samping (wajib).",
-        controlKind: "text",
-      },
       {
         name: "placement",
         type: '"start" | "end" | "top" | "bottom"',
