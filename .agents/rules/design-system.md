@@ -50,6 +50,7 @@ if (isLoading) return <Skeleton />;
 - Teks biasa memakai `fontSize` default (`md`), jadi jangan menulis `fontSize={"md"}`. `sm` hanya bila perlu untuk hierarki tertentu, `xs` sangat jarang.
 - Sel atau kolom yang berisi `Badge` memakai alignment default (`"start"`), jangan di-center.
 - Semua input (`Input`, `NumberInput`, `SearchInput`, `Select`, `Field`, dan sejenisnya) selalu `w={"full"}` di dalam container atau form.
+- **Spacing (`gap`, `p`, `px`, `py`, `m`, dll)**: Wajib angka (*Numeric Scale* 4px: `1`, `2`, `3`, `4`, `6`, `8`, dst). Dilarang string semantic seperti `"xs"`, `"sm"`, `"md"`. Ukuran string t-shirt hanya sah untuk prop `size` komponen.
 
 ### 1.4 Teks dan placeholder
 
@@ -100,18 +101,18 @@ import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-p
 
 ## 2. Design Tokens dan Theme
 
-Konstanta dari `@/design-system/constants/styles`:
-
-- `PADDING_MD`, `PADDING_SM`
-- `SPACING_MD`, `SPACING_SM`
+Sistem spacing di Exium menggunakan **Numeric Scale (Harmonic 4px Scale)** bawaan Chakra UI:
+- `1` = 4px, `2` = 8px, `3` = 12px, `4` = 16px, `5` = 20px, `6` = 24px, `8` = 32px, `10` = 40px, `12` = 48px, `16` = 64px.
+- **DILARANG** menggunakan semantic t-shirt string (`"xs"`, `"sm"`, `"md"`, `"lg"`) untuk spacing (`p`, `px`, `py`, `m`, `gap`). Selalu gunakan numeric scale: `p={4}`, `gap={2}`.
+- T-shirt size (`size={"xs"}`, `size={"sm"}`) HANYA digunakan untuk prop `size` komponen (seperti `Button`, `Dialog`, `Drawer`, `Badge`, `Input`).
 
 Theme store:
 
 ```tsx
-import { useThemeStore } from "@/design-system/stores/use-theme-store";
+import { useThemeStore } from "@/design-system/stores/theme-store";
 
 const { theme } = useThemeStore();
-// Properti: theme.radii.container, theme.colors, dll.
+// Properti: theme.radii.container, theme.colorPalette, dll.
 ```
 
 ---
@@ -145,15 +146,15 @@ import { Badge } from "@/design-system/components/typography/ui/badge";
 `Box`, `HStack`, `VStack`, `Flex`, `Separator`, `Grid`, `Card`.
 
 ```tsx
-import { HStack, VStack } from "@/design-system/components/layout/ui/flex-box";
-import { Box } from "@/design-system/components/layout/ui/box";
-import { Separator } from "@/design-system/components/layout/ui/separator";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Box } from "@/design-system/components/layout/box/box";
+import { Separator } from "@/design-system/components/layout/separator/separator";
 
-<VStack flex={1} gap={SPACING_MD}>
+<VStack flex={1} gap={4}>
   <HStack justify={"space-between"}>
     <Box>{"Kiri"}</Box>
   </HStack>
-  <Separator borderColor={"bg.canvas"} />
+  <Separator borderColor={"border.subtle"} />
 </VStack>;
 ```
 

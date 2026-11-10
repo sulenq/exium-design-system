@@ -22,13 +22,13 @@ const SPACES = [
 
 export const SpacingFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Spacing & Sizing"}
-        description={"Consistent 4px spacing scale providing rhythmic vertical and horizontal layout flow."}
+        description={"Consistent 4px harmonic scale (1=4px, 2=8px, 4=16px) providing rhythmic vertical and horizontal layout flow."}
       />
 
-      <VStack gap={"xs"}>
+      <VStack gap={2}>
         {SPACES.map((sp) => (
           <Box
             key={sp.token}
@@ -40,10 +40,10 @@ export const SpacingFoundationPage = () => {
             <HStack
               justify={"space-between"}
               align={"center"}
-              p={"xs"}
-              px={"sm"}
+              p={2}
+              px={3}
             >
-              <HStack gap={"md"} align={"center"}>
+              <HStack gap={4} align={"center"}>
                 <Badge variant={"subtle"} minW={"48px"}>
                   {sp.token}
                 </Badge>
