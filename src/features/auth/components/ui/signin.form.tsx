@@ -9,6 +9,7 @@ import { PasswordInput } from "@/design-system/components/input/password-input/p
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Separator } from "@/design-system/components/layout/separator/separator";
+import { NavLink } from "@/design-system/components/navigation/link/link";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { ResetPasswordTrigger } from "@/features/auth/components/ui/reset-password-modal";
@@ -22,6 +23,7 @@ import {
   zodResolver,
 } from "@/features/auth/schemas/signin.schema";
 import type { SigninFormValues } from "@/features/auth/types/signin.type";
+import { t } from "@/shared/libs/i18n";
 import { isDevModeEnabled } from "@/shared/utils/env/env.utils";
 import {
   ArrowRightIcon,
@@ -180,6 +182,18 @@ export const SigninForm = (props: StackProps) => {
           <AppIcon icon={ArrowRightIcon} />
         </Button>
       </VStack>
+
+      <HStack justify={"center"} gap={1} w={"full"}>
+        <P color={"fg.muted"} fontSize={"sm"}>
+          {t["auth.signin.signup_prompt"]()}
+        </P>
+
+        <NavLink to={"/auth/signup"}>
+          <P color={"blue.fg"} fontSize={"sm"} fontWeight={"medium"}>
+            {t["auth.signin.register_link"]()}
+          </P>
+        </NavLink>
+      </HStack>
 
       {isDevMode && (
         <HStack w={"full"} align={"center"} justify={"center"} gap={2} pt={2}>

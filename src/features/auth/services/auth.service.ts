@@ -8,6 +8,7 @@ import {
   postLoginApi,
   postLoginTotpVerifyApi,
   postLogoutApi,
+  postRegisterApi,
   postResetPasswordConfirmApi,
   postResetPasswordRequestApi,
   postResetPasswordVerifyOtpApi,
@@ -23,6 +24,7 @@ import type {
   TotpSetupData,
   TotpVerifyPayload,
 } from "@/features/auth/types/auth.service.type";
+import type { SignupData, SignupPayload } from "@/features/auth/types/signup.type";
 import type {
   ResetPasswordConfirmData,
   ResetPasswordConfirmPayload,
@@ -427,6 +429,30 @@ export const authService = {
 
   getCurrentUser: (): User | null => {
     return getUserSession();
+  },
+
+  register: async (
+    payload: SignupPayload,
+    signal?: AbortSignal,
+  ): Promise<SignupData> => {
+    try {
+      const response = await postRegisterApi(payload, signal);
+      return response.data;
+    } catch (error) {
+      if (error instanceof ApiError) {
+        throw error;
+      }
+
+      if (!isDummyDataEnabled()) {
+        throw error;
+      }
+
+      // Mock fallback for development environment when backend is offline and dummy data is enabled
+      return {
+        message: "Akun berhasil dibuat.",
+        email: payload.email,
+      };
+    }
   },
 
   getToken: (): string | null => {
