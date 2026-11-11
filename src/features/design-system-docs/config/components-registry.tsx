@@ -38,6 +38,7 @@ import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
 import { DurationInput } from "@/design-system/components/input/duration-input/duration-input";
 import { Field } from "@/design-system/components/input/field/field";
+import { FileInput } from "@/design-system/components/input/file-input/file-input";
 import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
 import { Input } from "@/design-system/components/input/input/input";
 import { NumberInput } from "@/design-system/components/input/number-input/number-input";
@@ -1304,6 +1305,56 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ),
   },
 
+  file_input: {
+    key: "file_input",
+    title: "FileInput",
+    category: "Form Inputs",
+    description:
+      "Komponen unggah berkas fleksibel dengan mode dropzone area seret-lepas atau tombol trigger.",
+    importPath:
+      'import { FileInput } from "@/design-system/components/input/file-input/file-input";',
+    component: FileInput,
+    defaultProps: {
+      variant: "dropzone",
+      maxFiles: 3,
+      disabled: false,
+    },
+    propsSpec: [
+      {
+        name: "variant",
+        type: '"dropzone" | "button" | "auto"',
+        defaultValue: "dropzone",
+        description: "Bentuk antarmuka input berkas (area seret-lepas atau tombol aksi).",
+        controlKind: "select",
+        options: ["dropzone", "button", "auto"],
+      },
+      {
+        name: "maxFiles",
+        type: "number",
+        defaultValue: 3,
+        description: "Batas jumlah maksimum berkas yang dapat diunggah.",
+        controlKind: "number",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: false,
+        description: "Menonaktifkan input berkas.",
+        controlKind: "boolean",
+      },
+    ],
+    renderPlayground: (props) => (
+      <Box w={"full"} maxW={"420px"}>
+        <FileInput
+          variant={(props.variant as "dropzone" | "button" | "auto") || "dropzone"}
+          maxFiles={Number(props.maxFiles) || 3}
+          disabled={Boolean(props.disabled)}
+          accept={[".jpeg", ".jpg", ".png", ".pdf"]}
+        />
+      </Box>
+    ),
+  },
+
   progress: {
     key: "progress",
     title: "Progress",
@@ -1818,9 +1869,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   clipboard: {
     key: "clipboard",
     title: "Clipboard",
-    category: "Data Display",
+    category: "Buttons & Actions",
     description:
-      "Komponen salin teks satu klik ke papan klip dengan status umpan balik instan.",
+      "Komponen aksi salin teks satu klik ke papan klip dengan status umpan balik instan.",
     importPath:
       'import { Clipboard } from "@/design-system/components/data-display/clipboard/clipboard";',
     component: Clipboard.Root,

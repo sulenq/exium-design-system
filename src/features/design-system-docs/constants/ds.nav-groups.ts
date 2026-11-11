@@ -51,7 +51,11 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
       },
       {
         key: "cat_buttons",
-        children: [{ key: "button" }, { key: "button_group" }],
+        children: [
+          { key: "button" },
+          { key: "button_group" },
+          { key: "clipboard" },
+        ],
       },
       {
         key: "cat_typography",
@@ -82,6 +86,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "search_input" },
           { key: "textarea" },
           { key: "field" },
+          { key: "file_input" },
         ],
       },
       {
@@ -100,7 +105,6 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_data_display",
         children: [
           { key: "data_table" },
-          { key: "clipboard" },
           { key: "countdown" },
         ],
       },

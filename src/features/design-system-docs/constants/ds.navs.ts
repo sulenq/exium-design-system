@@ -15,6 +15,7 @@ import {
   CubeIcon,
   CursorClickIcon,
   DownloadSimpleIcon,
+  FileArrowUpIcon,
   FileTextIcon,
   FlameIcon,
   FunnelIcon,
@@ -72,10 +73,6 @@ export const DS_NAVS_MAP = {
   cat_feedback: {
     icon: SlidersHorizontalIcon,
     title: "Feedback & Status",
-  },
-  cat_focus_alert: {
-    icon: WarningCircleIcon,
-    title: "Focus Alert",
   },
   cat_data_display: {
     icon: SquaresFourIcon,
@@ -212,6 +209,10 @@ export const DS_NAVS_MAP = {
   field: {
     icon: FileTextIcon,
     title: "Field & Fieldset",
+  },
+  file_input: {
+    icon: FileArrowUpIcon,
+    title: "File Input",
   },
 
   // Components - Feedback & Status
