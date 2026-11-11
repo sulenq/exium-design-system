@@ -55,6 +55,11 @@ Lihat `.env.example`. Variabel penting:
 
 Layering mengikuti `.agents/rules/separation-of-concerns.md`: `api/` (network) → `services/` (logika, fallback dummy) → `hooks/` (React Query) → `components/` → `pages/` → `routes/`.
 
+Layer `api` + `service` yang sudah siap tetapi belum punya UI (kontrak ada di `docs/api/api-docs.md`):
+
+- `auth.email-verification` — verifikasi email dan kirim ulang (`POST /api/auth/email/verify`, `/resend`).
+- `settings.account` — update profil (`PATCH /api/auth/me`) dan ganti kata sandi (`POST /api/auth/change-password`).
+
 > Halaman forgot/reset-password memakai endpoint reset yang sudah ada (`/api/auth/reset-password/request` dan `/confirm`). Backend perlu mengirim email berisi tautan ke `/auth/reset-password?email=...&token=...`.
 
 ## Aksesibilitas
