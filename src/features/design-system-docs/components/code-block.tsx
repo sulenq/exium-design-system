@@ -23,7 +23,8 @@ export const CodeBlock = (props: CodeBlockProps) => {
       style={{
         margin: 0,
         padding: 0,
-        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+        fontFamily:
+          'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
         fontSize: "13px",
         lineHeight: "1.6",
         whiteSpace: "pre-wrap",
@@ -38,4 +39,3 @@ export const CodeBlock = (props: CodeBlockProps) => {
     </pre>
   );
 };
-

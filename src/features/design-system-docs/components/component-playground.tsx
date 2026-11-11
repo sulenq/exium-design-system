@@ -8,7 +8,10 @@ import { NumberInput } from "@/design-system/components/input/number-input/numbe
 import SelectInput from "@/design-system/components/input/select/select";
 import { Switch } from "@/design-system/components/input/switch/switch";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
@@ -92,13 +95,13 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
 
       {/* Code Card (Title Code, Import + Live Component Snippet, Dynamic & Clean) */}
       <HStack
-        p={3}
+        p={1}
         rounded={"md"}
         bg={"bg.subtle"}
         align={"flex-start"}
         justify={"space-between"}
       >
-        <VStack gap={"md"} flex={1} overflow={"hidden"}>
+        <VStack gap={"md"} flex={1} overflow={"hidden"} pl={3}>
           <HStack align={"center"} justify={"space-between"}>
             <P color={"fg.subtle"} fontWeight={"semibold"}>
               {"CODE"}
@@ -114,7 +117,9 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
             </Button>
           </HStack>
 
-          <CodeBlock code={generateUsageCode()} language={"tsx"} />
+          <Box pb={3}>
+            <CodeBlock code={generateUsageCode()} language={"tsx"} />
+          </Box>
         </VStack>
       </HStack>
 
