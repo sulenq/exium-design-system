@@ -28,19 +28,37 @@ function toSyncValue(valueAsNumber: number): string {
 // Convert NaN, "NaN", null, or undefined to "" so that Chakra/Ark does not render "NaN" when empty
 function normalizeNumberInputValue(val: unknown): string | undefined {
   if (val === undefined) return undefined;
-  if (val === null || val === "" || val === "NaN" || (typeof val === "number" && Number.isNaN(val))) {
+  if (
+    val === null ||
+    val === "" ||
+    val === "NaN" ||
+    (typeof val === "number" && Number.isNaN(val))
+  ) {
     return "";
   }
   return String(val);
 }
 
 function checkHasValue(val: unknown): boolean {
-  return val !== undefined && val !== null && val !== "" && val !== "NaN" && !Number.isNaN(val);
+  return (
+    val !== undefined &&
+    val !== null &&
+    val !== "" &&
+    val !== "NaN" &&
+    !Number.isNaN(val)
+  );
 }
 
 export const NumberInput = (props: NumberInputProps) => {
   // Props
-  const { placeholder, inputProps, startElement, value, defaultValue, ...restProps } = props;
+  const {
+    placeholder,
+    inputProps,
+    startElement,
+    value,
+    defaultValue,
+    ...restProps
+  } = props;
 
   // Contexts
   const fieldContext = useFieldContextValue();
@@ -108,7 +126,9 @@ export const NumberInput = (props: NumberInputProps) => {
     <ChakraNumberInput.Root
       {...restProps}
       {...(normalizedValue !== undefined && { value: normalizedValue })}
-      {...(normalizedDefaultValue !== undefined && { defaultValue: normalizedDefaultValue })}
+      {...(normalizedDefaultValue !== undefined && {
+        defaultValue: normalizedDefaultValue,
+      })}
       onValueChange={(details) => {
         setHasValueState(details.value !== "");
         restProps.onValueChange?.({
@@ -271,7 +291,9 @@ export const SteppedNumberInput = (props: SteppedNumberInputProps) => {
       w={"min"}
       {...restProps}
       {...(normalizedValue !== undefined && { value: normalizedValue })}
-      {...(normalizedDefaultValue !== undefined && { defaultValue: normalizedDefaultValue })}
+      {...(normalizedDefaultValue !== undefined && {
+        defaultValue: normalizedDefaultValue,
+      })}
       onValueChange={(details) => {
         restProps.onValueChange?.({
           value: details.valueAsNumber,
