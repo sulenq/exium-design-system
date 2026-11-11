@@ -114,7 +114,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         // _active={{
         //   transform: clicky ? "translateY(2px)" : "none",
         // }}
-        transition={"150ms"}
         {...restProps}
       >
         {formattedChildren}

@@ -21,7 +21,6 @@ export const ComponentPlaygroundContainer = (
       alignItems={"center"}
       justifyContent={"center"}
       w={"full"}
-      transition={"background-color 0.2s ease, border-color 0.2s ease"}
     >
       {children}
     </Box>
