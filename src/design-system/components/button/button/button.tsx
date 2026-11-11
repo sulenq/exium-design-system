@@ -63,7 +63,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             </Span>
           );
 
-          if (!tooltip && typeof combinedText === "string" && combinedText.trim()) {
+          if (
+            !tooltip &&
+            typeof combinedText === "string" &&
+            combinedText.trim()
+          ) {
             result.push(
               <Tooltip
                 key={`button-tooltip-${result.length}`}
