@@ -4,8 +4,11 @@ import type { NavItem } from "@/shared/types/nav.type";
 import {
   ArrowsOutIcon,
   ArrowSquareOutIcon,
+  ArticleIcon,
   BellIcon,
+  CalendarDotsIcon,
   CaretDownIcon,
+  ChartBarIcon,
   ChatTextIcon,
   CheckSquareIcon,
   ClockIcon,
@@ -15,10 +18,13 @@ import {
   CubeIcon,
   CursorClickIcon,
   DownloadSimpleIcon,
+  EyeClosedIcon,
   FileArrowUpIcon,
+  FileIcon,
   FileTextIcon,
   FlameIcon,
   FunnelIcon,
+  GitCommitIcon,
   HashIcon,
   ImageIcon,
   InfoIcon,
@@ -144,6 +150,10 @@ export const DS_NAVS_MAP = {
     icon: CodeIcon,
     title: "Kbd",
   },
+  rich_text_editor: {
+    icon: ArticleIcon,
+    title: "Rich Text Editor",
+  },
 
   // Components - Form Inputs
   input: {
@@ -214,6 +224,10 @@ export const DS_NAVS_MAP = {
     icon: FileArrowUpIcon,
     title: "File Input",
   },
+  date_input: {
+    icon: CalendarDotsIcon,
+    title: "Date Input",
+  },
 
   // Components - Feedback & Status
   alert: {
@@ -251,13 +265,29 @@ export const DS_NAVS_MAP = {
     icon: SquaresFourIcon,
     title: "DataView Table",
   },
-  clipboard: {
-    icon: CopyIcon,
-    title: "Clipboard",
+  stat_grid: {
+    icon: ChartBarIcon,
+    title: "Stat Grid",
+  },
+  timeline: {
+    icon: GitCommitIcon,
+    title: "Timeline",
+  },
+  file_item: {
+    icon: FileIcon,
+    title: "File Item",
+  },
+  masked_text: {
+    icon: EyeClosedIcon,
+    title: "Masked Text",
   },
   countdown: {
     icon: ClockIcon,
     title: "Countdown",
+  },
+  clipboard: {
+    icon: CopyIcon,
+    title: "Clipboard",
   },
 
   // Components - Disclosure
@@ -287,6 +317,10 @@ export const DS_NAVS_MAP = {
   },
 
   // Components - Overlays & Modals
+  modal: {
+    icon: ArrowsOutIcon,
+    title: "Modal (Adaptive)",
+  },
   dialog: {
     icon: ArrowsOutIcon,
     title: "Dialog Modal",

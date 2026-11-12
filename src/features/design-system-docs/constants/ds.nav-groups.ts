@@ -65,6 +65,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "badge" },
           { key: "count_badge" },
           { key: "kbd" },
+          { key: "rich_text_editor" },
         ],
       },
       {
@@ -87,6 +88,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "textarea" },
           { key: "field" },
           { key: "file_input" },
+          { key: "date_input" },
         ],
       },
       {
@@ -105,6 +107,10 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_data_display",
         children: [
           { key: "data_table" },
+          { key: "stat_grid" },
+          { key: "timeline" },
+          { key: "file_item" },
+          { key: "masked_text" },
           { key: "countdown" },
         ],
       },
@@ -122,6 +128,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
       {
         key: "cat_overlay",
         children: [
+          { key: "modal" },
           { key: "dialog" },
           { key: "drawer" },
           { key: "popover" },

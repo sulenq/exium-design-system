@@ -6,6 +6,10 @@ import { Button } from "@/design-system/components/button/button/button";
 import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";
 import { Clipboard } from "@/design-system/components/data-display/clipboard/clipboard";
 import { Countdown } from "@/design-system/components/data-display/countdown/countdown";
+import { FileItem } from "@/design-system/components/data-display/file-item/file-item";
+import { MaskedText } from "@/design-system/components/data-display/masked-text/masked-text";
+import { StatGrid } from "@/design-system/components/data-display/stat-grid/stat-grid";
+import { Timeline } from "@/design-system/components/data-display/timeline/timeline";
 import type {
   FormattedListItem,
   FormattedTableHeader,
@@ -36,6 +40,7 @@ import { StateNoData } from "@/design-system/components/feedback/state-no-data/s
 import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-alert/focus-alert";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
+import { DateInput } from "@/design-system/components/input/date-input/date-input";
 import { DurationInput } from "@/design-system/components/input/duration-input/duration-input";
 import { Field } from "@/design-system/components/input/field/field";
 import { FileInput } from "@/design-system/components/input/file-input/file-input";
@@ -69,6 +74,7 @@ import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-mo
 import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
+import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { toast } from "@/design-system/components/toast";
@@ -77,6 +83,7 @@ import { CountBadge } from "@/design-system/components/typography/count-badge/co
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { Kbd } from "@/design-system/components/typography/kbd/kbd";
 import { P } from "@/design-system/components/typography/p/p";
+import { RichTextEditorPresetEssential } from "@/design-system/components/typography/rich-text-editor/rich-text-editor.preset";
 import { Span } from "@/design-system/components/typography/span/span";
 import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";
 import { COLOR_PALETTE_OPTIONS } from "@/design-system/constants/colors";
@@ -477,6 +484,24 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "text",
       },
     ],
+  },
+
+  rich_text_editor: {
+    key: "rich_text_editor",
+    title: "RichTextEditor",
+    category: "Typography & Display",
+    description:
+      "Editor teks kaya (WYSIWYG) berbasis TipTap dengan toolbar pemformatan lengkap, heading, list, dan warna.",
+    importPath:
+      'import { RichTextEditorPresetEssential } from "@/design-system/components/typography/rich-text-editor/rich-text-editor.preset";',
+    component: Box,
+    defaultProps: {},
+    propsSpec: [],
+    renderPlayground: () => (
+      <Box w={"full"} maxW={"680px"}>
+        <RichTextEditorPresetEssential />
+      </Box>
+    ),
   },
 
   input: {
@@ -1355,6 +1380,46 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ),
   },
 
+  date_input: {
+    key: "date_input",
+    title: "DateInput",
+    category: "Form Inputs",
+    description:
+      "Bidang input tanggal terintegrasi modal kalender interaktif dengan pemilihan tahun, bulan, dan hari.",
+    importPath:
+      'import { DateInput } from "@/design-system/components/input/date-input/date-input";',
+    component: DateInput,
+    defaultProps: {
+      datePickerSubtitle: "Pilih tanggal jadwal",
+      disabled: false,
+    },
+    propsSpec: [
+      {
+        name: "datePickerSubtitle",
+        type: "string",
+        defaultValue: "Pilih tanggal jadwal",
+        description: "Subjudul penjelasan pada modal kalender.",
+        controlKind: "text",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: false,
+        description: "Menonaktifkan pemilihan tanggal.",
+        controlKind: "boolean",
+      },
+    ],
+    renderPlayground: (props) => (
+      <Box w={"280px"}>
+        <DateInput
+          modalKey={"docs-date-input"}
+          disabled={Boolean(props.disabled)}
+          datePickerSubtitle={String(props.datePickerSubtitle || "Pilih tanggal jadwal")}
+        />
+      </Box>
+    ),
+  },
+
   progress: {
     key: "progress",
     title: "Progress",
@@ -1967,6 +2032,232 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         />
       );
     },
+  },
+
+  stat_grid: {
+    key: "stat_grid",
+    title: "StatGrid",
+    category: "Data Display",
+    description:
+      "Grid kartu statistik dan KPI metrik ringkas dengan label, nilai numerik terformat, delta badge, dan ikon.",
+    importPath:
+      'import { StatGrid } from "@/design-system/components/data-display/stat-grid/stat-grid";',
+    component: StatGrid.Root,
+    defaultProps: {
+      columns: 2,
+    },
+    propsSpec: [
+      {
+        name: "columns",
+        type: "number",
+        defaultValue: 2,
+        description: "Jumlah kolom kartu statistik dalam grid.",
+        controlKind: "select",
+        options: [1, 2, 3, 4],
+      },
+    ],
+    renderPlayground: (props) => (
+      <Box w={"full"} maxW={"600px"}>
+        <StatGrid.Root columns={Number(props.columns) || 2}>
+          <StatGrid.Item index={0} columns={Number(props.columns) || 2}>
+            <StatGrid.Header>
+              <StatGrid.Label>{"Total Pengguna Aktif"}</StatGrid.Label>
+              <StatGrid.Icon icon={PhosphorSparkleIcon} />
+            </StatGrid.Header>
+            <StatGrid.Value value={14250} suffix={"akun"} />
+            <StatGrid.Description>
+              {"+12.5% dibanding bulan lalu"}
+            </StatGrid.Description>
+          </StatGrid.Item>
+          <StatGrid.Item index={1} columns={Number(props.columns) || 2}>
+            <StatGrid.Header>
+              <StatGrid.Label>{"Tingkat Keberhasilan"}</StatGrid.Label>
+              <StatGrid.Icon icon={PhosphorSparkleIcon} />
+            </StatGrid.Header>
+            <StatGrid.Value value={"99.8%"} />
+            <StatGrid.Description>{"Stabil dalam batas aman"}</StatGrid.Description>
+          </StatGrid.Item>
+        </StatGrid.Root>
+      </Box>
+    ),
+  },
+
+  timeline: {
+    key: "timeline",
+    title: "Timeline",
+    category: "Data Display",
+    description:
+      "Tampilan alur riwayat waktu dan urutan proses bertahap secara vertikal.",
+    importPath:
+      'import { Timeline } from "@/design-system/components/data-display/timeline/timeline";',
+    component: Timeline.Root,
+    defaultProps: {
+      size: "md",
+    },
+    propsSpec: [
+      {
+        name: "size",
+        type: '"sm" | "md" | "lg"',
+        defaultValue: "md",
+        description: "Ukuran indikator dan garis penghubung timeline.",
+        controlKind: "select",
+        options: ["sm", "md", "lg"],
+      },
+    ],
+    renderPlayground: (props) => (
+      <Box w={"full"} maxW={"400px"}>
+        <Timeline.Root size={(props.size as "sm" | "md" | "lg") || "md"}>
+          <Timeline.Item>
+            <Timeline.Connector>
+              <Timeline.Separator />
+              <Timeline.Indicator />
+            </Timeline.Connector>
+            <Timeline.Content>
+              <Timeline.Title>{"Berkas Diterima"}</Timeline.Title>
+              <Timeline.Description>
+                {"Dokumen permohonan berhasil diunggah"}
+              </Timeline.Description>
+            </Timeline.Content>
+          </Timeline.Item>
+          <Timeline.Item>
+            <Timeline.Connector>
+              <Timeline.Separator />
+              <Timeline.Indicator />
+            </Timeline.Connector>
+            <Timeline.Content>
+              <Timeline.Title>{"Verifikasi Lapangan"}</Timeline.Title>
+              <Timeline.Description>
+                {"Petugas melakukan pengukuran spasial"}
+              </Timeline.Description>
+            </Timeline.Content>
+          </Timeline.Item>
+        </Timeline.Root>
+      </Box>
+    ),
+  },
+
+  file_item: {
+    key: "file_item",
+    title: "FileItem",
+    category: "Data Display",
+    description:
+      "Komponen kartu representasi berkas lampiran dengan ikon jenis berkas, label ukuran, dan aksi.",
+    importPath:
+      'import { FileItem } from "@/design-system/components/data-display/file-item/file-item";',
+    component: FileItem,
+    defaultProps: {
+      name: "laporan-survei-2026.pdf",
+      sizeLabel: "2.4 MB",
+      mimeType: "application/pdf",
+      disabled: false,
+    },
+    propsSpec: [
+      {
+        name: "name",
+        type: "string",
+        defaultValue: "laporan-survei-2026.pdf",
+        description: "Nama berkas yang ditampilkan.",
+        controlKind: "text",
+      },
+      {
+        name: "sizeLabel",
+        type: "string",
+        defaultValue: "2.4 MB",
+        description: "Label ukuran berkas (misal: 2.4 MB).",
+        controlKind: "text",
+      },
+      {
+        name: "mimeType",
+        type: "string",
+        defaultValue: "application/pdf",
+        description: "Tipe MIME berkas untuk menentukan ikon visual.",
+        controlKind: "text",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: false,
+        description: "Menonaktifkan interaksi kartu berkas.",
+        controlKind: "boolean",
+      },
+    ],
+    renderPlayground: (props) => (
+      <Box w={"full"} maxW={"380px"}>
+        <FileItem
+          name={String(props.name || "dokumen.pdf")}
+          sizeLabel={String(props.sizeLabel || "1.2 MB")}
+          mimeType={String(props.mimeType || "application/pdf")}
+          disabled={Boolean(props.disabled)}
+          onDelete={() => {}}
+        />
+      </Box>
+    ),
+  },
+
+  masked_text: {
+    key: "masked_text",
+    title: "MaskedText",
+    category: "Data Display",
+    description:
+      "Tampilan teks data sensitif tersamarkan (masking sensor) dengan tombol toggle intip dan salin teks.",
+    importPath:
+      'import { MaskedText } from "@/design-system/components/data-display/masked-text/masked-text";',
+    component: MaskedText,
+    defaultProps: {
+      value: "3271041908990001",
+      maskLength: 16,
+      defaultVisible: false,
+      withCopy: true,
+      withToggle: true,
+    },
+    propsSpec: [
+      {
+        name: "value",
+        type: "string",
+        defaultValue: "3271041908990001",
+        description: "Nilai data sensitif asli yang dimasking.",
+        controlKind: "text",
+      },
+      {
+        name: "maskLength",
+        type: "number",
+        defaultValue: 16,
+        description: "Jumlah karakter simbol masker saat tersembunyi.",
+        controlKind: "number",
+      },
+      {
+        name: "defaultVisible",
+        type: "boolean",
+        defaultValue: false,
+        description: "Status awal visibilitas teks.",
+        controlKind: "boolean",
+      },
+      {
+        name: "withCopy",
+        type: "boolean",
+        defaultValue: true,
+        description: "Tampilkan tombol salin teks ke clipboard.",
+        controlKind: "boolean",
+      },
+      {
+        name: "withToggle",
+        type: "boolean",
+        defaultValue: true,
+        description: "Tampilkan tombol intip (eye toggle).",
+        controlKind: "boolean",
+      },
+    ],
+    renderPlayground: (props) => (
+      <Box w={"full"} maxW={"320px"}>
+        <MaskedText
+          value={String(props.value || "3271041908990001")}
+          maskLength={Number(props.maskLength) || 16}
+          defaultVisible={Boolean(props.defaultVisible)}
+          withCopy={Boolean(props.withCopy)}
+          withToggle={Boolean(props.withToggle)}
+        />
+      </Box>
+    ),
   },
 
   accordion: {
@@ -2683,6 +2974,33 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           </Menu.Item>
         </Menu.Content>
       </Menu.Root>
+    ),
+  },
+
+  modal: {
+    key: "modal",
+    title: "Modal (Adaptive)",
+    category: "Overlays & Modals",
+    description:
+      "Komponen overlay pintar adaptif: otomatis menjadi Dialog pada desktop dan Drawer bawah pada perangkat mobile.",
+    importPath:
+      'import { Modal } from "@/design-system/components/overlay/modal/modal";',
+    component: Modal.Root,
+    defaultProps: {
+      size: "xs",
+    },
+    propsSpec: [
+      {
+        name: "size",
+        type: '"xs" | "sm" | "md" | "lg" | "xl" | "full"',
+        defaultValue: "xs",
+        description: "Ukuran lebar modal saat ditampilkan dalam mode dialog desktop.",
+        controlKind: "select",
+        options: ["xs", "sm", "md", "lg", "xl", "full"],
+      },
+    ],
+    renderPlayground: (props) => (
+      <ModalPlaygroundDemo size={(props.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs"} />
     ),
   },
 
@@ -4503,5 +4821,49 @@ const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog.Root>
+  );
+};
+
+const ModalPlaygroundDemo = ({ size = "xs" }: { size?: "xs" | "sm" | "md" | "lg" | "xl" | "full" }) => {
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "docs-modal",
+  });
+
+  return (
+    <Modal.Root
+      modalKey={modalKey}
+      opened={isOpen}
+      open={open}
+      close={close}
+      size={size}
+    >
+      <Modal.Trigger asChild>
+        <Button variant={"outline"}>Buka Modal Adaptif</Button>
+      </Modal.Trigger>
+      <Modal.Content>
+        <Modal.Header>
+          <Modal.Title textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
+            Exium Adaptive Modal
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <VStack gap={"md"}>
+            <P color={"fg.muted"}>
+              Modal adaptif Exium secara cerdas merender komponen Dialog mengambang pada layar desktop,
+              dan otomatis bertransformasi menjadi Drawer geser bawah pada layar ponsel.
+            </P>
+            <P color={"fg.muted"}>
+              Perubahan ukuran viewport langsung mengadaptasi layout modal secara mulus tanpa kehilangan data form
+              atau memicu reload status URL.
+            </P>
+          </VStack>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button w={"full"} variant={"outline"} onClick={close}>
+            Tutup Modal
+          </Button>
+        </Modal.Footer>
+      </Modal.Content>
+    </Modal.Root>
   );
 };
