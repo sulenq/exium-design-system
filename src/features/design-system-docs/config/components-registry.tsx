@@ -156,7 +156,17 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         type: "string",
         defaultValue: "fg.muted",
         description: "Token warna teks watermark.",
-        controlKind: "text",
+        controlKind: "select",
+        options: [
+          "fg.muted",
+          "fg.subtle",
+          "fg",
+          "blue.fg",
+          "green.fg",
+          "red.fg",
+          "orange.fg",
+          "purple.fg",
+        ],
       },
     ],
     renderPlayground: (props) => (
@@ -1349,7 +1359,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         name: "variant",
         type: '"dropzone" | "button" | "auto"',
         defaultValue: "dropzone",
-        description: "Bentuk antarmuka input berkas (area seret-lepas atau tombol aksi).",
+        description:
+          "Bentuk antarmuka input berkas (area seret-lepas atau tombol aksi).",
         controlKind: "select",
         options: ["dropzone", "button", "auto"],
       },
@@ -1371,7 +1382,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
         <FileInput
-          variant={(props.variant as "dropzone" | "button" | "auto") || "dropzone"}
+          variant={
+            (props.variant as "dropzone" | "button" | "auto") || "dropzone"
+          }
           maxFiles={Number(props.maxFiles) || 3}
           disabled={Boolean(props.disabled)}
           accept={[".jpeg", ".jpg", ".png", ".pdf"]}
@@ -1414,7 +1427,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         <DateInput
           modalKey={"docs-date-input"}
           disabled={Boolean(props.disabled)}
-          datePickerSubtitle={String(props.datePickerSubtitle || "Pilih tanggal jadwal")}
+          datePickerSubtitle={String(
+            props.datePickerSubtitle || "Pilih tanggal jadwal",
+          )}
         />
       </Box>
     ),
@@ -2019,7 +2034,16 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         type: "string",
         defaultValue: "fg.error",
         description: "Token warna teks saat waktu countdown habis.",
-        controlKind: "text",
+        controlKind: "select",
+        options: [
+          "fg.error",
+          "fg.warning",
+          "fg.muted",
+          "red.fg",
+          "orange.fg",
+          "blue.fg",
+          "fg",
+        ],
       },
     ],
     renderPlayground: (props) => {
@@ -2029,6 +2053,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           finishedAt={tomorrow}
           warningThresholdDays={Number(props.warningThresholdDays) || 3}
           warningThresholdHours={Number(props.warningThresholdHours) || 24}
+          finishColor={String(props.finishColor || "fg.error")}
         />
       );
     },
@@ -2075,7 +2100,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
               <StatGrid.Icon icon={PhosphorSparkleIcon} />
             </StatGrid.Header>
             <StatGrid.Value value={"99.8%"} />
-            <StatGrid.Description>{"Stabil dalam batas aman"}</StatGrid.Description>
+            <StatGrid.Description>
+              {"Stabil dalam batas aman"}
+            </StatGrid.Description>
           </StatGrid.Item>
         </StatGrid.Root>
       </Box>
@@ -2171,7 +2198,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         type: "string",
         defaultValue: "application/pdf",
         description: "Tipe MIME berkas untuk menentukan ikon visual.",
-        controlKind: "text",
+        controlKind: "select",
+        options: [
+          "application/pdf",
+          "image/jpeg",
+          "image/png",
+          "application/zip",
+          "text/csv",
+          "text/plain",
+        ],
       },
       {
         name: "disabled",
@@ -2275,13 +2310,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     },
     propsSpec: [
       {
-        name: "defaultValue",
-        type: "string[]",
-        defaultValue: undefined,
-        description: "Item panel yang terbuka secara default.",
-        controlKind: "text",
-      },
-      {
         name: "collapsible",
         type: "boolean",
         defaultValue: true,
@@ -2346,13 +2374,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       colorPalette: "blue",
     },
     propsSpec: [
-      {
-        name: "defaultValue",
-        type: "string",
-        defaultValue: undefined,
-        description: "Nilai tab yang aktif pertama kali.",
-        controlKind: "text",
-      },
       {
         name: "variant",
         type: '"line" | "subtle" | "outline" | "enclosed"',
@@ -2885,13 +2906,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "text",
       },
       {
-        name: "children",
-        type: "ReactElement",
-        defaultValue: undefined,
-        description: "Elemen target trigger tooltip (wajib).",
-        controlKind: "text",
-      },
-      {
         name: "disabled",
         type: "boolean",
         defaultValue: false,
@@ -2994,13 +3008,16 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         name: "size",
         type: '"xs" | "sm" | "md" | "lg" | "xl" | "full"',
         defaultValue: "xs",
-        description: "Ukuran lebar modal saat ditampilkan dalam mode dialog desktop.",
+        description:
+          "Ukuran lebar modal saat ditampilkan dalam mode dialog desktop.",
         controlKind: "select",
         options: ["xs", "sm", "md", "lg", "xl", "full"],
       },
     ],
     renderPlayground: (props) => (
-      <ModalPlaygroundDemo size={(props.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs"} />
+      <ModalPlaygroundDemo
+        size={(props.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs"}
+      />
     ),
   },
 
@@ -3287,13 +3304,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         defaultValue: false,
         description: "Sediakan konteks dimensi container kepada sub-komponen.",
         controlKind: "boolean",
-      },
-      {
-        name: "children",
-        type: "ReactNode",
-        defaultValue: undefined,
-        description: "Sub-komponen Header dan Body container (wajib).",
-        controlKind: "text",
       },
     ],
     renderPlayground: (props) => (
@@ -3839,14 +3849,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     },
     propsSpec: [
       {
-        name: "data",
-        type: "() => Promise<Blob> | Blob | string",
-        defaultValue: undefined,
-        description:
-          "Fungsi async atau data Blob yang akan didownload (wajib).",
-        controlKind: "text",
-      },
-      {
         name: "fileName",
         type: "string",
         defaultValue: "exium-doc.txt",
@@ -3858,14 +3860,13 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         type: "string",
         defaultValue: "text/plain",
         description: "Tipe MIME konten file.",
-        controlKind: "text",
-      },
-      {
-        name: "children",
-        type: "ReactNode",
-        defaultValue: undefined,
-        description: "Tombol atau elemen pemicu download (wajib).",
-        controlKind: "text",
+        controlKind: "select",
+        options: [
+          "text/plain",
+          "application/json",
+          "text/csv",
+          "application/pdf",
+        ],
       },
     ],
     renderPlayground: (props) => (
@@ -4824,7 +4825,11 @@ const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
   );
 };
 
-const ModalPlaygroundDemo = ({ size = "xs" }: { size?: "xs" | "sm" | "md" | "lg" | "xl" | "full" }) => {
+const ModalPlaygroundDemo = ({
+  size = "xs",
+}: {
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "full";
+}) => {
   const { modalKey, isOpen, open, close } = usePopModal({
     modalKey: "docs-modal",
   });
@@ -4849,12 +4854,14 @@ const ModalPlaygroundDemo = ({ size = "xs" }: { size?: "xs" | "sm" | "md" | "lg"
         <Modal.Body>
           <VStack gap={"md"}>
             <P color={"fg.muted"}>
-              Modal adaptif Exium secara cerdas merender komponen Dialog mengambang pada layar desktop,
-              dan otomatis bertransformasi menjadi Drawer geser bawah pada layar ponsel.
+              Modal adaptif Exium secara cerdas merender komponen Dialog
+              mengambang pada layar desktop, dan otomatis bertransformasi
+              menjadi Drawer geser bawah pada layar ponsel.
             </P>
             <P color={"fg.muted"}>
-              Perubahan ukuran viewport langsung mengadaptasi layout modal secara mulus tanpa kehilangan data form
-              atau memicu reload status URL.
+              Perubahan ukuran viewport langsung mengadaptasi layout modal
+              secara mulus tanpa kehilangan data form atau memicu reload status
+              URL.
             </P>
           </VStack>
         </Modal.Body>
