@@ -21,7 +21,7 @@ import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-docs/components/component-playground-container";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { ColorPaletteSelect } from "@/features/design-system-docs/components/color-palette.select";
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, CopyIcon } from "lucide-react";
 import { useState } from "react";
 
 export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
@@ -30,6 +30,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
     spec.defaultProps,
   );
   const [copied, setCopied] = useState(false);
+  const [isCodeExpanded, setIsCodeExpanded] = useState(false);
 
   // Handlers
   const handlePropChange = (name: string, value: unknown) => {
@@ -107,17 +108,37 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
               {"CODE"}
             </P>
 
-            <Button size={"xs"} variant={"ghost"} onClick={handleCopyCode}>
-              {copied ? (
-                <AppIcon icon={CheckIcon} size={"sm"} />
-              ) : (
-                <AppIcon icon={CopyIcon} size={"sm"} />
-              )}
-              {copied ? "Copied!" : "Copy"}
-            </Button>
+            <HStack gap={1} align={"center"}>
+              <Button
+                size={"xs"}
+                variant={"ghost"}
+                onClick={() => setIsCodeExpanded((prev) => !prev)}
+              >
+                <AppIcon
+                  icon={isCodeExpanded ? ChevronUpIcon : ChevronDownIcon}
+                  size={"sm"}
+                />
+                {isCodeExpanded ? "Collapse" : "Expand"}
+              </Button>
+
+              <Button size={"xs"} variant={"ghost"} onClick={handleCopyCode}>
+                {copied ? (
+                  <AppIcon icon={CheckIcon} size={"sm"} />
+                ) : (
+                  <AppIcon icon={CopyIcon} size={"sm"} />
+                )}
+                {copied ? "Copied!" : "Copy"}
+              </Button>
+            </HStack>
           </HStack>
 
-          <Box pb={3}>
+          <Box
+            pb={3}
+            maxH={isCodeExpanded ? "none" : "300px"}
+            overflowY={"auto"}
+            w={"full"}
+            transition={"max-height 0.2s ease"}
+          >
             <CodeBlock code={generateUsageCode()} language={"tsx"} />
           </Box>
         </VStack>

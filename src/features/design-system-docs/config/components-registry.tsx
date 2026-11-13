@@ -5099,7 +5099,9 @@ const SidebarPlaygroundDemo = ({
           </Badge>
         </HStack>
         <P fontSize={"sm"} color={"fg.muted"}>
-          {"Sidebar dan VNavs memiliki proporsi padding (p={3}), header default, logo branding, serta pemisah yang identik dengan navigasi dokumentasi sistem."}
+          {
+            "Sidebar dan VNavs memiliki proporsi padding (p={3}), header default, logo branding, serta pemisah yang identik dengan navigasi dokumentasi sistem."
+          }
         </P>
       </Box>
     </Box>
