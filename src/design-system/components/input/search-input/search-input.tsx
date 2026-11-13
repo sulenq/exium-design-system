@@ -162,6 +162,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         {...inputGroupProps}
       >
         <Input
+          type={"search"}
+          autoComplete={"off"}
+          autoCorrect={"off"}
+          autoCapitalize={"none"}
+          spellCheck={false}
+          data-lpignore={"true"}
+          data-1p-ignore={"true"}
+          data-form-type={"other"}
           {...restProps}
           w={"full"}
           minW={"0"}

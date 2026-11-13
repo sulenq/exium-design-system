@@ -72,7 +72,6 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_inputs",
         children: [
           { key: "input" },
-          { key: "duration_input" },
           { key: "unit_input" },
           { key: "number_input" },
           { key: "password_input" },

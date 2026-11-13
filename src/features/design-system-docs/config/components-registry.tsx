@@ -41,7 +41,6 @@ import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-ale
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
 import { DateInput } from "@/design-system/components/input/date-input/date-input";
-import { DurationInput } from "@/design-system/components/input/duration-input/duration-input";
 import { Field } from "@/design-system/components/input/field/field";
 import { FileInput } from "@/design-system/components/input/file-input/file-input";
 import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
@@ -633,72 +632,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ),
   },
 
-  duration_input: {
-    key: "duration_input",
-    title: "DurationInput",
-    category: "Form Inputs",
-    description:
-      "Input durasi 2-segmen (nilai numerik dan unit waktu). Nilai hakiki disimpan dalam milidetik (ms) dan mendukung floating label terintegrasi.",
-    importPath:
-      'import { DurationInput } from "@/design-system/components/input/duration-input/duration-input";',
-    component: DurationInput,
-    defaultProps: {
-      defaultValue: 120000,
-      defaultUnit: "minute",
-      placeholder: "0",
-      disabled: false,
-    },
-    propsSpec: [
-      {
-        name: "defaultValue",
-        type: "number",
-        defaultValue: undefined,
-        description: "Nilai awal dalam milidetik (ms).",
-        controlKind: "number",
-      },
-      {
-        name: "defaultUnit",
-        type: '"millisecond" | "second" | "minute" | "hour" | "day" | "week"',
-        defaultValue: "minute",
-        description: "Satuan default saat nilai awal belum ditentukan.",
-        controlKind: "select",
-        options: ["millisecond", "second", "minute", "hour", "day", "week"],
-      },
-      {
-        name: "placeholder",
-        type: "string",
-        defaultValue: "0",
-        description: "Placeholder segmen angka.",
-        controlKind: "text",
-      },
-      {
-        name: "disabled",
-        type: "boolean",
-        defaultValue: false,
-        description: "Status nonaktif kontrol input.",
-        controlKind: "boolean",
-      },
-    ],
-    renderPlayground: (props) => (
-      <Box w={"280px"}>
-        <DurationInput
-          defaultValue={Number(props.defaultValue) || 120000}
-          defaultUnit={
-            (props.defaultUnit as
-              | "millisecond"
-              | "second"
-              | "minute"
-              | "hour"
-              | "day"
-              | "week") || "minute"
-          }
-          placeholder={(props.placeholder as string) || "0"}
-          disabled={Boolean(props.disabled)}
-        />
-      </Box>
-    ),
-  },
-
   unit_input: {
     key: "unit_input",
     title: "UnitInput",
@@ -970,6 +903,39 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       size: "md",
       clearable: true,
       disabled: false,
+    },
+    generateCode: (props) => {
+      const propList: string[] = ['modalKey={"kategori-select"}'];
+      if (props.placeholder && props.placeholder !== "Pilih kategori...") {
+        propList.push(`placeholder={"${props.placeholder}"}`);
+      } else {
+        propList.push('placeholder={"Pilih kategori..."}');
+      }
+      if (props.size && props.size !== "md") {
+        propList.push(`size={"${props.size}"}`);
+      }
+      if (props.clearable === false) {
+        propList.push("clearable={false}");
+      }
+      if (props.disabled) {
+        propList.push("disabled={true}");
+      }
+      if (props.isFetching) {
+        propList.push("isFetching={true}");
+      }
+      if (props.isError) {
+        propList.push("isError={true}");
+      }
+
+      return `<FocusSelectInput
+  ${propList.join("\n  ")}
+  options={[
+    { label: "Bidang Tanah", value: "bidang", description: "Lapisan persil bidang tanah" },
+    { label: "Batas Wilayah", value: "wilayah", description: "Batas administrasi daerah" },
+    { label: "Zona Nilai Tanah", value: "znt", description: "Pemetaan valuasi spasial" },
+  ]}
+  onValueChange={(val) => console.log(val)}
+/>`;
     },
     propsSpec: [
       {

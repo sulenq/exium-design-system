@@ -73,6 +73,25 @@ export const NumberInput = (props: NumberInputProps) => {
   // Stores
   const { theme } = useThemeStore();
 
+  const size = restProps.size ?? "md";
+
+  // Adaptive stepper sizing based on input size
+  const stepperConfig = {
+    "2xs": { width: 18, inset: 2, gap: 0, iconSize: 10, peExtra: 26 },
+    xs: { width: 20, inset: 2, gap: 0, iconSize: 11, peExtra: 28 },
+    sm: { width: 24, inset: 3, gap: 0.5, iconSize: 12, peExtra: 34 },
+    md: { width: 28, inset: 4, gap: 1, iconSize: 14, peExtra: 40 },
+    lg: { width: 32, inset: 4, gap: 1, iconSize: 16, peExtra: 46 },
+    xl: { width: 36, inset: 5, gap: 1.5, iconSize: 18, peExtra: 52 },
+    "2xl": { width: 40, inset: 6, gap: 2, iconSize: 20, peExtra: 58 },
+  }[size as "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"] ?? {
+    width: 28,
+    inset: 4,
+    gap: 1,
+    iconSize: 14,
+    peExtra: 40,
+  };
+
   // Refs
   // Dedicated node for RHF — decoupled from the visible input, so whatever
   // Ark renders there (raw digits or a formatOptions-formatted string like
@@ -194,9 +213,13 @@ export const NumberInput = (props: NumberInputProps) => {
           {...(startElement && {
             ps: `${(startElementWidth || 20) + 20}px`,
           })}
-          {...(endElement && {
-            pe: `${(endElementWidth || 0) + (stepper ? 44 : 12)}px`,
-          })}
+          {...(endElement
+            ? {
+                pe: `${(endElementWidth || 0) + (stepper ? stepperConfig.peExtra : 12)}px`,
+              }
+            : stepper
+              ? { pe: `${stepperConfig.peExtra}px` }
+              : {})}
           onFocusCapture={() => {
             setIsFocused(true);
           }}
@@ -222,7 +245,7 @@ export const NumberInput = (props: NumberInputProps) => {
               endElementPlacement === "after-stepper"
                 ? "0px"
                 : stepper
-                  ? "33px"
+                  ? `${stepperConfig.width + stepperConfig.inset + 1}px`
                   : "1px"
             }
             top={"50%"}
@@ -245,17 +268,17 @@ export const NumberInput = (props: NumberInputProps) => {
           borderStartWidth={"0 !important"}
           divideY={"0 !important"}
           position={"absolute"}
-          top={"4px"}
-          bottom={"4px"}
+          top={`${stepperConfig.inset}px`}
+          bottom={`${stepperConfig.inset}px`}
           insetEnd={
             endElementPlacement === "after-stepper" && endElementWidth
-              ? `${endElementWidth + 4}px`
-              : "4px"
+              ? `${endElementWidth + stepperConfig.inset}px`
+              : `${stepperConfig.inset}px`
           }
-          width={"28px"}
-          height={"calc(100% - 8px)"}
+          width={`${stepperConfig.width}px`}
+          height={`calc(100% - ${stepperConfig.inset * 2}px)`}
           margin={"0 !important"}
-          gap={1}
+          gap={stepperConfig.gap}
           zIndex={1}
         >
           <ChakraNumberInput.IncrementTrigger
@@ -273,7 +296,7 @@ export const NumberInput = (props: NumberInputProps) => {
             _disabled={{ opacity: "0.5", bg: "transparent" }}
           >
             {stepperVariant === "borderless" ? (
-              <ChevronUp size={14} />
+              <ChevronUp size={stepperConfig.iconSize} />
             ) : undefined}
           </ChakraNumberInput.IncrementTrigger>
 
@@ -292,7 +315,7 @@ export const NumberInput = (props: NumberInputProps) => {
             _disabled={{ opacity: "0.5", bg: "transparent" }}
           >
             {stepperVariant === "borderless" ? (
-              <ChevronDown size={14} />
+              <ChevronDown size={stepperConfig.iconSize} />
             ) : undefined}
           </ChakraNumberInput.DecrementTrigger>
         </ChakraNumberInput.Control>

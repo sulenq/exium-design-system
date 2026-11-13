@@ -21,7 +21,12 @@ import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-docs/components/component-playground-container";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { ColorPaletteSelect } from "@/features/design-system-docs/components/color-palette.select";
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon, CopyIcon } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  CopyIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
@@ -59,7 +64,10 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
       })
       .join(" ");
 
-    const componentName = spec.title.split(" ")[0];
+    // Extract imported component identifier from spec.importPath (e.g. `import { FocusSelectInput } from ...` -> `FocusSelectInput`)
+    const importMatch = spec.importPath?.match(/import\s*\{\s*(\w+)/);
+    const componentName =
+      importMatch?.[1] ?? spec.title.replace(/\s+/g, "");
     const propsPrefix = propStrings ? ` ${propStrings}` : "";
     const childrenVal = propsState.children;
 
