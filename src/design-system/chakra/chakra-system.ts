@@ -158,12 +158,13 @@ export const chakraConfig = defineConfig({
           300: { value: "hsl(0, 0%, 76%)" },
           400: { value: "hsl(0, 0%, 64%)" },
           500: { value: "hsl(0, 0%, 50%)" },
-          600: { value: "hsl(0, 0%, 42%)" },
-          700: { value: "hsl(0, 0%, 32%)" },
-          800: { value: "hsl(0, 0%, 22%)" },
+          600: { value: "hsl(0, 0%, 39%)" },
+          700: { value: "hsl(0, 0%, 28%)" },
+          800: { value: "hsl(0, 0%, 18%)" },
           900: { value: "hsl(0, 0%, 15%)" },
           950: { value: "hsl(0, 0%, 11%)" },
         },
+
         grey: {
           50: { value: "hsl(215, 10%, 97%)" },
           100: { value: "hsl(215, 11%, 93%)" },
