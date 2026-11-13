@@ -22,16 +22,17 @@ export const I18nFoundationPage = () => {
       >
         <VStack gap={"sm"} p={"md"}>
           <Heading size={"sm"} fontWeight={"bold"}>
-            {"Using Paraglide Messages"}
+            {"Using Translation (t)"}
           </Heading>
           <CodeBlock
-            code={`import * as m from "@/paraglide/messages";
-import { getLocale, setLocale } from "@/paraglide/runtime";
+            code={`import { t, getLocale, setLocale } from "@/shared/libs/i18n";
 
-// Render message with active locale
-<P>{m.common_save()}</P>
+// Render message with active locale (dot or underscore notation supported)
+<P>{t.common_save()}</P>
+<P>{t["common.save"]()}</P>
 
-// Switch locale dynamically
+// Check or switch locale dynamically
+const current = getLocale();
 setLocale("en");`}
             language={"tsx"}
           />

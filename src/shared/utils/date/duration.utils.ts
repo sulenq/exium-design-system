@@ -1,9 +1,18 @@
 // src/shared/utils/date/duration.utils.ts
 
-import type {
-  DurationUnit,
-  DurationValue,
-} from "@/design-system/components/input/duration-input/duration-input.type";
+export type DurationUnit =
+  | "millisecond"
+  | "second"
+  | "minute"
+  | "hour"
+  | "day"
+  | "week";
+
+export type DurationValue = {
+  value: number;
+  unit: DurationUnit;
+};
+
 import { t } from "@/shared/libs/i18n";
 
 export const DURATION_UNIT_TO_MS: Record<DurationUnit, number> = {

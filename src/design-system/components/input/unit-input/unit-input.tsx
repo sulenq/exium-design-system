@@ -26,13 +26,9 @@ import {
   getUnitsForQuantity,
   toBase,
 } from "@/shared/utils/unit/convert-unit";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { getLocalizedUnitName } from "@/shared/utils/unit/unit-i18n";
+import { getLocale } from "@/shared/libs/i18n";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 function isMeasurement<Q extends UnitQuantity>(
   val: number | Measurement<Q> | undefined,
@@ -72,7 +68,6 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
   // Contexts
   const fieldContext = useFieldContextValue();
   const isFloatingVariant = fieldContext?.variant === "floating";
-  const fieldLabel = fieldContext?.label;
 
   // Registry definitions
   const quantityDef = UNIT_REGISTRY[quantity];
@@ -109,7 +104,10 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
         );
       }
     }
-    const storeDefault = getDefaultUnit(quantity, measurementSystem) as UnitOf<Q>;
+    const storeDefault = getDefaultUnit(
+      quantity,
+      measurementSystem,
+    ) as UnitOf<Q>;
     if (availableUnitKeys.has(storeDefault)) return storeDefault;
 
     return (availableUnitDefs[0]?.key ?? baseUnit) as UnitOf<Q>;
@@ -124,8 +122,21 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
   ]);
 
   // State: Unit (Uncontrolled first, or controlled)
-  const [internalUnit, setInternalUnit] = useState<UnitOf<Q>>(resolveInitialUnit);
-  const currentUnit = controlledUnit !== undefined ? controlledUnit : internalUnit;
+  const [internalUnit, setInternalUnit] =
+    useState<UnitOf<Q>>(resolveInitialUnit);
+  const [prevQuantity, setPrevQuantity] = useState<Q>(quantity);
+  // Conversion override for uncontrolled mode when unit changes with unitChangeBehavior="convert"
+  const [convertedValue, setConvertedValue] = useState<string | null>(null);
+
+  // Sync unit when quantity changes
+  if (prevQuantity !== quantity) {
+    setPrevQuantity(quantity);
+    setInternalUnit(resolveInitialUnit());
+    setConvertedValue(null);
+  }
+
+  const currentUnit =
+    controlledUnit !== undefined ? controlledUnit : internalUnit;
 
   // Refs for tracking values without re-rendering on typing
   const currentValueRef = useRef<number | null>(
@@ -142,9 +153,6 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
         ? String(defaultValue)
         : "",
   );
-
-  // Conversion override for uncontrolled mode when unit changes with unitChangeBehavior="convert"
-  const [convertedValue, setConvertedValue] = useState<string | null>(null);
 
   // Initial unit ref for form reset listener
   const initialUnitRef = useRef<UnitOf<Q>>(currentUnit);
@@ -174,9 +182,15 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
     if (min !== undefined) {
       if (isMeasurement(min)) {
         // Round min UP so bound is never exceeded by rounding
-        const converted = convertUnit(min.value, quantity, min.unit, currentUnit, {
-          maxFractionDigits,
-        });
+        const converted = convertUnit(
+          min.value,
+          quantity,
+          min.unit,
+          currentUnit,
+          {
+            maxFractionDigits,
+          },
+        );
         const factor = 10 ** maxFractionDigits;
         return Math.ceil(converted * factor) / factor;
       }
@@ -193,15 +207,27 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
       return 0;
     }
     return undefined;
-  }, [min, quantity, currentUnit, maxFractionDigits, quantityDef.allowNegative]);
+  }, [
+    min,
+    quantity,
+    currentUnit,
+    maxFractionDigits,
+    quantityDef.allowNegative,
+  ]);
 
   const resolvedMax = useMemo(() => {
     if (max !== undefined) {
       if (isMeasurement(max)) {
         // Round max DOWN so bound is never exceeded by rounding
-        const converted = convertUnit(max.value, quantity, max.unit, currentUnit, {
-          maxFractionDigits,
-        });
+        const converted = convertUnit(
+          max.value,
+          quantity,
+          max.unit,
+          currentUnit,
+          {
+            maxFractionDigits,
+          },
+        );
         const factor = 10 ** maxFractionDigits;
         return Math.floor(converted * factor) / factor;
       }
@@ -216,8 +242,7 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
       currentValueRef.current = num;
       currentFormattedValueRef.current = formatted;
 
-      const baseVal =
-        num !== null ? toBase(num, quantity, unitKey) : null;
+      const baseVal = num !== null ? toBase(num, quantity, unitKey) : null;
 
       const changeEvent: UnitInputValue<Q> = {
         value: num,
@@ -252,13 +277,9 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
       }
 
       if (unitChangeBehavior === "convert") {
-        let converted = convertUnit(
-          currentNum,
-          quantity,
-          prevUnit,
-          nextUnit,
-          { maxFractionDigits },
-        );
+        let converted = convertUnit(currentNum, quantity, prevUnit, nextUnit, {
+          maxFractionDigits,
+        });
 
         // Clamp converted bounds if min/max exists
         let currentBoundMin: number | undefined;
@@ -343,15 +364,30 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
   );
 
   // 7. Select Options (Grouped by system unless whitelist `units` is provided)
+  const currentLocale = getLocale();
+
   const unitOptions: SelectOption[] = useMemo(() => {
+    const formatOption = (u: {
+      key: string;
+      symbol: string;
+      name: string;
+    }) => {
+      const localizedName = getLocalizedUnitName(
+        quantity,
+        u.key,
+        currentLocale,
+      );
+      return {
+        value: u.key,
+        label: u.symbol,
+        symbol: u.symbol,
+        name: localizedName,
+      };
+    };
+
     if (whitelistUnits && whitelistUnits.length > 0) {
       // Honor order without grouping
-      return availableUnitDefs.map((u) => ({
-        value: u.key,
-        label: `${u.symbol}  ${u.name}`,
-        symbol: u.symbol,
-        name: u.name,
-      }));
+      return availableUnitDefs.map(formatOption);
     }
 
     const neutrals = availableUnitDefs.filter((u) => u.system === "neutral");
@@ -363,18 +399,8 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
 
     const ordered = [...neutrals, ...activeGroup, ...secondGroup];
 
-    return ordered.map((u) => ({
-      value: u.key,
-      label: `${u.symbol}  ${u.name}`,
-      symbol: u.symbol,
-      name: u.name,
-    }));
-  }, [whitelistUnits, availableUnitDefs, measurementSystem]);
-
-  const activeUnitDef = useMemo(
-    () => getUnitDef(quantity, currentUnit),
-    [quantity, currentUnit],
-  );
+    return ordered.map(formatOption);
+  }, [whitelistUnits, availableUnitDefs, measurementSystem, quantity, currentLocale]);
 
   // Effective unit name for native form submission
   const resolvedUnitName = unitName ?? (name ? `${name}Unit` : undefined);
@@ -392,7 +418,7 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
       {/* Unit Select Dropdown */}
       <Box
         w={"auto"}
-        minW={{ base: "72px", md: "110px" }}
+        minW={"100px"}
         h={"full"}
         display={"flex"}
         alignItems={"center"}
@@ -406,12 +432,6 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
               outline: "none !important",
               bg: "transparent !important",
               minH: "unset !important",
-              h: "full",
-              px: "8px",
-              cursor: disabled || readOnly ? "default" : "pointer",
-              _hover: {
-                bg: disabled || readOnly ? "transparent" : "bg.muted",
-              },
               _focus: {
                 boxShadow: "none !important",
                 border: "none !important",
@@ -422,6 +442,10 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
                 border: "none !important",
                 outline: "none !important",
               },
+              _active: {
+                boxShadow: "none !important",
+                border: "none !important",
+              },
             },
         }}
         {...(isFloatingVariant && {
@@ -429,6 +453,7 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
         })}
       >
         <SelectInput
+          key={`unit-select-${quantity}`}
           value={currentUnit}
           options={unitOptions}
           clearable={false}
@@ -437,35 +462,36 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
             minW: "220px",
             w: "auto",
           }}
-          onValueChange={(val) => {
-            if (val) handleUnitSelect(val);
-          }}
-          trigger={({ disabled: isTriggerDisabled }) => (
-            <HStack
-              gap={1}
-              align={"center"}
-              justify={"center"}
-              w={"full"}
-              h={"full"}
-              title={activeUnitDef.name}
-              aria-label={fieldLabel ? `${fieldLabel} unit` : "Unit"}
-              opacity={isTriggerDisabled ? 0.6 : 1}
-            >
-              <P fontSize={"sm"} fontWeight={"medium"} userSelect={"none"}>
-                {activeUnitDef.symbol}
-              </P>
-            </HStack>
-          )}
           renderOption={(opt) => (
-            <HStack w={"full"} justify={"space-between"} align={"center"} gap={3}>
-              <P fontWeight={"semibold"} minW={"44px"} whiteSpace={"nowrap"}>
+            <HStack
+              gap={3}
+              align={"center"}
+              flex={1}
+              minW={0}
+              justify={"start"}
+            >
+              <P
+                fontWeight={"semibold"}
+                w={"48px"}
+                minW={"48px"}
+                whiteSpace={"nowrap"}
+                textAlign={"start"}
+              >
                 {String(opt.symbol || "")}
               </P>
-              <P color={"fg.muted"} whiteSpace={"nowrap"}>
+              <P
+                color={"fg.muted"}
+                whiteSpace={"nowrap"}
+                textAlign={"start"}
+                flex={1}
+              >
                 {String(opt.name || opt.label)}
               </P>
             </HStack>
           )}
+          onValueChange={(val) => {
+            if (val) handleUnitSelect(val);
+          }}
           {...unitTriggerProps}
         />
       </Box>
@@ -513,4 +539,3 @@ export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
     </>
   );
 }
-

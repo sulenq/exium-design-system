@@ -260,7 +260,7 @@ export const DurationInput = forwardRef<HTMLInputElement, DurationInputProps>(
         {/* 2. Unit Select Segment (Design System SelectInput) */}
         <Box
           w={"auto"}
-          minW={"125px"}
+          minW={"100px"}
           h={"full"}
           display={"flex"}
           alignItems={"center"}
