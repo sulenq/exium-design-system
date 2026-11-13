@@ -373,6 +373,10 @@ export const DS_NAVS_MAP = {
     icon: SquaresFourIcon,
     title: "Sidebar",
   },
+  v_navs: {
+    icon: ListIcon,
+    title: "VNavs",
+  },
   link: {
     icon: ArrowSquareOutIcon,
     title: "Link",

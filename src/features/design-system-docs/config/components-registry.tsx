@@ -70,6 +70,10 @@ import { Avatar } from "@/design-system/components/media/avatar/avatar";
 import { Image } from "@/design-system/components/media/image/image";
 import { ExternalLink } from "@/design-system/components/navigation/link/link";
 import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";
+import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";
+import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import type { NavGroup, NavItem } from "@/shared/types/nav.type";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
@@ -82,7 +86,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { CountBadge } from "@/design-system/components/typography/count-badge/count-badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { Kbd } from "@/design-system/components/typography/kbd/kbd";
-import { P } from "@/design-system/components/typography/p/p";
+import { ClampedP, P } from "@/design-system/components/typography/p/p";
 import { RichTextEditorPresetEssential } from "@/design-system/components/typography/rich-text-editor/rich-text-editor.preset";
 import { Span } from "@/design-system/components/typography/span/span";
 import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";
@@ -93,15 +97,17 @@ import type {
 } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import {
   ChevronDownIcon,
-  CopyIcon,
   EditIcon,
   EyeIcon,
+  FolderIcon,
   HomeIcon,
+  LayersIcon,
   SettingsIcon,
   SparklesIcon,
   Trash2Icon,
+  UserIcon,
 } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import { Sparkle as PhosphorSparkleIcon } from "@phosphor-icons/react";
 
@@ -184,10 +190,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen interaktif utama untuk aksi pengguna dengan variasi saiz, gaya, dan status loading.",
     importPath:
-      'import { Button } from "@/design-system/components/button/button/button";',
+      'import { Button } from "@/design-system/components/button/button/button";\nimport { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";',
     component: Button,
     defaultProps: {
-      children: "Button",
+      label: "Button",
+      iconPlacement: "none",
       size: "md",
       colorPalette: "blue",
       loading: false,
@@ -195,11 +202,19 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     },
     propsSpec: [
       {
-        name: "children",
-        type: "ReactNode",
-        defaultValue: undefined,
-        description: "Label atau elemen anak di dalam button.",
+        name: "label",
+        type: "string",
+        defaultValue: "Button",
+        description: "Teks label tombol.",
         controlKind: "text",
+      },
+      {
+        name: "iconPlacement",
+        type: '"none" | "start" | "end"',
+        defaultValue: "none",
+        description: "Komposisi ikon di dalam children tombol (awal / akhir).",
+        controlKind: "select",
+        options: ["none", "start", "end"],
       },
       {
         name: "size",
@@ -232,8 +247,51 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const sizeProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const colorProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+      const loadingProp = props.loading ? " loading={true}" : "";
+      const disabledProp = props.disabled ? " disabled={true}" : "";
+      const label = String(props.label || "Button");
+      const iconPlacement = (props.iconPlacement as string) || "none";
+
+      if (iconPlacement === "start") {
+        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  <AppIcon icon={SparklesIcon} />\n  {"${label}"}\n</Button>`;
+      }
+      if (iconPlacement === "end") {
+        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"${label}"}\n  <AppIcon icon={SparklesIcon} />\n</Button>`;
+      }
+      return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"${label}"}\n</Button>`;
+    },
     renderPlayground: (props) => {
       const variants = ["solid", "subtle", "outline", "ghost"] as const;
+      const label = String(props.label || "Button");
+      const iconPlacement = (props.iconPlacement as string) || "none";
+
+      const renderChildren = () => {
+        if (iconPlacement === "start") {
+          return (
+            <>
+              <AppIcon icon={SparklesIcon} />
+              {label}
+            </>
+          );
+        }
+        if (iconPlacement === "end") {
+          return (
+            <>
+              {label}
+              <AppIcon icon={SparklesIcon} />
+            </>
+          );
+        }
+        return label;
+      };
+
       return (
         <HStack gap={3} wrap={"wrap"} justify={"center"}>
           {variants.map((variant) => (
@@ -245,7 +303,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
               loading={Boolean(props.loading)}
               disabled={Boolean(props.disabled)}
             >
-              {String(props.children || "Button")}
+              {renderChildren()}
             </Button>
           ))}
         </HStack>
@@ -308,7 +366,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Komponen teks standard dengan dukungan penyesuaian font size, weight, dan warna.",
     importPath:
-      'import { P } from "@/design-system/components/typography/p/p";',
+      'import { ClampedP, P } from "@/design-system/components/typography/p/p";',
     component: P,
     defaultProps: {
       children: "Exium Design System Typography Example",
@@ -1963,7 +2021,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "value",
         type: "string",
-        defaultValue: undefined,
+        defaultValue: "https://exium.id",
         required: true,
         description: "Nilai string yang akan disalin (wajib).",
         controlKind: "text",
@@ -1976,6 +2034,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
+    generateCode: (props) => {
+      const val = String(props.value || "https://exium.id");
+      const timeout = Number(props.timeout) || 2000;
+      const timeoutProp = timeout !== 2000 ? ` timeout={${timeout}}` : "";
+      return `<Clipboard.Root value={"${val}"}${timeoutProp}>\n  <HStack gap={2}>\n    <Clipboard.Input />\n    <Clipboard.Trigger asChild>\n      <Button size={"sm"} variant={"outline"}>\n        <Clipboard.Indicator />\n        <Clipboard.CopyText />\n      </Button>\n    </Clipboard.Trigger>\n  </HStack>\n</Clipboard.Root>`;
+    },
     renderPlayground: (props) => (
       <Clipboard.Root
         value={String(props.value || "https://exium.id")}
@@ -1985,7 +2049,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           <Clipboard.Input />
           <Clipboard.Trigger asChild>
             <Button size={"sm"} variant={"outline"}>
-              <AppIcon icon={CopyIcon} size={"sm"} /> Salin
+              <Clipboard.Indicator />
+              <Clipboard.CopyText />
             </Button>
           </Clipboard.Trigger>
         </HStack>
@@ -3431,13 +3496,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
       {
-        name: "collapsedWidth",
-        type: "number",
-        defaultValue: 60,
-        description: "Lebar saat sidebar dalam keadaan collapsed.",
-        controlKind: "number",
-      },
-      {
         name: "expandedWidth",
         type: "number",
         defaultValue: 240,
@@ -3445,110 +3503,123 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
+    generateCode: (props) => {
+      const isExpandable = props.expandable !== false;
+      const isExpanded = Boolean(props.expanded);
+      const expandedW = Number(props.expandedWidth) || 240;
+
+      return `<Sidebar.Root
+  sidebarKey={"app-sidebar"}
+  expandable={${isExpandable}}
+  expanded={${isExpanded}}
+  expandedWidth={${expandedW}}
+>
+  <Sidebar.Header>
+    <HStack align={"center"} justify={"space-between"} w={"full"}>
+      <HStack align={"center"} gap={2}>
+        <Logo boxSize={18} ml={1.5} flexShrink={0} />
+        {${isExpanded} && (
+          <ClampedP fontSize={"lg"} fontWeight={"semibold"}>
+            {"exium"}
+          </ClampedP>
+        )}
+      </HStack>
+      {${isExpanded} && (
+        <ClampedP mr={1} fontSize={"sm"} color={"fg.subtle"} lineHeight={1}>
+          {"v1.0"}
+        </ClampedP>
+      )}
+    </HStack>
+  </Sidebar.Header>
+
+  <Sidebar.Body>
+    <VScrollContainer>
+      <VNavs
+        flex={1}
+        groups={navGroups}
+        navs={navsMap}
+        activeKey={activeNavKey}
+        expanded={${isExpanded}}
+        onNavClick={setActiveNavKey}
+        p={3}
+      />
+    </VScrollContainer>
+  </Sidebar.Body>
+</Sidebar.Root>`;
+    },
     renderPlayground: (props, onPropChange) => {
       const isExpanded = Boolean(props.expanded);
       const isExpandable = Boolean(props.expandable);
 
       return (
-        <Box
-          h={"240px"}
-          border={"1px solid"}
-          borderColor={"border.subtle"}
-          rounded={"md"}
-          bg={"bg.canvas"}
-          pos={"relative"}
-        >
-          <Sidebar.Root
-            sidebarKey={"demo-playground-sidebar"}
-            expandable={isExpandable}
-            expanded={isExpanded}
-            onExpandedChange={(next) => onPropChange?.("expanded", next)}
-            collapsedWidth={Number(props.collapsedWidth) || 60}
-            expandedWidth={Number(props.expandedWidth) || 240}
-          >
-            <Sidebar.Header
-              px={3}
-              py={3}
-              justify={isExpanded ? "space-between" : "center"}
-            >
-              <HStack gap={2} align={"center"} overflow={"hidden"}>
-                <Box
-                  boxSize={7}
-                  minW={7}
-                  rounded={"md"}
-                  bg={"blue.solid"}
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  flexShrink={0}
-                >
-                  <AppIcon icon={SparklesIcon} size={"xs"} color={"white"} />
-                </Box>
-                {isExpanded && (
-                  <P fontWeight={"bold"} fontSize={"sm"} truncate>
-                    Exium App
-                  </P>
-                )}
-              </HStack>
-            </Sidebar.Header>
-
-            <Sidebar.Separator mx={-1} />
-
-            <Sidebar.Body
-              p={2}
-              gap={1}
-              align={isExpanded ? "stretch" : "center"}
-            >
-              <Tooltip
-                content={"Beranda"}
-                disabled={isExpanded}
-                positioning={{ placement: "right" }}
-              >
-                <HStack
-                  p={2}
-                  rounded={"md"}
-                  bg={"blue.subtle"}
-                  color={"blue.fg"}
-                  gap={2.5}
-                  cursor={"pointer"}
-                  w={isExpanded ? "full" : "auto"}
-                  justify={isExpanded ? "start" : "center"}
-                >
-                  <AppIcon icon={HomeIcon} size={"sm"} flexShrink={0} />
-                  {isExpanded && (
-                    <P fontSize={"xs"} fontWeight={"semibold"} truncate>
-                      Beranda
-                    </P>
-                  )}
-                </HStack>
-              </Tooltip>
-
-              <Tooltip
-                content={"Pengaturan"}
-                disabled={isExpanded}
-                positioning={{ placement: "right" }}
-              >
-                <HStack
-                  p={2}
-                  rounded={"md"}
-                  _hover={{ bg: "bg.muted" }}
-                  gap={2.5}
-                  cursor={"pointer"}
-                  w={isExpanded ? "full" : "auto"}
-                  justify={isExpanded ? "start" : "center"}
-                >
-                  <AppIcon icon={SettingsIcon} size={"sm"} flexShrink={0} />
-                  {isExpanded && (
-                    <P fontSize={"xs"} color={"fg.muted"} truncate>
-                      Pengaturan
-                    </P>
-                  )}
-                </HStack>
-              </Tooltip>
-            </Sidebar.Body>
-          </Sidebar.Root>
-        </Box>
+        <SidebarPlaygroundDemo
+          expanded={isExpanded}
+          expandable={isExpandable}
+          expandedWidth={Number(props.expandedWidth) || 240}
+          onExpandedChange={(next) => onPropChange?.("expanded", next)}
+        />
       );
+    },
+  },
+
+  v_navs: {
+    key: "v_navs",
+    title: "VNavs",
+    category: "Navigation & Shell",
+    description:
+      "Navigasi hierarkis vertikal berlapis dengan dukungan pengelompokan (groups), sub-nav collapsible bertingkat, dan mode collapsed/rail.",
+    importPath:
+      'import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";',
+    component: VNavs,
+    defaultProps: {
+      expanded: true,
+    },
+    propsSpec: [
+      {
+        name: "expanded",
+        type: "boolean",
+        defaultValue: true,
+        description:
+          "Status buka/tutup label navigasi (true: full, false: rail).",
+        controlKind: "boolean",
+      },
+    ],
+    generateCode: (props) => {
+      const isExpanded = Boolean(props.expanded);
+      return `<VNavs
+  flex={1}
+  groups={[
+    {
+      title: "Menu Utama",
+      items: [
+        { key: "home" },
+        {
+          key: "projects",
+          children: [{ key: "active_projects" }, { key: "archived_projects" }],
+        },
+      ],
+    },
+    {
+      title: "Preferensi",
+      items: [{ key: "settings" }],
+    },
+  ]}
+  navs={{
+    home: { title: "Beranda", icon: HomeIcon },
+    projects: { title: "Proyek", icon: FolderIcon },
+    active_projects: { title: "Proyek Aktif" },
+    archived_projects: { title: "Arsip Proyek" },
+    settings: { title: "Pengaturan", icon: SettingsIcon },
+  }}
+  activeKey={"home"}
+  expanded={${isExpanded}}
+  onNavClick={(key) => handleSelectNav(key)}
+  p={2}
+/>`;
+    },
+    renderPlayground: (props) => {
+      const isExpanded = Boolean(props.expanded);
+      return <VNavsPlaygroundDemo expanded={isExpanded} />;
     },
   },
 
@@ -3562,8 +3633,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { ExternalLink } from "@/design-system/components/navigation/link/link";',
     component: ExternalLink,
     defaultProps: {
-      href: "https://atrbpn.go.id",
-      children: "Kunjungi Situs ATR BPN",
+      href: "https://youtube.com",
+      children: "Youtube",
     },
     propsSpec: [
       {
@@ -3592,8 +3663,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     renderPlayground: (props) => (
-      <ExternalLink href={String(props.href || "https://atrbpn.go.id")}>
-        {String(props.children || "Kunjungi Situs ATR BPN")}
+      <ExternalLink href={String(props.href || "https://youtube.com")}>
+        {String(props.children || "Youtube")}
       </ExternalLink>
     ),
   },
@@ -4872,5 +4943,194 @@ const ModalPlaygroundDemo = ({
         </Modal.Footer>
       </Modal.Content>
     </Modal.Root>
+  );
+};
+
+const DEMO_NAV_GROUPS: NavGroup[] = [
+  {
+    title: "Menu Utama",
+    items: [
+      { key: "home" },
+      {
+        key: "projects",
+        children: [{ key: "active_projects" }, { key: "archived_projects" }],
+      },
+    ],
+  },
+  {
+    title: "Sistem",
+    items: [
+      {
+        key: "organization",
+        children: [{ key: "members" }, { key: "roles" }],
+      },
+      { key: "settings" },
+    ],
+  },
+];
+
+const DEMO_NAVS_MAP: Record<string, NavItem> = {
+  home: {
+    title: "Beranda",
+    icon: HomeIcon,
+  },
+  projects: {
+    title: "Proyek",
+    icon: FolderIcon,
+  },
+  active_projects: {
+    title: "Proyek Aktif",
+  },
+  archived_projects: {
+    title: "Arsip Proyek",
+  },
+  organization: {
+    title: "Organisasi",
+    icon: LayersIcon,
+  },
+  members: {
+    title: "Anggota",
+    icon: UserIcon,
+  },
+  roles: {
+    title: "Peran Akses",
+  },
+  settings: {
+    title: "Pengaturan",
+    icon: SettingsIcon,
+  },
+};
+
+const SidebarPlaygroundDemo = ({
+  expanded,
+  expandable,
+  expandedWidth,
+  onExpandedChange,
+}: {
+  expanded: boolean;
+  expandable: boolean;
+  expandedWidth: number;
+  onExpandedChange?: (next: boolean) => void;
+}) => {
+  const [activeNavKey, setActiveNavKey] = useState("home");
+  const { theme } = useThemeStore();
+
+  return (
+    <Box
+      w={"full"}
+      h={"360px"}
+      border={"1px solid"}
+      borderColor={"border.subtle"}
+      rounded={"md"}
+      bg={"bg.canvas"}
+      display={"flex"}
+      alignItems={"stretch"}
+      justifyContent={"start"}
+      overflow={"hidden"}
+      pos={"relative"}
+    >
+      <Sidebar.Root
+        sidebarKey={"demo-playground-sidebar"}
+        expandable={expandable}
+        expanded={expanded}
+        onExpandedChange={onExpandedChange}
+        expandedWidth={expandedWidth}
+        h={"full"}
+      >
+        <Sidebar.Header>
+          <HStack align={"center"} justify={"space-between"} w={"full"}>
+            <HStack align={"center"} gap={2}>
+              <Logo boxSize={18} ml={1.5} flexShrink={0} />
+
+              <ClampedP
+                w={expanded ? "" : 0}
+                fontSize={"lg"}
+                fontWeight={"semibold"}
+                color={`${theme.colorPalette}.fg`}
+                mb={"3px"}
+              >
+                {"exium"}
+              </ClampedP>
+            </HStack>
+
+            <ClampedP
+              w={expanded ? "" : 0}
+              mr={1}
+              fontSize={"sm"}
+              transition={"200ms"}
+              color={"fg.subtle"}
+              lineHeight={1}
+            >
+              {"v1.0"}
+            </ClampedP>
+          </HStack>
+        </Sidebar.Header>
+
+        <Sidebar.Body>
+          <VScrollContainer>
+            <VNavs
+              flex={1}
+              groups={DEMO_NAV_GROUPS}
+              navs={DEMO_NAVS_MAP}
+              activeKey={activeNavKey}
+              expanded={expanded}
+              onNavClick={setActiveNavKey}
+              p={3}
+            />
+          </VScrollContainer>
+        </Sidebar.Body>
+      </Sidebar.Root>
+
+      {/* Simulated content area */}
+      <Box
+        flex={1}
+        p={6}
+        bg={"bg.subtle"}
+        display={"flex"}
+        flexDirection={"column"}
+        gap={4}
+      >
+        <HStack justify={"space-between"} align={"center"}>
+          <P fontWeight={"semibold"} fontSize={"md"}>
+            {"Area Konten Utama"}
+          </P>
+          <Badge colorPalette={"blue"} variant={"subtle"}>
+            {`Navigasi Aktif: ${DEMO_NAVS_MAP[activeNavKey]?.title ?? activeNavKey}`}
+          </Badge>
+        </HStack>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Sidebar dan VNavs memiliki proporsi padding (p={3}), header default, logo branding, serta pemisah yang identik dengan navigasi dokumentasi sistem."}
+        </P>
+      </Box>
+    </Box>
+  );
+};
+
+const VNavsPlaygroundDemo = ({ expanded }: { expanded: boolean }) => {
+  const [activeNavKey, setActiveNavKey] = useState("home");
+
+  return (
+    <Box
+      w={"full"}
+      maxW={"300px"}
+      h={"360px"}
+      border={"1px solid"}
+      borderColor={"border.subtle"}
+      rounded={"md"}
+      bg={"bg.body"}
+      overflow={"hidden"}
+    >
+      <VScrollContainer>
+        <VNavs
+          flex={1}
+          groups={DEMO_NAV_GROUPS}
+          navs={DEMO_NAVS_MAP}
+          activeKey={activeNavKey}
+          expanded={expanded}
+          onNavClick={setActiveNavKey}
+          p={3}
+        />
+      </VScrollContainer>
+    </Box>
   );
 };

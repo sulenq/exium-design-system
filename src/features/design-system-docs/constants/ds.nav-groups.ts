@@ -149,7 +149,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
       },
       {
         key: "cat_navigation",
-        children: [{ key: "sidebar" }, { key: "link" }],
+        children: [{ key: "sidebar" }, { key: "v_navs" }, { key: "link" }],
       },
       {
         key: "cat_media",
