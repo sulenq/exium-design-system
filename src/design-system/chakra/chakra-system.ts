@@ -139,7 +139,7 @@ export const chakraConfig = defineConfig({
         canvasDarkAlpha: { value: "#161717d9" },
 
         bodyLight: { value: "#ffffff" },
-        bodyDark: { value: "#1a1b1c" },
+        bodyDark: { value: "#171717" },
 
         bodyLightAlpha: { value: "#ffffffbf" },
         bodyDarkAlpha: { value: "#1a1b1cbf" },
@@ -159,12 +159,11 @@ export const chakraConfig = defineConfig({
           400: { value: "hsl(0, 0%, 64%)" },
           500: { value: "hsl(0, 0%, 50%)" },
           600: { value: "hsl(0, 0%, 42%)" },
-          700: { value: "hsl(0, 0%, 33%)" },
-          800: { value: "hsl(0, 0%, 23%)" },
-          900: { value: "hsl(0, 0%, 16%)" },
-          950: { value: "hsl(0, 0%, 9%)" },
+          700: { value: "hsl(0, 0%, 32%)" },
+          800: { value: "hsl(0, 0%, 22%)" },
+          900: { value: "hsl(0, 0%, 15%)" },
+          950: { value: "hsl(0, 0%, 11%)" },
         },
-
         grey: {
           50: { value: "hsl(215, 10%, 97%)" },
           100: { value: "hsl(215, 11%, 93%)" },

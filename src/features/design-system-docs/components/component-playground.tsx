@@ -66,8 +66,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
 
     // Extract imported component identifier from spec.importPath (e.g. `import { FocusSelectInput } from ...` -> `FocusSelectInput`)
     const importMatch = spec.importPath?.match(/import\s*\{\s*(\w+)/);
-    const componentName =
-      importMatch?.[1] ?? spec.title.replace(/\s+/g, "");
+    const componentName = importMatch?.[1] ?? spec.title.replace(/\s+/g, "");
     const propsPrefix = propStrings ? ` ${propStrings}` : "";
     const childrenVal = propsState.children;
 
