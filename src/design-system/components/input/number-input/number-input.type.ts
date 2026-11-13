@@ -8,6 +8,10 @@ import type { ButtonProps } from "@/design-system/components/button/button/butto
 export type NumberInputProps = NumberInputRootProps & {
   placeholder?: string;
   startElement?: ReactNode;
+  endElement?: ReactNode;
+  endElementPlacement?: "before-stepper" | "after-stepper";
+  stepper?: boolean;
+  stepperVariant?: "default" | "borderless";
   inputProps?: NumberInputInputProps;
   onValueChange?: (details: { value: number; formattedValue: string }) => void;
 };

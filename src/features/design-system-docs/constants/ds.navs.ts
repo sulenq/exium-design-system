@@ -164,6 +164,10 @@ export const DS_NAVS_MAP = {
     icon: ClockIcon,
     title: "Duration Input",
   },
+  unit_input: {
+    icon: HashIcon,
+    title: "Unit Input",
+  },
   number_input: {
     icon: HashIcon,
     title: "Number Input",

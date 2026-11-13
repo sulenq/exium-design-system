@@ -57,6 +57,8 @@ import SelectInput from "@/design-system/components/input/select/select";
 import { Slider } from "@/design-system/components/input/slider/slider";
 import { Switch } from "@/design-system/components/input/switch/switch";
 import { Textarea } from "@/design-system/components/input/textarea/textarea";
+import { UnitInput } from "@/design-system/components/input/unit-input/unit-input";
+import type { UnitQuantity } from "@/design-system/constants/types/units.type";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Card } from "@/design-system/components/layout/card/card";
 import { Container } from "@/design-system/components/layout/container/container";
@@ -691,6 +693,100 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
               | "week") || "minute"
           }
           placeholder={(props.placeholder as string) || "0"}
+          disabled={Boolean(props.disabled)}
+        />
+      </Box>
+    ),
+  },
+
+  unit_input: {
+    key: "unit_input",
+    title: "UnitInput",
+    category: "Form Inputs",
+    description:
+      "Kontrol formulir terintegrasi untuk memasukkan besaran fisik (angka + satuan unit seperti kg, °C, ha) dengan konversi otomatis, borderless stepper, dan dukungan 15 kuantitas ISO 80000.",
+    importPath:
+      'import { UnitInput } from "@/design-system/components/input/unit-input/unit-input";',
+    component: UnitInput,
+    defaultProps: {
+      quantity: "mass",
+      unitChangeBehavior: "keep",
+      defaultValue: "5",
+      stepper: true,
+      disabled: false,
+    },
+    propsSpec: [
+      {
+        name: "quantity",
+        type: '"mass" | "length" | "area" | "volume" | "temperature" | "duration" | "speed" | "data" | "pressure" | "energy" | "power" | "angle" | "frequency" | "force" | "count"',
+        defaultValue: "mass",
+        description: "Besaran fisik yang diukur (kuantitas fisik ISO 80000).",
+        controlKind: "select",
+        options: [
+          "mass",
+          "length",
+          "area",
+          "volume",
+          "temperature",
+          "duration",
+          "speed",
+          "data",
+          "pressure",
+          "energy",
+          "power",
+          "angle",
+          "frequency",
+          "force",
+          "count",
+        ],
+      },
+      {
+        name: "unitChangeBehavior",
+        type: '"keep" | "convert"',
+        defaultValue: "keep",
+        description:
+          "Perilaku saat pengguna mengubah unit: keep (angka tetap) atau convert (angka dikonversi secara matematis).",
+        controlKind: "select",
+        options: ["keep", "convert"],
+      },
+      {
+        name: "defaultValue",
+        type: "string",
+        defaultValue: "5",
+        description: "Nilai awal dalam angka string.",
+        controlKind: "text",
+      },
+      {
+        name: "stepper",
+        type: "boolean",
+        defaultValue: true,
+        description: "Tampilkan stepper tombol naik / turun tanpa outline.",
+        controlKind: "boolean",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: false,
+        description: "Status nonaktif kontrol input.",
+        controlKind: "boolean",
+      },
+    ],
+    generateCode: (props) => {
+      const q = (props.quantity as string) || "mass";
+      const b = (props.unitChangeBehavior as string) || "keep";
+      const stepperProp = props.stepper === false ? ` stepper={false}` : "";
+      const disabledProp = props.disabled ? ` disabled={true}` : "";
+      return `<UnitInput\n  quantity={"${q}"}\n  unitChangeBehavior={"${b}"}\n  defaultValue={"${props.defaultValue || "5"}"}${stepperProp}${disabledProp}\n  onValueChange={(val) => console.log(val)}\n/>`;
+    },
+    renderPlayground: (props) => (
+      <Box w={"280px"}>
+        <UnitInput
+          quantity={(props.quantity as UnitQuantity) || "mass"}
+          unitChangeBehavior={
+            (props.unitChangeBehavior as "keep" | "convert") || "keep"
+          }
+          defaultValue={String(props.defaultValue ?? "5")}
+          stepper={props.stepper !== false}
           disabled={Boolean(props.disabled)}
         />
       </Box>

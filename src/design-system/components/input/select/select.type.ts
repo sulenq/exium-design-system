@@ -1,6 +1,6 @@
 // src/design-system/components/input/types/select.type.ts
 
-import type { SelectRootProps } from "@chakra-ui/react";
+import type { SelectRootProps, Select as ChakraSelect } from "@chakra-ui/react";
 import type { ComponentType, MouseEvent, ReactNode, RefObject } from "react";
 
 export type SelectOption = {
@@ -41,6 +41,7 @@ export type SelectProps = Omit<
   suffixLabel?: ReactNode;
   trigger?: ReactNode | ((params: SelectTriggerRenderParams) => ReactNode);
   renderOption?: (option: SelectOption) => ReactNode;
+  contentProps?: Partial<ChakraSelect.ContentProps>;
   isFetching?: boolean;
   isLoading?: boolean;
   isError?: boolean;

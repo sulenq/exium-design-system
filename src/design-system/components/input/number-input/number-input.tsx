@@ -17,7 +17,7 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 import { dispatchNativeInputEvent } from "@/shared/utils/dom/dispatch-native-input-event";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { MinusIcon, PlusIcon, ChevronUp, ChevronDown } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // `valueAsNumber` is NaN while the input is empty (Number("") === NaN).
@@ -55,6 +55,10 @@ export const NumberInput = (props: NumberInputProps) => {
     placeholder,
     inputProps,
     startElement,
+    endElement,
+    endElementPlacement = "before-stepper",
+    stepper = true,
+    stepperVariant = "default",
     value,
     defaultValue,
     ...restProps
@@ -80,12 +84,21 @@ export const NumberInput = (props: NumberInputProps) => {
 
   // States
   const [startElementWidth, setStartElementWidth] = useState<number>(0);
+  const [endElementWidth, setEndElementWidth] = useState<number>(0);
 
   const startElementRef = useCallback((node: HTMLDivElement | null) => {
     if (node) {
       setStartElementWidth(node.offsetWidth);
     } else {
       setStartElementWidth(0);
+    }
+  }, []);
+
+  const endElementRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      setEndElementWidth(node.offsetWidth);
+    } else {
+      setEndElementWidth(0);
     }
   }, []);
 
@@ -181,6 +194,9 @@ export const NumberInput = (props: NumberInputProps) => {
           {...(startElement && {
             ps: `${(startElementWidth || 20) + 20}px`,
           })}
+          {...(endElement && {
+            pe: `${(endElementWidth || 0) + (stepper ? 44 : 12)}px`,
+          })}
           onFocusCapture={() => {
             setIsFocused(true);
           }}
@@ -197,15 +213,90 @@ export const NumberInput = (props: NumberInputProps) => {
             },
           })}
         />
+
+        {endElement && (
+          <Box
+            ref={endElementRef}
+            position={"absolute"}
+            right={
+              endElementPlacement === "after-stepper"
+                ? "0px"
+                : stepper
+                  ? "33px"
+                  : "1px"
+            }
+            top={"50%"}
+            transform={"translateY(-50%)"}
+            h={"full"}
+            zIndex={2}
+            display={"inline-flex"}
+            alignItems={"center"}
+            pointerEvents={"auto"}
+          >
+            {endElement}
+          </Box>
+        )}
       </Box>
-      <ChakraNumberInput.Control>
-        <ChakraNumberInput.IncrementTrigger
-          roundedTopRight={`calc(${theme.radii.component} - 1px)`}
-        />
-        <ChakraNumberInput.DecrementTrigger
-          roundedBottomRight={`calc(${theme.radii.component} - 1px)`}
-        />
-      </ChakraNumberInput.Control>
+
+      {stepper && (
+        <ChakraNumberInput.Control
+          outline={"none !important"}
+          border={"none !important"}
+          borderStartWidth={"0 !important"}
+          divideY={"0 !important"}
+          position={"absolute"}
+          top={"4px"}
+          bottom={"4px"}
+          insetEnd={
+            endElementPlacement === "after-stepper" && endElementWidth
+              ? `${endElementWidth + 4}px`
+              : "4px"
+          }
+          width={"28px"}
+          height={"calc(100% - 8px)"}
+          margin={"0 !important"}
+          gap={1}
+          zIndex={1}
+        >
+          <ChakraNumberInput.IncrementTrigger
+            aria-label={"Increase"}
+            tabIndex={-1}
+            border={"none !important"}
+            borderBottomWidth={"0 !important"}
+            outline={"none !important"}
+            boxShadow={"none !important"}
+            bg={"transparent"}
+            color={"fg.muted"}
+            rounded={"sm"}
+            _hover={{ bg: "bg.muted" }}
+            _active={{ bg: "bg.emphasized" }}
+            _disabled={{ opacity: "0.5", bg: "transparent" }}
+          >
+            {stepperVariant === "borderless" ? (
+              <ChevronUp size={14} />
+            ) : undefined}
+          </ChakraNumberInput.IncrementTrigger>
+
+          <ChakraNumberInput.DecrementTrigger
+            aria-label={"Decrease"}
+            tabIndex={-1}
+            border={"none !important"}
+            borderTopWidth={"0 !important"}
+            outline={"none !important"}
+            boxShadow={"none !important"}
+            bg={"transparent"}
+            color={"fg.muted"}
+            rounded={"sm"}
+            _hover={{ bg: "bg.muted" }}
+            _active={{ bg: "bg.emphasized" }}
+            _disabled={{ opacity: "0.5", bg: "transparent" }}
+          >
+            {stepperVariant === "borderless" ? (
+              <ChevronDown size={14} />
+            ) : undefined}
+          </ChakraNumberInput.DecrementTrigger>
+        </ChakraNumberInput.Control>
+      )}
     </ChakraNumberInput.Root>
   );
 

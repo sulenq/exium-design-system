@@ -73,6 +73,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         children: [
           { key: "input" },
           { key: "duration_input" },
+          { key: "unit_input" },
           { key: "number_input" },
           { key: "password_input" },
           { key: "select" },

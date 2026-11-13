@@ -48,6 +48,7 @@ export default function SelectInput(props: SelectProps) {
     suffixLabel,
     trigger: customTrigger,
     renderOption,
+    contentProps,
     _hover,
     disabled = false,
     isFetching = false,
@@ -299,11 +300,12 @@ export default function SelectInput(props: SelectProps) {
         <ChakraSelect.Positioner>
           <ChakraSelect.Content
             gap={1}
-            minW={"80px"}
+            minW={"160px"}
             bg={"bg.body"}
             rounded={theme?.radii.container}
             border={"1px solid {colors.border.subtle}"}
             shadow={"sm"}
+            {...contentProps}
             _open={{
               animation: "scale-up",
               animationDuration: "slow",
