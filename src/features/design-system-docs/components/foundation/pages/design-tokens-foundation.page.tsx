@@ -1,10 +1,7 @@
 // src/features/design-system-docs/components/foundation/pages/design-tokens-foundation.page.tsx
 
 import { Box } from "@/design-system/components/layout/box/box";
-import {
-  HStack,
-  VStack,
-} from "@/design-system/components/layout/flex-box/flex-box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
@@ -12,38 +9,93 @@ import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
 
 export const DesignTokensFoundationPage = () => {
+  const TOP_LEVEL_SPECS = [
+    {
+      key: "globalCss",
+      type: "object",
+      description: "Styling global CSS yang diinjeksi ke DOM root (html, body bg.body, font dasar, dan reset tipografi element).",
+    },
+    {
+      key: "theme.breakpoints",
+      type: "sm (350px), md (750px), lg (960px), xl (1200px)",
+      description: "Skala responsive layout untuk seluruh komponen antarmuka.",
+    },
+    {
+      key: "theme.keyframes",
+      type: "CSS @keyframes",
+      description: "Animasi modal & overlay: scale-up, scale-up-from-click-origin, scale-up-overshoot, scale-down, shrink-x, ping.",
+    },
+    {
+      key: "theme.tokens",
+      type: "Raw Primitive Tokens",
+      description: "Nilai absolut konstan non-kontekstual: palet warna 50–950, font family, font size skala rem, durasi transisi ms, dan weight.",
+    },
+    {
+      key: "theme.semanticTokens",
+      type: "Contextual Tokens (Light/Dark)",
+      description: "Token semantik adaptif (base vs _dark): bg.*, border.*, dan seluruh slot role colorPalette.*.",
+    },
+    {
+      key: "theme.layerStyles",
+      type: "Compound Visual Presets",
+      description: "Kombinasi style siap pakai untuk efek visual kompleks seperti Glassmorphism (glass, glassTop, glassBottom, frosted, dll).",
+    },
+    {
+      key: "theme.recipes & slotRecipes",
+      type: "Component Styling Recipes",
+      description: "Single recipe (button, input) dan multi-part slot recipe (select, checkbox, dialog, drawer, carousel).",
+    },
+  ];
+
+  const BG_SEMANTIC_SPECS = [
+    { token: "bg.body", target: "Konten halaman", description: "Background utama konten: putih (#ffffff) / dark (#1a1b1c)" },
+    { token: "bg.canvas", target: "Dasar aplikasi", description: "Background kanvas dasar layout: #f5f6f8 / #161717" },
+    { token: "bg.panel", target: "Sidebar & Card", description: "Background panel penampung dan sidebar" },
+    { token: "bg.subtle", target: "Hover & Table Zebra", description: "Background kontras lembut untuk hover baris dan zebra table" },
+    { token: "bg.muted", target: "Badge & Tag", description: "Background elemen sekunder, tag netral, dan input disabled" },
+    { token: "bg.emphasized", target: "Selected State", description: "Background aktif / ditekan / baris terpilih" },
+    { token: "bg.bodyAlpha", target: "Glass & Overlay", description: "Background transparan dengan alpha channel untuk efek blur" },
+    { token: "bg.backdrop", target: "Modal Backdrop", description: "Backdrop dialog overlay modal atau drawer" },
+  ];
+
+  const BORDER_SEMANTIC_SPECS = [
+    { token: "border (DEFAULT)", target: "Input & Card", description: "Border standar komponen form dan container (neutral 200 / 800)" },
+    { token: "border.subtle", target: "Separator", description: "Border pemisah section sangat tipis (an1)" },
+    { token: "border.muted", target: "Secondary Card", description: "Border outline sekunder (an2)" },
+    { token: "border.emphasized", target: "Interactive", description: "Border interaktif dan status hover fokus (an3)" },
+  ];
+
+  const PALETTE_SLOT_SPECS = [
+    { slot: "colorPalette.contrast", usage: "Teks di atas solid", description: "Warna teks kontras tinggi (putih/hitam) saat tombol solid aktif" },
+    { slot: "colorPalette.fg", usage: "Teks beraksen", description: "Warna foreground teks aksen primer" },
+    { slot: "colorPalette.subtle", usage: "Badge lembut", description: "Warna background badge dan alert aksen" },
+    { slot: "colorPalette.muted", usage: "Hover aksen", description: "Background hover sekunder aksen" },
+    { slot: "colorPalette.emphasized", usage: "Active aksen", description: "Background aksen saat diklik / selected" },
+    { slot: "colorPalette.solid", usage: "Tombol solid", description: "Background tombol utama berkontras solid" },
+    { slot: "colorPalette.focusRing", usage: "Focus outline", description: "Ring fokus aksesibilitas navigasi keyboard" },
+    { slot: "colorPalette.border", usage: "Outline aksen", description: "Border warna untuk varian outline" },
+  ];
+
   return (
-    <VStack gap={6}>
+    <VStack gap={6} align={"stretch"} w={"full"}>
       <FoundationHeader
         title={"Design Tokens & Chakra System"}
-        description={
-          "Dokumentasi lengkap seluruh konfigurasi token, semantic tokens, keyframes, layer styles, recipes, struktur key, arti, serta cara pendefinisian dan pengeditan di chakra-system.ts."
-        }
+        description={"Spesifikasi teknis arsitektur token, semantic tokens, layer styles, recipes, struktur konfigurasi, serta cara pendefinisian di chakra-system.ts."}
       />
 
       {/* 1. Architecture Overview */}
-      <Box
-        rounded={"lg"}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
-        bg={"bg.body"}
-        p={4}
-        w={"full"}
-      >
-        <VStack gap={3}>
-          <Heading size={"sm"} fontWeight={"bold"}>
-            {"1. Arsitektur File & Lokasi"}
-          </Heading>
-          <P fontSize={"sm"} color={"fg.muted"}>
-            {
-              "Semua konfigurasi token, tema, dan styling system Chakra UI v3 dipusatkan pada satu file utama:"
-            }
-          </P>
-          <CodeBlock
-            code={`// Lokasi file:
-src/design-system/chakra/chakra-system.ts
-
-// Komponen penyusun:
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"1. Arsitektur File & Lokasi"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Semua konfigurasi token, tema, dan styling system Chakra UI v3 dipusatkan pada satu file utama:"}
+        </P>
+        <P fontSize={"xs"} fontFamily={"mono"} color={"fg.subtle"}>
+          {"src/design-system/chakra/chakra-system.ts"}
+        </P>
+        <CodeBlock
+          code={`// src/design-system/chakra/chakra-system.ts
 export const chakraConfig = defineConfig({
   globalCss: { ... },
   theme: {
@@ -61,628 +113,277 @@ export const chakraConfig = defineConfig({
 
 export const chakraSystem = createSystem(defaultConfig, chakraConfig);
 export default chakraSystem;`}
-            language={"tsx"}
-          />
-        </VStack>
-      </Box>
+          language={"tsx"}
+        />
+      </VStack>
 
-      {/* 2. Top-Level Keys inside chakraConfig */}
-      <Box
-        rounded={"lg"}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
-        bg={"bg.body"}
-        p={4}
-        w={"full"}
-      >
-        <VStack gap={4}>
-          <Heading size={"sm"} fontWeight={"bold"}>
-            {"2. Daftar Seluruh Top-Level Key di chakra-system"}
-          </Heading>
-          <P fontSize={"sm"} color={"fg.muted"}>
-            {
-              "Setiap konfigurasi di dalam `defineConfig` mengendalikan aspek tertentu pada sistem styling aplikasi:"
-            }
-          </P>
+      {/* 2. Top-Level Keys Table */}
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"2. Top-Level Config Specs"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Daftar konfigurasi utama di dalam chakraConfig beserta tanggung jawab teknisnya:"}
+        </P>
 
-          <VStack gap={3}>
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"blue"}>{"globalCss"}</Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"object"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Mendefinisikan styling global CSS yang diinjeksi ke DOM root (misal `html, body` bg ke `bg.body`, font dasar, dan reset tipografi element)."
-                }
-              </P>
-            </Box>
+        <Box overflowX={"auto"} w={"full"}>
+          <table
+            style={{
+              width: "100%",
+              textAlign: "left",
+              borderCollapse: "collapse",
+              fontSize: "13px",
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <th style={{ padding: "10px 8px" }}>{"Configuration Key"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Target / Format"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Description"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {TOP_LEVEL_SPECS.map((item) => (
+                <tr key={item.key} style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                  <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>
+                    {item.key}
+                  </td>
+                  <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.type}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.description}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Box>
+      </VStack>
 
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"purple"}>{"theme.breakpoints"}</Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"sm, md, lg, xl"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Breakpoint responsive layout: `sm: 350px`, `md: 750px`, `lg: 960px`, `xl: 1200px`."
-                }
-              </P>
-            </Box>
+      {/* 3. Semantic Tokens: Backgrounds & Borders Table */}
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"3. Semantic Tokens: Backgrounds & Borders"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Token semantik adaptif otomatis berganti antara Light dan Dark mode:"}
+        </P>
 
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"teal"}>{"theme.keyframes"}</Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"CSS @keyframes"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Animasi modal & overlay: `scale-up`, `scale-up-from-click-origin`, `scale-up-overshoot`, `scale-down`, `shrink-x`, `ping` menggunakan CSS variable koordinat origin klik."
-                }
-              </P>
-            </Box>
+        {/* Background Table */}
+        <Box overflowX={"auto"} w={"full"}>
+          <table
+            style={{
+              width: "100%",
+              textAlign: "left",
+              borderCollapse: "collapse",
+              fontSize: "13px",
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <th style={{ padding: "10px 8px" }}>{"Background Token"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Target Peruntukan"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Description"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {BG_SEMANTIC_SPECS.map((item) => (
+                <tr key={item.token} style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                  <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>
+                    {item.token}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.target}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.description}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Box>
 
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"orange"}>{"theme.tokens"}</Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"Raw Tokens (Non-Contextual)"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Nilai absolut konstan (raw primitive) yang tidak tergantung tema, seperti palet warna 50–950, font family, font size skala rem, durasi transisi, dan weight."
-                }
-              </P>
-            </Box>
+        {/* Border Table */}
+        <Box overflowX={"auto"} w={"full"} mt={2}>
+          <table
+            style={{
+              width: "100%",
+              textAlign: "left",
+              borderCollapse: "collapse",
+              fontSize: "13px",
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <th style={{ padding: "10px 8px" }}>{"Border Token"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Target Peruntukan"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Description"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {BORDER_SEMANTIC_SPECS.map((item) => (
+                <tr key={item.token} style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                  <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>
+                    {item.token}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.target}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.description}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Box>
+      </VStack>
 
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"green"}>{"theme.semanticTokens"}</Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"Contextual & Mode-Aware Tokens"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Token adaptif terhadap Dark/Light mode (`base` vs `_dark`) dan semantic role (misal `bg.panel`, `bg.subtle`, `border.subtle`, `colorPalette.fg`, `colorPalette.solid`)."
-                }
-              </P>
-            </Box>
+      {/* 4. Semantic Palette Slots Table */}
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"4. Semantic Color Palette Slots"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Setiap palet warna (31 warna terdaftar) menyediakan 8 semantic slots yang konsisten:"}
+        </P>
 
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"cyan"}>{"theme.layerStyles"}</Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"Compound Visual Presets"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Kombinasi style siap pakai untuk efek visual kompleks seperti Glassmorphism (`glass`, `glassTop`, `glassBottom`, `frosted`, `frostedInverted`)."
-                }
-              </P>
-            </Box>
+        <Box overflowX={"auto"} w={"full"}>
+          <table
+            style={{
+              width: "100%",
+              textAlign: "left",
+              borderCollapse: "collapse",
+              fontSize: "13px",
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <th style={{ padding: "10px 8px" }}>{"Color Palette Slot"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Usage"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Description"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PALETTE_SLOT_SPECS.map((item) => (
+                <tr key={item.slot} style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                  <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>
+                    {item.slot}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.usage}
+                  </td>
+                  <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>
+                    {item.description}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Box>
+      </VStack>
 
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <HStack justify={"space-between"} mb={1}>
-                <Badge colorPalette={"pink"}>
-                  {"theme.recipes & slotRecipes"}
-                </Badge>
-                <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>
-                  {"Component Styling Recipes"}
-                </P>
-              </HStack>
-              <P fontSize={"sm"}>
-                {
-                  "Recipe tunggal (`button`, `input`) dan Multi-part Slot Recipe (`select`, `checkbox`, `dialog`, `drawer`, `carousel`) untuk komponen Chakra UI v3."
-                }
-              </P>
-            </Box>
-          </VStack>
-        </VStack>
-      </Box>
+      {/* 5. Typography, Sizing & Motion Specs */}
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"5. Typography, Motion & Sizing Specs"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Token konstan primitif font, durasi transisi, dan dimensi komponen terstandarisasi:"}
+        </P>
 
-      {/* 3. Deep Dive: Tokens vs Semantic Tokens */}
-      <Box
-        rounded={"lg"}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
-        bg={"bg.body"}
-        p={4}
-        w={"full"}
-      >
-        <VStack gap={4}>
-          <Heading size={"sm"} fontWeight={"bold"}>
-            {"3. Rincian Kategori Tokens & Semantic Tokens"}
-          </Heading>
-          <P fontSize={"sm"} color={"fg.muted"}>
-            {
-              "Berikut adalah daftar seluruh key kategori di dalam `tokens` dan `semanticTokens` beserta fungsinya:"
-            }
-          </P>
+        <Box overflowX={"auto"} w={"full"}>
+          <table
+            style={{
+              width: "100%",
+              textAlign: "left",
+              borderCollapse: "collapse",
+              fontSize: "13px",
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <th style={{ padding: "10px 8px" }}>{"Category"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Tokens / Range"}</th>
+                <th style={{ padding: "10px 8px" }}>{"Value"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>{"fonts"}</td>
+                <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>{"heading / body / number"}</td>
+                <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>{"'Plus Jakarta Sans Variable', sans-serif"}</td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>{"fontSizes"}</td>
+                <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>{"xs s.d. 9xl"}</td>
+                <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>{"0.75rem (12px) s.d. 6.3125rem (101px)"}</td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>{"fontWeights"}</td>
+                <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>{"normal, medium, semibold, bold"}</td>
+                <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>{"450, 500, 600, 700"}</td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>{"durations"}</td>
+                <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>{"fastest s.d. slowest"}</td>
+                <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>{"40ms, 75ms, 110ms, 150ms, 225ms, 340ms, 400ms"}</td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>{"sizes"}</td>
+                <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>{"headerH, tableRowH, modalControlsW"}</td>
+                <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>{"56px, 56px, 70px"}</td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--chakra-colors-border-subtle)" }}>
+                <td style={{ padding: "10px 8px", fontWeight: "600", fontFamily: "monospace" }}>{"zIndex"}</td>
+                <td style={{ padding: "10px 8px", fontFamily: "monospace", color: "var(--chakra-colors-fg-muted)" }}>{"modal"}</td>
+                <td style={{ padding: "10px 8px", color: "var(--chakra-colors-fg-muted)" }}>{"1400 (stacking context dialog overlay)"}</td>
+              </tr>
+            </tbody>
+          </table>
+        </Box>
+      </VStack>
 
-          <VStack gap={3}>
-            {/* Tokens Colors */}
-            <Box
-              p={3}
-              rounded={"md"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"tokens.colors (Primitive HSL & Hex Scales)"}
-              </Heading>
-              <P fontSize={"xs"} color={"fg.muted"} mb={2}>
-                {
-                  "Berisi nilai statis mentah. Memuat 31+ palet warna skala 50 hingga 950:"
-                }
-              </P>
-              <P fontSize={"xs"} fontFamily={"mono"} color={"fg.subtle"}>
-                {
-                  "neutral, grey, cream, caramel, mocha, brown, maroon, red, salmon, pastelOrange, orange, gold, yellow, lime, olive, green, jade, teal, tealBlue, cyan, sky, powderBlue, blue, sapphire, indigo, discord, powderLavender, lavender, purple, bubblegumPink, pink"
-                }
-              </P>
-            </Box>
-
-            {/* Semantic Tokens Colors */}
-            <Box
-              p={3}
-              rounded={"md"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"semanticTokens.colors.bg (Adaptive Backgrounds)"}
-              </Heading>
-              <P fontSize={"xs"} color={"fg.muted"} mb={2}>
-                {
-                  "Token background yang otomatis berganti warna antara Light & Dark mode:"
-                }
-              </P>
-              <VStack gap={1} align={"stretch"}>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.body"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background utama konten putih / #1a1b1c"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.canvas"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background canvas dasar app / layout #f5f6f8 / #161717"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.panel"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Panel container, sidebar, atau card"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.subtle"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background kontras lembut (hover/list/zebra)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.muted"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background badge subtle, disabled, atau tag"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.emphasized"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background aktif / ditekan / selected item"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.bodyAlpha"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background transparan untuk overlay / glassmorphism"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"bg.backdrop"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Backdrop modal atau drawer dialog"}
-                  </P>
-                </HStack>
-              </VStack>
-            </Box>
-
-            {/* Semantic Tokens Borders */}
-            <Box
-              p={3}
-              rounded={"md"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"semanticTokens.colors.border (Adaptive Borders)"}
-              </Heading>
-              <VStack gap={1} align={"stretch"}>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"border (DEFAULT)"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Border standar komponen (neutral 200 / 800)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"border.subtle"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Border sangat tipis / pemisah section (an1)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"border.muted"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Border sekunder / card outline (an2)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"border.emphasized"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Border interaktif atau hover state (an3)"}
-                  </P>
-                </HStack>
-              </VStack>
-            </Box>
-
-            {/* Semantic Palette Tokens */}
-            <Box
-              p={3}
-              rounded={"md"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"semanticTokens.colors.<palette> (Role-Based Color Scales)"}
-              </Heading>
-              <P fontSize={"xs"} color={"fg.muted"} mb={2}>
-                {
-                  "Setiap nama warna (misal `blue`, `green`, `red`, dll) menyediakan semantic slots yang konsisten:"
-                }
-              </P>
-              <VStack gap={1} align={"stretch"}>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.contrast"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Warna teks di atas background solid (putih/hitam)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.fg"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Warna teks foreground beraksen"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.subtle"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Warna background badge / tag / alert lembut"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.muted"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background aksen sekunder / hover"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.emphasized"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background aksen aktif saat diklik / selected"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.solid"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Background tombol solid primer"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.focusRing"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Outline ring fokus aksesibilitas input / button"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"colorPalette.border"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Border untuk variant outline"}
-                  </P>
-                </HStack>
-              </VStack>
-            </Box>
-
-            {/* Fonts & Durations */}
-            <Box
-              p={3}
-              rounded={"md"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"tokens.fonts & tokens.durations"}
-              </Heading>
-              <VStack gap={1} align={"stretch"}>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"fonts.heading / fonts.body"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"'Plus Jakarta Sans Variable', sans-serif"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"fontSizes (xs - 9xl)"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"0.75rem (12px) s.d. 6.3125rem (101px)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"fontWeights (normal - black)"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"normal (450), medium (500), semibold (600), bold (700)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"durations (fastest - slowest)"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"40ms, 75ms, 110ms, 150ms, 225ms, 340ms, 400ms"}
-                  </P>
-                </HStack>
-              </VStack>
-            </Box>
-
-            {/* Semantic Sizes, Blurs, Shadows & ZIndex */}
-            <Box
-              p={3}
-              rounded={"md"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"semanticTokens (Sizes, Shadows, Blurs, zIndex)"}
-              </Heading>
-              <VStack gap={1} align={"stretch"}>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"sizes.headerH / tableRowH"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"56px (standar tinggi baris tabel & header)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"sizes.modalControlsW"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"70px (lebar tombol action modal)"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"shadows (xs - 2xl)"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"Elevasi shadow dual-layer adaptif dark mode"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"blurs (sm - xl, backdrop)"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"sm: 4px, md: 10px, lg: 5px, xl: 50px, backdrop: 10px"}
-                  </P>
-                </HStack>
-                <HStack justify={"space-between"}>
-                  <P fontSize={"xs"} fontFamily={"mono"}>
-                    {"zIndex.modal"}
-                  </P>
-                  <P fontSize={"xs"} color={"fg.muted"}>
-                    {"1400 (stacking context dialog overlay)"}
-                  </P>
-                </HStack>
-              </VStack>
-            </Box>
-          </VStack>
-        </VStack>
-      </Box>
-
-      {/* 4. Layer Styles (Glassmorphism) */}
-      <Box
-        rounded={"lg"}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
-        bg={"bg.body"}
-        p={4}
-        w={"full"}
-      >
-        <VStack gap={3}>
-          <Heading size={"sm"} fontWeight={"bold"}>
-            {"4. Layer Styles (Glass & Frosted Presets)"}
-          </Heading>
-          <P fontSize={"sm"} color={"fg.muted"}>
-            {
-              "Didefinisikan di `layerStyles` untuk efek glassmorphism dengan inset highlight dan dark/light borders:"
-            }
-          </P>
-          <VStack gap={1} align={"stretch"}>
-            <HStack justify={"space-between"}>
-              <P fontSize={"xs"} fontFamily={"mono"}>
-                {"glass"}
-              </P>
-              <P fontSize={"xs"} color={"fg.muted"}>
-                {"Efek kaca serba guna dengan blur 5px dan inset border"}
-              </P>
-            </HStack>
-            <HStack justify={"space-between"}>
-              <P fontSize={"xs"} fontFamily={"mono"}>
-                {"glassTop / glassBottom"}
-              </P>
-              <P fontSize={"xs"} color={"fg.muted"}>
-                {"Glass dengan highlight bayangan searah (atas / bawah)"}
-              </P>
-            </HStack>
-            <HStack justify={"space-between"}>
-              <P fontSize={"xs"} fontFamily={"mono"}>
-                {"glassTopRight / glassBottomLeft"}
-              </P>
-              <P fontSize={"xs"} color={"fg.muted"}>
-                {"Glass sudut miring directional untuk floating widget"}
-              </P>
-            </HStack>
-            <HStack justify={"space-between"}>
-              <P fontSize={"xs"} fontFamily={"mono"}>
-                {"frosted / frostedLight / frostedDark"}
-              </P>
-              <P fontSize={"xs"} color={"fg.muted"}>
-                {"Efek buram frosted glass untuk panel popup"}
-              </P>
-            </HStack>
-          </VStack>
-          <CodeBlock
-            code={`// Contoh pemakaian layerStyle pada Box atau Card:
+      {/* 6. Layer Styles */}
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"6. Layer Styles (Glassmorphism Presets)"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Compound visual presets untuk efek visual kaca adaptif dark mode:"}
+        </P>
+        <HStack gap={2} wrap={"wrap"}>
+          {["glass", "glassTop", "glassBottom", "glassTopRight", "glassBottomLeft", "frosted", "frostedLight", "frostedDark"].map((name) => (
+            <Badge key={name} variant={"subtle"} size={"sm"}>
+              {name}
+            </Badge>
+          ))}
+        </HStack>
+        <CodeBlock
+          code={`// Menggunakan layerStyle pada Box atau Card:
 <Box layerStyle={"glass"} p={4} rounded={"lg"}>
   <P>{"Konten dengan efek Glassmorphism"}</P>
 </Box>`}
-            language={"tsx"}
-          />
-        </VStack>
-      </Box>
+          language={"tsx"}
+        />
+      </VStack>
 
-      {/* 5. How to Define & Edit Tokens */}
-      <Box
-        rounded={"lg"}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
-        bg={"bg.body"}
-        p={4}
-        w={"full"}
-      >
-        <VStack gap={4}>
-          <Heading size={"sm"} fontWeight={"bold"}>
-            {"5. Cara Mendefinisikan & Mengedit Token Baru"}
-          </Heading>
+      {/* 7. How to Define & Edit Tokens */}
+      <VStack gap={3} align={"stretch"} w={"full"}>
+        <Heading size={"sm"} fontWeight={"bold"}>
+          {"7. Cara Menambah & Mengedit Token"}
+        </Heading>
+        <P fontSize={"sm"} color={"fg.muted"}>
+          {"Panduan sintaks penambahan raw token dan semantic token di chakra-system.ts:"}
+        </P>
 
-          <VStack gap={3}>
-            {/* Step 1: Primitive Token */}
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"A. Menambahkan Raw Token (tokens)"}
-              </Heading>
-              <P fontSize={"xs"} color={"fg.muted"} mb={2}>
-                {
-                  'Gunakan sintaks `{ value: "..." }` di dalam kategori terkait pada `theme.tokens`:'
-                }
-              </P>
-              <CodeBlock
-                code={`// Di src/design-system/chakra/chakra-system.ts -> tokens:
+        <VStack gap={3} align={"stretch"}>
+          <VStack gap={1} align={"stretch"}>
+            <P fontSize={"xs"} fontWeight={"semibold"}>{"A. Menambahkan Raw Token (theme.tokens):"}</P>
+            <CodeBlock
+              code={`// Di src/design-system/chakra/chakra-system.ts -> tokens:
 tokens: {
   colors: {
     brandPrimary: { value: "#3b82f6" },
@@ -691,28 +392,14 @@ tokens: {
     instant: { value: "20ms" },
   },
 }`}
-                language={"typescript"}
-              />
-            </Box>
+              language={"typescript"}
+            />
+          </VStack>
 
-            {/* Step 2: Semantic Token with Dark Mode */}
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"B. Menambahkan Semantic Token (semanticTokens)"}
-              </Heading>
-              <P fontSize={"xs"} color={"fg.muted"} mb={2}>
-                {
-                  'Gunakan alias reference `{colors.x}` dengan object `{ base: "...", _dark: "..." }`:'
-                }
-              </P>
-              <CodeBlock
-                code={`// Di src/design-system/chakra/chakra-system.ts -> semanticTokens:
+          <VStack gap={1} align={"stretch"}>
+            <P fontSize={"xs"} fontWeight={"semibold"}>{"B. Menambahkan Semantic Token (theme.semanticTokens):"}</P>
+            <CodeBlock
+              code={`// Di src/design-system/chakra/chakra-system.ts -> semanticTokens:
 semanticTokens: {
   colors: {
     bg: {
@@ -725,44 +412,28 @@ semanticTokens: {
     },
   },
 }`}
-                language={"typescript"}
-              />
-            </Box>
+              language={"typescript"}
+            />
+          </VStack>
 
-            {/* Step 3: Usage in UI Code */}
-            <Box
-              p={3}
-              rounded={"md"}
-              bg={"bg.subtle"}
-              border={"1px solid"}
-              borderColor={"border.subtle"}
-            >
-              <Heading size={"xs"} mb={1}>
-                {"C. Cara Penggunaan di Komponen UI"}
-              </Heading>
-              <P fontSize={"xs"} color={"fg.muted"} mb={2}>
-                {
-                  "Panggil nama token langsung pada props Chakra UI. Chakra akan menerjemahkannya ke CSS variable otomatis:"
-                }
-              </P>
-              <CodeBlock
-                code={`import { Box } from "@/design-system/components/layout/box/box";
+          <VStack gap={1} align={"stretch"}>
+            <P fontSize={"xs"} fontWeight={"semibold"}>{"C. Penggunaan pada Komponen UI:"}</P>
+            <CodeBlock
+              code={`import { Box } from "@/design-system/components/layout/box/box";
 import { P } from "@/design-system/components/typography/p/p";
 
 export const CustomCard = () => {
   return (
-    // Menggunakan semantic token bg.customCard dan border.subtle
     <Box bg={"bg.customCard"} border={"1px solid"} borderColor={"border.subtle"} p={4} rounded={"md"}>
-      <P color={"colorPalette.fg"}>{"Teks otomatis beradaptasi dengan warna aktif"}</P>
+      <P color={"colorPalette.fg"}>{"Teks otomatis beradaptasi dengan tema"}</P>
     </Box>
   );
 };`}
-                language={"tsx"}
-              />
-            </Box>
+              language={"tsx"}
+            />
           </VStack>
         </VStack>
-      </Box>
+      </VStack>
     </VStack>
   );
 };

@@ -204,7 +204,7 @@ const chartLineColor = useColorModeValue("#1471EB", "#26D968");`}
               px={3}
               py={1.5}
               rounded={"sm"}
-              bg={colorMode === "light" ? "bg.emphasized" : "transparent"}
+              bg={colorMode === "light" ? "bg.muted" : "transparent"}
               color={colorMode === "light" ? "fg.default" : "fg.muted"}
               cursor={"pointer"}
             >
@@ -222,7 +222,7 @@ const chartLineColor = useColorModeValue("#1471EB", "#26D968");`}
               px={3}
               py={1.5}
               rounded={"sm"}
-              bg={colorMode === "dark" ? "bg.emphasized" : "transparent"}
+              bg={colorMode === "dark" ? "bg.muted" : "transparent"}
               color={colorMode === "dark" ? "fg.default" : "fg.muted"}
               cursor={"pointer"}
             >

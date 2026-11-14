@@ -16,9 +16,10 @@ export const FoundationHeader = (props: FoundationHeaderProps) => {
   return (
     <VStack gap={"xs"}>
       <HStack gap={"sm"} align={"center"}>
-        <Heading fontSize={"3xl"} fontWeight={"bold"}>
+        <Heading fontSize={"2xl"} fontWeight={"bold"}>
           {title}
         </Heading>
+
         <Badge variant={"subtle"}>{badge}</Badge>
       </HStack>
       <P color={"fg.muted"}>{description}</P>

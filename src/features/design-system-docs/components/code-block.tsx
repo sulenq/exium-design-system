@@ -1,5 +1,6 @@
 // src/features/design-system-docs/components/code-block.tsx
 
+import { Box } from "@/design-system/components/layout/box/box";
 import type { CodeBlockProps } from "@/features/design-system-docs/types/code-block.type";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript";
@@ -19,23 +20,31 @@ export const CodeBlock = (props: CodeBlockProps) => {
   }, [code, language]);
 
   return (
-    <pre
-      style={{
-        margin: 0,
-        padding: 0,
-        fontFamily:
-          'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-        fontSize: "13px",
-        lineHeight: "1.6",
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-word",
-        background: "transparent",
-      }}
+    <Box
+      bg={"bg.subtle"}
+      rounded={"md"}
+      p={3}
+      w={"full"}
+      overflowX={"auto"}
     >
-      <code
-        className={`language-${language}`}
-        dangerouslySetInnerHTML={{ __html: highlighted }}
-      />
-    </pre>
+      <pre
+        style={{
+          margin: 0,
+          padding: 0,
+          fontFamily:
+            'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+          fontSize: "13px",
+          lineHeight: "1.6",
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-word",
+          background: "transparent",
+        }}
+      >
+        <code
+          className={`language-${language}`}
+          dangerouslySetInnerHTML={{ __html: highlighted }}
+        />
+      </pre>
+    </Box>
   );
 };
