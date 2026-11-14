@@ -23,7 +23,7 @@ type BaseSidebarRootProps = Omit<BoxProps, "children"> & {
 
 export type ExpandableSidebarRootProps = BaseSidebarRootProps & {
   expandable: true;
-  sidebarKey: string;
+  sidebarKey?: string;
 };
 
 export type NonExpandableSidebarRootProps = BaseSidebarRootProps & {

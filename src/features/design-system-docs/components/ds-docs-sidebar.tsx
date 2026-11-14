@@ -9,7 +9,7 @@ import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";
 import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { ClampedP } from "@/design-system/components/typography/p/p";
-import { useSidebarStore } from "@/design-system/stores/sidebar-store";
+import { usePersistedState } from "@/design-system/hooks/use-persisted-state";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { DS_NAV_GROUPS_LIST } from "@/features/design-system-docs/constants/ds.nav-groups";
 import { DS_NAVS_MAP } from "@/features/design-system-docs/constants/ds.navs";
@@ -21,18 +21,19 @@ import type { NavItem } from "@/shared/types/nav.type";
 import { useMemo, useState } from "react";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 
-const DS_SIDEBAR_KEY = "ds-docs";
 const DEFAULT_SIDEBAR_EXPANDED = true;
 
 export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
   // Props
   const { activeNavKey, onSelectNav, isMobileDrawer = false } = props;
 
-  // Stores
-  const storedExpanded = useSidebarStore(
-    (s) => s.expandedByKey[DS_SIDEBAR_KEY] ?? DEFAULT_SIDEBAR_EXPANDED,
+  // Persisted state with custom key and object { opened: boolean }
+  const [sidebarState, setSidebarState] = usePersistedState<{ opened: boolean }>(
+    "sidebar",
+    { opened: DEFAULT_SIDEBAR_EXPANDED },
   );
-  const expanded = isMobileDrawer ? true : storedExpanded;
+
+  const expanded = isMobileDrawer ? true : sidebarState.opened;
 
   // States
   const [searchQuery, setSearchQuery] = useState("");
@@ -66,7 +67,13 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
     <Sidebar.Root
       {...(isMobileDrawer
         ? { expandable: false, w: "full", borderRight: "none" }
-        : { expandable: true, sidebarKey: DS_SIDEBAR_KEY })}
+        : {
+            expandable: true,
+            expanded,
+            onExpandedChange: (nextExpanded) => {
+              setSidebarState({ opened: nextExpanded });
+            },
+          })}
       defaultExpanded={DEFAULT_SIDEBAR_EXPANDED}
     >
       <Sidebar.Header>

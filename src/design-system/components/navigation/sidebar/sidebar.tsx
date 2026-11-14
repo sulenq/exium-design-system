@@ -4,7 +4,10 @@ import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Center } from "@/design-system/components/layout/center/center";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Separator } from "@/design-system/components/layout/separator/separator";
 import type {
   SidebarBodyProps,
@@ -96,7 +99,6 @@ export const SidebarRoot = (props: SidebarRootProps) => {
           overflowY={"auto"}
           overflowX={"clip"}
           h={"full"}
-          py={"3px"}
           // layerStyle={"frosted"}
           // bg={"bg.canvasAlpha"}
           bg={"bg.body"}

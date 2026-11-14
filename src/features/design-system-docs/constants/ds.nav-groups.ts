@@ -191,6 +191,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "use_focus_search" },
           { key: "use_search_param" },
           { key: "use_search_input" },
+          { key: "use_persisted_state" },
         ],
       },
     ],

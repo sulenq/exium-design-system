@@ -517,6 +517,9 @@ export const DS_NAVS_MAP = {
   use_search_input: {
     title: "useSearchInput",
   },
+  use_persisted_state: {
+    title: "usePersistedState",
+  },
 
   // Utils Categories
   cat_core_utils: {

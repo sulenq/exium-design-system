@@ -13,4 +13,5 @@ export { useRefDimension } from "@/design-system/hooks/use-ref-dimension";
 export { useSearchInput } from "@/design-system/hooks/use-search-input";
 export { useSearchParam } from "@/design-system/hooks/use-search-param";
 export { useViewport } from "@/design-system/hooks/use-viewport";
+export { usePersistedState } from "@/design-system/hooks/use-persisted-state";
 export { usePopDisclosure, usePopModal } from "@/design-system/components/overlay/hooks/use-pop-disclosure";

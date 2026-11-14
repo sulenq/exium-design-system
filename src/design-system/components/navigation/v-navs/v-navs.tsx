@@ -16,7 +16,7 @@ import { NavButton } from "@/design-system/components/navigation/nav/nav";
 import { findActivePath } from "@/design-system/components/navigation/utils/navs.utils";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { P } from "@/design-system/components/typography/p/p";
+import { ClampedP, P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
@@ -58,14 +58,47 @@ export const VNavs = <TNavKey extends string>(props: VNavsProps<TNavKey>) => {
           <Fragment key={groupIndex}>
             {!isFirstGroup && !isSmallViewport && <Separator my={"sm"} />}
 
-            <VStack align={expanded ? "stretch" : "start"} overflow={"clip"}>
-              {expanded && groupTitle && (
-                <P fontSize={"sm"} color={"fg.subtle"} px={2} mb={2}>
-                  {groupTitle}
-                </P>
+            <VStack align={"stretch"} overflow={"clip"} w={"full"}>
+              {groupTitle && (
+                <Box
+                  h={"24px"}
+                  mb={2}
+                  px={2}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"flex-start"}
+                >
+                  {expanded ? (
+                    <ClampedP fontSize={"sm"} color={"fg.subtle"} lineClamp={1}>
+                      {groupTitle}
+                    </ClampedP>
+                  ) : (
+                    <Tooltip
+                      content={groupTitle}
+                      positioning={{ placement: "right" }}
+                    >
+                      <Box
+                        w={"20px"}
+                        h={"20px"}
+                        display={"flex"}
+                        alignItems={"center"}
+                        justifyContent={"center"}
+                        cursor={"default"}
+                      >
+                        <Box
+                          w={"4px"}
+                          h={"4px"}
+                          rounded={"full"}
+                          bg={"fg.muted"}
+                          opacity={0.6}
+                        />
+                      </Box>
+                    </Tooltip>
+                  )}
+                </Box>
               )}
 
-              <VStack gap={1} align={expanded ? "stretch" : "center"}>
+              <VStack gap={1} align={"stretch"} w={"full"}>
                 {group.items.map((node) => (
                   <VNavNode
                     key={node.key}

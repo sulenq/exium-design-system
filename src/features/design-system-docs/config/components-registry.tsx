@@ -3536,7 +3536,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     description:
       "Bilah navigasi samping vertikal dengan toggle perluasan (expand/collapse) dan penyimpanan state.",
     importPath:
-      'import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";',
+      'import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";\nimport { usePersistedState } from "@/design-system/hooks/use-persisted-state";',
     component: Sidebar.Root,
     defaultProps: {
       expanded: true,
@@ -3570,23 +3570,30 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       const isExpanded = Boolean(props.expanded);
       const expandedW = Number(props.expandedWidth) || 240;
 
-      return `<Sidebar.Root
-  sidebarKey={"app-sidebar"}
+      return `// 1. Simpan status buka/tutup komponen dengan persisted state hook (key bebas)
+const [isOpened, setIsOpened] = usePersistedState<boolean>(
+  "app-sidebar",
+  ${isExpanded}
+);
+
+// 2. Hubungkan ke Sidebar.Root lewat controlled props
+<Sidebar.Root
   expandable={${isExpandable}}
-  expanded={${isExpanded}}
+  expanded={isOpened}
+  onExpandedChange={setIsOpened}
   expandedWidth={${expandedW}}
 >
   <Sidebar.Header>
     <HStack align={"center"} justify={"space-between"} w={"full"}>
       <HStack align={"center"} gap={2}>
         <Logo boxSize={18} ml={1.5} flexShrink={0} />
-        {${isExpanded} && (
+        {isOpened && (
           <ClampedP fontSize={"lg"} fontWeight={"semibold"}>
             {"exium"}
           </ClampedP>
         )}
       </HStack>
-      {${isExpanded} && (
+      {isOpened && (
         <ClampedP mr={1} fontSize={"sm"} color={"fg.subtle"} lineHeight={1}>
           {"v1.0"}
         </ClampedP>
@@ -3601,7 +3608,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         groups={navGroups}
         navs={navsMap}
         activeKey={activeNavKey}
-        expanded={${isExpanded}}
+        expanded={isOpened}
         onNavClick={setActiveNavKey}
         p={3}
       />

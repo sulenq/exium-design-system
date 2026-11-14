@@ -129,6 +129,26 @@ const { query, setQuery, filteredItems } = useSearchInput({
 });`,
     returns: "SearchInputController<T>",
   },
+  use_persisted_state: {
+    title: "usePersistedState",
+    description: "Generic persistent state hook with arbitrary key support, typed storage (localStorage / sessionStorage), and optional cross-tab synchronization.",
+    usage: `import { usePersistedState } from "@/design-system/hooks/use-persisted-state";
+
+// 1. Primitive state (boolean, string, number, dll) dengan key bebas
+const [isOpen, setIsOpen] = usePersistedState<boolean>("app-drawer-open", true);
+
+// 2. Object state kompleks dengan key bebas
+type FilterState = { category: string; page: number };
+const [filter, setFilter] = usePersistedState<FilterState>("table-filter", {
+  category: "all",
+  page: 1,
+});
+
+// 3. Update state via value langsung atau function updater
+setIsOpen(false);
+setFilter((prev) => ({ ...prev, page: prev.page + 1 }));`,
+    returns: "[T, (value: T | ((prev: T) => T)) => void, () => void]",
+  },
 };
 
 export const HookDocs = (props: HookDocsProps) => {
