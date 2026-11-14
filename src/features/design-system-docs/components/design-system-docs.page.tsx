@@ -3,7 +3,10 @@
 import { IconButton } from "@/design-system/components/button/button/button";
 import { ColorModeToggleButton } from "@/design-system/components/button/color-mode/color-mode";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
@@ -51,7 +54,9 @@ export const DesignSystemDocsPage = () => {
   ].includes(activeNavKey);
 
   const isHook = activeNavKey.startsWith("use_");
-  const isUtil = ["formatters", "a11y_helpers", "common_zod_schemas"].includes(activeNavKey);
+  const isUtil = ["formatters", "a11y_helpers", "common_zod_schemas"].includes(
+    activeNavKey,
+  );
 
   // Callbacks
   const handleSelectNav = useCallback(
@@ -140,8 +145,9 @@ export const DesignSystemDocsPage = () => {
           flexShrink={0}
           align={"center"}
           justify={"space-between"}
-          h={"60px"}
-          px={"md"}
+          h={"56px"}
+          p={2}
+          pl={4}
         >
           <HStack align={"center"} gap={"sm"}>
             {isSmallViewport && (
@@ -169,12 +175,18 @@ export const DesignSystemDocsPage = () => {
           {isFoundation && <FoundationDocs navKey={activeNavKey} />}
           {isHook && <HookDocs navKey={activeNavKey} />}
           {isUtil && <UtilDocs navKey={activeNavKey} />}
-          {!isFoundation && !isHook && !isUtil && activeNavKey !== "overview" && currentSpec && (
-            <ComponentPlayground key={currentSpec.key} spec={currentSpec} />
-          )}
-          {!isFoundation && !isHook && !isUtil && activeNavKey !== "overview" && !currentSpec && (
-            <DemoPage />
-          )}
+          {!isFoundation &&
+            !isHook &&
+            !isUtil &&
+            activeNavKey !== "overview" &&
+            currentSpec && (
+              <ComponentPlayground key={currentSpec.key} spec={currentSpec} />
+            )}
+          {!isFoundation &&
+            !isHook &&
+            !isUtil &&
+            activeNavKey !== "overview" &&
+            !currentSpec && <DemoPage />}
         </VScrollContainer>
       </VStack>
     </HStack>
