@@ -429,8 +429,11 @@ export const DS_NAVS_MAP = {
   typography_foundation: {
     title: "Typography",
   },
-  theming_dark_mode: {
-    title: "Theming & Dark Mode",
+  theming: {
+    title: "Theme",
+  },
+  dark_mode: {
+    title: "Dark Mode",
   },
   iconography: {
     title: "Iconography",

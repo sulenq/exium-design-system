@@ -3,6 +3,7 @@
 import { AccessibilityFoundationPage } from "@/features/design-system-docs/components/foundation/pages/accessibility-foundation.page";
 import { BreakpointsFoundationPage } from "@/features/design-system-docs/components/foundation/pages/breakpoints-foundation.page";
 import { ColorsFoundationPage } from "@/features/design-system-docs/components/foundation/pages/colors-foundation.page";
+import { DarkModeFoundationPage } from "@/features/design-system-docs/components/foundation/pages/dark-mode-foundation.page";
 import { DesignTokensFoundationPage } from "@/features/design-system-docs/components/foundation/pages/design-tokens-foundation.page";
 import { ElevationFoundationPage } from "@/features/design-system-docs/components/foundation/pages/elevation-foundation.page";
 import { I18nFoundationPage } from "@/features/design-system-docs/components/foundation/pages/i18n-foundation.page";
@@ -29,7 +30,8 @@ const FOUNDATION_PAGE_REGISTRY: Partial<Record<DsNavKey, ComponentType>> = {
   breakpoints_layout: BreakpointsFoundationPage,
   iconography: IconographyFoundationPage,
   motion: MotionFoundationPage,
-  theming_dark_mode: ThemingFoundationPage,
+  theming: ThemingFoundationPage,
+  dark_mode: DarkModeFoundationPage,
   accessibility: AccessibilityFoundationPage,
   internationalization: I18nFoundationPage,
 };

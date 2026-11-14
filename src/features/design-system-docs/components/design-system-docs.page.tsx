@@ -44,7 +44,8 @@ export const DesignSystemDocsPage = () => {
     "breakpoints_layout",
     "iconography",
     "motion",
-    "theming_dark_mode",
+    "theming",
+    "dark_mode",
     "accessibility",
     "internationalization",
   ].includes(activeNavKey);

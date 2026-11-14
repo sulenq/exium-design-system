@@ -16,7 +16,8 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         children: [
           { key: "principles" },
           { key: "design_tokens" },
-          { key: "theming_dark_mode" },
+          { key: "theming" },
+          { key: "dark_mode" },
           { key: "colors" },
           { key: "typography_foundation" },
           { key: "iconography" },
