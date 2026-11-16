@@ -425,7 +425,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         props.color && props.color !== "fg.default"
           ? ` color={"${props.color}"}`
           : "";
-      const clampProp = props.lineClamp ? ` lineClamp={${props.lineClamp}}` : "";
+      const clampProp = props.lineClamp
+        ? ` lineClamp={${props.lineClamp}}`
+        : "";
 
       return `<P${fsProp}${fwProp}${colorProp}${clampProp}>\n  {"${childrenVal}"}\n</P>`;
     },
@@ -433,8 +435,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       <Box maxW={"300px"}>
         <P
           fontSize={
-            (props.fontSize as "xs" | "sm" | "md" | "lg" | "xl" | "2xl") ||
-            "md"
+            (props.fontSize as "xs" | "sm" | "md" | "lg" | "xl" | "2xl") || "md"
           }
           fontWeight={
             (props.fontWeight as "normal" | "medium" | "semibold" | "bold") ||
@@ -538,12 +539,16 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const childrenVal = String(props.children || "Exium Design System Heading");
+      const childrenVal = String(
+        props.children || "Exium Design System Heading",
+      );
       const fsProp =
         props.fontSize && props.fontSize !== "xl"
           ? ` fontSize={"${props.fontSize}"}`
           : "";
-      const clampProp = props.lineClamp ? ` lineClamp={${props.lineClamp}}` : "";
+      const clampProp = props.lineClamp
+        ? ` lineClamp={${props.lineClamp}}`
+        : "";
 
       return `<Heading${fsProp}${clampProp}>\n  {"${childrenVal}"}\n</Heading>`;
     },
@@ -661,7 +666,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Input } from "@/design-system/components/input/input/input";',
     component: Input,
     defaultProps: {
-      placeholder: "Enter text here...",
+      placeholder: "Masukkan teks...",
       size: "md",
       maxLength: 20,
       disabled: false,
@@ -698,6 +703,13 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Masukkan teks..."}';
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const mlProp = props.maxLength && props.maxLength !== 20 ? ` maxLength={${props.maxLength}}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<Input${phProp}${szProp}${mlProp}${disProp} />`;
+    },
     renderPlayground: (props) => (
       <Box w={"260px"}>
         <Input
@@ -866,6 +878,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const val = props.value !== undefined ? props.value : 10;
+      const minProp = props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
+      const maxProp = props.max !== undefined && props.max !== 100 ? ` max={${props.max}}` : "";
+      const stepProp = props.step !== undefined && props.step !== 1 ? ` step={${props.step}}` : "";
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<NumberInput\n  value={"${val}"}${minProp}${maxProp}${stepProp}${szProp}${disProp}\n  onValueChange={(details) => console.log(details.value)}\n/>`;
+    },
     renderPlayground: (props, onPropChange) => (
       <Box w={"260px"}>
         <NumberInput
@@ -886,12 +907,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     title: "PasswordInput",
     category: "Form Inputs",
     description:
-      "Input kata laluan aman dengan tombol toggle visibilitas show/hide terintegrasi.",
+      "Input kata sandi aman dengan tombol toggle visibilitas show/hide terintegrasi.",
     importPath:
       'import { PasswordInput } from "@/design-system/components/input/password-input/password-input";',
     component: PasswordInput,
     defaultProps: {
-      placeholder: "Enter secret password...",
+      placeholder: "Masukkan kata sandi...",
       size: "md",
       disabled: false,
     },
@@ -919,6 +940,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Masukkan kata sandi..."}';
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<PasswordInput${phProp}${szProp}${disProp} />`;
+    },
     renderPlayground: (props) => (
       <Box w={"260px"}>
         <PasswordInput {...props} />
@@ -936,7 +963,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import SelectInput from "@/design-system/components/input/select/select";',
     component: SelectInput,
     defaultProps: {
-      placeholder: "Pilih status...",
+      placeholder: "Pilih opsi...",
       size: "md",
       disabled: false,
     },
@@ -964,6 +991,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Pilih opsi..."}';
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<SelectInput${phProp}${szProp}${disProp}\n  options={[\n    { label: "Opsi 1", value: "opt1" },\n    { label: "Opsi 2", value: "opt2" },\n    { label: "Opsi 3", value: "opt3" },\n  ]}\n  onValueChange={(val) => console.log(val)}\n/>`;
+    },
     renderPlayground: (props) => <SelectPlaygroundDemo {...props} />,
   },
 
@@ -977,17 +1010,17 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";',
     component: FocusSelectInput,
     defaultProps: {
-      placeholder: "Pilih kategori...",
+      placeholder: "Pilih opsi...",
       size: "md",
       clearable: true,
       disabled: false,
     },
     generateCode: (props) => {
-      const propList: string[] = ['modalKey={"kategori-select"}'];
-      if (props.placeholder && props.placeholder !== "Pilih kategori...") {
+      const propList: string[] = ['modalKey={"opsi-select"}'];
+      if (props.placeholder && props.placeholder !== "Pilih opsi...") {
         propList.push(`placeholder={"${props.placeholder}"}`);
       } else {
-        propList.push('placeholder={"Pilih kategori..."}');
+        propList.push('placeholder={"Pilih opsi..."}');
       }
       if (props.size && props.size !== "md") {
         propList.push(`size={"${props.size}"}`);
@@ -1008,9 +1041,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       return `<FocusSelectInput
   ${propList.join("\n  ")}
   options={[
-    { label: "Bidang Tanah", value: "bidang", description: "Lapisan persil bidang tanah" },
-    { label: "Batas Wilayah", value: "wilayah", description: "Batas administrasi daerah" },
-    { label: "Zona Nilai Tanah", value: "znt", description: "Pemetaan valuasi spasial" },
+    { label: "Opsi 1", value: "opt1", description: "Deskripsi opsi pertama" },
+    { label: "Opsi 2", value: "opt2", description: "Deskripsi opsi kedua" },
+    { label: "Opsi 3", value: "opt3", description: "Deskripsi opsi ketiga" },
   ]}
   onValueChange={(val) => console.log(val)}
 />`;
@@ -1100,6 +1133,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const label = props.children || "Accept Terms & Conditions";
+      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<Checkbox${cpProp}${disProp}>\n  {"${label}"}\n</Checkbox>`;
+    },
   },
 
   switch: {
@@ -1148,6 +1187,13 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const label = props.children || "Enable Notifications";
+      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<Switch${cpProp}${szProp}${disProp}>\n  {"${label}"}\n</Switch>`;
+    },
   },
 
   textarea: {
@@ -1160,7 +1206,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Textarea } from "@/design-system/components/input/textarea/textarea";',
     component: Textarea,
     defaultProps: {
-      placeholder: "Tuliskan keterangan di sini...",
+      placeholder: "Masukkan keterangan...",
       disabled: false,
     },
     propsSpec: [
@@ -1179,6 +1225,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Masukkan keterangan..."}';
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<Textarea${phProp}${disProp} />`;
+    },
     renderPlayground: (props) => (
       <Box w={"340px"}>
         <Textarea {...props} />
@@ -1225,6 +1276,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<RadioInput\n  defaultValue={"opt1"}${cpProp}${szProp}${disProp}\n  options={[\n    { value: "opt1", label: "Option 1" },\n    { value: "opt2", label: "Option 2" },\n    { value: "opt3", label: "Option 3" },\n  ]}\n  onValueChange={(details) => console.log(details.value)}\n/>`;
+    },
     renderPlayground: (props) => (
       <RadioInput
         defaultValue={"opt1"}
@@ -1280,6 +1337,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<RadioCardInput.Root defaultValue={"standard"}${cpProp}${szProp}${disProp} w={"full"}>\n  <HStack gap={3} w={"full"}>\n    <RadioCardInput.Item value={"standard"} flex={1} p={3}>\n      <RadioCardInput.ItemText>\n        <P fontWeight={"semibold"} fontSize={"sm"}>{"Standard"}</P>\n        <P fontSize={"xs"} color={"fg.muted"}>{"Fitur esensial"}</P>\n      </RadioCardInput.ItemText>\n    </RadioCardInput.Item>\n    <RadioCardInput.Item value={"pro"} flex={1} p={3}>\n      <RadioCardInput.ItemText>\n        <P fontWeight={"semibold"} fontSize={"sm"}>{"Enterprise"}</P>\n        <P fontSize={"xs"} color={"fg.muted"}>{"Akses menyeluruh"}</P>\n      </RadioCardInput.ItemText>\n    </RadioCardInput.Item>\n  </HStack>\n</RadioCardInput.Root>`;
+    },
     renderPlayground: (props) => (
       <RadioCardInput.Root
         defaultValue={"standard"}
@@ -1293,20 +1356,20 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           <RadioCardInput.Item value={"standard"} flex={1} p={3}>
             <RadioCardInput.ItemText>
               <P fontWeight={"semibold"} fontSize={"sm"}>
-                Standard
+                {"Standard"}
               </P>
               <P fontSize={"xs"} color={"fg.muted"}>
-                Fitur esensial
+                {"Fitur esensial"}
               </P>
             </RadioCardInput.ItemText>
           </RadioCardInput.Item>
           <RadioCardInput.Item value={"pro"} flex={1} p={3}>
             <RadioCardInput.ItemText>
               <P fontWeight={"semibold"} fontSize={"sm"}>
-                Enterprise
+                {"Enterprise"}
               </P>
               <P fontSize={"xs"} color={"fg.muted"}>
-                Akses menyeluruh
+                {"Akses menyeluruh"}
               </P>
             </RadioCardInput.ItemText>
           </RadioCardInput.Item>
@@ -1355,6 +1418,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<SegmentGroupInput\n  defaultValue={"grid"}${cpProp}${szProp}${disProp}\n  options={[\n    { value: "list", label: "List View" },\n    { value: "grid", label: "Grid View" },\n    { value: "map", label: "Map View" },\n  ]}\n  onValueChange={(details) => console.log(details.value)}\n/>`;
+    },
     renderPlayground: (props) => (
       <SegmentGroupInput
         defaultValue={"grid"}
@@ -1401,13 +1470,18 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
+    generateCode: (props) => {
+      const minProp = props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
+      const maxProp = props.max !== undefined && props.max !== 100 ? ` max={${props.max}}` : "";
+      return `<Slider\n  defaultValue={[40]}${minProp}${maxProp}\n  showValue={true}\n  label={"Volume / Ukuran"}\n/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"280px"}>
         <Slider
           defaultValue={[40]}
           min={Number(props.min) || 0}
           max={Number(props.max) || 100}
-          showValue
+          showValue={true}
           label={"Volume / Ukuran"}
         />
       </Box>
@@ -1443,6 +1517,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const count = props.count || 4;
+      const maskProp = props.mask ? ` mask={true}` : "";
+      return `<PinInput count={${count}}${maskProp} onValueComplete={(e) => console.log(e.valueAsString)} />`;
+    },
     renderPlayground: (props) => (
       <PinInput count={Number(props.count) || 4} mask={Boolean(props.mask)} />
     ),
@@ -1458,7 +1537,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { SearchInput } from "@/design-system/components/input/search-input/search-input";',
     component: SearchInput,
     defaultProps: {
-      placeholder: "Cari data di sini...",
+      placeholder: "Cari...",
       size: "md",
     },
     propsSpec: [
@@ -1478,10 +1557,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["xs", "sm", "md", "lg"],
       },
     ],
+    generateCode: (props) => {
+      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Cari..."}';
+      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      return `<SearchInput${phProp}${szProp} value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />`;
+    },
     renderPlayground: (props) => (
       <Box w={"280px"}>
         <SearchInput
-          placeholder={String(props.placeholder || "Cari data di sini...")}
+          placeholder={String(props.placeholder || "Cari...")}
           size={(props.size as "xs" | "sm" | "md" | "lg") || "md"}
         />
       </Box>
@@ -1498,8 +1582,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Field } from "@/design-system/components/input/field/field";',
     component: Field,
     defaultProps: {
-      label: "Nama Lengkap",
-      helperText: "Sesuai dengan KTP",
+      label: "Label",
+      helperText: "Keterangan bantuan",
       optional: false,
     },
     propsSpec: [
@@ -1525,6 +1609,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const lbl = props.label ? ` label={"${props.label}"}` : ' label={"Label"}';
+      const ht = props.helperText ? ` helperText={"${props.helperText}"}` : "";
+      const opt = props.optional ? ` optional={true}` : "";
+      return `<Field${lbl}${ht}${opt}>\n  <Input placeholder={"Masukkan teks..."} />\n</Field>`;
+    },
     renderPlayground: (props) => (
       <Box w={"300px"}>
         <Field
@@ -1532,7 +1622,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           helperText={String(props.helperText || "")}
           optional={Boolean(props.optional)}
         >
-          <Input placeholder={"Ketikkan teks..."} />
+          <Input placeholder={"Masukkan teks..."} />
         </Field>
       </Box>
     ),
@@ -1577,6 +1667,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const vProp = props.variant && props.variant !== "dropzone" ? ` variant={"${props.variant}"}` : "";
+      const mfProp = props.maxFiles && props.maxFiles !== 3 ? ` maxFiles={${props.maxFiles}}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<FileInput${vProp}${mfProp}${disProp} accept={[".jpeg", ".jpg", ".png", ".pdf"]} onFileChange={(files) => console.log(files)} />`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
         <FileInput
@@ -1601,14 +1697,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { DateInput } from "@/design-system/components/input/date-input/date-input";',
     component: DateInput,
     defaultProps: {
-      datePickerSubtitle: "Pilih tanggal jadwal",
+      datePickerSubtitle: "Pilih tanggal",
       disabled: false,
     },
     propsSpec: [
       {
         name: "datePickerSubtitle",
         type: "string",
-        defaultValue: "Pilih tanggal jadwal",
+        defaultValue: "Pilih tanggal",
         description: "Subjudul penjelasan pada modal kalender.",
         controlKind: "text",
       },
@@ -1620,13 +1716,18 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const subProp = props.datePickerSubtitle && props.datePickerSubtitle !== "Pilih tanggal" ? ` datePickerSubtitle={"${props.datePickerSubtitle}"}` : "";
+      const disProp = props.disabled ? ` disabled={true}` : "";
+      return `<DateInput modalKey={"pilih-tanggal"}${subProp}${disProp} onValueChange={(val) => console.log(val)} />`;
+    },
     renderPlayground: (props) => (
       <Box w={"280px"}>
         <DateInput
           modalKey={"docs-date-input"}
           disabled={Boolean(props.disabled)}
           datePickerSubtitle={String(
-            props.datePickerSubtitle || "Pilih tanggal jadwal",
+            props.datePickerSubtitle || "Pilih tanggal",
           )}
         />
       </Box>
@@ -1687,9 +1788,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         props.colorPalette && props.colorPalette !== "blue"
           ? ` colorPalette={"${props.colorPalette}"}`
           : "";
-      const animProp = props.animated
-        ? ` striped={true} animated={true}`
-        : "";
+      const animProp = props.animated ? ` striped={true} animated={true}` : "";
 
       return `<Progress.Root value={${val}}${colorProp}${sizeProp}${animProp}>\n  <Progress.Track>\n    <Progress.Range />\n  </Progress.Track>\n</Progress.Root>`;
     },
@@ -4144,13 +4243,13 @@ const SelectPlaygroundDemo = (props: Record<string, unknown>) => {
   return (
     <Box w={"260px"}>
       <SelectInput
-        placeholder={String(props.placeholder || "Pilih status...")}
+        placeholder={String(props.placeholder || "Pilih opsi...")}
         size={(props.size as "sm" | "md" | "lg") || "md"}
         disabled={Boolean(props.disabled)}
         options={[
-          { label: "Aktif", value: "active" },
-          { label: "Menunggu", value: "pending" },
-          { label: "Ditangguhkan", value: "suspended" },
+          { label: "Opsi 1", value: "opt1" },
+          { label: "Opsi 2", value: "opt2" },
+          { label: "Opsi 3", value: "opt3" },
         ]}
       />
     </Box>
@@ -4162,7 +4261,7 @@ const FocusSelectPlaygroundDemo = (props: Record<string, unknown>) => {
     <Box w={"260px"}>
       <FocusSelectInput
         modalKey={"docs-focus-select-demo"}
-        placeholder={String(props.placeholder || "Pilih kategori...")}
+        placeholder={String(props.placeholder || "Pilih opsi...")}
         size={(props.size as "sm" | "md" | "lg") || "md"}
         clearable={Boolean(props.clearable)}
         disabled={Boolean(props.disabled)}
@@ -4170,19 +4269,19 @@ const FocusSelectPlaygroundDemo = (props: Record<string, unknown>) => {
         isError={Boolean(props.isError)}
         options={[
           {
-            label: "Bidang Tanah",
-            value: "bidang",
-            description: "Lapisan persil bidang tanah",
+            label: "Opsi 1",
+            value: "opt1",
+            description: "Deskripsi opsi pertama",
           },
           {
-            label: "Batas Wilayah",
-            value: "wilayah",
-            description: "Batas administrasi daerah",
+            label: "Opsi 2",
+            value: "opt2",
+            description: "Deskripsi opsi kedua",
           },
           {
-            label: "Zona Nilai Tanah",
-            value: "znt",
-            description: "Pemetaan valuasi spasial",
+            label: "Opsi 3",
+            value: "opt3",
+            description: "Deskripsi opsi ketiga",
           },
         ]}
       />
