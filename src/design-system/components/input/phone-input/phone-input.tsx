@@ -187,16 +187,18 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
 
     const countryOptions = useMemo<SelectOption[]>(
       () =>
-        availableCountries.map((country) => {
-          const countryName = getCountryName(country.code, locale);
-          return {
-            value: country.code,
-            label: `${countryName} (+${country.dialCode})`,
-            name: countryName,
-            flag: getFlagEmoji(country.code),
-            dialCode: `+${country.dialCode}`,
-          };
-        }),
+        availableCountries
+          .map((country) => {
+            const countryName = getCountryName(country.code, locale);
+            return {
+              value: country.code,
+              label: `${countryName} (+${country.dialCode})`,
+              name: countryName,
+              flag: getFlagEmoji(country.code),
+              dialCode: `+${country.dialCode}`,
+            };
+          })
+          .sort((a, b) => a.name.localeCompare(b.name, locale)),
       [availableCountries, locale],
     );
 
