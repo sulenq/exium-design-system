@@ -30,6 +30,7 @@ import { isEmptyArray } from "@/shared/utils/data/array";
 import { useNavigate } from "@tanstack/react-router";
 import {
   cloneElement,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -60,10 +61,22 @@ export const DataViewRowContextMenu = <
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   // States
+  const [isOpen, setIsOpen] = useState(true);
   const [adjustedPos, setAdjustedPos] = useState<{ top: number; left: number }>({
     top: point.y,
     left: point.x,
   });
+
+  // Handlers
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const handleAnimationEnd = () => {
+    if (!isOpen) {
+      onClose();
+    }
+  };
 
   // Derived Values
   const visibleActions = itemActions.filter((action) => {
@@ -105,18 +118,18 @@ export const DataViewRowContextMenu = <
   useEffect(() => {
     const handlePointerDownOutside = (event: PointerEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        onClose();
+        handleClose();
       }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onClose();
+        handleClose();
       }
     };
 
     const handleScrollOrResize = () => {
-      onClose();
+      handleClose();
     };
 
     document.addEventListener("pointerdown", handlePointerDownOutside, true);
@@ -130,7 +143,7 @@ export const DataViewRowContextMenu = <
       window.removeEventListener("scroll", handleScrollOrResize, true);
       window.removeEventListener("resize", handleScrollOrResize);
     };
-  }, [onClose]);
+  }, [handleClose]);
 
   return (
     <Portal>
@@ -149,8 +162,10 @@ export const DataViewRowContextMenu = <
         shadow={"lg"}
         role={"menu"}
         aria-orientation={"vertical"}
-        animationName={"scale-up"}
+        animationName={isOpen ? "scale-up" : "scale-down"}
         animationDuration={"fast"}
+        animationFillMode={"forwards"}
+        onAnimationEnd={handleAnimationEnd}
         css={{
           animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
           transformOrigin: "top left",
