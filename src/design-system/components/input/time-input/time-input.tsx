@@ -23,7 +23,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { useFieldContext } from "@chakra-ui/react";
@@ -237,14 +237,15 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
             transform={floatingLabelTransform}
             transition={"transform 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
           >
-            <ClampedP
+            <P
+              lineClamp={1}
               fontSize={floatingLabelFontSize}
               fontWeight={"medium"}
               color={"fg.subtle"}
               transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
             >
               {floatingLabel}
-            </ClampedP>
+            </P>
           </Box>
         )}
 
