@@ -3,6 +3,8 @@
 import { IconButton } from "@/design-system/components/button/button/button";
 import { ColorModeToggleButton } from "@/design-system/components/button/color-mode/color-mode";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import SelectInput from "@/design-system/components/input/select/select";
+import type { SelectOption } from "@/design-system/components/input/select/select.type";
 import {
   HStack,
   VStack,
@@ -20,9 +22,13 @@ import { HookDocs } from "@/features/design-system-docs/components/foundation/ho
 import { UtilDocs } from "@/features/design-system-docs/components/foundation/util-docs";
 import { COMPONENTS_REGISTRY } from "@/features/design-system-docs/config/components-registry";
 import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
+import type { Locale } from "@/paraglide/runtime";
+import { locales } from "@/paraglide/runtime";
+import { getLocaleLabel } from "@/shared/libs/i18n";
+import { useLocale } from "@/shared/libs/i18n/locale-provider";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { MenuIcon } from "lucide-react";
-import { useCallback } from "react";
+import { LanguagesIcon, MenuIcon } from "lucide-react";
+import { useCallback, useMemo } from "react";
 
 export const DesignSystemDocsPage = () => {
   // Hooks
@@ -30,10 +36,19 @@ export const DesignSystemDocsPage = () => {
   const search = useSearch({ from: "/design-system/ui" });
   const navigate = useNavigate({ from: "/design-system/ui" });
   const mobileDrawer = usePopModal({ modalKey: "ds-docs-mobile-nav" });
+  const { locale, setLocale } = useLocale();
 
   // Derived Values
   const activeNavKey: DsNavKey = (search.component as DsNavKey) || "overview";
   const currentSpec = COMPONENTS_REGISTRY[activeNavKey];
+
+  const localeOptions: SelectOption[] = useMemo(() => {
+    return locales.map((loc) => ({
+      label: `${loc.toUpperCase()} - ${getLocaleLabel(loc)}`,
+      value: loc,
+      icon: LanguagesIcon,
+    }));
+  }, []);
 
   const isFoundation = [
     "principles",
@@ -164,7 +179,19 @@ export const DesignSystemDocsPage = () => {
             <P fontWeight={"semibold"}>Exium Design System Documentation</P>
           </HStack>
 
-          <HStack align={"center"} gap={3}>
+          <HStack align={"center"} gap={2}>
+            <SelectInput
+              value={locale}
+              onValueChange={(val) => {
+                if (val) {
+                  setLocale(val as Locale);
+                }
+              }}
+              options={localeOptions}
+              clearable={false}
+              w={"160px"}
+              size={"sm"}
+            />
             <ColorModeToggleButton />
           </HStack>
         </HStack>

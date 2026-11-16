@@ -1,12 +1,24 @@
 // src/features/design-system-docs/components/foundation/hook-docs.tsx
 
+import { Button } from "@/design-system/components/button/button/button";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box } from "@/design-system/components/layout/box/box";
-import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
+import { Badge } from "@/design-system/components/typography/badge/badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
-import type { HookDocSpec, HookDocsProps } from "@/features/design-system-docs/types/hook-docs.type";
+import type {
+  HookDocSpec,
+  HookDocsProps,
+} from "@/features/design-system-docs/types/hook-docs.type";
+import { getLocaleLabel, t } from "@/shared/libs/i18n";
+import { useLocale } from "@/shared/libs/i18n/locale-provider";
+import { LanguagesIcon } from "lucide-react";
 
 const HOOKS_SPECS_MAP: Record<string, HookDocSpec> = {
   use_disclosure: {
@@ -149,6 +161,115 @@ setIsOpen(false);
 setFilter((prev) => ({ ...prev, page: prev.page + 1 }));`,
     returns: "[T, (value: T | ((prev: T) => T)) => void, () => void]",
   },
+  use_locale: {
+    title: "useLocale",
+    description: "Read the current application locale and switch languages dynamically without full page reload.",
+    usage: `import { useLocale } from "@/shared/libs/i18n/locale-provider";
+import { getLocaleLabel, t } from "@/shared/libs/i18n";
+
+const { locale, setLocale } = useLocale();
+
+// Read current locale & label
+console.log(locale); // "id" | "en"
+console.log(getLocaleLabel(locale)); // "Indonesian" | "English"
+
+// Switch language
+setLocale("en");
+setLocale("id");
+
+// Use localized string
+const greeting = t["common_loading"]();`,
+    returns: "{ locale: 'id' | 'en', setLocale: (locale: 'id' | 'en') => void }",
+  },
+};
+
+const UseLocaleInteractiveDemo = () => {
+  // Hooks
+  const { locale, setLocale } = useLocale();
+
+  return (
+    <Box
+      rounded={"lg"}
+      border={"1px solid"}
+      borderColor={"border.subtle"}
+      bg={"bg.body"}
+    >
+      <VStack gap={4} p={4}>
+        <HStack justify={"space-between"} align={"center"} wrap={"wrap"} gap={2}>
+          <VStack gap={1} align={"start"}>
+            <Heading size={"sm"} fontWeight={"bold"}>
+              {"Interactive Locale Demo"}
+            </Heading>
+            <P fontSize={"sm"} color={"fg.subtle"}>
+              {"Test switching application language live across components."}
+            </P>
+          </VStack>
+
+          <HStack gap={2} align={"center"}>
+            <Badge colorPalette={"blue"} variant={"subtle"}>
+              {`${locale.toUpperCase()} — ${getLocaleLabel(locale)}`}
+            </Badge>
+          </HStack>
+        </HStack>
+
+        <HStack gap={2} wrap={"wrap"}>
+          <Button
+            variant={locale === "id" ? "solid" : "outline"}
+            colorPalette={"blue"}
+            onClick={() => setLocale("id")}
+          >
+            <AppIcon icon={LanguagesIcon} />
+            {"Bahasa Indonesia (ID)"}
+          </Button>
+
+          <Button
+            variant={locale === "en" ? "solid" : "outline"}
+            colorPalette={"blue"}
+            onClick={() => setLocale("en")}
+          >
+            <AppIcon icon={LanguagesIcon} />
+            {"English (EN)"}
+          </Button>
+        </HStack>
+
+        <VStack
+          gap={2}
+          p={3}
+          rounded={"md"}
+          bg={"bg.subtle"}
+          border={"1px solid"}
+          borderColor={"border.subtle"}
+        >
+          <HStack justify={"space-between"} align={"center"}>
+            <P fontSize={"sm"} fontWeight={"medium"} color={"fg.subtle"}>
+              {"t.common_loading():"}
+            </P>
+            <P fontSize={"sm"} fontWeight={"semibold"}>
+              {t.common_loading()}
+            </P>
+          </HStack>
+
+          <HStack justify={"space-between"} align={"center"}>
+            <P fontSize={"sm"} fontWeight={"medium"} color={"fg.subtle"}>
+              {"t.common_searching():"}
+            </P>
+            <P fontSize={"sm"} fontWeight={"semibold"}>
+              {t.common_searching()}
+            </P>
+          </HStack>
+
+          <HStack justify={"space-between"} align={"center"}>
+            <P fontSize={"sm"} fontWeight={"medium"} color={"fg.subtle"}>
+              {"t.common_processing():"}
+            </P>
+            <P fontSize={"sm"} fontWeight={"semibold"}>
+              {t.common_processing()}
+            </P>
+          </HStack>
+        </VStack>
+      </VStack>
+    </Box>
+  );
 };
 
 export const HookDocs = (props: HookDocsProps) => {
@@ -197,6 +318,8 @@ export const HookDocs = (props: HookDocsProps) => {
           </P>
         </VStack>
       </Box>
+
+      {navKey === "use_locale" && <UseLocaleInteractiveDemo />}
     </VStack>
   );
 };

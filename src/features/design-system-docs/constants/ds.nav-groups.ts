@@ -178,6 +178,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "use_disclosure" },
           { key: "use_pop_disclosure" },
           { key: "use_color_mode" },
+          { key: "use_locale" },
           { key: "use_is_mounted" },
         ],
       },

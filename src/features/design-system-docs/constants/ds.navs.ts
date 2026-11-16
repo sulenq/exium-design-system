@@ -534,6 +534,9 @@ export const DS_NAVS_MAP = {
   use_persisted_state: {
     title: "usePersistedState",
   },
+  use_locale: {
+    title: "useLocale",
+  },
 
   // Utils Categories
   cat_core_utils: {
