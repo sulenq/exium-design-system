@@ -7,7 +7,7 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { Separator } from "@/design-system/components/layout/separator/separator";
 import { Avatar } from "@/design-system/components/media/avatar/avatar";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useColorMode } from "@/design-system/hooks/use-color-mode";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { ResetPasswordTrigger } from "@/features/auth/components/ui/reset-password-modal";
@@ -91,19 +91,19 @@ export const UserProfilePopoverTrigger = (
                   gap={"sm"}
                   w={"full"}
                 >
-                  <ClampedP fontWeight={"semibold"} textAlign={"center"}>
+                  <P lineClamp={1} fontWeight={"semibold"} textAlign={"center"}>
                     {displayName}
-                  </ClampedP>
+                  </P>
                 </HStack>
 
                 {displayEmail && (
-                  <ClampedP
+                  <P lineClamp={1}
                     fontSize={"sm"}
                     color={"fg.muted"}
                     textAlign={"center"}
                   >
                     {displayEmail}
-                  </ClampedP>
+                  </P>
                 )}
 
                 {user && "department" in user && user.department && (
@@ -113,13 +113,13 @@ export const UserProfilePopoverTrigger = (
                 )}
 
                 {user && "companyName" in user && user.companyName && (
-                  <ClampedP
+                  <P lineClamp={1}
                     fontSize={"2xs"}
                     color={"fg.muted"}
                     textAlign={"center"}
                   >
                     {user.companyName}
-                  </ClampedP>
+                  </P>
                 )}
               </VStack>
             </VStack>

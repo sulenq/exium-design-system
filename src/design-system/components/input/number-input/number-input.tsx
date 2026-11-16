@@ -11,7 +11,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Group } from "@/design-system/components/layout/group/group";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { VISUALLY_HIDDEN_INPUT_STYLE } from "@/design-system/constants/css-preset";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { dispatchNativeInputEvent } from "@/shared/utils/dom/dispatch-native-input-event";
@@ -344,7 +344,7 @@ export const NumberInput = (props: NumberInputProps) => {
           }
         >
           <HStack align={"center"} gap={2}>
-            <ClampedP
+            <P lineClamp={1}
               fontSize={isLabelFloating ? "xs" : "md"}
               fontWeight={"medium"}
               color={"fg.subtle"}
@@ -355,7 +355,7 @@ export const NumberInput = (props: NumberInputProps) => {
               }
             >
               {floatingLabel}
-            </ClampedP>
+            </P>
 
             {isOptional && (
               <Badge

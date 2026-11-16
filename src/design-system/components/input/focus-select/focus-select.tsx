@@ -20,7 +20,7 @@ import { VScrollContainer } from "@/design-system/components/layout/scroll-conta
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
@@ -233,14 +233,14 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
             }
           >
             <HStack align={"center"} gap={2}>
-              <ClampedP
+              <P lineClamp={1}
                 fontSize={isLabelFloating ? "xs" : "md"}
                 fontWeight={"medium"}
                 color={"fg.subtle"}
                 transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
               >
                 {floatingLabel}
-              </ClampedP>
+              </P>
 
               {isOptional && (
                 <Badge
@@ -404,11 +404,11 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
               >
                 <HStack gap={"sm"} align={"center"} flex={1} minW={0}>
                   <AppIcon icon={PlusIcon} size={"sm"} />
-                  <ClampedP>
+                  <P lineClamp={1}>
                     {searchQuery.trim()
                       ? searchQuery.trim()
                       : "Ketik di atas untuk input kustom..."}
-                  </ClampedP>
+                  </P>
                 </HStack>
                 <Badge>Opsi Kustom</Badge>
               </Button>
@@ -460,21 +460,21 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                         >
                           {renderStartElement(opt.startElement, opt.icon, "sm")}
                           <VStack align={"start"}>
-                            <ClampedP
+                            <P lineClamp={1}
                               fontWeight={isSelected ? "semibold" : "normal"}
                               textAlign={"start"}
                             >
                               {opt.label}
-                            </ClampedP>
+                            </P>
 
                             {opt.description && (
-                              <ClampedP
+                              <P lineClamp={1}
                                 fontSize={"xs"}
                                 textAlign={"start"}
                                 color={"fg.subtle"}
                               >
                                 {opt.description}
-                              </ClampedP>
+                              </P>
                             )}
                           </VStack>
                         </HStack>

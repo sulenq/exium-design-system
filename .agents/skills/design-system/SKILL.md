@@ -25,7 +25,7 @@ Ketika pengguna meminta membuat fitur baru, halaman, form, modal, atau refactor:
    - Mau bikin layout kolom/baris? ➡️ Wajib `HStack` / `VStack` / `Splitter` (`layout.md`).
    - Mau bikin tabel data / list data? ➡️ Wajib DataList Table pattern 1 `useMemo` implicit return (`data-display.md`).
    - Mau bikin tabs / accordion / wizard? ➡️ Wajib `Tabs`, `Accordion`, `Steps` (`disclosure.md`).
-   - Mau bikin teks / label / judul? ➡️ Wajib `P`, `ClampedP`, `Heading`, `Badge`, `CountBadge` (`typography.md`).
+   - Mau bikin teks / label / judul? ➡️ Wajib `P`, `Heading`, `Badge`, `CountBadge` (`typography.md`).
    - Mau render icon? ➡️ Wajib `AppIcon` (Lucide primary, Tabler fallback) (`icon.md`).
    - Mau notifikasi toast? ➡️ Wajib `toast.success`, `toast.error`, `toast.info`, `toast.warning` (`toast.md`).
    - Mau peta GIS? ➡️ Wajib `MapShell`, `BaseMap`, layer order mutlak (`map.md`).
@@ -53,7 +53,7 @@ Ketika pengguna meminta membuat fitur baru, halaman, form, modal, atau refactor:
 16. [Overlay (`overlay.md`)](./overlay.md) — URL search param `modalKey` hierarchy (`usePopModal`), `Modal`, `Dialog`, `Drawer`, `Popover`, `Menu`, `Tooltip`, `ActionBar`.
 17. [Shell (`shell.md`)](./shell.md) — `GisAppShell`, `CommonAppShell`, `AppNavTitle`, `HeaderContainer`.
 18. [Toast (`toast.md`)](./toast.md) — Programmatic `toast.success`, `toast.error`, `toast.info`, `toast.warning`, `Toaster`, `ToastHistory`, `NotificationCenter`.
-19. [Typography (`typography.md`)](./typography.md) — `P`, `ClampedP`, `TNum`, `Heading`, `Badge`, `CountBadge`, `Span`, `Kbd`, `Url`, `List`, `RichTextEditor`.
+19. [Typography (`typography.md`)](./typography.md) — `P`, `TNum`, `Heading`, `Badge`, `CountBadge`, `Span`, `Kbd`, `Url`, `List`, `RichTextEditor`.
 20. [Utilities (`utilities.md`)](./utilities.md) — `OfflineAlert`, `ModalPurger`, `FormatNumber`, `ClickDelegateContainer`, `DownloadTrigger`, `Portal`, `ChakraLocaleProvider`, `DebugMenu`.
 
 ---
@@ -73,7 +73,7 @@ Ketika pengguna meminta membuat fitur baru, halaman, form, modal, atau refactor:
    - `setState` inside `useEffect` is forbidden.
    - Accessing `ref.current` during render is forbidden.
    - Never use `<Input type="number" />`; always use `<NumberInput />`.
-   - Dilarang pakai `truncate`; selalu gunakan `<ClampedP>`.
+   - Dilarang pakai `truncate`; gunakan `<P lineClamp={1}>` atau `<Heading lineClamp={1}>`.
    - Dilarang cek array kosong dengan `.length === 0`; selalu gunakan `isEmptyArray(arr)`.
    - Form wajib RHF + Zod; dilarang membuat form dengan kumpulan `useState` terpisah.
 4. **Verification**:

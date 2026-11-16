@@ -41,7 +41,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useFieldContext } from "@chakra-ui/react";
 import { CalendarIcon } from "lucide-react";
@@ -546,14 +546,14 @@ export const DateInput = memo(
               }
             >
               <HStack align={"center"} gap={2}>
-                <ClampedP
+                <P lineClamp={1}
                   fontSize={isLabelFloating ? "xs" : "md"}
                   fontWeight={"medium"}
                   color={"fg.subtle"}
                   transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
                 >
                   {floatingLabel}
-                </ClampedP>
+                </P>
 
                 {isOptional && (
                   <Badge

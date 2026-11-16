@@ -15,7 +15,7 @@ import type { IgtLayerItem } from "@/design-system/components/map/map/map.type";
 import { LayerSymbologyContent } from "@/design-system/components/map/map/map.symbology-panel";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { useFlyToLayer } from "@/design-system/components/map/hooks/use-fly-to-layer";
@@ -224,12 +224,12 @@ function MapLayerManagementItemComponent<
               </IconButton>
             </Tooltip>
 
-            <ClampedP
+            <P lineClamp={1}
               fontWeight={"medium"}
               color={isEnabled ? `fg` : "fg.subtle"}
             >
               {displayName.replace(/_/g, " ")}
-            </ClampedP>
+            </P>
           </HStack>
 
           <HStack align={"center"} gap={"xs"} mr={"2xs"}>

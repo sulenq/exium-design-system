@@ -7,7 +7,7 @@ import type { HNavsProps } from "@/design-system/components/navigation/h-navs/h-
 import { NavButton } from "@/design-system/components/navigation/nav/nav";
 import { findActivePath } from "@/design-system/components/navigation/utils/navs.utils";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import type { NavNode } from "@/shared/types/nav.type";
@@ -92,7 +92,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
                       />
                     )}
 
-                    <ClampedP
+                    <P lineClamp={1}
                       fontSize={"2xs"}
                       fontWeight={isHighlighted ? "semibold" : "medium"}
                       color={
@@ -107,7 +107,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
                       maxW={"full"}
                     >
                       {label}
-                    </ClampedP>
+                    </P>
                   </VStack>
                 </NavButton>
               </Menu.Trigger>
@@ -192,7 +192,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
                 />
               )}
 
-              <ClampedP
+              <P lineClamp={1}
                 fontSize={"2xs"}
                 fontWeight={isActive ? "semibold" : "medium"}
                 color={isActive ? `${theme.colorPalette}.fg` : "fg.muted"}
@@ -203,7 +203,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
                 maxW={"full"}
               >
                 {label}
-              </ClampedP>
+              </P>
             </VStack>
           </NavButton>
         );

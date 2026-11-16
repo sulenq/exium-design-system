@@ -12,7 +12,7 @@ import type {
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { Span } from "@/design-system/components/typography/span/span";
 import { FormatNumber } from "@/design-system/components/utilities/format-number/fornat-number";
 import { useThemeStore } from "@/design-system/stores/theme-store";
@@ -115,7 +115,7 @@ const StatGridValue = (props: StatGridValueProps) => {
   } = props;
 
   return (
-    <ClampedP
+    <P lineClamp={1}
       fontSize={"2xl"}
       fontWeight={"semibold"}
       color={color}
@@ -158,7 +158,7 @@ const StatGridValue = (props: StatGridValueProps) => {
           {suffix}
         </Span>
       )}
-    </ClampedP>
+    </P>
   );
 };
 

@@ -10,7 +10,7 @@ import type {
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
@@ -265,7 +265,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               }
             >
               <HStack align={"center"} gap={2}>
-                <ClampedP
+                <P lineClamp={1}
                   fontSize={isLabelFloating ? "xs" : "md"}
                   fontWeight={"medium"}
                   color={"fg.subtle"}
@@ -276,7 +276,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
                   }
                 >
                   {floatingLabel}
-                </ClampedP>
+                </P>
 
                 {isOptional && (
                   <Badge

@@ -5,7 +5,7 @@ import type { InputProps } from "@/design-system/components/input/input/input.ty
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
@@ -195,7 +195,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           }
         >
           <HStack align={"center"} gap={2}>
-            <ClampedP
+            <P lineClamp={1}
               fontSize={isLabelFloating ? "xs" : "md"}
               fontWeight={"medium"}
               color={"fg.subtle"}
@@ -206,7 +206,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
               }
             >
               {floatingLabel}
-            </ClampedP>
+            </P>
 
             {isOptional && (
               <Badge

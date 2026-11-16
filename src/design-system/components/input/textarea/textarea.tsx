@@ -5,7 +5,7 @@ import type { TextareaProps } from "@/design-system/components/input/textarea/te
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
@@ -208,14 +208,14 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             }
           >
             <HStack align={"center"} gap={2}>
-              <ClampedP
+              <P lineClamp={1}
                 fontSize={isLabelFloating ? "xs" : "md"}
                 fontWeight={"medium"}
                 color={"fg.subtle"}
                 transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
               >
                 {floatingLabel}
-              </ClampedP>
+              </P>
 
               {isOptional && (
                 <Badge

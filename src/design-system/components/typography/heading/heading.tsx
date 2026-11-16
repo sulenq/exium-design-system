@@ -7,37 +7,44 @@ import { forwardRef } from "react";
 
 export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   (props, ref) => {
-    return (
+    // Props
+    const { children, lineClamp, minW = 0, minWidth, ...restProps } = props;
+
+    const resolvedMinW = minWidth ?? minW;
+
+    const headingElement = (
       <ChakraHeading
         ref={ref}
         fontSize={"lg"}
         fontWeight={"semibold"}
         lineHeight={1.2}
-        {...props}
-      />
+        lineClamp={lineClamp}
+        wordBreak={
+          lineClamp
+            ? Number(lineClamp) > 1
+              ? "break-word"
+              : "break-all"
+            : undefined
+        }
+        minW={lineClamp ? resolvedMinW : undefined}
+        {...restProps}
+      >
+        {children}
+      </ChakraHeading>
     );
-  },
-);
 
-export const ClampedHeading = forwardRef<HTMLHeadingElement, HeadingProps>(
-  (props, ref) => {
-    // Props
-    const { children, ...restProps } = props;
-
-    return (
-      <Tooltip content={children}>
-        <ChakraHeading
-          ref={ref}
-          fontSize={"lg"}
-          fontWeight={"semibold"}
-          lineHeight={1.2}
-          lineClamp={1}
-          wordBreak={"break-all"}
-          {...restProps}
+    if (lineClamp !== undefined && lineClamp !== null) {
+      return (
+        <Tooltip
+          content={children}
+          w={restProps.w ?? restProps.width}
+          minW={resolvedMinW}
         >
-          {children}
-        </ChakraHeading>
-      </Tooltip>
-    );
+          {headingElement}
+        </Tooltip>
+      );
+    }
+
+    return headingElement;
   },
 );

@@ -132,7 +132,7 @@ export const DS_NAVS_MAP = {
   // Components - Typography & Display
   typography: {
     icon: TextTIcon,
-    title: "P & Typography",
+    title: "P",
   },
   heading: {
     icon: TextHIcon,

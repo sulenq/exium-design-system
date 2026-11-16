@@ -18,7 +18,7 @@ import type { MapFeatureInfoItem } from "@/design-system/components/map/map/map.
 import { zoomToFeatureSafe } from "@/design-system/components/map/utils/map-camera";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { toast } from "@/design-system/components/toast";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isEmptyArray } from "@/shared/utils/data/array";
@@ -176,15 +176,15 @@ export const MapFeatureInfoPanel = () => {
             </Center>
 
             <VStack flex={1} align={"start"}>
-              <ClampedP fontWeight={"medium"} lineHeight={"tight"}>
+              <P lineClamp={1} fontWeight={"medium"} lineHeight={"tight"}>
                 {displayFeature?.title ??
                   displayFeature?.layerTitle ??
                   "Informasi Fitur"}
-              </ClampedP>
+              </P>
 
-              <ClampedP fontSize={"sm"} color={"fg.subtle"}>
+              <P lineClamp={1} fontSize={"sm"} color={"fg.subtle"}>
                 {basisLabel}
-              </ClampedP>
+              </P>
             </VStack>
           </HStack>
 

@@ -10,7 +10,7 @@ import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Image } from "@/design-system/components/media/image/image";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { isImageFile } from "@/shared/utils/data/file";
@@ -59,9 +59,9 @@ export const FileItem = (props: FileItemProps) => {
         <FileIcon mimeType={mimeType} />
       )}
 
-      <ClampedP flex={1}>
+      <P lineClamp={1} flex={1}>
         {name}
-      </ClampedP>
+      </P>
 
       <HStack align={"center"} gap={2} ml={"auto"} flexShrink={0}>
         <P fontSize={"sm"} whiteSpace={"nowrap"} color={"fg.subtle"}>

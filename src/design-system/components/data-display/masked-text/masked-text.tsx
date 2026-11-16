@@ -5,7 +5,7 @@ import type { MaskedTextProps } from "@/design-system/components/data-display/ma
 import { ClipboardButton } from "@/design-system/components/data-display/clipboard/clipboard-button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { memo, useState } from "react";
 
@@ -35,9 +35,9 @@ export const MaskedText = memo((props: MaskedTextProps) => {
     <HStack gap={"xs"} align={"center"} w={"full"} {...restProps}>
       <HStack flex={1} minW={0} overflow={"hidden"}>
         {isVisible ? (
-          <ClampedP flex={1} fontFamily={"mono"} userSelect={"all"}>
+          <P lineClamp={1} flex={1} fontFamily={"mono"} userSelect={"all"}>
             {value}
-          </ClampedP>
+          </P>
         ) : (
           <P
             fontFamily={"mono"}

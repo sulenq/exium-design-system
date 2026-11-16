@@ -54,11 +54,11 @@ if (isLoading) return <Skeleton />;
 
 ### 1.4 Teks dan placeholder
 
-- Jangan pakai prop `truncate`. Pakai `ClampedP` untuk memotong teks satu atau banyak baris.
+- Jangan pakai prop `truncate`. Pakai `P` atau `Heading` dengan prop `lineClamp` (misal: `<P lineClamp={1}>`) untuk memotong teks satu atau banyak baris (otomatis terbungkus Tooltip).
 - Jangan beri prefix "contoh:" di `placeholder` maupun `helperText`. Tulis nilainya langsung: `placeholder={"admin_spatial"}`.
 
 ```tsx
-import { ClampedP } from "@/design-system/components/typography/ui/p";
+import { P } from "@/design-system/components/typography/ui/p";
 ```
 
 ### 1.5 Form

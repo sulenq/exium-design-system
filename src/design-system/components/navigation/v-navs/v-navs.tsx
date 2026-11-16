@@ -16,7 +16,7 @@ import { NavButton } from "@/design-system/components/navigation/nav/nav";
 import { findActivePath } from "@/design-system/components/navigation/utils/navs.utils";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
@@ -69,9 +69,9 @@ export const VNavs = <TNavKey extends string>(props: VNavsProps<TNavKey>) => {
                   justifyContent={"flex-start"}
                 >
                   {expanded ? (
-                    <ClampedP fontSize={"sm"} color={"fg.subtle"} lineClamp={1}>
+                    <P fontSize={"sm"} color={"fg.subtle"} lineClamp={1}>
                       {groupTitle}
-                    </ClampedP>
+                    </P>
                   ) : (
                     <Tooltip
                       content={groupTitle}

@@ -8,7 +8,7 @@ import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";
 import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { usePersistedState } from "@/design-system/hooks/use-persisted-state";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { DS_NAV_GROUPS_LIST } from "@/features/design-system-docs/constants/ds.nav-groups";
@@ -133,7 +133,7 @@ const DsDocsSidebarHeader = ({
       <HStack align={"center"} gap={"sm"}>
         <Logo boxSize={18} ml={1.5} flexShrink={0} />
 
-        <ClampedP
+        <P lineClamp={1}
           w={expanded ? "" : 0}
           fontSize={"lg"}
           fontWeight={"semibold"}
@@ -141,13 +141,13 @@ const DsDocsSidebarHeader = ({
           mb={"3px"}
         >
           exium
-        </ClampedP>
+        </P>
       </HStack>
 
       {isMobileDrawer ? (
         <Drawer.CloseButton pos={"relative"} top={"auto"} right={"auto"} />
       ) : (
-        <ClampedP
+        <P lineClamp={1}
           w={expanded ? "" : 0}
           mr={1}
           fontSize={"sm"}
@@ -156,7 +156,7 @@ const DsDocsSidebarHeader = ({
           lineHeight={1}
         >
           v1.0
-        </ClampedP>
+        </P>
       )}
     </HStack>
   );

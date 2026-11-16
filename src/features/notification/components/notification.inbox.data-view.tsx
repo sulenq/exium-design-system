@@ -13,7 +13,7 @@ import { Box, Circle } from "@/design-system/components/layout/box/box";
 import { Center } from "@/design-system/components/layout/center/center";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { resolveInboxUI } from "@/features/notification/constants/inbox-code-resolver";
 import {
@@ -230,12 +230,12 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
         <VStack gap={"sm"} w={"full"}>
           {/* Title + Dot + Badge */}
           <HStack align={"center"} gap={"sm"}>
-            <ClampedP
+            <P lineClamp={1}
               fontWeight={item.isRead ? "medium" : "semibold"}
               wordBreak={"break-word"}
             >
               {resolved.title}
-            </ClampedP>
+            </P>
 
             <Badge
               variant={"subtle"}

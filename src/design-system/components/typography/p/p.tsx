@@ -13,36 +13,63 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 export const P = forwardRef<HTMLParagraphElement, PProps>(
   function P(props, ref) {
     // Props
-    const { children = "", ...restProps } = props;
+    const { children = "", lineClamp, minW = 0, minWidth, ...restProps } = props;
 
-    return (
+    const resolvedMinW = minWidth ?? minW;
+
+    const parsedContent =
+      typeof children === "string"
+        ? parse(children, {
+            replace: (domNode) => {
+              if (
+                domNode.type === "tag" &&
+                domNode.name === "b" &&
+                domNode.children.length
+              ) {
+                return (
+                  <b style={{ fontWeight: 700 }}>
+                    {domToReact(domNode.children as DOMNode[])}
+                  </b>
+                );
+              }
+            },
+          })
+        : children;
+
+    const textElement = (
       <Text
         ref={ref}
         as={"p"}
-        wordBreak={"break-word"}
+        wordBreak={
+          lineClamp
+            ? Number(lineClamp) > 1
+              ? "break-word"
+              : "break-all"
+            : "break-word"
+        }
         fontFamily={"inherit"}
         fontWeight={"normal"}
+        lineClamp={lineClamp}
+        minW={lineClamp ? resolvedMinW : undefined}
         {...restProps}
       >
-        {typeof children === "string"
-          ? parse(children, {
-              replace: (domNode) => {
-                if (
-                  domNode.type === "tag" &&
-                  domNode.name === "b" &&
-                  domNode.children.length
-                ) {
-                  return (
-                    <b style={{ fontWeight: 700 }}>
-                      {domToReact(domNode.children as DOMNode[])}
-                    </b>
-                  );
-                }
-              },
-            })
-          : children}
+        {parsedContent}
       </Text>
     );
+
+    if (lineClamp !== undefined && lineClamp !== null) {
+      return (
+        <Tooltip
+          content={children}
+          w={restProps.w ?? restProps.width}
+          minW={resolvedMinW}
+        >
+          {textElement}
+        </Tooltip>
+      );
+    }
+
+    return textElement;
   },
 );
 
@@ -84,35 +111,6 @@ export const PLink = forwardRef<HTMLSpanElement, PProps>(
       >
         {children}
       </Span>
-    );
-  },
-);
-
-export const ClampedP = forwardRef<HTMLParagraphElement, PProps>(
-  function ClampedP(props, ref) {
-    // Props
-    const { children, minW = 0, minWidth, lineClamp = 1, ...restProps } = props;
-
-    const resolvedMinW = minWidth ?? minW;
-
-    return (
-      <Tooltip
-        content={children}
-        w={restProps.w ?? restProps.width}
-        minW={resolvedMinW}
-      >
-        <P
-          ref={ref}
-          lineClamp={lineClamp}
-          wordBreak={
-            lineClamp && Number(lineClamp) > 1 ? "break-word" : "break-all"
-          }
-          minW={resolvedMinW}
-          {...restProps}
-        >
-          {children}
-        </P>
-      </Tooltip>
     );
   },
 );

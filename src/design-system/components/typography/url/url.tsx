@@ -2,7 +2,7 @@
 
 import { ClipboardButton } from "@/design-system/components/data-display/clipboard/clipboard-button";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import type { UrlProps } from "@/design-system/components/typography/url/url.type";
 import { memo } from "react";
 
@@ -23,7 +23,7 @@ export const Url = memo((props: UrlProps) => {
 
   return (
     <HStack gap={"xs"} align={"center"} maxW={maxW} w={"full"} {...restProps}>
-      <ClampedP
+      <P
         as={isExternalLink ? "a" : "p"}
         href={isExternalLink ? url : undefined}
         target={isExternalLink ? "_blank" : undefined}
@@ -43,7 +43,7 @@ export const Url = memo((props: UrlProps) => {
         }
       >
         {url}
-      </ClampedP>
+      </P>
 
       <ClipboardButton
         value={url}

@@ -27,7 +27,7 @@ import type {
   GisAppShellProps,
   GisContentProps,
 } from "@/design-system/components/shell/gis-app-shell/gis-app-shell.type";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { APP_CONFIG } from "@/design-system/constants/_meta";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useSidebarStore } from "@/design-system/stores/sidebar-store";
@@ -160,18 +160,18 @@ const SidebarHeader = () => {
         <HStack align={"center"} gap={"sm"}>
           <Logo flexShrink={0} boxSize={6} ml={1} />
 
-          <ClampedP
+          <P lineClamp={1}
             w={expanded ? "" : 0}
             fontWeight={"semibold"}
             color={`${theme.colorPalette}.fg`}
             lineHeight={1.2}
           >
             {APP_CONFIG.title}
-          </ClampedP>
+          </P>
         </HStack>
       </NavLink>
 
-      <ClampedP
+      <P lineClamp={1}
         w={expanded ? "" : 0}
         mr={1}
         fontSize={"sm"}
@@ -180,7 +180,7 @@ const SidebarHeader = () => {
         lineHeight={1}
       >
         v{APP_CONFIG.version}
-      </ClampedP>
+      </P>
     </Sidebar.Header>
   );
 };
@@ -670,7 +670,7 @@ const MobileBottomNav = () => {
           <VStack align={"center"} justify={"center"} gap={"2xs"} minW={"50px"}>
             <AppIcon icon={UserIcon} color={"fg.muted"} />
 
-            <ClampedP
+            <P lineClamp={1}
               fontSize={"2xs"}
               fontWeight={"medium"}
               color={"fg.muted"}
@@ -679,7 +679,7 @@ const MobileBottomNav = () => {
               pb={"1px"}
             >
               {t["app.navs.profile"]()}
-            </ClampedP>
+            </P>
           </VStack>
         </NavButton>
       </UserProfilePopoverTrigger>

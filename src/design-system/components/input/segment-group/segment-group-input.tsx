@@ -3,7 +3,7 @@
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type { SegmentGroupInputProps } from "@/design-system/components/input/segment-group/segmented-control.type";
 import { SegmentGroup } from "@/design-system/components/input/segment-group/segment-group";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import * as React from "react";
 
 export const SegmentGroupInput = React.forwardRef<
@@ -38,7 +38,7 @@ export const SegmentGroupInput = React.forwardRef<
 
           {option.label && (
             <SegmentGroup.ItemText>
-              <ClampedP fontSize={"sm"}>{option.label}</ClampedP>
+              <P lineClamp={1} fontSize={"sm"}>{option.label}</P>
             </SegmentGroup.ItemText>
           )}
 

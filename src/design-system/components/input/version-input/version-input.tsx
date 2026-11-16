@@ -12,7 +12,7 @@ import type {
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useFieldContext } from "@chakra-ui/react";
 import {
@@ -392,13 +392,13 @@ export const VersionInput = memo(
             pointerEvents={"none"}
           >
             <HStack align={"center"} gap={2}>
-              <ClampedP
+              <P lineClamp={1}
                 fontSize={"xs"}
                 fontWeight={"medium"}
                 color={"fg.subtle"}
               >
                 {floatingLabel}
-              </ClampedP>
+              </P>
 
               {isOptional && (
                 <Badge

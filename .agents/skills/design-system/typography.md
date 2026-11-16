@@ -1,6 +1,6 @@
 ---
 name: exium-typography
-description: "Guidelines and API reference for Exium Typography components: P, ClampedP, TNum, Heading, Badge, CountBadge, Span, Kbd, Url, List, and RichTextEditor."
+description: "Guidelines and API reference for Exium Typography components: P, TNum, Heading, Badge, CountBadge, Span, Kbd, Url, List, and RichTextEditor."
 ---
 
 # Exium Typography Components
@@ -11,22 +11,21 @@ Located in `@/design-system/components/typography/ui/`.
 
 ## 1. Paragraph & Text Clamping (`p.tsx`)
 
-- `P`: Standar elemen paragraf/teks.
-- `ClampedP`: Teks yang otomatis terpotong (*line clamp*) dengan tooltip bila terpotong.
-  - 🔴 **Aturan Mutlak**: DILARANG menggunakan CSS `truncate` biasa; selalu gunakan `<ClampedP lineClamp={2}>`.
+- `P`: Standar elemen paragraf/teks dengan integrasi `lineClamp` & Tooltip otomatis saat terpotong.
+  - 🔴 **Aturan Mutlak**: DILARANG menggunakan CSS `truncate` biasa; selalu gunakan `<P lineClamp={1}>` atau `<P lineClamp={2}>`.
 - `TNum`: Typography tabular numbers (`fontVariantNumeric="tabular-nums"`) untuk angka statistik/harga agar digit sejajar secara vertikal.
 
 ### Example:
 ```tsx
-import { P, ClampedP, TNum } from "@/design-system/components/typography/ui/p";
+import { P, TNum } from "@/design-system/components/typography/ui/p";
 
 <P fontSize={"sm"} color={"fg.muted"}>
   {"Keterangan status permohonan data"}
 </P>
 
-<ClampedP lineClamp={2} maxW={"300px"}>
+<P lineClamp={2} maxW={"300px"}>
   {"Deskripsi layer yang sangat panjang ini akan dipotong rapi jika melebihi 2 baris."}
-</ClampedP>
+</P>
 
 <P>
   {"Total Luas: "}<TNum>{1250.5}</TNum>{" ha"}

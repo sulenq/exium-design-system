@@ -14,7 +14,7 @@ import { useMapInstanceStore } from "@/design-system/components/map/stores/map.i
 import type { MapSearchResultItem } from "@/design-system/components/map/map/map.search.type";
 import { MapOverlayContainer } from "@/design-system/components/map/map/map.overlay";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useClickOutside } from "@/design-system/hooks/use-click-outside";
 import { useSearchParam } from "@/design-system/hooks/use-search-param";
 import { useThemeStore } from "@/design-system/stores/theme-store";
@@ -317,9 +317,9 @@ export const MapSearch = () => {
                         >
                           <AppIcon icon={Clock} color={"fg.muted"} />
 
-                          <ClampedP textAlign={"start"}>
+                          <P lineClamp={1} textAlign={"start"}>
                             {item.display_name}
-                          </ClampedP>
+                          </P>
                         </HStack>
 
                         <IconButton
@@ -375,9 +375,9 @@ export const MapSearch = () => {
                       <HStack gap={2} overflow={"hidden"} w={"full"}>
                         <AppIcon icon={MapPin} color={"fg.muted"} />
 
-                        <ClampedP textAlign={"start"}>
+                        <P lineClamp={1} textAlign={"start"}>
                           {item.display_name}
-                        </ClampedP>
+                        </P>
                       </HStack>
                     </Button>
                   ))}

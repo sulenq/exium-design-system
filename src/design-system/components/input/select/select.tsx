@@ -9,7 +9,10 @@ import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton"
 import { StateNoResult } from "@/design-system/components/feedback/state-no-result/state.no-result";
 import { StateRetry } from "@/design-system/components/feedback/state-retry/state.retry";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { P } from "@/design-system/components/typography/p/p";
@@ -209,9 +212,7 @@ export default function SelectInput(props: SelectProps) {
           />
 
           {suffixLabel && (
-            <Box fontSize={props?.fontSize ?? "md"}>
-              {suffixLabel}
-            </Box>
+            <Box fontSize={props?.fontSize ?? "md"}>{suffixLabel}</Box>
           )}
         </HStack>
 

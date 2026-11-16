@@ -22,7 +22,7 @@ import type {
 import { fetchLegendGraphic } from "@/design-system/components/map/utils/fetch-legend-graphic";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { ClampedP } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { getMapLayers } from "@/design-system/components/map/services/map-layers.service";
 import type { IgtLayerItem } from "@/design-system/components/map/map/map.type";
@@ -132,7 +132,7 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
           borderColor={"border.subtle"}
         >
           <HStack gap={"xs"} align={"center"} minW={0} flex={1}>
-            <ClampedP fontWeight={"medium"}>{"Simbologi & Legenda"}</ClampedP>
+            <P lineClamp={1} fontWeight={"medium"}>{"Simbologi & Legenda"}</P>
 
             <Badge colorPalette={"blue"} size={"xs"}>
               {`${activeSymbologyLayers.length}`}
@@ -196,13 +196,13 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
                       </Center>
 
                       <VStack align={"start"} gap={0} flex={1} minW={0}>
-                        <ClampedP fontWeight={"medium"} lineHeight={"tight"}>
+                        <P lineClamp={1} fontWeight={"medium"} lineHeight={"tight"}>
                           {displayName.replace(/_/g, " ")}
-                        </ClampedP>
+                        </P>
 
-                        <ClampedP fontSize={"sm"} color={"fg.subtle"}>
+                        <P lineClamp={1} fontSize={"sm"} color={"fg.subtle"}>
                           {basisLabel}
-                        </ClampedP>
+                        </P>
                       </VStack>
                     </HStack>
 
@@ -331,14 +331,14 @@ const LegendRuleItem = memo((props: LegendRuleItemProps) => {
           <DefaultThematicSwatch basis={fallbackBasis} />
         )}
 
-        <ClampedP
+        <P lineClamp={1}
           fontSize={"sm"}
           color={"fg"}
           flex={1}
           wordBreak={"break-word"}
         >
           {ruleTitle}
-        </ClampedP>
+        </P>
       </HStack>
     </HStack>
   );
@@ -434,9 +434,9 @@ const DefaultThematicSwatch = memo((props: DefaultThematicSwatchProps) => {
         borderColor={strokeColor}
         flexShrink={0}
       />
-      <ClampedP fontSize={"sm"} color={"fg"}>
+      <P lineClamp={1} fontSize={"sm"} color={"fg"}>
         {label}
-      </ClampedP>
+      </P>
     </HStack>
   );
 });

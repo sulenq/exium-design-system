@@ -42,7 +42,7 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { Grid } from "@/design-system/components/layout/grid/grid";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { ChevronLeftIcon, ChevronRightIcon, GlobeIcon } from "lucide-react";
 
@@ -498,7 +498,7 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
           <HStack align={"center"} gap={2} color={"fg.muted"}>
             <AppIcon icon={GlobeIcon} size={"sm"} />
 
-            <ClampedP fontSize={"sm"}>{timezoneLabel}</ClampedP>
+            <P lineClamp={1} fontSize={"sm"}>{timezoneLabel}</P>
           </HStack>
 
           {/* <Button

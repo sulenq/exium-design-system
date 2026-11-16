@@ -19,7 +19,7 @@ import { Center } from "@/design-system/components/layout/center/center";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Image } from "@/design-system/components/media/image/image";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
@@ -560,13 +560,13 @@ const FileItem = (props: FileItemProps) => {
         <FileIcon mimeType={mimeType} opacity={contentOpacity} />
       )}
 
-      <ClampedP
+      <P lineClamp={1}
         flex={1}
         textDecoration={markedForDelete ? "line-through" : undefined}
         opacity={contentOpacity}
       >
         {name}
-      </ClampedP>
+      </P>
 
       <HStack align={"center"} gap={2} ml={"auto"} flexShrink={0}>
         {markedForDelete && (

@@ -87,7 +87,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { CountBadge } from "@/design-system/components/typography/count-badge/count-badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { Kbd } from "@/design-system/components/typography/kbd/kbd";
-import { ClampedP, P } from "@/design-system/components/typography/p/p";
+import { P } from "@/design-system/components/typography/p/p";
 import { RichTextEditorPresetEssential } from "@/design-system/components/typography/rich-text-editor/rich-text-editor.preset";
 import { Span } from "@/design-system/components/typography/span/span";
 import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";
@@ -362,18 +362,19 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
 
   typography: {
     key: "typography",
-    title: "Typography (P)",
+    title: "P",
     category: "Typography & Display",
     description:
-      "Komponen teks standard dengan dukungan penyesuaian font size, weight, dan warna.",
+      "Komponen teks standard dengan dukungan penyesuaian font size, weight, warna, serta integrasi pemotongan baris (lineClamp) dengan tooltip.",
     importPath:
-      'import { ClampedP, P } from "@/design-system/components/typography/p/p";',
+      'import { P } from "@/design-system/components/typography/p/p";',
     component: P,
     defaultProps: {
       children: "Exium Design System Typography Example",
       fontSize: "md",
       fontWeight: "normal",
       color: "fg.default",
+      lineClamp: undefined,
     },
     propsSpec: [
       {
@@ -382,6 +383,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         defaultValue: undefined,
         description: "Konten teks yang dipaparkan.",
         controlKind: "text",
+      },
+      {
+        name: "lineClamp",
+        type: "number",
+        defaultValue: undefined,
+        description:
+          "Batas jumlah baris teks. Saat bernilai, teks otomatis terpotong dan dibungkus Tooltip.",
+        controlKind: "number",
       },
       {
         name: "fontSize",
@@ -400,6 +409,44 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["normal", "medium", "semibold", "bold"],
       },
     ],
+    generateCode: (props) => {
+      const childrenVal = String(
+        props.children || "Exium Design System Typography Example",
+      );
+      const fsProp =
+        props.fontSize && props.fontSize !== "md"
+          ? ` fontSize={"${props.fontSize}"}`
+          : "";
+      const fwProp =
+        props.fontWeight && props.fontWeight !== "normal"
+          ? ` fontWeight={"${props.fontWeight}"}`
+          : "";
+      const colorProp =
+        props.color && props.color !== "fg.default"
+          ? ` color={"${props.color}"}`
+          : "";
+      const clampProp = props.lineClamp ? ` lineClamp={${props.lineClamp}}` : "";
+
+      return `<P${fsProp}${fwProp}${colorProp}${clampProp}>\n  {"${childrenVal}"}\n</P>`;
+    },
+    renderPlayground: (props) => (
+      <Box maxW={"300px"}>
+        <P
+          fontSize={
+            (props.fontSize as "xs" | "sm" | "md" | "lg" | "xl" | "2xl") ||
+            "md"
+          }
+          fontWeight={
+            (props.fontWeight as "normal" | "medium" | "semibold" | "bold") ||
+            "normal"
+          }
+          color={props.color as string}
+          lineClamp={props.lineClamp ? Number(props.lineClamp) : undefined}
+        >
+          {String(props.children || "Exium Design System Typography Example")}
+        </P>
+      </Box>
+    ),
   },
 
   badge: {
@@ -456,13 +503,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     title: "Heading",
     category: "Typography & Display",
     description:
-      "Elemen judul semantik dengan styling tegas dan line-height teratur.",
+      "Elemen judul semantik dengan styling tegas, line-height teratur, serta dukungan lineClamp dan Tooltip.",
     importPath:
       'import { Heading } from "@/design-system/components/typography/heading/heading";',
     component: Heading,
     defaultProps: {
       children: "Exium Design System Heading",
       fontSize: "xl",
+      lineClamp: undefined,
     },
     propsSpec: [
       {
@@ -473,6 +521,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "text",
       },
       {
+        name: "lineClamp",
+        type: "number",
+        defaultValue: undefined,
+        description:
+          "Batas jumlah baris judul. Saat bernilai, teks otomatis terpotong dan dibungkus Tooltip.",
+        controlKind: "number",
+      },
+      {
         name: "fontSize",
         type: '"md" | "lg" | "xl" | "2xl" | "3xl"',
         defaultValue: "xl",
@@ -481,6 +537,28 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["md", "lg", "xl", "2xl", "3xl"],
       },
     ],
+    generateCode: (props) => {
+      const childrenVal = String(props.children || "Exium Design System Heading");
+      const fsProp =
+        props.fontSize && props.fontSize !== "xl"
+          ? ` fontSize={"${props.fontSize}"}`
+          : "";
+      const clampProp = props.lineClamp ? ` lineClamp={${props.lineClamp}}` : "";
+
+      return `<Heading${fsProp}${clampProp}>\n  {"${childrenVal}"}\n</Heading>`;
+    },
+    renderPlayground: (props) => (
+      <Box maxW={"320px"}>
+        <Heading
+          fontSize={
+            (props.fontSize as "md" | "lg" | "xl" | "2xl" | "3xl") || "xl"
+          }
+          lineClamp={props.lineClamp ? Number(props.lineClamp) : undefined}
+        >
+          {String(props.children || "Exium Design System Heading")}
+        </Heading>
+      </Box>
+    ),
   },
 
   count_badge: {
@@ -3623,15 +3701,15 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       <HStack align={"center"} gap={2}>
         <Logo boxSize={18} ml={1.5} flexShrink={0} />
         {isOpened && (
-          <ClampedP fontSize={"lg"} fontWeight={"semibold"}>
+          <P lineClamp={1} fontSize={"lg"} fontWeight={"semibold"}>
             {"exium"}
-          </ClampedP>
+          </P>
         )}
       </HStack>
       {isOpened && (
-        <ClampedP mr={1} fontSize={"sm"} color={"fg.subtle"} lineHeight={1}>
+        <P lineClamp={1} mr={1} fontSize={"sm"} color={"fg.subtle"} lineHeight={1}>
           {"v1.0"}
-        </ClampedP>
+        </P>
       )}
     </HStack>
   </Sidebar.Header>
@@ -5146,7 +5224,7 @@ const SidebarPlaygroundDemo = ({
             <HStack align={"center"} gap={2}>
               <Logo boxSize={18} ml={1.5} flexShrink={0} />
 
-              <ClampedP
+              <P lineClamp={1}
                 w={expanded ? "" : 0}
                 fontSize={"lg"}
                 fontWeight={"semibold"}
@@ -5154,10 +5232,10 @@ const SidebarPlaygroundDemo = ({
                 mb={"3px"}
               >
                 {"exium"}
-              </ClampedP>
+              </P>
             </HStack>
 
-            <ClampedP
+            <P lineClamp={1}
               w={expanded ? "" : 0}
               mr={1}
               fontSize={"sm"}
@@ -5166,7 +5244,7 @@ const SidebarPlaygroundDemo = ({
               lineHeight={1}
             >
               {"v1.0"}
-            </ClampedP>
+            </P>
           </HStack>
         </Sidebar.Header>
 
