@@ -3067,6 +3067,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       defaultStep: 1,
       count: 3,
       size: "md",
+      orientation: "horizontal",
       colorPalette: "blue",
     },
     propsSpec: [
@@ -3086,6 +3087,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
       {
+        name: "orientation",
+        type: '"horizontal" | "vertical"',
+        defaultValue: "horizontal",
+        description: "Arah orientasi alur langkah stepper.",
+        controlKind: "select",
+        options: ["horizontal", "vertical"],
+      },
+      {
         name: "size",
         type: '"sm" | "md" | "lg"',
         defaultValue: "md",
@@ -3102,10 +3111,28 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: COLOR_PALETTE_OPTIONS,
       },
     ],
+    generateCode: (props) => {
+      const orientation = (props.orientation as string) || "horizontal";
+      const orientationProp =
+        orientation !== "horizontal"
+          ? ` orientation={"${orientation}"}`
+          : "";
+      const sizeProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const colorProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+
+      return `<Steps.Root\n  defaultStep={${Number(props.defaultStep) || 1}}\n  count={${Number(props.count) || 3}}${orientationProp}${sizeProp}${colorProp}\n  w={"full"}\n>\n  <Steps.List>\n    <Steps.Item index={0} title={"Langkah 1"}>\n      <Steps.Trigger>\n        <Steps.Indicator />\n        <Steps.Title fontSize={{ base: "xs", sm: "sm" }}>{"Biodata"}</Steps.Title>\n      </Steps.Trigger>\n      <Steps.Separator />\n    </Steps.Item>\n    <Steps.Item index={1} title={"Langkah 2"}>\n      <Steps.Trigger>\n        <Steps.Indicator />\n        <Steps.Title fontSize={{ base: "xs", sm: "sm" }}>{"Berkas"}</Steps.Title>\n      </Steps.Trigger>\n      <Steps.Separator />\n    </Steps.Item>\n    <Steps.Item index={2} title={"Langkah 3"}>\n      <Steps.Trigger>\n        <Steps.Indicator />\n        <Steps.Title fontSize={{ base: "xs", sm: "sm" }}>{"Selesai"}</Steps.Title>\n      </Steps.Trigger>\n    </Steps.Item>\n  </Steps.List>\n</Steps.Root>`;
+    },
     renderPlayground: (props) => (
       <Steps.Root
         defaultStep={Number(props.defaultStep) || 1}
         count={Number(props.count) || 3}
+        orientation={
+          (props.orientation as "horizontal" | "vertical") || "horizontal"
+        }
         size={(props.size as "sm" | "md" | "lg") || "md"}
         colorPalette={(props.colorPalette as string) || "blue"}
         w={"full"}
