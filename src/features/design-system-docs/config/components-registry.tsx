@@ -4248,6 +4248,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       value: "https://exium-docs.vercel.app",
       size: "md",
       errorCorrection: "M",
+      withLogo: false,
       downloadable: false,
     },
     propsSpec: [
@@ -4266,6 +4267,13 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         description: "Ukuran kode QR.",
         controlKind: "select",
         options: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      },
+      {
+        name: "withLogo",
+        type: "boolean",
+        defaultValue: false,
+        description: "Tampilkan logo Exium di bagian tengah kode QR.",
+        controlKind: "boolean",
       },
       {
         name: "errorCorrection",
@@ -4296,6 +4304,15 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         description: "Nama file hasil unduhan.",
       },
     ],
+    generateCode: (props) => {
+      const val = props.value ? ` value={"${props.value}"}` : ' value={"https://exium-docs.vercel.app"}';
+      const sz = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const dl = props.downloadable ? ` downloadable={true}` : "";
+      if (props.withLogo) {
+        return `<QrCode${val}${sz}${dl}\n  overlay={<Logo boxSize={8} />}\n/>`;
+      }
+      return `<QrCode${val}${sz}${dl} />`;
+    },
     renderPlayground: (props) => (
       <QrCode
         value={String(props.value || "https://exium-docs.vercel.app")}
@@ -4303,6 +4320,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         errorCorrection={
           (props.errorCorrection as QrCodeErrorCorrection) || "M"
         }
+        overlay={props.withLogo ? <Logo boxSize={8} /> : undefined}
         downloadable={Boolean(props.downloadable)}
       />
     ),
