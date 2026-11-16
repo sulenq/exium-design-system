@@ -72,8 +72,8 @@ export const ConfirmDialogModal = (props: {
           <Modal.CloseButton />
         </Modal.Header>
 
-        <Modal.Body pt={0} pb={"lg"}>
-          <VStack align={"center"} gap={"md"} textAlign={"center"}>
+        <Modal.Body pt={0} pb={6}>
+          <VStack align={"center"} gap={4} textAlign={"center"}>
             <Circle
               size={"48px"}
               bg={`${colorPalette}.subtle`}
@@ -105,7 +105,7 @@ export const ConfirmDialogModal = (props: {
         </Modal.Body>
 
         <Modal.Footer>
-          <VStack gap={"xs"} w={"full"}>
+          <VStack gap={2} w={"full"}>
             <Button
               primary
               variant={"solid"}

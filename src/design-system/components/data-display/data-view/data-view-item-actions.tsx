@@ -304,7 +304,7 @@ export const DataViewSpreadActions = <
 
   return (
     <HStack
-      gap={"2xs"}
+      gap={1}
       align={"center"}
       justify={"start"}
       wrap={"nowrap"}
@@ -392,7 +392,7 @@ export const DataViewStickyActions = <
 
   return (
     <HStack
-      gap={"2xs"}
+      gap={1}
       align={"center"}
       justify={"end"}
       wrap={"nowrap"}

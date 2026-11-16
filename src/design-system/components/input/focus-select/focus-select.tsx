@@ -256,7 +256,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
           </Box>
         )}
 
-        <HStack gap={"sm"} flex={1} minW={0} justify={"start"}>
+        <HStack gap={3} flex={1} minW={0} justify={"start"}>
           {isFetchingLoading && !currentValue ? (
             <Skeleton
               h={"16px"}
@@ -289,7 +289,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
         </HStack>
 
         <HStack
-          gap={"sm"}
+          gap={3}
           position={"absolute"}
           right={3}
           top={"50%"}
@@ -365,7 +365,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
         <Modal.Body p={0}>
           {/* Always render SearchInput when not fetching */}
           {!isFetchingLoading && !isError && (
-            <VStack w={"full"} px={"md"} pt={"2px"} mb={"sm"}>
+            <VStack w={"full"} px={4} pt={"2px"} mb={3}>
               <Field variant={"default"} invalid={false}>
                 <SearchInput
                   ref={searchInputRef}
@@ -379,7 +379,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
           )}
 
           {customOption && !isFetchingLoading && !isError && (
-            <VStack w={"full"} px={"md"} mb={"sm"}>
+            <VStack w={"full"} px={4} mb={3}>
               <Button
                 variant={
                   isCustomValueSelected && currentValue === searchQuery.trim()
@@ -387,7 +387,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                     : "outline"
                 }
                 w={"full"}
-                py={"sm"}
+                py={3}
                 px={3}
                 justifyContent={"space-between"}
                 alignItems={"center"}
@@ -402,7 +402,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                 }}
                 disabled={!searchQuery.trim()}
               >
-                <HStack gap={"sm"} align={"center"} flex={1} minW={0}>
+                <HStack gap={3} align={"center"} flex={1} minW={0}>
                   <AppIcon icon={PlusIcon} size={"sm"} />
                   <P lineClamp={1}>
                     {searchQuery.trim()
@@ -416,9 +416,9 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
           )}
 
           {/* Clean options list container */}
-          <VScrollContainer w={"full"} maxH={"300px"} px={"md"} pb={"md"}>
+          <VScrollContainer w={"full"} maxH={"300px"} px={4} pb={4}>
             {isFetchingLoading ? (
-              <VStack gap={"xs"} w={"full"} h={"240px"}>
+              <VStack gap={2} w={"full"} h={"240px"}>
                 {Array.from({ length: SKELETON_LIST_COUNT }).map((_, index) => (
                   <Skeleton key={`skeleton-${index + 1}`} w={"full"} flex={1} />
                 ))}
@@ -444,7 +444,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                       minH={"40px"}
                       h={"max"}
                       px={3}
-                      py={"xs"}
+                      py={2}
                       alignItems={"center"}
                       justifyContent={"start"}
                       onClick={() => handleOptionSelect(opt.value, opt)}
@@ -453,7 +453,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                         renderOption(opt)
                       ) : (
                         <HStack
-                          gap={"sm"}
+                          gap={3}
                           align={"center"}
                           flex={1}
                           justify={"start"}

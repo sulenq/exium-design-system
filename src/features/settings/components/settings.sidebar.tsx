@@ -94,7 +94,7 @@ export const SettingsSidebarBody = () => {
         });
       }}
       flex={1}
-      gap={isSmallViewport ? "md" : ""}
+      gap={isSmallViewport ? 4 : 0}
       overflowY={"auto"}
       w={"full"}
       p={2}

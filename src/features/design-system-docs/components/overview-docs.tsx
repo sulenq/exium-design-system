@@ -49,7 +49,7 @@ export const OverviewDocs = ({
         justify={"space-between"}
         align={"center"}
       >
-        <VStack align={"start"} gap={"sm"}>
+        <VStack align={"start"} gap={3}>
           <HStack gap={2}>
             <AppIcon icon={SparklesIcon} />
             <P fontWeight={"bold"}>Demo Gallery (/demo)</P>

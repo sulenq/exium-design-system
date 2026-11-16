@@ -10,13 +10,13 @@ import { FoundationHeader } from "@/features/design-system-docs/components/found
 
 export const RadiusFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Radius & Borders"}
         description={"Corner radius presets dynamically paired for components and containers."}
       />
 
-      <SimpleGrid columns={[2, 4]} gap={"sm"}>
+      <SimpleGrid columns={[2, 4]} gap={3}>
         {ROUNDED_PRESETS_LIST.map((r) => (
           <Box
             key={r.label}
@@ -25,7 +25,7 @@ export const RadiusFoundationPage = () => {
             borderColor={"border.subtle"}
             bg={"bg.body"}
           >
-            <VStack gap={"xs"} p={"sm"}>
+            <VStack gap={2} p={3}>
               <Box
                 w={"full"}
                 h={"64px"}
@@ -33,7 +33,7 @@ export const RadiusFoundationPage = () => {
                 border={"2px solid"}
                 borderColor={"blue.solid"}
                 rounded={r.component}
-                mb={"2xs"}
+                mb={1}
               />
               <Heading size={"xs"} fontWeight={"bold"}>
                 {r.label}

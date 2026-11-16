@@ -14,8 +14,8 @@ export const FoundationHeader = (props: FoundationHeaderProps) => {
   const { title, badge = "Foundation", description } = props;
 
   return (
-    <VStack gap={"xs"}>
-      <HStack gap={"sm"} align={"center"}>
+    <VStack gap={2}>
+      <HStack gap={3} align={"center"}>
         <Heading fontSize={"2xl"} fontWeight={"bold"}>
           {title}
         </Heading>

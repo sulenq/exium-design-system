@@ -71,7 +71,7 @@ export const SigninForm = (props: StackProps) => {
       <VStack
         flex={1}
         justify={"space-between"}
-        gap={"lg"}
+        gap={6}
         w={"full"}
         {...props}
       >

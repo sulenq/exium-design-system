@@ -43,13 +43,13 @@ const PRINCIPLES = [
 
 export const PrinciplesFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Design Principles"}
         description={"Fundamental guidelines and architectural decisions powering Exium Design System."}
       />
 
-      <SimpleGrid columns={[1, null, 2]} gap={"md"}>
+      <SimpleGrid columns={[1, null, 2]} gap={4}>
         {PRINCIPLES.map((p) => (
           <Box
             key={p.title}
@@ -58,8 +58,8 @@ export const PrinciplesFoundationPage = () => {
             borderColor={"border.subtle"}
             bg={"bg.body"}
           >
-            <VStack gap={"xs"} p={"md"}>
-              <HStack gap={"sm"} align={"center"} mb={"xs"}>
+            <VStack gap={2} p={4}>
+              <HStack gap={3} align={"center"} mb={2}>
                 <AppIcon icon={p.icon} color={"blue.fg"} size={"lg"} />
                 <Heading size={"sm"} fontWeight={"bold"}>
                   {p.title}

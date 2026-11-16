@@ -2154,7 +2154,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
               </Box>
             </Skeleton>
 
-            <VStack align={"stretch"} gap={isLoaded ? "2xs" : "xs"} flex={1}>
+            <VStack align={"stretch"} gap={isLoaded ? 1 : 2} flex={1}>
               <Skeleton
                 h={"16px"}
                 w={"70%"}
@@ -5423,7 +5423,7 @@ const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
           </P>
         </Drawer.Header>
         <Drawer.Body>
-          <VStack gap={"md"}>
+          <VStack gap={4}>
             <P color={"fg.muted"}>
               Panel geser samping untuk form, filter detail, atau konfigurasi
               sekunder aplikasi.
@@ -5493,7 +5493,7 @@ const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
           </P>
         </Dialog.Header>
         <Dialog.Body>
-          <VStack gap={"md"}>
+          <VStack gap={4}>
             <P color={"fg.muted"}>
               Ini adalah contoh dialog modal terpusat dari Exium Design System
               dengan animasi origin klik halus dan backdrop blur.
@@ -5562,7 +5562,7 @@ const ModalPlaygroundDemo = ({
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <VStack gap={"md"}>
+          <VStack gap={4}>
             <P color={"fg.muted"}>
               Modal adaptif Exium secara cerdas merender komponen Dialog
               mengambang pada layar desktop, dan otomatis bertransformasi

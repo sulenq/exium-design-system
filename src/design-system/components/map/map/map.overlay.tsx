@@ -80,7 +80,7 @@ export const MapOverlay = (props: MapOverlayProps) => {
         minW={isSmallViewport ? 0 : "480px"}
         pointerEvents={"none"}
       >
-        <MapControls px={"md"} pb={"md"} />
+        <MapControls px={4} pb={4} />
       </Box>
     </Box>
   );

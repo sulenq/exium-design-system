@@ -16,17 +16,17 @@ export const MapControls = (props: StackProps) => {
       align={"end"}
       overflowX={"auto"}
       justify={"space-between"}
-      gap={"md"}
+      gap={4}
       w={"full"}
       pointerEvents={"none"}
       {...props}
     >
-      <HStack align={"end"} gap={"md"} pointerEvents={"none"} flexShrink={0}>
+      <HStack align={"end"} gap={4} pointerEvents={"none"} flexShrink={0}>
         <MapBasemapSelect />
         <MapScale mb={1} />
       </HStack>
 
-      <HStack gap={"sm"} pointerEvents={"none"} flexShrink={0}>
+      <HStack gap={3} pointerEvents={"none"} flexShrink={0}>
         <Map3DToggle />
         <MapZoom />
         <MapLocate />

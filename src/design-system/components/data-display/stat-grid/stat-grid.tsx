@@ -52,7 +52,7 @@ const StatGridItem = (props: StatGridItemProps) => {
       position={"relative"}
       gap={2}
       h={"full"}
-      p={"md"}
+      p={4}
       borderRight={isLastInRow ? undefined : "2px solid"}
       borderTop={isNotFirstRow ? "1px solid" : undefined}
       borderColor={"bg.canvas"}

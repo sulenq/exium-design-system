@@ -157,7 +157,7 @@ const SidebarHeader = () => {
   return (
     <Sidebar.Header>
       <NavLink to={logoPath}>
-        <HStack align={"center"} gap={"sm"}>
+        <HStack align={"center"} gap={3}>
           <Logo flexShrink={0} boxSize={6} ml={1} />
 
           <P lineClamp={1}
@@ -625,8 +625,8 @@ const MobileBottomNav = () => {
       bg={"bg.body"}
       borderTop={"1px solid"}
       borderColor={"border.subtle"}
-      pt={"sm"}
-      pb={"md"}
+      pt={3}
+      pb={4}
       align={"center"}
       zIndex={2}
       pointerEvents={"auto"}
@@ -646,7 +646,7 @@ const MobileBottomNav = () => {
               });
             }
           }}
-          px={"xs"}
+          px={2}
         />
       </Box>
 
@@ -662,12 +662,12 @@ const MobileBottomNav = () => {
           variant={"ghost"}
           size={"sm"}
           h={"auto"}
-          p={"xs"}
-          // ml={"2xs"}
-          mr={"sm"}
+          p={2}
+          // ml={1}
+          mr={3}
           flexShrink={0}
         >
-          <VStack align={"center"} justify={"center"} gap={"2xs"} minW={"50px"}>
+          <VStack align={"center"} justify={"center"} gap={1} minW={"50px"}>
             <AppIcon icon={UserIcon} color={"fg.muted"} />
 
             <P lineClamp={1}

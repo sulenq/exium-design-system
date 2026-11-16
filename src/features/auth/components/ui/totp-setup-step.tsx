@@ -104,11 +104,11 @@ export const TotpSetupStep = (props: TotpSetupStepProps) => {
       }}
       flex={1}
       justify={"space-between"}
-      gap={"md"}
+      gap={4}
       w={"full"}
       {...restProps}
     >
-      <VStack align={"center"} gap={"sm"} w={"full"}>
+      <VStack align={"center"} gap={3} w={"full"}>
         <Badge size={"lg"} colorPalette={"purple"}>
           <AppIcon icon={QrCodeIcon} size={"sm"} />
 

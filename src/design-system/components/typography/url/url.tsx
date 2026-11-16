@@ -22,7 +22,7 @@ export const Url = memo((props: UrlProps) => {
   }
 
   return (
-    <HStack gap={"xs"} align={"center"} maxW={maxW} w={"full"} {...restProps}>
+    <HStack gap={2} align={"center"} maxW={maxW} w={"full"} {...restProps}>
       <P
         as={isExternalLink ? "a" : "p"}
         href={isExternalLink ? url : undefined}

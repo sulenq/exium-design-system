@@ -9,20 +9,20 @@ import { FoundationHeader } from "@/features/design-system-docs/components/found
 
 export const AccessibilityFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Accessibility (A11y)"}
         description={"WCAG 2.1 AA conformance standards applied across all interactive controls."}
       />
 
-      <SimpleGrid columns={[1, 3]} gap={"md"}>
+      <SimpleGrid columns={[1, 3]} gap={4}>
         <Box
           rounded={"lg"}
           border={"1px solid"}
           borderColor={"border.subtle"}
           bg={"bg.body"}
         >
-          <VStack gap={"xs"} p={"md"}>
+          <VStack gap={2} p={4}>
             <Heading size={"sm"} fontWeight={"bold"}>
               {"Contrast Ratio"}
             </Heading>
@@ -38,7 +38,7 @@ export const AccessibilityFoundationPage = () => {
           borderColor={"border.subtle"}
           bg={"bg.body"}
         >
-          <VStack gap={"xs"} p={"md"}>
+          <VStack gap={2} p={4}>
             <Heading size={"sm"} fontWeight={"bold"}>
               {"Keyboard Focus"}
             </Heading>
@@ -54,7 +54,7 @@ export const AccessibilityFoundationPage = () => {
           borderColor={"border.subtle"}
           bg={"bg.body"}
         >
-          <VStack gap={"xs"} p={"md"}>
+          <VStack gap={2} p={4}>
             <Heading size={"sm"} fontWeight={"bold"}>
               {"ARIA Labels"}
             </Heading>

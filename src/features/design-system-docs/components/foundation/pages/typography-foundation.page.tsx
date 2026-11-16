@@ -18,13 +18,13 @@ const SCALES = [
 
 export const TypographyFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Typography"}
         description={"Typography hierarchy, font sizes, tabular digits, and text clamping rules."}
       />
 
-      <VStack gap={"sm"}>
+      <VStack gap={3}>
         {SCALES.map((s) => (
           <Box
             key={s.name}
@@ -33,7 +33,7 @@ export const TypographyFoundationPage = () => {
             borderColor={"border.subtle"}
             bg={"bg.body"}
           >
-            <VStack gap={"xs"} p={"sm"}>
+            <VStack gap={2} p={3}>
               <HStack justify={"space-between"} align={"center"}>
                 <Badge variant={"outline"}>{s.name}</Badge>
                 <P fontSize={"xs"} color={"fg.muted"} fontFamily={"mono"}>

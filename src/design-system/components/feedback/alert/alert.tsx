@@ -57,7 +57,7 @@ export const AlertDescription = (props: AlertDescriptionProps) => {
 };
 
 export const AlertContent = (props: AlertContentProps) => {
-  return <ChakraAlert.Content gap={"xs"} {...props} />;
+  return <ChakraAlert.Content gap={2} {...props} />;
 };
 
 export const Alert = {

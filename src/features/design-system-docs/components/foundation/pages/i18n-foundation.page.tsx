@@ -8,7 +8,7 @@ import { FoundationHeader } from "@/features/design-system-docs/components/found
 
 export const I18nFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Internationalization (i18n)"}
         description={"First-class multi-language support powered by Paraglide JS with Indonesian (id) and English (en)."}
@@ -20,7 +20,7 @@ export const I18nFoundationPage = () => {
         borderColor={"border.subtle"}
         bg={"bg.body"}
       >
-        <VStack gap={"sm"} p={"md"}>
+        <VStack gap={3} p={4}>
           <Heading size={"sm"} fontWeight={"bold"}>
             {"Using Translation (t)"}
           </Heading>

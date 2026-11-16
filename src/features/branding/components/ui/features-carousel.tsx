@@ -107,7 +107,7 @@ export const FeaturesCarousel = (props: FeaturesCarouselProps) => {
                   aspectRatio={16 / 10}
                 />
 
-                <VStack gap={"sm"} mt={"md"}>
+                <VStack gap={3} mt={4}>
                   <P
                     fontSize={"xl"}
                     fontWeight={"semibold"}

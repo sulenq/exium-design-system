@@ -93,7 +93,7 @@ export const OfflineAlert = () => {
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
-        p={"md"}
+        p={4}
         opacity={isVisible ? 1 : 0}
         transform={isVisible ? "scale(1)" : "scale(0.95)"}
         transition={
@@ -101,7 +101,7 @@ export const OfflineAlert = () => {
         }
         // bg={"bodyDarkAlpha/50"}
       >
-        <VStack align={"center"} gap={"md"} textAlign={"center"} zIndex={2}>
+        <VStack align={"center"} gap={4} textAlign={"center"} zIndex={2}>
           <Box
             pos={"relative"}
             display={"inline-flex"}
@@ -132,7 +132,7 @@ export const OfflineAlert = () => {
             </Circle>
           </Box>
 
-          {/* <VStack gap={"xs"} align={"center"}>
+          {/* <VStack gap={2} align={"center"}>
             <Heading size={"md"} fontWeight={"semibold"} color={"fg.default"}>
               {t["offline_alert.title"]()}
             </Heading>

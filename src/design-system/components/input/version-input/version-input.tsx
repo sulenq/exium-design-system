@@ -348,7 +348,7 @@ export const VersionInput = memo(
             fontWeight={"medium"}
             userSelect={"none"}
             lineHeight={1}
-            mr={"2xs"}
+            mr={1}
           >
             {"v"}
           </P>

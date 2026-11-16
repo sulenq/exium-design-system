@@ -106,7 +106,7 @@ export function ToastStack<TItem>({
             : groupLabel}
         </P>
 
-        <HStack align={"center"} gap={"xs"}>
+        <HStack align={"center"} gap={2}>
           {onCloseAll && (
             <IconButton
               size={"2xs"}

@@ -217,7 +217,7 @@ export default function SelectInput(props: SelectProps) {
         </HStack>
 
         <HStack
-          gap={"sm"}
+          gap={3}
           align={"center"}
           justify={"center"}
           pointerEvents={"auto"}
@@ -317,7 +317,7 @@ export default function SelectInput(props: SelectProps) {
             }}
           >
             {isFetchingLoading ? (
-              <VStack gap={"sm"} w={"full"} p={2}>
+              <VStack gap={3} w={"full"} p={2}>
                 {Array.from({ length: 3 }).map((_, index) => (
                   <Skeleton
                     key={`select-skeleton-${index + 1}`}

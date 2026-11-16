@@ -389,7 +389,7 @@ const FileInputInner = (props: FileinputInnerProps) => {
                   )}
                 </VStack>
 
-                <VStack gap={"xs"} maxW={"360px"}>
+                <VStack gap={2} maxW={"360px"}>
                   <P textAlign={"center"}>
                     {dragging ? t["common.drop_it_here"]() : dropzoneText}
                   </P>

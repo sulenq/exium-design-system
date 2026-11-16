@@ -16,7 +16,7 @@ export const Fieldset = forwardRef<HTMLFieldSetElement, FieldsetProps>(
 
     return (
       <ChakraFieldset.Root ref={ref} w={"full"} minW={0} {...restProps}>
-        <VStack gap={"sm"} w={"full"}>
+        <VStack gap={3} w={"full"}>
           {legend && (
             <ChakraFieldset.Legend fontWeight={"semibold"}>
               {legend}
@@ -27,7 +27,7 @@ export const Fieldset = forwardRef<HTMLFieldSetElement, FieldsetProps>(
             {containeredContent && (
               <VStack
                 w={"full"}
-                p={"md"}
+                p={4}
                 border={"1px solid"}
                 borderColor={"border"}
                 rounded={theme.radii.container}

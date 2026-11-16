@@ -23,13 +23,13 @@ const Z_INDICES = [
 
 export const ZIndexFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Z-Index Stacking Order"}
         description={"Predictable elevation z-index tokens preventing stacking collisions across modals and overlays."}
       />
 
-      <VStack gap={"xs"}>
+      <VStack gap={2}>
         {Z_INDICES.map((z) => (
           <Box
             key={z.token}
@@ -41,10 +41,10 @@ export const ZIndexFoundationPage = () => {
             <HStack
               justify={"space-between"}
               align={"center"}
-              p={"xs"}
-              px={"sm"}
+              p={2}
+              px={3}
             >
-              <HStack gap={"md"} align={"center"}>
+              <HStack gap={4} align={"center"}>
                 <Badge variant={"subtle"} minW={"80px"}>
                   {z.token}
                 </Badge>

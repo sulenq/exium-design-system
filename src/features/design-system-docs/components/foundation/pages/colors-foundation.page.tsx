@@ -42,19 +42,19 @@ export const ColorsFoundationPage = () => {
   };
 
   return (
-    <VStack gap={"lg"} w={"full"}>
+    <VStack gap={6} w={"full"}>
       <FoundationHeader
         title={"Colors & Palettes"}
         description={"Authentic color palettes supported by Exium Design System with light and dark mode scales."}
       />
 
-      <VStack gap={"md"} w={"full"}>
+      <VStack gap={4} w={"full"}>
         {COLOR_PALETTES_LIST.map((item) => {
           return (
             <VStack
               key={item.palette}
-              gap={"sm"}
-              p={"md"}
+              gap={3}
+              p={4}
               rounded={"lg"}
               border={"1px solid"}
               borderColor={"border.subtle"}
@@ -67,7 +67,7 @@ export const ColorsFoundationPage = () => {
                 w={"full"}
                 wrap={"wrap"}
               >
-                <HStack align={"center"} gap={"sm"}>
+                <HStack align={"center"} gap={3}>
                   <Box
                     boxSize={4}
                     rounded={"full"}

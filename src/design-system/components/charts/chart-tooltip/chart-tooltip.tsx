@@ -42,8 +42,8 @@ export const ChartTooltipContent = (props: ChartTooltipContentProps) => {
   return (
     <VStack
       align={"start"}
-      gap={"2xs"}
-      p={"sm"}
+      gap={1}
+      p={3}
       rounded={theme.radii.component}
       bg={"bg.body"}
       shadow={"md"}

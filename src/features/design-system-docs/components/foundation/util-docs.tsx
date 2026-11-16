@@ -51,7 +51,7 @@ export const UtilDocs = ({ navKey }: { navKey: DsNavKey }) => {
   };
 
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={spec.title}
         badge={"Util"}
@@ -64,7 +64,7 @@ export const UtilDocs = ({ navKey }: { navKey: DsNavKey }) => {
         borderColor={"border.subtle"}
         bg={"bg.body"}
       >
-        <VStack gap={"sm"} p={"md"}>
+        <VStack gap={3} p={4}>
           <Heading size={"sm"} fontWeight={"bold"}>
             {"Usage Example"}
           </Heading>
@@ -78,7 +78,7 @@ export const UtilDocs = ({ navKey }: { navKey: DsNavKey }) => {
         borderColor={"border.subtle"}
         bg={"bg.body"}
       >
-        <VStack gap={"xs"} p={"md"}>
+        <VStack gap={2} p={4}>
           <Heading size={"sm"} fontWeight={"bold"}>
             {"Architectural Note"}
           </Heading>

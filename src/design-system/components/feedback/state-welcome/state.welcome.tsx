@@ -102,7 +102,7 @@ export const StateWelcome = (props: StateWelcomeProps) => {
     <AppContentContainer
       align={"center"}
       justify={"center"}
-      p={"xl"}
+      p={8}
       // bg={"bg.canvas"}
       {...restProps}
     >
@@ -111,13 +111,13 @@ export const StateWelcome = (props: StateWelcomeProps) => {
         textAlign={"center"}
         maxW={"480px"}
         w={"full"}
-        gap={"lg"}
+        gap={6}
       >
         {/* Minimal Logo */}
         <Logo />
 
         {/* Title & Subtitle */}
-        <VStack align={"center"} gap={"xs"}>
+        <VStack align={"center"} gap={2}>
           <Heading as={"h1"} size={"xl"}>
             {resolvedTitle}
           </Heading>
@@ -128,7 +128,7 @@ export const StateWelcome = (props: StateWelcomeProps) => {
         </VStack>
 
         {/* 3 Last / Suggested Navigations in clean neutral outline VStack */}
-        <VStack w={"full"} maxW={"360px"} gap={"xs"} mt={"xs"}>
+        <VStack w={"full"} maxW={"360px"} gap={2} mt={2}>
           {displayNavItems.map((nav) => (
             <Button
               key={nav.pathname}
@@ -143,7 +143,7 @@ export const StateWelcome = (props: StateWelcomeProps) => {
                 navigate({ to: nav.pathname });
               }}
             >
-              <HStack gap={"sm"} align={"center"}>
+              <HStack gap={3} align={"center"}>
                 <AppIcon icon={nav.icon} />
 
                 <P fontWeight={"medium"} color={"fg.base"}>

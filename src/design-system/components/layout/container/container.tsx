@@ -62,7 +62,7 @@ const ContainerHeader = (props: ContainerHeaderProps) => {
   const { children, ...restProps } = props;
 
   return (
-    <HStack w={"full"} minH={"headerH"} px={"md"} {...restProps}>
+    <HStack w={"full"} minH={"headerH"} px={4} {...restProps}>
       {children}
     </HStack>
   );

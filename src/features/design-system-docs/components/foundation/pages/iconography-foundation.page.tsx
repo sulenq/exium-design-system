@@ -9,7 +9,7 @@ import { FoundationHeader } from "@/features/design-system-docs/components/found
 
 export const IconographyFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Iconography"}
         description={"Unified icon rendering using Lucide (primary), Tabler (fallback), and Phosphor with weight support."}
@@ -21,7 +21,7 @@ export const IconographyFoundationPage = () => {
         borderColor={"border.subtle"}
         bg={"bg.body"}
       >
-        <VStack gap={"sm"} p={"md"}>
+        <VStack gap={3} p={4}>
           <Heading size={"sm"} fontWeight={"bold"}>
             {"AppIcon Component Standard"}
           </Heading>

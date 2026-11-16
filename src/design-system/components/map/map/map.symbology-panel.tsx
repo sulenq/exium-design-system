@@ -121,17 +121,17 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
         {/* Header */}
         <HStack
           flexShrink={0}
-          gap={"sm"}
+          gap={3}
           w={"full"}
           h={"48px"}
-          px={"md"}
-          pr={"xs"}
+          px={4}
+          pr={2}
           justify={"space-between"}
           align={"center"}
           borderBottom={"1px solid"}
           borderColor={"border.subtle"}
         >
-          <HStack gap={"xs"} align={"center"} minW={0} flex={1}>
+          <HStack gap={2} align={"center"} minW={0} flex={1}>
             <P lineClamp={1} fontWeight={"medium"}>{"Simbologi & Legenda"}</P>
 
             <Badge colorPalette={"blue"} size={"xs"}>
@@ -139,7 +139,7 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
             </Badge>
           </HStack>
 
-          <HStack align={"center"} gap={"2xs"} flexShrink={0}>
+          <HStack align={"center"} gap={1} flexShrink={0}>
             <Tooltip content={"Tutup Semua Simbologi"}>
               <IconButton
                 size={"xs"}
@@ -175,16 +175,16 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
               return (
                 <Accordion.Item key={layer.id} value={layer.id}>
                   <Accordion.ItemTrigger
-                    px={"md"}
+                    px={4}
                     w={"full"}
                     _hover={{
                       bg: "bg.subtle",
                     }}
                     transition={"150ms"}
                   >
-                    <HStack gap={"sm"} flex={1} align={"center"} minW={0}>
+                    <HStack gap={3} flex={1} align={"center"} minW={0}>
                       <Center
-                        p={"xs"}
+                        p={2}
                         bg={`${colorPalette}.subtle`}
                         rounded={theme.radii.component}
                         flexShrink={0}
@@ -206,7 +206,7 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
                       </VStack>
                     </HStack>
 
-                    <HStack gap={"xs"} align={"center"} flexShrink={0}>
+                    <HStack gap={2} align={"center"} flexShrink={0}>
                       <Tooltip content={"Sembunyikan Simbologi"}>
                         <IconButton
                           as={"div"}
@@ -226,7 +226,7 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
                   </Accordion.ItemTrigger>
 
                   <Accordion.ItemContent>
-                    <Accordion.ItemBody px={"md"}>
+                    <Accordion.ItemBody px={4}>
                       <LayerSymbologyContent layer={layer} />
                     </Accordion.ItemBody>
                   </Accordion.ItemContent>
@@ -268,7 +268,7 @@ export const LayerSymbologyContent = memo(
 
     if (isError || !rules || rules.length === 0) {
       return (
-        <Center w={"full"} py={"xs"}>
+        <Center w={"full"} py={2}>
           <StateRetry
             title={"Gagal Memuat Simbologi"}
             description={
@@ -285,7 +285,7 @@ export const LayerSymbologyContent = memo(
     }
 
     return (
-      <VStack w={"full"} gap={"xs"} align={"stretch"} pt={"2xs"}>
+      <VStack w={"full"} gap={2} align={"stretch"} pt={1}>
         {rules.map((rule, idx) => (
           <LegendRuleItem
             key={rule.name ?? idx}
@@ -311,10 +311,10 @@ const LegendRuleItem = memo((props: LegendRuleItemProps) => {
       w={"full"}
       justify={"space-between"}
       align={"center"}
-      gap={"sm"}
-      py={"2xs"}
+      gap={3}
+      py={1}
     >
-      <HStack gap={"sm"} align={"center"} flex={1} minW={0}>
+      <HStack gap={3} align={"center"} flex={1} minW={0}>
         {symbolizers.map((symb, idx) => {
           if (symb.Polygon) {
             return <PolygonSwatch key={idx} polygon={symb.Polygon} />;
@@ -424,7 +424,7 @@ const DefaultThematicSwatch = memo((props: DefaultThematicSwatchProps) => {
   const label = isKawasan ? "Poligon Kawasan" : "Poligon Bidang Tanah";
 
   return (
-    <HStack gap={"sm"} align={"center"}>
+    <HStack gap={3} align={"center"}>
       <Box
         w={"20px"}
         h={"16px"}

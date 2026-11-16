@@ -51,12 +51,12 @@ export const NotificationInboxDataView = memo(() => {
   const deleteInboxMutation = useDeleteInboxItem();
 
   if (isLoading) {
-    return <Skeleton p={"md"} />;
+    return <Skeleton p={4} />;
   }
 
   if (isError) {
     return (
-      <Center flex={1} py={"xl"}>
+      <Center flex={1} py={8}>
         <StateRetry
           title={"Gagal Memuat Inbox"}
           description={
@@ -81,14 +81,14 @@ export const NotificationInboxDataView = memo(() => {
   }
 
   return (
-    <VStack flex={1} align={"stretch"} overflowY={"auto"} p={"md"}>
+    <VStack flex={1} align={"stretch"} overflowY={"auto"} p={4}>
       {/* Inbox Actions Bar */}
       <HStack
         justify={"space-between"}
         align={"center"}
         wrap={"wrap"}
-        gap={"xs"}
-        mb={"md"}
+        gap={2}
+        mb={4}
         w={"full"}
       >
         <P fontSize={"xs"} color={"fg.subtle"}>
@@ -132,7 +132,7 @@ export const NotificationInboxDataView = memo(() => {
       </HStack>
 
       {/* Inbox Items List */}
-      <VStack align={"stretch"} gap={"sm"}>
+      <VStack align={"stretch"} gap={3}>
         {items.map((item) => (
           <InboxCardItem
             key={item.id}
@@ -145,7 +145,7 @@ export const NotificationInboxDataView = memo(() => {
 
       {/* Load More Button if hasNextPage */}
       {hasNextPage && (
-        <Center mt={"md"}>
+        <Center mt={4}>
           <Button
             size={"sm"}
             loading={isFetchingNextPage}
@@ -205,8 +205,8 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
     <HStack
       align={"start"}
       justify={"space-between"}
-      p={"sm"}
-      gap={["sm", null, "md"]}
+      p={3}
+      gap={[3, null, 4]}
       bg={item.isRead ? "bg.body" : "bg.subtle"}
       shadow={"xs"}
       rounded={theme.radii.container}
@@ -225,11 +225,11 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
         <AppIcon icon={IconComponent} size={"sm"} />
       </Circle>
 
-      <VStack flex={1} minW={0} gap={"xs"} align={"stretch"}>
+      <VStack flex={1} minW={0} gap={2} align={"stretch"}>
         {/* Header*/}
-        <VStack gap={"sm"} w={"full"}>
+        <VStack gap={3} w={"full"}>
           {/* Title + Dot + Badge */}
-          <HStack align={"center"} gap={"sm"}>
+          <HStack align={"center"} gap={3}>
             <P lineClamp={1}
               fontWeight={item.isRead ? "medium" : "semibold"}
               wordBreak={"break-word"}
@@ -275,7 +275,7 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
         </VStack>
 
         {/* Message Content */}
-        <Box w={"full"} pt={"2xs"}>
+        <Box w={"full"} pt={1}>
           <P
             color={"fg.muted"}
             lineHeight={"tall"}
@@ -292,8 +292,8 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
           justify={"space-between"}
           align={"center"}
           wrap={"wrap"}
-          gap={"xs"}
-          mt={"xs"}
+          gap={2}
+          mt={2}
         >
           {hasAction ? (
             <Button

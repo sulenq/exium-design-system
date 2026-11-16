@@ -89,11 +89,11 @@ export const TotpVerifyStep = (props: TotpVerifyStepProps) => {
       }}
       flex={1}
       justify={"space-between"}
-      gap={"lg"}
+      gap={6}
       w={"full"}
       {...restProps}
     >
-      <VStack align={"center"} gap={"lg"} w={"full"}>
+      <VStack align={"center"} gap={6} w={"full"}>
         <Badge size={"lg"} colorPalette={"purple"}>
           <AppIcon icon={ShieldCheckIcon} size={"sm"} />
 
@@ -138,7 +138,7 @@ export const TotpVerifyStep = (props: TotpVerifyStepProps) => {
       )}
 
       {/* Pin Input */}
-      <VStack align={"center"} gap={"md"} py={2} w={"full"}>
+      <VStack align={"center"} gap={4} py={2} w={"full"}>
         <PinInput
           count={6}
           fluid={true}

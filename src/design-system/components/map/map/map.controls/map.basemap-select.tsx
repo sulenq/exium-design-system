@@ -83,7 +83,7 @@ export const MapBasemapSelect = () => {
                   pos={"absolute"}
                   left={-2}
                   bottom={-2}
-                  p={"2xs"}
+                  p={1}
                 >
                   <AppIcon
                     icon={plainAdaptiveProps[colorMode].icon}
@@ -107,8 +107,8 @@ export const MapBasemapSelect = () => {
         <Popover.Body
           className={"noScrollbar"}
           w={["full", null, "400px"]}
-          px={"xs"}
-          py={"md"}
+          px={2}
+          py={4}
           overflowY={"auto"}
         >
           <Grid
@@ -160,7 +160,7 @@ export const MapBasemapSelect = () => {
                         pos={"absolute"}
                         left={-2}
                         bottom={-2}
-                        p={"2xs"}
+                        p={1}
                       >
                         <AppIcon
                           icon={plainAdaptiveProps[colorMode].icon}
@@ -191,10 +191,10 @@ export const MapBasemapSelect = () => {
             })}
           </Grid>
 
-          <Separator borderColor={"bg.canvas"} my={"sm"} />
+          <Separator borderColor={"bg.canvas"} my={3} />
 
-          <VStack gap={"xs"} align={"stretch"} px={"xs"} pb={"2xs"}>
-            <HStack justify={"space-between"} gap={"md"} w={"full"}>
+          <VStack gap={2} align={"stretch"} px={2} pb={1}>
+            <HStack justify={"space-between"} gap={4} w={"full"}>
               <P fontSize={"sm"} fontWeight={"medium"}>
                 {"Opasitas Peta Dasar"}
               </P>

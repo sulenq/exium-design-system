@@ -161,7 +161,7 @@ export const HookDocs = (props: HookDocsProps) => {
   };
 
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={spec.title}
         badge={"Hook"}
@@ -174,7 +174,7 @@ export const HookDocs = (props: HookDocsProps) => {
         borderColor={"border.subtle"}
         bg={"bg.body"}
       >
-        <VStack gap={"sm"} p={"md"}>
+        <VStack gap={3} p={4}>
           <Heading size={"sm"} fontWeight={"bold"}>
             {"Usage Example"}
           </Heading>
@@ -188,7 +188,7 @@ export const HookDocs = (props: HookDocsProps) => {
         borderColor={"border.subtle"}
         bg={"bg.body"}
       >
-        <VStack gap={"xs"} p={"md"}>
+        <VStack gap={2} p={4}>
           <Heading size={"sm"} fontWeight={"bold"}>
             {"Return Value"}
           </Heading>

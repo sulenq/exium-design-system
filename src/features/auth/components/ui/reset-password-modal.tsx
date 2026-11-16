@@ -170,9 +170,9 @@ const ResetPasswordModalContent = (props: ResetPasswordModalContentProps) => {
 
         <Separator borderColor={"bg.canvas"} />
 
-        <Modal.Body p={"md"}>
+        <Modal.Body p={4}>
           {isSuccess ? (
-            <VStack gap={"md"} align={"stretch"} py={"sm"}>
+            <VStack gap={4} align={"stretch"} py={3}>
               <FocusAlertView
                 variant={"success"}
                 title={"Kata Sandi Berhasil Direset!"}
@@ -184,7 +184,7 @@ const ResetPasswordModalContent = (props: ResetPasswordModalContentProps) => {
               <Button
                 primary={true}
                 w={"full"}
-                mt={"sm"}
+                mt={3}
                 onClick={handleCloseModal}
               >
                 {"Selesai"}
@@ -240,7 +240,7 @@ const ResetPasswordMethodSelector = ({
         e.stopPropagation();
         methodForm.handleSubmit((values) => onSelectMethod(values.method))(e);
       }}
-      gap={"md"}
+      gap={4}
       align={"stretch"}
     >
       <Fieldset>
@@ -248,7 +248,7 @@ const ResetPasswordMethodSelector = ({
           name={"method"}
           control={methodForm.control}
           render={({ field }) => (
-            <VStack gap={"xs"} align={"stretch"} w={"full"}>
+            <VStack gap={2} align={"stretch"} w={"full"}>
               <ResetMethodRadioItem
                 method={"email"}
                 isSelected={field.value === "email"}
@@ -297,7 +297,7 @@ export const ResetMethodRadioItem = (props: ResetMethodRadioItemProps) => {
   return (
     <Box
       onClick={onSelect}
-      p={"md"}
+      p={4}
       borderWidth={"1px"}
       borderColor={isSelected ? `${colorPalette}.solid` : "border.subtle"}
       rounded={theme.radii.component}
@@ -306,17 +306,17 @@ export const ResetMethodRadioItem = (props: ResetMethodRadioItemProps) => {
       textAlign={"start"}
       _hover={{ borderColor: `${colorPalette}.fg` }}
     >
-      <HStack justify={"space-between"} align={"center"} gap={"md"} w={"full"}>
-        <HStack gap={"sm"} align={"start"}>
+      <HStack justify={"space-between"} align={"center"} gap={4} w={"full"}>
+        <HStack gap={3} align={"start"}>
           <AppIcon
             icon={icon}
             size={"sm"}
             color={`${colorPalette}.fg`}
-            mt={"2xs"}
+            mt={1}
           />
 
-          <VStack align={"start"} gap={"2xs"}>
-            <HStack gap={"xs"} align={"center"}>
+          <VStack align={"start"} gap={1}>
+            <HStack gap={2} align={"center"}>
               <P fontWeight={"semibold"}>{title}</P>
 
               {badge && (
@@ -468,7 +468,7 @@ const EmailResetPasswordFlow = ({
           e.stopPropagation();
           requestForm.handleSubmit(handleRequestSubmit)(e);
         }}
-        gap={"md"}
+        gap={4}
         align={"stretch"}
       >
         <Alert.Root status={"info"} colorPalette={"blue"} variant={"subtle"}>
@@ -487,7 +487,7 @@ const EmailResetPasswordFlow = ({
             errorText={requestForm.formState.errors.email?.message}
             helperText={
               isUserLoggedIn ? (
-                <HStack gap={"2xs"} align={"center"} color={"fg.muted"}>
+                <HStack gap={1} align={"center"} color={"fg.muted"}>
                   <AppIcon icon={LockIcon} size={"xs"} />
                   <P fontSize={"xs"}>
                     {"Email terkunci sesuai akun login aktif"}
@@ -509,7 +509,7 @@ const EmailResetPasswordFlow = ({
           </Field>
         </Fieldset>
 
-        <VStack gap={"xs"} mt={"xs"}>
+        <VStack gap={2} mt={2}>
           <Button
             primary={true}
             type={"submit"}
@@ -537,7 +537,7 @@ const EmailResetPasswordFlow = ({
           e.stopPropagation();
           otpForm.handleSubmit(handleOtpSubmit)(e);
         }}
-        gap={"md"}
+        gap={4}
         align={"stretch"}
       >
         <Alert.Root status={"info"} colorPalette={"purple"} variant={"subtle"}>
@@ -553,7 +553,7 @@ const EmailResetPasswordFlow = ({
             invalid={Boolean(otpForm.formState.errors.resetToken)}
             errorText={otpForm.formState.errors.resetToken?.message}
           >
-            <VStack align={"center"} w={"full"} py={"xs"}>
+            <VStack align={"center"} w={"full"} py={2}>
               <PinInput
                 count={6}
                 otp={true}
@@ -573,7 +573,7 @@ const EmailResetPasswordFlow = ({
           </Field>
         </Fieldset>
 
-        <HStack justify={"space-between"} align={"center"} mt={"xs"}>
+        <HStack justify={"space-between"} align={"center"} mt={2}>
           <Button
             variant={"ghost"}
             size={"xs"}
@@ -616,7 +616,7 @@ const EmailResetPasswordFlow = ({
         e.stopPropagation();
         newPasswordForm.handleSubmit(handlePasswordSubmit)(e);
       }}
-      gap={"md"}
+      gap={4}
       align={"stretch"}
     >
       <Alert.Root status={"success"} colorPalette={"green"} variant={"subtle"}>
@@ -656,7 +656,7 @@ const EmailResetPasswordFlow = ({
         </Field>
       </Fieldset>
 
-      <HStack justify={"start"} align={"center"} mt={"xs"}>
+      <HStack justify={"start"} align={"center"} mt={2}>
         <Button
           variant={"ghost"}
           size={"xs"}
@@ -771,7 +771,7 @@ const TotpResetPasswordFlow = ({
           e.stopPropagation();
           totpForm.handleSubmit(handleTotpSubmit)(e);
         }}
-        gap={"md"}
+        gap={4}
         align={"stretch"}
       >
         <Alert.Root status={"info"} colorPalette={"blue"} variant={"subtle"}>
@@ -790,7 +790,7 @@ const TotpResetPasswordFlow = ({
             errorText={totpForm.formState.errors.email?.message}
             helperText={
               isUserLoggedIn ? (
-                <HStack gap={"2xs"} align={"center"} color={"fg.muted"}>
+                <HStack gap={1} align={"center"} color={"fg.muted"}>
                   <AppIcon icon={LockIcon} size={"xs"} />
                   <P fontSize={"xs"}>
                     {"Email terkunci sesuai akun login aktif"}
@@ -818,7 +818,7 @@ const TotpResetPasswordFlow = ({
             invalid={Boolean(totpForm.formState.errors.totpCode)}
             errorText={totpForm.formState.errors.totpCode?.message}
           >
-            <VStack align={"center"} w={"full"} py={"xs"}>
+            <VStack align={"center"} w={"full"} py={2}>
               <PinInput
                 count={6}
                 otp={true}
@@ -838,7 +838,7 @@ const TotpResetPasswordFlow = ({
           </Field>
         </Fieldset>
 
-        <VStack gap={"xs"}>
+        <VStack gap={2}>
           <Button
             primary={true}
             type={"submit"}
@@ -865,7 +865,7 @@ const TotpResetPasswordFlow = ({
         e.stopPropagation();
         newPasswordForm.handleSubmit(handlePasswordSubmit)(e);
       }}
-      gap={"md"}
+      gap={4}
       align={"stretch"}
     >
       <Alert.Root status={"success"} colorPalette={"green"} variant={"subtle"}>
@@ -905,7 +905,7 @@ const TotpResetPasswordFlow = ({
         </Field>
       </Fieldset>
 
-      <VStack gap={"xs"}>
+      <VStack gap={2}>
         <Button
           primary={true}
           type={"submit"}

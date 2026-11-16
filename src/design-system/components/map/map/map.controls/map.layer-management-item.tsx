@@ -165,7 +165,7 @@ function MapLayerManagementItemComponent<
     <VStack align={"stretch"} w={"full"} position={"relative"} {...restProps}>
       <VStack
         ref={itemRef}
-        gap={"2xs"}
+        gap={1}
         position={"relative"}
         opacity={isDragging ? 0.4 : 1}
         transition={"opacity 0.15s ease"}
@@ -199,14 +199,14 @@ function MapLayerManagementItemComponent<
 
         <HStack
           align={"center"}
-          gap={"md"}
+          gap={4}
           colorPalette={colorPalette}
           rounded={theme.radii.component}
           cursor={"pointer"}
           onClick={handleToggle}
           w={"full"}
         >
-          <HStack flex={1} align={"center"} gap={"xs"}>
+          <HStack flex={1} align={"center"} gap={2}>
             <Tooltip content={"Tahan & geser untuk mengubah urutan (z-index)"}>
               <IconButton
                 ref={dragHandleRef}
@@ -232,7 +232,7 @@ function MapLayerManagementItemComponent<
             </P>
           </HStack>
 
-          <HStack align={"center"} gap={"xs"} mr={"2xs"}>
+          <HStack align={"center"} gap={2} mr={1}>
             <Switch size={"sm"} checked={isEnabled} pointerEvents={"none"} />
           </HStack>
         </HStack>
@@ -240,7 +240,7 @@ function MapLayerManagementItemComponent<
         <HStack
           align={"center"}
           justify={"space-between"}
-          gap={"md"}
+          gap={4}
           pl={"28px"}
         >
           <Badge
@@ -251,7 +251,7 @@ function MapLayerManagementItemComponent<
             {normalizedBasis}
           </Badge>
 
-          <HStack align={"center"} gap={"2xs"}>
+          <HStack align={"center"} gap={1}>
             <Popover.Root
               positioning={{
                 placement: "left",
@@ -277,7 +277,7 @@ function MapLayerManagementItemComponent<
                 p={3}
                 onClick={(e) => e.stopPropagation()}
               >
-                <VStack gap={"xs"} align={"stretch"} w={"full"}>
+                <VStack gap={2} align={"stretch"} w={"full"}>
                   <HStack justify={"space-between"} w={"full"}>
                     <P fontSize={"sm"} fontWeight={"medium"}>
                       {"Opasitas Layer"}
@@ -344,9 +344,9 @@ function MapLayerManagementItemComponent<
 
       {showSymbology && (
         <Collapsible.Root opened={isSymbologyOpen}>
-          <Collapsible.Content mt={"xs"}>
+          <Collapsible.Content mt={2}>
             <VStack
-              gap={"xs"}
+              gap={2}
               p={3}
               bg={"bg.subtle"}
               rounded={theme.radii.component}

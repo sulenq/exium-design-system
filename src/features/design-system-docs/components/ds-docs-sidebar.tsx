@@ -87,7 +87,7 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
         <VScrollContainer>
           {/* Filter Input (Only when expanded) */}
           {expanded && (
-            <Box p={"sm"} flexShrink={0} w={"full"}>
+            <Box p={3} flexShrink={0} w={"full"}>
               <SearchInput
                 size={"sm"}
                 placeholder={"Filter components..."}
@@ -100,7 +100,7 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
 
           {/* VNavs or No Result State */}
           {filteredGroups.length === 0 ? (
-            <StateNoResult query={searchQuery} minH={"200px"} py={"md"} />
+            <StateNoResult query={searchQuery} minH={"200px"} py={4} />
           ) : (
             <VNavs<DsNavKey>
               flex={1}
@@ -130,7 +130,7 @@ const DsDocsSidebarHeader = ({
 
   return (
     <HStack align={"center"} justify={"space-between"} w={"full"}>
-      <HStack align={"center"} gap={"sm"}>
+      <HStack align={"center"} gap={3}>
         <Logo boxSize={18} ml={1.5} flexShrink={0} />
 
         <P lineClamp={1}

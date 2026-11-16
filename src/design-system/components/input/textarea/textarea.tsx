@@ -137,7 +137,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           setHasValueState(Boolean(e.currentTarget.value));
           props.onInput?.(e);
         }}
-        pb={"md"}
+        pb={4}
         {...(startElement && {
           ps: `${(startElementWidth || 20) + 20}px`,
         })}

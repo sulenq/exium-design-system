@@ -22,7 +22,7 @@ export const ExternalLink = (props: ExternalLinkProps) => {
 
   if (!href) {
     return (
-      <HStack align={"center"} gap={"xs"}>
+      <HStack align={"center"} gap={2}>
         <AppIcon
           icon={Link2OffIcon}
           color={"fg.muted"}

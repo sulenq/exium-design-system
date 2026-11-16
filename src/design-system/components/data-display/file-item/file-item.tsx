@@ -69,7 +69,7 @@ export const FileItem = (props: FileItemProps) => {
         </P>
       </HStack>
 
-      <HStack align={"center"} gap={"xs"} flexShrink={0}>
+      <HStack align={"center"} gap={2} flexShrink={0}>
         {actionButtons}
 
         {onDelete && (

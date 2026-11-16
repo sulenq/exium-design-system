@@ -186,15 +186,15 @@ function MapLayerManagementPanelComponent<
 
         <Separator borderColor={"bg.canvas"} />
 
-        <Popover.Body p={"sm"} maxH={"500px"} overflowY={"auto"}>
+        <Popover.Body p={3} maxH={"500px"} overflowY={"auto"}>
           {isLoading ? (
-            <HStack align={"center"} justify={"center"} gap={"md"} p={"md"}>
+            <HStack align={"center"} justify={"center"} gap={4} p={4}>
               <Loader />
 
               <P color={"fg.muted"}>{loadingLabel}</P>
             </HStack>
           ) : isError ? (
-            <Center p={"md"}>
+            <Center p={4}>
               <StateRetry
                 title={errorTitle}
                 description={
@@ -206,9 +206,9 @@ function MapLayerManagementPanelComponent<
               />
             </Center>
           ) : (
-            <VStack gap={"xs"}>
+            <VStack gap={2}>
               {!isEmptyArray(orderedLayers) && (
-                <VStack gap={"sm"} p={1} align={"stretch"}>
+                <VStack gap={3} p={1} align={"stretch"}>
                   <HStack
                     justify={"space-between"}
                     align={"center"}
@@ -228,7 +228,7 @@ function MapLayerManagementPanelComponent<
                     />
                   </HStack>
 
-                  <VStack gap={"xs"} align={"stretch"}>
+                  <VStack gap={2} align={"stretch"}>
                     <HStack justify={"space-between"} w={"full"}>
                       <P fontSize={"sm"} fontWeight={"medium"}>
                         {"Opasitas Semua Layer"}
@@ -258,14 +258,14 @@ function MapLayerManagementPanelComponent<
               )}
 
               {isEmptyArray(orderedLayers) && (
-                <HStack align={"center"} justify={"center"} p={"md"}>
+                <HStack align={"center"} justify={"center"} p={4}>
                   <P color={"fg.muted"} fontSize={"sm"}>
                     {emptyLabel}
                   </P>
                 </HStack>
               )}
 
-              <VStack mt={"sm"}>
+              <VStack mt={3}>
                 {orderedLayers.map((layer, index) => {
                   const isEnabled = Boolean(enabledLayerIds[layer.id]);
                   const isSymbologyEnabled = Boolean(
@@ -289,8 +289,8 @@ function MapLayerManagementPanelComponent<
                       onOpacityChange={setLayerOpacity}
                       onReorder={reorderLayer}
                       onFlyTo={onFlyToLayer}
-                      pt={isFirstIndex ? 0 : "xs"}
-                      pb={isLastIndex ? 0 : "xs"}
+                      pt={isFirstIndex ? 0 : 2}
+                      pb={isLastIndex ? 0 : 2}
                       borderTop={"1px solid"}
                       borderColor={
                         isFirstIndex ? "transparent" : "border.subtle"

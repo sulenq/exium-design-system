@@ -28,7 +28,7 @@ export const UserSessionActions = (props: UserSessionActionsProps) => {
 
 
   return (
-    <VStack gap={"xs"} w={"full"} maxW={"300px"} mx={"auto"} {...restProps}>
+    <VStack gap={2} w={"full"} maxW={"300px"} mx={"auto"} {...restProps}>
       <Button primary w={"full"} size={"lg"} onClick={handleEnter}>
         {"Masuk ke Aplikasi"}
         <AppIcon icon={ArrowRightIcon} />

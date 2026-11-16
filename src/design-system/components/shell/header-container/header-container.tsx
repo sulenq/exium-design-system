@@ -12,10 +12,10 @@ export const HeaderContainer = (props: StackProps) => {
       flexShrink={0}
       align={"center"}
       justify={"space-between"}
-      gap={"md"}
+      gap={4}
       minH={"headerH"}
-      py={"xs"}
-      px={"md"}
+      py={2}
+      px={4}
       {...restProps}
     >
       {children}

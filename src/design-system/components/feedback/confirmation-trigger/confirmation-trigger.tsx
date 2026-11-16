@@ -72,14 +72,14 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
         <Modal.Content>
           <Modal.CloseButton zIndex={2} />
 
-          <Modal.Body pt={"xl"} pb={"lg"}>
-            <VStack align={"center"} gap={"md"}>
+          <Modal.Body pt={8} pb={6}>
+            <VStack align={"center"} gap={4}>
               <Circle
                 pos={"relative"}
                 size={"76px"}
                 bg={`${resolvedColorPalette}.muted/40`}
                 color={`${resolvedColorPalette}.fg`}
-                mb={"md"}
+                mb={4}
               >
                 <AbsoluteCenter>
                   <Circle size={"52px"} bg={`${resolvedColorPalette}.muted`} />
@@ -116,7 +116,7 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <VStack gap={"xs"} w={"full"}>
+            <VStack gap={2} w={"full"}>
               <Button
                 primary
                 variant={"solid"}

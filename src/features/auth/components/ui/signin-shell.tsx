@@ -53,7 +53,7 @@ export const SigninShell = (props: SigninShellProps) => {
             <HStack align={"center"} justify={"center"} gap={4}>
               <Logo boxSize={24} />
 
-              <VStack align={"start"} gap={"2xs"}>
+              <VStack align={"start"} gap={1}>
                 <P fontSize={"md"} fontWeight={"semibold"} lineHeight={1.2}>
                   {APP_CONFIG.title}
                 </P>

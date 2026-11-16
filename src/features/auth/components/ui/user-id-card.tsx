@@ -107,7 +107,7 @@ export const UserIdCard = (props: UserIdCardProps) => {
           objectFit={"cover"}
         />
 
-        <VStack flex={1} justify={"space-between"} gap={4} p={"sm"}>
+        <VStack flex={1} justify={"space-between"} gap={4} p={3}>
           <VStack align={"start"} gap={1}>
             <P fontWeight={"medium"}>{displayName}</P>
 

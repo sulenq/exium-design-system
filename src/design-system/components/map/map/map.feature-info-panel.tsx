@@ -140,7 +140,7 @@ export const MapFeatureInfoPanel = () => {
         gap={0}
       >
         {/* Header */}
-        <HStack align={"center"} justify={"space-between"} p={"md"}>
+        <HStack align={"center"} justify={"space-between"} p={4}>
           <P fontWeight={"medium"}>{"Properties"}</P>
 
           <Tooltip content={"Tutup"}>
@@ -157,17 +157,17 @@ export const MapFeatureInfoPanel = () => {
           flexShrink={0}
           align={"center"}
           justify={"space-between"}
-          gap={"md"}
+          gap={4}
           w={"full"}
           h={"auto"}
           minH={"48px"}
-          p={"sm"}
+          p={3}
           borderBottom={"1px solid"}
           borderColor={"bg.canvas"}
         >
-          <HStack gap={"md"} align={"center"} flex={1} minW={0}>
+          <HStack gap={4} align={"center"} flex={1} minW={0}>
             <Center
-              p={"xs"}
+              p={2}
               bg={`${colorPalette}.subtle`}
               rounded={theme.radii.component}
               flexShrink={0}
@@ -188,7 +188,7 @@ export const MapFeatureInfoPanel = () => {
             </VStack>
           </HStack>
 
-          <HStack align={"center"} gap={"2xs"} flexShrink={0}>
+          <HStack align={"center"} gap={1} flexShrink={0}>
             {(selectedFeature?.geometry || displayFeature?.geometry) && (
               <Tooltip content={"Zoom ke Fitur"}>
                 <IconButton
@@ -205,7 +205,7 @@ export const MapFeatureInfoPanel = () => {
 
         {/* Content */}
         {isLoading && !displayFeature && (
-          <VStack w={"full"} p={"md"} gap={"sm"}>
+          <VStack w={"full"} p={4} gap={3}>
             <Skeleton h={"28px"} w={"full"} />
             <Skeleton h={"18px"} w={"75%"} />
             <Skeleton h={"18px"} w={"60%"} />
@@ -215,7 +215,7 @@ export const MapFeatureInfoPanel = () => {
 
         {(!isLoading || Boolean(displayFeature)) &&
           isEmptyArray(allEntries) && (
-            <VStack w={"full"} p={"lg"} align={"center"} justify={"center"}>
+            <VStack w={"full"} p={6} align={"center"} justify={"center"}>
               <StateNoData description={"Tidak ada atribut fitur"} />
             </VStack>
           )}
@@ -224,7 +224,7 @@ export const MapFeatureInfoPanel = () => {
           !isEmptyArray(allEntries) && (
             <VStack w={"full"} flex={1} gap={0} overflowY={"auto"}>
               {allEntries.length > 5 && (
-                <Box p={"sm"} w={"full"}>
+                <Box p={3} w={"full"}>
                   <SearchInput
                     placeholder={"Cari atribut..."}
                     value={searchQuery}
@@ -234,11 +234,11 @@ export const MapFeatureInfoPanel = () => {
                 </Box>
               )}
 
-              <VStack w={"full"} flex={1} p={"sm"} gap={"xs"}>
+              <VStack w={"full"} flex={1} p={3} gap={2}>
                 {isEmptyArray(filteredEntries) && (
                   <VStack
                     w={"full"}
-                    py={"md"}
+                    py={4}
                     align={"center"}
                     justify={"center"}
                   >
@@ -256,14 +256,14 @@ export const MapFeatureInfoPanel = () => {
                           : String(value);
 
                     return (
-                      <VStack key={key} w={"full"} gap={"xs"}>
+                      <VStack key={key} w={"full"} gap={2}>
                         {idx > 0 && <Separator borderColor={"border.subtle"} />}
                         {isSmallViewport && (
                           <VStack
                             w={"full"}
                             align={"start"}
-                            gap={"2xs"}
-                            py={"2xs"}
+                            gap={1}
+                            py={1}
                           >
                             <P
                               fontSize={"sm"}
@@ -288,8 +288,8 @@ export const MapFeatureInfoPanel = () => {
                             w={"full"}
                             justify={"space-between"}
                             align={"start"}
-                            gap={"sm"}
-                            py={"2xs"}
+                            gap={3}
+                            py={1}
                           >
                             <P
                               fontSize={"sm"}

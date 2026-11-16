@@ -10,27 +10,27 @@ import { FoundationHeader } from "@/features/design-system-docs/components/found
 
 export const MotionFoundationPage = () => {
   return (
-    <VStack gap={"lg"}>
+    <VStack gap={6}>
       <FoundationHeader
         title={"Motion & Animations"}
         description={"Pre-configured keyframes for dialog scaling, popover origin expansion, and layout transitions."}
       />
 
-      <SimpleGrid columns={[1, 2]} gap={"md"}>
+      <SimpleGrid columns={[1, 2]} gap={4}>
         <Box
           rounded={"lg"}
           border={"1px solid"}
           borderColor={"border.subtle"}
           bg={"bg.body"}
         >
-          <VStack gap={"xs"} p={"md"}>
+          <VStack gap={2} p={4}>
             <Heading size={"sm"} fontWeight={"bold"}>
               {"Dialog & Overlay Scale"}
             </Heading>
             <P fontSize={"sm"} color={"fg.muted"}>
               {"Keyframes scale-up and scale-up-from-click-origin animate modals directly from trigger click coordinates."}
             </P>
-            <Box mt={"xs"}>
+            <Box mt={2}>
               <Badge variant={"subtle"}>{"scale-up / scale-up-overshoot"}</Badge>
             </Box>
           </VStack>
@@ -42,14 +42,14 @@ export const MotionFoundationPage = () => {
           borderColor={"border.subtle"}
           bg={"bg.body"}
         >
-          <VStack gap={"xs"} p={"md"}>
+          <VStack gap={2} p={4}>
             <Heading size={"sm"} fontWeight={"bold"}>
               {"Alert Attention"}
             </Heading>
             <P fontSize={"sm"} color={"fg.muted"}>
               {"Controlled via useAlertAnimation to shake or highlight on unhandled user form validation errors."}
             </P>
-            <Box mt={"xs"}>
+            <Box mt={2}>
               <Badge variant={"subtle"}>{"shrink-x / ping"}</Badge>
             </Box>
           </VStack>

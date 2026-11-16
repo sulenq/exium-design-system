@@ -285,9 +285,9 @@ export const FocusAlertView = (props: FocusAlertViewProps) => {
   return (
     <VStack
       align={"center"}
-      gap={"md"}
+      gap={4}
       textAlign={"center"}
-      my={"sm"}
+      my={3}
       {...restProps}
     >
       <Box
@@ -295,7 +295,7 @@ export const FocusAlertView = (props: FocusAlertViewProps) => {
         display={"inline-flex"}
         alignItems={"center"}
         justifyContent={"center"}
-        mb={"md"}
+        mb={4}
       >
         {/* Outer expanding elegant pulse ripple */}
         <AbsoluteCenter>
@@ -407,7 +407,7 @@ const FocusAlertContent = (props: FocusAlertContentProps) => {
         animationDuration: "slower",
       }}
     >
-      <Modal.Body pt={"lg"} pb={"md"}>
+      <Modal.Body pt={6} pb={4}>
         <FocusAlertView
           variant={variant}
           colorPalette={resolvedColorPalette}
@@ -420,7 +420,7 @@ const FocusAlertContent = (props: FocusAlertContentProps) => {
 
       <Modal.Footer>
         {hasCancel ? (
-          <VStack gap={"xs"} w={"full"}>
+          <VStack gap={2} w={"full"}>
             <Button
               primary
               variant={"solid"}

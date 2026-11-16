@@ -43,7 +43,7 @@ export const StringArrayInput = (props: StringArrayInputProps) => {
 
   return (
     <FieldContext.Provider value={null}>
-      <VStack align={"stretch"} gap={"sm"} w={"full"}>
+      <VStack align={"stretch"} gap={3} w={"full"}>
         {isEmptyArray(value) && (
           <P fontSize={"xs"} color={"fg.muted"} py={1}>
             {emptyText}
@@ -51,9 +51,9 @@ export const StringArrayInput = (props: StringArrayInputProps) => {
         )}
 
         {!isEmptyArray(value) && (
-          <VStack align={"stretch"} gap={"xs"} w={"full"}>
+          <VStack align={"stretch"} gap={2} w={"full"}>
             {value.map((item, index) => (
-              <HStack key={index} gap={"xs"} align={"center"} w={"full"}>
+              <HStack key={index} gap={2} align={"center"} w={"full"}>
                 {itemPrefix && (
                   <P fontSize={"xs"} color={"fg.muted"} fontWeight={"medium"}>
                     {itemPrefix}

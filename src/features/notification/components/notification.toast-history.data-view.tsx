@@ -30,8 +30,8 @@ export const NotificationToastHistoryDataView = memo(
         <VStack
           flex={1}
           align={"stretch"}
-          gap={"md"}
-          p={"md"}
+          gap={4}
+          p={4}
           overflowY={"auto"}
         >
           <Center flex={1} py={12}>
@@ -46,8 +46,8 @@ export const NotificationToastHistoryDataView = memo(
         <VStack
           flex={1}
           align={"stretch"}
-          gap={"md"}
-          p={"md"}
+          gap={4}
+          p={4}
           overflowY={"auto"}
         >
           <StateNoData
@@ -65,11 +65,11 @@ export const NotificationToastHistoryDataView = memo(
       <VStack
         flex={1}
         align={"stretch"}
-        // gap={"md"}
-        p={"md"}
+        // gap={4}
+        p={4}
         overflowY={"auto"}
       >
-        <HStack justify={"flex-end"} mb={"md"}>
+        <HStack justify={"flex-end"} mb={4}>
           <ConfirmationTrigger
             modalKey={"clear-all-notification-toast-history"}
             title={"Hapus Semua Riwayat Notifikasi"}
@@ -85,7 +85,7 @@ export const NotificationToastHistoryDataView = memo(
           </ConfirmationTrigger>
         </HStack>
 
-        <VStack align={"stretch"} gap={"lg"}>
+        <VStack align={"stretch"} gap={6}>
           {categoryGroups.map((group) => (
             <NotificationGroupStackCard
               key={group.groupName}

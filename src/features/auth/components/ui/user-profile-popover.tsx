@@ -72,7 +72,7 @@ export const UserProfilePopoverTrigger = (
       <Popover.Content minW={"240px"} zIndex={"dropdown"}>
         <Popover.Body p={0}>
           <VStack>
-            <VStack gap={"md"} align={"center"} p={"md"}>
+            <VStack gap={4} align={"center"} p={4}>
               <Avatar
                 name={displayName || displayEmail || "User"}
                 size={"2xl"}
@@ -80,15 +80,15 @@ export const UserProfilePopoverTrigger = (
                 flexShrink={0}
               />
 
-              <VStack align={"center"} gap={"xs"}>
+              <VStack align={"center"} gap={2}>
                 {user?.role && (
-                  <UserRoleBadge mb={"xs"}>{user.role}</UserRoleBadge>
+                  <UserRoleBadge mb={2}>{user.role}</UserRoleBadge>
                 )}
 
                 <HStack
                   align={"center"}
                   justify={"center"}
-                  gap={"sm"}
+                  gap={3}
                   w={"full"}
                 >
                   <P lineClamp={1} fontWeight={"semibold"} textAlign={"center"}>
@@ -126,15 +126,15 @@ export const UserProfilePopoverTrigger = (
 
             <Separator />
 
-            <VStack gap={"2xs"} p={"xs"}>
+            <VStack gap={1} p={2}>
               {/* Dark Mode Toggle */}
               <Button
                 justifyContent={"space-between"}
-                px={"sm"}
+                px={3}
                 clicky={false}
                 onClick={toggleColorMode}
               >
-                <HStack gap={"xs"} align={"center"}>
+                <HStack gap={2} align={"center"}>
                   <AppIcon
                     icon={isDarkMode ? MoonIcon : SunIcon}
                     color={"fg.muted"}
@@ -152,7 +152,7 @@ export const UserProfilePopoverTrigger = (
                   <Button
                     size={"sm"}
                     w={"full"}
-                    px={"sm"}
+                    px={3}
                     clicky={false}
                     justifyContent={"start"}
                   >
@@ -168,7 +168,7 @@ export const UserProfilePopoverTrigger = (
                   colorPalette={"red"}
                   size={"sm"}
                   w={"full"}
-                  px={"sm"}
+                  px={3}
                   clicky={false}
                   loading={signoutMutation.isPending}
                   justifyContent={"start"}

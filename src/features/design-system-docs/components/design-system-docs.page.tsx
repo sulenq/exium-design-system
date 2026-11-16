@@ -149,7 +149,7 @@ export const DesignSystemDocsPage = () => {
           p={2}
           pl={4}
         >
-          <HStack align={"center"} gap={"sm"}>
+          <HStack align={"center"} gap={3}>
             {isSmallViewport && (
               <IconButton
                 size={"sm"}
@@ -164,7 +164,7 @@ export const DesignSystemDocsPage = () => {
             <P fontWeight={"semibold"}>Exium Design System Documentation</P>
           </HStack>
 
-          <HStack align={"center"} gap={"sm"}>
+          <HStack align={"center"} gap={3}>
             <ColorModeToggleButton />
           </HStack>
         </HStack>

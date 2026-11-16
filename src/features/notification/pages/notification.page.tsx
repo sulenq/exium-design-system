@@ -93,7 +93,7 @@ export const NotificationPage = () => {
 
 const NotificationHeader = memo(() => {
   return (
-    <HStack align={"center"} justify={"space-between"} gap={"md"} pr={2}>
+    <HStack align={"center"} justify={"space-between"} gap={4} pr={2}>
       <HStack align={"center"}>
         <AppNavTitle />
       </HStack>

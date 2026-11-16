@@ -36,7 +36,7 @@ export const DataViewFooter = (props: DataViewFooterProps) => {
       justify={"center"}
       gap={2}
       w={"full"}
-      p={"md"}
+      p={4}
       zIndex={4}
       bg={"bg.body"}
       roundedBottom={theme.radii.container}

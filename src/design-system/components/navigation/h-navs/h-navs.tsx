@@ -39,7 +39,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
     <HScrollContainer
       className={"noScrollbar"}
       align={"center"}
-      gap={"xs"}
+      gap={2}
       w={"full"}
       {...restProps}
     >
@@ -67,7 +67,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
                   colorPalette={isHighlighted ? theme.colorPalette : undefined}
                   size={"sm"}
                   h={"auto"}
-                  p={"xs"}
+                  p={2}
                   flex={1}
                   minW={"68px"}
                   maxW={"110px"}
@@ -75,7 +75,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
                   justifyContent={"center"}
                 >
                   <VStack
-                    gap={"2xs"}
+                    gap={1}
                     align={"center"}
                     justify={"center"}
                     w={"full"}
@@ -170,7 +170,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
             colorPalette={isActive ? theme.colorPalette : undefined}
             size={"sm"}
             h={"auto"}
-            p={"xs"}
+            p={2}
             flex={1}
             minW={"68px"}
             maxW={"110px"}
@@ -179,7 +179,7 @@ export const HNavs = <TNavKey extends string>(props: HNavsProps<TNavKey>) => {
             onClick={() => onNavClick?.(node.key)}
           >
             <VStack
-              gap={"2xs"}
+              gap={1}
               align={"center"}
               justify={"center"}
               w={"full"}

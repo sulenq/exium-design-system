@@ -432,9 +432,9 @@ const DataListTableHeader = (props: DataViewTableHeaderProps) => {
                 right={0}
                 zIndex={11}
                 bg={"bg.body"}
-                px={hasStickyActions ? undefined : "xs"}
-                pl={hasStickyActions ? "md" : undefined}
-                pr={hasStickyActions ? "xs" : undefined}
+                px={hasStickyActions ? undefined : 2}
+                pl={hasStickyActions ? 4 : undefined}
+                pr={hasStickyActions ? 2 : undefined}
               />
             );
           })()}
@@ -497,7 +497,7 @@ const DataListTableRow = memo(
               toggleItemSelection(item);
             }}
           >
-            <Center w={"full"} h={"full"} px={"xs"} bg={cellBg}>
+            <Center w={"full"} h={"full"} px={2} bg={cellBg}>
               <Checkbox
                 size={"sm"}
                 checked={isItemSelected}
@@ -553,7 +553,7 @@ const DataListTableRow = memo(
                 align={"center"}
                 w={"full"}
                 h={"full"}
-                px={"md"}
+                px={4}
                 bg={cellBg}
                 gap={1}
               >
@@ -582,10 +582,10 @@ const DataListTableRow = memo(
                   <HStack
                     w={"full"}
                     h={"full"}
-                    px={hasStickyActions ? undefined : "xs"}
-                    pl={hasStickyActions ? "md" : undefined}
-                    pr={hasStickyActions ? "xs" : undefined}
-                    gap={"2xs"}
+                    px={hasStickyActions ? undefined : 2}
+                    pl={hasStickyActions ? 4 : undefined}
+                    pr={hasStickyActions ? 2 : undefined}
+                    gap={1}
                     align={"center"}
                     justify={hasStickyActions ? "end" : "center"}
                     bg={cellBg}

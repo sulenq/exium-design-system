@@ -32,7 +32,7 @@ export const MaskedText = memo((props: MaskedTextProps) => {
   const maskedString = maskChar.repeat(maskLength);
 
   return (
-    <HStack gap={"xs"} align={"center"} w={"full"} {...restProps}>
+    <HStack gap={2} align={"center"} w={"full"} {...restProps}>
       <HStack flex={1} minW={0} overflow={"hidden"}>
         {isVisible ? (
           <P lineClamp={1} flex={1} fontFamily={"mono"} userSelect={"all"}>
@@ -51,7 +51,7 @@ export const MaskedText = memo((props: MaskedTextProps) => {
         )}
       </HStack>
 
-      <HStack gap={"2xs"} flexShrink={0}>
+      <HStack gap={1} flexShrink={0}>
         {withToggle && (
           <IconButton
             variant={"plain"}
