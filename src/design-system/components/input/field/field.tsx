@@ -67,6 +67,9 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
     if (variant === "floating") {
       return (
         <ChakraField.Root ref={ref} gap={1} {...restProps}>
+          {/* The visible floating label is painted by the input itself and is not a <label>; expose an accessible name for assistive tech without changing the visuals. */}
+          {label && <ChakraField.Label srOnly={true}>{label}</ChakraField.Label>}
+
           <FieldContext.Provider
             value={{
               variant,

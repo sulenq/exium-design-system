@@ -17,6 +17,10 @@ import type {
   TotpVerifyResponse,
 } from "@/features/auth/types/auth.service.type";
 import type {
+  SignupPayload,
+  SignupResponse,
+} from "@/features/auth/types/signup.type";
+import type {
   ResetPasswordConfirmPayload,
   ResetPasswordConfirmResponse,
   ResetPasswordRequestPayload,
@@ -181,3 +185,12 @@ export const postResetPasswordConfirmApi = async (
   );
 };
 
+
+export const postRegisterApi = async (
+  payload: SignupPayload,
+  signal?: AbortSignal,
+): Promise<SignupResponse> => {
+  return apiClient.post<SignupResponse>("/api/auth/register", payload, {
+    signal,
+  });
+};

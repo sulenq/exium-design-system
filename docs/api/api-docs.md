@@ -406,6 +406,127 @@ type ResetPasswordConfirmResponse = {
 }
 ```
 
+### Tautan Reset Kata Sandi via Email (Halaman `/auth/forgot-password` & `/auth/reset-password`)
+
+Alur alternatif tanpa modal OTP. Tidak ada endpoint baru; halaman memakai endpoint Step 1 dan Step 3 di atas.
+
+1. `/auth/forgot-password` memanggil `POST /api/auth/reset-password/request` dengan `{ email: string }`.
+2. Backend mengirim email berisi tautan ke frontend: `/auth/reset-password?email=<email>&token=<resetToken>` (kedua nilai di-URL-encode).
+3. `/auth/reset-password` memanggil `POST /api/auth/reset-password/confirm` dengan `{ email: string; resetToken: string; newPassword: string; confirmPassword: string }`, di mana `resetToken` adalah nilai query `token`.
+
+Demi keamanan, Step 1 sebaiknya selalu membalas 200 baik email terdaftar maupun tidak; halaman menampilkan pesan netral.
+
+### Registrasi Akun (Sign Up)
+
+Digunakan halaman `/auth/signup` untuk membuat akun baru.
+
+- **Endpoint**: `POST /api/auth/register`
+- **Akses**: `Public`
+- **Content-Type**: `application/json`
+- **Request Body**:
+
+```typescript
+type SignupPayload = {
+  name: string; // Nama lengkap, tidak boleh kosong
+  email: string;
+  password: string; // Minimal 8 karakter
+};
+```
+
+- **Response (200 OK / 201 Created)**:
+
+```typescript
+type SignupResponse = {
+  success: true;
+  message: string;
+  data: {
+    message: string; // "Akun berhasil dibuat."
+    email: string;
+  };
+  timestamp: string;
+};
+```
+
+- **Response Error (409 Conflict / 422 Unprocessable Entity)**:
+
+```json
+{
+  "success": false,
+  "code": "VALIDATION_ERROR",
+  "message": "Email sudah terdaftar.",
+  "errors": { "email": ["Email sudah terdaftar."] }
+}
+```
+
+Frontend tidak otomatis login setelah registrasi; pengguna diarahkan ke halaman sign in.
+
+### Verifikasi Email
+
+Digunakan untuk memverifikasi alamat email dari tautan yang dikirim setelah registrasi.
+
+- **Endpoint**: `POST /api/auth/email/verify`
+- **Akses**: `Public`
+- **Content-Type**: `application/json`
+- **Request Body**:
+
+```typescript
+type EmailVerificationVerifyPayload = {
+  email: string;
+  token: string; // Token dari tautan verifikasi
+};
+```
+
+- **Response (200 OK)**:
+
+```typescript
+type EmailVerificationVerifyResponse = {
+  success: true;
+  message: string;
+  data: {
+    email: string;
+    verified: boolean;
+  };
+  timestamp: string;
+};
+```
+
+- **Response Error (400 Bad Request)**: token tidak valid atau kedaluwarsa.
+
+```json
+{
+  "success": false,
+  "code": "VERIFICATION_TOKEN_INVALID",
+  "message": "Tautan verifikasi tidak valid atau kedaluwarsa."
+}
+```
+
+### Kirim Ulang Email Verifikasi
+
+- **Endpoint**: `POST /api/auth/email/resend`
+- **Akses**: `Public`
+- **Content-Type**: `application/json`
+- **Request Body**:
+
+```typescript
+type EmailVerificationResendPayload = {
+  email: string;
+};
+```
+
+- **Response (200 OK)**:
+
+```typescript
+type EmailVerificationResendResponse = {
+  success: true;
+  message: string;
+  data: {
+    email: string;
+    expiresIn?: number; // Detik berlaku tautan verifikasi
+  };
+  timestamp: string;
+};
+```
+
 ---
 
 ## 1.2 Pendaftaran Calon Mitra
@@ -505,6 +626,87 @@ type UserProfileResponse = {
   role: "internal" | "mitra";
   organizationName?: string;
 };
+```
+
+### Update Profil
+
+Memperbarui profil pengguna yang sedang login. Frontend menyimpan `data.user` sebagai sesi pengguna terbaru.
+
+- **Endpoint**: `PATCH /api/auth/me`
+- **Akses**: `Authenticated (Mitra & Internal)`
+- **Content-Type**: `application/json`
+- **Request Body**:
+
+```typescript
+type AccountProfileUpdatePayload = {
+  name: string;
+};
+```
+
+- **Response (200 OK)**:
+
+```typescript
+type AccountProfileUpdateResponse = {
+  success: true;
+  message: string;
+  data: {
+    user: {
+      id: string;
+      email: string;
+      name: string;
+      role: "internal" | "mitra";
+      createdAt: string; // ISO 8601
+      updatedAt: string; // ISO 8601
+      // role "internal"
+      status?: string;
+      department?: string;
+      internalRoles?: string[];
+      // role "mitra"
+      companyName?: string;
+      tier?: "standard" | "premium" | "enterprise";
+    };
+  };
+  timestamp: string;
+};
+```
+
+### Ganti Kata Sandi
+
+Mengganti kata sandi pengguna yang sedang login (berbeda dari alur reset untuk pengguna yang lupa kata sandi).
+
+- **Endpoint**: `POST /api/auth/change-password`
+- **Akses**: `Authenticated (Mitra & Internal)`
+- **Content-Type**: `application/json`
+- **Request Body**:
+
+```typescript
+type AccountPasswordChangePayload = {
+  currentPassword: string;
+  newPassword: string; // Minimal 8 karakter
+};
+```
+
+- **Response (200 OK)**:
+
+```typescript
+type AccountPasswordChangeResponse = {
+  success: true;
+  message: string;
+  data: {
+    message: string;
+  };
+  timestamp: string;
+};
+```
+
+- **Response Error (400 Bad Request)**: kata sandi saat ini salah.
+
+```json
+{
+  "success": false,
+  "code": "CURRENT_PASSWORD_INVALID",
+  "message": "Kata sandi saat ini salah."
+}
 ```
 
 ### Logout

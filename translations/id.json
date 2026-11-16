@@ -141,17 +141,20 @@
       "subtitle": "Akses dasbor akun Anda",
       "btn_submit": "Masuk",
       "forgot_password_link": "Lupa kata sandi?",
-      "singup_prompt": "Belum memiliki akun?",
       "register_link": "Daftar di sini",
-      "oauth_continue_with": "Lanjutkan dengan {provider}"
+      "oauth_continue_with": "Lanjutkan dengan {provider}",
+      "signup_prompt": "Belum memiliki akun?"
     },
-    "singup": {
+    "signup": {
       "title": "Buat Akun",
       "subtitle": "Mulai uji coba gratis Anda hari ini",
       "btn_submit": "Daftar",
       "signin_prompt": "Sudah memiliki akun?",
       "signin_link": "Masuk",
-      "terms_agreement": "Saya menyetujui Syarat & Ketentuan dan Kebijakan Privasi."
+      "terms_agreement": "Saya menyetujui Syarat & Ketentuan dan Kebijakan Privasi.",
+      "terms_required": "Anda harus menyetujui ketentuan untuk melanjutkan.",
+      "success_title": "Akun berhasil dibuat",
+      "success_description": "Akun Anda telah dibuat. Silakan masuk."
     },
     "signout": {
       "title": "Keluar",
@@ -161,13 +164,31 @@
       "title": "Atur Ulang Kata Sandi",
       "subtitle": "Masukkan email Anda untuk menerima tautan atur ulang kata sandi",
       "btn_submit": "Kirim Tautan Atur Ulang",
-      "success_message": "Jika email tersebut terdaftar, tautan atur ulang telah dikirim."
+      "success_message": "Jika email tersebut terdaftar, tautan atur ulang telah dikirim.",
+      "back_to_signin": "Kembali ke halaman masuk",
+      "sent_title": "Periksa email Anda",
+      "sent_description": "Jika {email} terdaftar, tautan atur ulang telah dikirim."
     },
     "otp": {
       "title": "Verifikasi Dua Langkah",
       "subtitle": "Masukkan 6 digit kode yang dikirim ke perangkat Anda",
       "resend_prompt": "Tidak menerima kode?",
       "resend_btn": "Kirim Ulang Kode"
+    },
+    "reset": {
+      "title": "Buat kata sandi baru",
+      "subtitle": "Pilih kata sandi baru untuk akun Anda",
+      "new_password_label": "Kata sandi baru",
+      "btn_submit": "Perbarui kata sandi",
+      "invalid_link_title": "Tautan tidak valid atau kedaluwarsa",
+      "invalid_link_description": "Tautan atur ulang ini tidak memiliki informasi yang diperlukan. Minta tautan baru.",
+      "request_new_link": "Minta tautan baru"
+    },
+    "fields": {
+      "name": "Nama lengkap",
+      "email": "Email",
+      "password": "Kata sandi",
+      "confirm_password": "Konfirmasi kata sandi"
     }
   },
   "validation": {

@@ -142,17 +142,20 @@
       "subtitle": "Access your account dashboard",
       "btn_submit": "Sign In",
       "forgot_password_link": "Forgot password?",
-      "singup_prompt": "Don't have an account?",
       "register_link": "Sign up here",
-      "oauth_continue_with": "Continue with {provider}"
+      "oauth_continue_with": "Continue with {provider}",
+      "signup_prompt": "Don't have an account?"
     },
-    "singup": {
+    "signup": {
       "title": "Create Account",
       "subtitle": "Get started with your free trial today",
       "btn_submit": "Register",
       "signin_prompt": "Already have an account?",
       "signin_link": "Sign in",
-      "terms_agreement": "I agree to the Terms of Service and Privacy Policy."
+      "terms_agreement": "I agree to the Terms of Service and Privacy Policy.",
+      "terms_required": "You must accept the terms to continue.",
+      "success_title": "Account created",
+      "success_description": "Your account has been created. Please sign in."
     },
     "signout": {
       "title": "Sign Out",
@@ -162,13 +165,31 @@
       "title": "Reset Password",
       "subtitle": "Enter your email to receive a reset link",
       "btn_submit": "Send Reset Link",
-      "success_message": "If that email exists, a reset link has been sent."
+      "success_message": "If that email exists, a reset link has been sent.",
+      "back_to_signin": "Back to sign in",
+      "sent_title": "Check your email",
+      "sent_description": "If {email} is registered, a reset link has been sent."
     },
     "otp": {
       "title": "Two-Factor Verification",
       "subtitle": "Enter the 6-digit code sent to your device",
       "resend_prompt": "Didn't receive the code?",
       "resend_btn": "Resend Code"
+    },
+    "reset": {
+      "title": "Set a new password",
+      "subtitle": "Choose a new password for your account",
+      "new_password_label": "New password",
+      "btn_submit": "Update password",
+      "invalid_link_title": "Invalid or expired link",
+      "invalid_link_description": "This reset link is missing required information. Request a new one.",
+      "request_new_link": "Request a new link"
+    },
+    "fields": {
+      "name": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirm_password": "Confirm password"
     }
   },
   "validation": {
