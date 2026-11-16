@@ -169,7 +169,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         </Tabs.List>
 
         <Tabs.Content value={"controls"} pt={4}>
-          <SimpleGrid columns={[1, 2, 3]} gap={4}>
+          <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
             {spec.propsSpec
               .filter((prop) => prop.controlKind !== undefined)
               .map((prop) => (
