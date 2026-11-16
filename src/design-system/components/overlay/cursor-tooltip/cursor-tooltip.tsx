@@ -111,8 +111,8 @@ export const CursorTooltip = (props: CursorTooltipProps) => {
             transform={`translate3d(${posX}px, ${posY}px, 0)`}
             zIndex={"tooltip"}
             pointerEvents={"none"}
-            bg={"bg.contrast"}
-            color={"fg.inverted"}
+            bg={"bg.inverted"}
+            color={"bg.body"}
             px={2.5}
             py={1}
             rounded={"md"}

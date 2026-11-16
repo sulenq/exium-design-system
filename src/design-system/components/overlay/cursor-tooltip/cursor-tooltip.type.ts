@@ -8,3 +8,4 @@ export type CursorTooltipProps = {
   disabled?: boolean;
   offset?: { x: number; y: number };
 };
+

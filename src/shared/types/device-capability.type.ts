@@ -7,3 +7,4 @@ export type DeviceCapability = {
   hasTouch: boolean;
   inputType: DeviceInputType;
 };
+

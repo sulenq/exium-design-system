@@ -37,3 +37,4 @@ export const useDeviceCapability = (): DeviceCapability => {
 
   return capability;
 };
+
