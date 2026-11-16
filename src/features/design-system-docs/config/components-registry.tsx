@@ -1601,6 +1601,20 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const val = Number(props.value) || 0;
+      const sizeProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const colorProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+      const animProp = props.animated
+        ? ` striped={true} animated={true}`
+        : "";
+
+      return `<Progress.Root value={${val}}${colorProp}${sizeProp}${animProp}>\n  <Progress.Track>\n    <Progress.Range />\n  </Progress.Track>\n</Progress.Root>`;
+    },
     renderPlayground: (props) => (
       <Box w={"320px"}>
         <Progress.Root
@@ -1649,6 +1663,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["shine", "pulse"],
       },
     ],
+    generateCode: (props) => {
+      const isLoaded = Boolean(props.loaded);
+      const variant = (props.variant as string) || "shine";
+      const variantProp = variant !== "shine" ? ` variant={"${variant}"}` : "";
+      const loadedProp = isLoaded ? ` loaded={true}` : ` loaded={false}`;
+
+      return `{/* Mode Standalone Placeholder */}\n<Skeleton w={"full"} h={"60px"} rounded={"md"}${variantProp} />\n\n{/* Mode Loaded Container */}\n<Skeleton${loadedProp}${variantProp} rounded={"md"}>\n  <P>{"Konten data sebenarnya yang tampil saat loaded true"}</P>\n</Skeleton>`;
+    },
     renderPlayground: (props) => {
       const isLoaded = Boolean(props.loaded);
       const variant = (props.variant as "shine" | "pulse") || "shine";
@@ -1757,6 +1779,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["info", "success", "warning", "error"],
       },
     ],
+    generateCode: (props) => {
+      const status = (props.status as string) || "info";
+      return `<Alert.Root status={"${status}"}>\n  <Alert.Indicator />\n  <Alert.Content>\n    <Alert.Title>{"Informasi Sistem"}</Alert.Title>\n    <Alert.Description>\n      {"Operasi berhasil disinkronkan dengan status ${status}."}\n    </Alert.Description>\n  </Alert.Content>\n</Alert.Root>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
         <Alert.Root
@@ -1798,6 +1824,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["success", "error", "warning", "info", "loading"],
       },
     ],
+    generateCode: (props) => {
+      const v = (props.variant as string) || "info";
+      return `// Panggil fungsi toast imperatif sesuai level notifikasi\ntoast.${v}("Judul Notifikasi", {\n  description: "Pesan detail pemberitahuan status ${v}.",\n});`;
+    },
     renderPlayground: (props) => (
       <HStack gap={3} wrap={"wrap"}>
         <Button
@@ -1859,6 +1889,13 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "text",
       },
     ],
+    generateCode: (props) => {
+      const title = String(props.title || "Tidak Ada Data");
+      const desc = String(
+        props.description || "Belum ada item atau rekaman data yang tersedia.",
+      );
+      return `<StateNoData\n  title={"${title}"}\n  description={"${desc}"}\n/>`;
+    },
     renderPlayground: (props) => (
       <StateNoData
         title={props.title as string}
