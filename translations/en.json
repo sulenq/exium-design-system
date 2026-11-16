@@ -86,7 +86,15 @@
     "dismiss_all": "Dismiss all",
     "notifications": "Notifications",
     "link_not_found": "Link not found",
-    "page_size": "Page Size"
+    "page_size": "Page Size",
+    "select_time": "Select Time",
+    "select_country": "Select country",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds",
+    "phone_number": "Phone number",
+    "checklist_progress": "{checked} of {total} completed",
+    "qr_code": "QR code"
   },
   "action": {
     "actions": "Actions",
