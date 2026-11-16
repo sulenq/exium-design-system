@@ -62,7 +62,10 @@ import {
   Center,
 } from "@/design-system/components/layout/center/center";
 import { Container } from "@/design-system/components/layout/container/container";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Splitter } from "@/design-system/components/layout/splitter/splitter";
 import { Image } from "@/design-system/components/media/image/image";
 import { ExternalLink } from "@/design-system/components/navigation/link/link";
@@ -133,7 +136,9 @@ const DemoCard = ({
     <Container.Root w={"full"}>
       <Container.Body gap={3} p={4} align={"start"}>
         <HStack align={"center"} gap={2} w={"full"} pb={1}>
-          {icon && <AppIcon icon={icon} size={"sm"} color={"colorPalette.fg"} />}
+          {icon && (
+            <AppIcon icon={icon} size={"sm"} color={"colorPalette.fg"} />
+          )}
           <P fontSize={"sm"} fontWeight={"semibold"}>
             {title}
           </P>
@@ -377,7 +382,10 @@ const PasswordInputCard = () => {
   return (
     <DemoCard title={"PasswordInput"} icon={TextCursorInputIcon}>
       <Field label={"Password Input"}>
-        <PasswordInput withPasswordStrength={true} placeholder={"Kata sandi..."} />
+        <PasswordInput
+          withPasswordStrength={true}
+          placeholder={"Kata sandi..."}
+        />
       </Field>
     </DemoCard>
   );
@@ -564,7 +572,10 @@ const TextareaCard = () => {
   return (
     <DemoCard title={"Textarea"} icon={TextCursorInputIcon}>
       <Field label={"Catatan Tambahan"}>
-        <Textarea placeholder={"Tuliskan deskripsi atau catatan..."} maxLength={200} />
+        <Textarea
+          placeholder={"Tuliskan deskripsi atau catatan..."}
+          maxLength={200}
+        />
       </Field>
     </DemoCard>
   );
@@ -842,13 +853,26 @@ const DrawerCard = () => {
 
 const AccordionCard = () => {
   const items = [
-    { value: "a", title: "Item Pertama", text: "Konten penjelasan item pertama..." },
-    { value: "b", title: "Item Kedua", text: "Konten penjelasan item kedua..." },
+    {
+      value: "a",
+      title: "Item Pertama",
+      text: "Konten penjelasan item pertama...",
+    },
+    {
+      value: "b",
+      title: "Item Kedua",
+      text: "Konten penjelasan item kedua...",
+    },
   ];
 
   return (
     <DemoCard title={"Accordion"} icon={LayersIcon}>
-      <Accordion.Root collapsible={true} multiple={true} defaultValue={["a"]} w={"full"}>
+      <Accordion.Root
+        collapsible={true}
+        multiple={true}
+        defaultValue={["a"]}
+        w={"full"}
+      >
         {items.map((item, index) => (
           <Accordion.Item key={index} value={item.value}>
             <Accordion.ItemTrigger>
@@ -1114,7 +1138,8 @@ const ODialog = () => {
         </Dialog.Header>
         <Dialog.Body>
           <P textAlign={"center"}>
-            Apakah Anda yakin ingin memproses tindakan ini? Tindakan ini tidak dapat dibatalkan.
+            Apakah Anda yakin ingin memproses tindakan ini? Tindakan ini tidak
+            dapat dibatalkan.
           </P>
         </Dialog.Body>
         <Dialog.Footer>
@@ -1163,7 +1188,8 @@ const ODrawer = () => {
         <Drawer.Body>
           <VStack align={"center"} gap={4}>
             <P textAlign={"center"}>
-              Drawer adalah panel samping untuk fokus pengguna pada konfigurasi atau form panjang.
+              Drawer adalah panel samping untuk fokus pengguna pada konfigurasi
+              atau form panjang.
             </P>
           </VStack>
         </Drawer.Body>
@@ -1231,7 +1257,11 @@ const Layout = () => {
     <Container.Root w={"full"}>
       <Container.Body gap={3} p={4}>
         <HStack align={"center"} gap={2} w={"full"} pb={1}>
-          <AppIcon icon={LayoutGridIcon} size={"md"} color={"colorPalette.fg"} />
+          <AppIcon
+            icon={LayoutGridIcon}
+            size={"md"}
+            color={"colorPalette.fg"}
+          />
           <P fontSize={"md"} fontWeight={"semibold"}>
             Splitter (Layout)
           </P>
@@ -1264,7 +1294,6 @@ const Layout = () => {
 };
 
 export const DataDisplay = () => {
-
   const dataList = {
     fields: [
       { th: "Name", sortable: true },
@@ -1417,7 +1446,6 @@ export const DataDisplay = () => {
 // ---------------------------------------------------------------------------
 // Color Palettes
 // ---------------------------------------------------------------------------
-
 
 const COLOR_STEPS = [
   "50",
