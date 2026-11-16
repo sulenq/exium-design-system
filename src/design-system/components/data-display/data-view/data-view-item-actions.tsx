@@ -489,26 +489,31 @@ export const DataListItemActionsTrigger = <
     return true;
   });
 
+  const triggerId = contextedTrigger ? `${item.id}-context` : item.id;
   const isMenuOpen = tableContext?.setActiveItemMenuId
-    ? tableContext.activeItemMenuId === item.id
+    ? tableContext.activeItemMenuId === triggerId
     : undefined;
 
   const handleOpenChange = (details: { open: boolean }) => {
     if (tableContext?.setActiveItemMenuId) {
-      tableContext.setActiveItemMenuId(details.open ? item.id : null);
+      tableContext.setActiveItemMenuId(details.open ? triggerId : null);
     }
     restProps.onOpenChange?.(details);
   };
 
+  const positioning = contextedTrigger
+    ? undefined
+    : {
+        offset: { crossAxis: 4 },
+        hideWhenDetached: true,
+      };
+
   return (
     <Menu.Root
       lazyMount
-      positioning={{
-        offset: { crossAxis: 4 },
-        hideWhenDetached: true,
-      }}
+      positioning={positioning}
       closeOnSelect={false}
-      open={isMenuOpen}
+      open={contextedTrigger ? undefined : isMenuOpen}
       onOpenChange={handleOpenChange}
       {...restProps}
     >
