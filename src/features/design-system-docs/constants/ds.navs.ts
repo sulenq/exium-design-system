@@ -32,7 +32,10 @@ import {
   ListIcon,
   LockIcon,
   MagnifyingGlassIcon,
+  ListChecksIcon,
   NavigationArrowIcon,
+  PhoneIcon,
+  QrCodeIcon,
   QuestionIcon,
   RadioIcon,
   SlidersHorizontalIcon,
@@ -228,6 +231,14 @@ export const DS_NAVS_MAP = {
     icon: CalendarDotsIcon,
     title: "Date Input",
   },
+  phone_input: {
+    icon: PhoneIcon,
+    title: "Phone Input",
+  },
+  time_input: {
+    icon: ClockIcon,
+    title: "Time Input",
+  },
 
   // Components - Feedback & Status
   alert: {
@@ -321,6 +332,10 @@ export const DS_NAVS_MAP = {
     icon: ArrowsOutIcon,
     title: "Modal (Adaptive)",
   },
+  checklist_modal: {
+    icon: ListChecksIcon,
+    title: "Checklist Modal",
+  },
   dialog: {
     icon: ArrowsOutIcon,
     title: "Dialog Modal",
@@ -390,6 +405,10 @@ export const DS_NAVS_MAP = {
   image: {
     icon: ImageIcon,
     title: "Image",
+  },
+  qr_code: {
+    icon: QrCodeIcon,
+    title: "QR Code",
   },
   app_icon: {
     icon: SparkleIcon,
