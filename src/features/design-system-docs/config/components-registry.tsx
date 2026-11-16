@@ -87,7 +87,6 @@ import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
-import { ChecklistModal } from "@/design-system/components/overlay/checklist-modal/checklist-modal";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { toast } from "@/design-system/components/toast";
@@ -1386,7 +1385,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       const szProp =
         props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
-      return `<RadioCardInput.Root defaultValue={"standard"}${cpProp}${szProp}${disProp} w={"full"}>\n  <HStack gap={3} w={"full"}>\n    <RadioCardInput.Item value={"standard"} flex={1} p={3}>\n      <RadioCardInput.ItemText>\n        <P fontWeight={"semibold"} fontSize={"sm"}>{"Standard"}</P>\n        <P fontSize={"xs"} color={"fg.muted"}>{"Fitur esensial"}</P>\n      </RadioCardInput.ItemText>\n    </RadioCardInput.Item>\n    <RadioCardInput.Item value={"pro"} flex={1} p={3}>\n      <RadioCardInput.ItemText>\n        <P fontWeight={"semibold"} fontSize={"sm"}>{"Enterprise"}</P>\n        <P fontSize={"xs"} color={"fg.muted"}>{"Akses menyeluruh"}</P>\n      </RadioCardInput.ItemText>\n    </RadioCardInput.Item>\n  </HStack>\n</RadioCardInput.Root>`;
+      return `<RadioCardInput.Root defaultValue={"standard"}${cpProp}${szProp}${disProp} w={"full"}>\n  <HStack gap={3} w={"full"}>\n    <RadioCardInput.Item value={"standard"} flex={1} p={3}>\n      <RadioCardInput.ItemControl justifyContent={"space-between"}>\n        <RadioCardInput.ItemText>\n          <P fontWeight={"semibold"} fontSize={"sm"}>{"Standard"}</P>\n          <P fontSize={"xs"} color={"fg.muted"}>{"Fitur esensial"}</P>\n        </RadioCardInput.ItemText>\n        <RadioCardInput.ItemIndicator />\n      </RadioCardInput.ItemControl>\n    </RadioCardInput.Item>\n    <RadioCardInput.Item value={"pro"} flex={1} p={3}>\n      <RadioCardInput.ItemControl justifyContent={"space-between"}>\n        <RadioCardInput.ItemText>\n          <P fontWeight={"semibold"} fontSize={"sm"}>{"Enterprise"}</P>\n          <P fontSize={"xs"} color={"fg.muted"}>{"Akses menyeluruh"}</P>\n        </RadioCardInput.ItemText>\n        <RadioCardInput.ItemIndicator />\n      </RadioCardInput.ItemControl>\n    </RadioCardInput.Item>\n  </HStack>\n</RadioCardInput.Root>`;
     },
     renderPlayground: (props) => (
       <RadioCardInput.Root
@@ -1399,24 +1398,30 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       >
         <HStack gap={3} w={"full"}>
           <RadioCardInput.Item value={"standard"} flex={1} p={3}>
-            <RadioCardInput.ItemText>
-              <P fontWeight={"semibold"} fontSize={"sm"}>
-                {"Standard"}
-              </P>
-              <P fontSize={"xs"} color={"fg.muted"}>
-                {"Fitur esensial"}
-              </P>
-            </RadioCardInput.ItemText>
+            <RadioCardInput.ItemControl justifyContent={"space-between"}>
+              <RadioCardInput.ItemText>
+                <P fontWeight={"semibold"} fontSize={"sm"}>
+                  {"Standard"}
+                </P>
+                <P fontSize={"xs"} color={"fg.muted"}>
+                  {"Fitur esensial"}
+                </P>
+              </RadioCardInput.ItemText>
+              <RadioCardInput.ItemIndicator />
+            </RadioCardInput.ItemControl>
           </RadioCardInput.Item>
           <RadioCardInput.Item value={"pro"} flex={1} p={3}>
-            <RadioCardInput.ItemText>
-              <P fontWeight={"semibold"} fontSize={"sm"}>
-                {"Enterprise"}
-              </P>
-              <P fontSize={"xs"} color={"fg.muted"}>
-                {"Akses menyeluruh"}
-              </P>
-            </RadioCardInput.ItemText>
+            <RadioCardInput.ItemControl justifyContent={"space-between"}>
+              <RadioCardInput.ItemText>
+                <P fontWeight={"semibold"} fontSize={"sm"}>
+                  {"Enterprise"}
+                </P>
+                <P fontSize={"xs"} color={"fg.muted"}>
+                  {"Akses menyeluruh"}
+                </P>
+              </RadioCardInput.ItemText>
+              <RadioCardInput.ItemIndicator />
+            </RadioCardInput.ItemControl>
           </RadioCardInput.Item>
         </HStack>
       </RadioCardInput.Root>
@@ -3103,23 +3108,34 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         count={Number(props.count) || 3}
         size={(props.size as "sm" | "md" | "lg") || "md"}
         colorPalette={(props.colorPalette as string) || "blue"}
-        maxW={"380px"}
         w={"full"}
       >
         <Steps.List>
           <Steps.Item index={0} title={"Langkah 1"}>
-            <Steps.Indicator />
-            <Steps.Title>Biodata</Steps.Title>
+            <Steps.Trigger>
+              <Steps.Indicator />
+              <Steps.Title fontSize={{ base: "xs", sm: "sm" }}>
+                {"Biodata"}
+              </Steps.Title>
+            </Steps.Trigger>
             <Steps.Separator />
           </Steps.Item>
           <Steps.Item index={1} title={"Langkah 2"}>
-            <Steps.Indicator />
-            <Steps.Title>Berkas</Steps.Title>
+            <Steps.Trigger>
+              <Steps.Indicator />
+              <Steps.Title fontSize={{ base: "xs", sm: "sm" }}>
+                {"Berkas"}
+              </Steps.Title>
+            </Steps.Trigger>
             <Steps.Separator />
           </Steps.Item>
           <Steps.Item index={2} title={"Langkah 3"}>
-            <Steps.Indicator />
-            <Steps.Title>Selesai</Steps.Title>
+            <Steps.Trigger>
+              <Steps.Indicator />
+              <Steps.Title fontSize={{ base: "xs", sm: "sm" }}>
+                {"Selesai"}
+              </Steps.Title>
+            </Steps.Trigger>
           </Steps.Item>
         </Steps.List>
       </Steps.Root>
@@ -3534,12 +3550,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     renderPlayground: (props) => (
       <Tooltip
+        key={`tooltip-${Boolean(props.disabled)}`}
         content={String(props.content || "Tooltip info bantuan")}
         disabled={Boolean(props.disabled)}
         openDelay={Number(props.openDelay) || 300}
         closeDelay={Number(props.closeDelay) || 200}
       >
-        <Button variant={"outline"}>Arahkan Mouse ke Sini</Button>
+        <Button variant={"outline"}>
+          {props.disabled ? "Tooltip Dinonaktifkan" : "Arahkan Mouse ke Sini"}
+        </Button>
       </Tooltip>
     ),
   },
@@ -3623,86 +3642,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       <ModalPlaygroundDemo
         size={(props.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs"}
       />
-    ),
-  },
-
-  checklist_modal: {
-    key: "checklist_modal",
-    title: "Checklist Modal",
-    category: "Overlays & Modals",
-    description:
-      "Modal berisi daftar centang. Tombol konfirmasi baru aktif setelah semua item wajib dicentang.",
-    importPath:
-      'import { ChecklistModal } from "@/design-system/components/overlay/checklist-modal/checklist-modal";',
-    component: ChecklistModal,
-    defaultProps: {
-      size: "sm",
-    },
-    propsSpec: [
-      {
-        name: "modalKey",
-        type: "string",
-        required: true,
-        defaultValue: undefined,
-        description: "Key unik modal, tersinkron dengan URL param overlay.",
-      },
-      {
-        name: "title",
-        type: "string",
-        required: true,
-        defaultValue: undefined,
-        description: "Judul modal.",
-      },
-      {
-        name: "items",
-        type: "{ id: string; label: string; description?: string; optional?: boolean }[]",
-        required: true,
-        defaultValue: undefined,
-        description:
-          "Daftar item. Item optional tidak menahan tombol konfirmasi.",
-      },
-      {
-        name: "defaultCheckedIds",
-        type: "string[]",
-        defaultValue: undefined,
-        description: "Item yang sudah tercentang saat modal dibuka.",
-      },
-      {
-        name: "onConfirm",
-        type: "(checkedIds: string[]) => void | Promise<void>",
-        required: true,
-        defaultValue: undefined,
-        description:
-          "Dipanggil dengan id yang dicentang. Modal menutup setelah selesai; lempar error untuk menahannya tetap terbuka.",
-      },
-      {
-        name: "size",
-        type: '"xs" | "sm" | "md" | "lg"',
-        defaultValue: "sm",
-        description: "Lebar modal pada mode dialog desktop.",
-        controlKind: "select",
-        options: ["xs", "sm", "md", "lg"],
-      },
-    ],
-    renderPlayground: (props) => (
-      <ChecklistModal
-        modalKey={"docs-checklist-modal"}
-        title={"Sebelum publikasi"}
-        description={"Pastikan semua poin berikut sudah terpenuhi."}
-        size={(props.size as "xs" | "sm" | "md" | "lg") || "sm"}
-        items={[
-          { id: "review", label: "Konten sudah direview" },
-          {
-            id: "backup",
-            label: "Backup data sudah dibuat",
-            description: "Backup terakhir tidak lebih dari 24 jam.",
-          },
-          { id: "notify", label: "Tim sudah diberi tahu", optional: true },
-        ]}
-        onConfirm={() => undefined}
-      >
-        <Button variant={"outline"}>{"Buka checklist"}</Button>
-      </ChecklistModal>
     ),
   },
 

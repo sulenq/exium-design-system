@@ -32,7 +32,6 @@ import {
   ListIcon,
   LockIcon,
   MagnifyingGlassIcon,
-  ListChecksIcon,
   NavigationArrowIcon,
   PhoneIcon,
   QrCodeIcon,
@@ -331,10 +330,6 @@ export const DS_NAVS_MAP = {
   modal: {
     icon: ArrowsOutIcon,
     title: "Modal (Adaptive)",
-  },
-  checklist_modal: {
-    icon: ListChecksIcon,
-    title: "Checklist Modal",
   },
   dialog: {
     icon: ArrowsOutIcon,

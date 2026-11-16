@@ -92,7 +92,6 @@
     "minutes": "Menit",
     "seconds": "Detik",
     "phone_number": "Nomor telepon",
-    "checklist_progress": "{checked} dari {total} selesai",
     "qr_code": "Kode QR"
   },
   "action": {

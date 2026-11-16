@@ -93,7 +93,6 @@
     "minutes": "Minutes",
     "seconds": "Seconds",
     "phone_number": "Phone number",
-    "checklist_progress": "{checked} of {total} completed",
     "qr_code": "QR code"
   },
   "action": {

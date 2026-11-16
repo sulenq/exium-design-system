@@ -132,7 +132,6 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_overlay",
         children: [
           { key: "modal" },
-          { key: "checklist_modal" },
           { key: "dialog" },
           { key: "drawer" },
           { key: "popover" },
