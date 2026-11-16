@@ -74,6 +74,7 @@ const DataListTableRootInternal = <
     initialSortColumnIndex,
     initialSortOrder = "asc",
     withNumbering = true,
+    withStickyMenu = false,
     canBatchSelect = false,
     selectedItems: controlledSelectedItems,
     onSelectedItemChange,
@@ -163,6 +164,7 @@ const DataListTableRootInternal = <
       itemActions:
         itemActionsList as unknown as DataViewItemActionsGenerator<T>[],
       withNumbering,
+      withStickyMenu,
       virtualized,
       fixedItemHeight,
       tableContainerRef,
@@ -198,6 +200,7 @@ const DataListTableRootInternal = <
       batchActions,
       itemActionsList,
       withNumbering,
+      withStickyMenu,
       virtualized,
       fixedItemHeight,
       tableContainerRef,
@@ -246,7 +249,7 @@ const DataListTableRootInternal = <
         cols.push("max-content");
       }
 
-      // Sticky column for sticky actions + menu trigger (never shrinks, sizing based on sticky items + padding)
+      // Sticky column for sticky actions and/or menu trigger
       const stickyActionsCount = actions.filter(
         (action) =>
           typeof action === "object" &&
@@ -257,11 +260,14 @@ const DataListTableRootInternal = <
 
       const hasStickyActions = stickyActionsCount > 0;
 
-      // 40px trigger button + each sticky button 32px + 8px gaps + padding
-      const stickyColWidth = hasStickyActions
-        ? `${40 + stickyActionsCount * 36 + 24}px`
-        : "56px";
-      cols.push(stickyColWidth);
+      if (withStickyMenu || hasStickyActions) {
+        // withStickyMenu adds 40px trigger button + padding
+        const triggerWidth = withStickyMenu ? 40 : 0;
+        const stickyActionsWidth = stickyActionsCount * 36;
+        const paddingWidth = hasStickyActions && withStickyMenu ? 24 : 16;
+        const stickyColWidth = `${Math.max(56, triggerWidth + stickyActionsWidth + paddingWidth)}px`;
+        cols.push(stickyColWidth);
+      }
     }
 
     return cols.join(" ");
@@ -271,6 +277,7 @@ const DataListTableRootInternal = <
     headersList,
     itemActionsList,
     withNumbering,
+    withStickyMenu,
   ]);
 
   return (
@@ -336,6 +343,7 @@ const DataListTableHeader = (props: DataViewTableHeaderProps) => {
     sortConfig,
     toggleSort,
     withNumbering,
+    withStickyMenu,
   } = useDataViewTableContext();
 
   return (
@@ -426,6 +434,8 @@ const DataListTableHeader = (props: DataViewTableHeaderProps) => {
                 action.sticky,
             );
 
+            if (!withStickyMenu && !hasStickyActions) return null;
+
             return (
               <DataListTableCell
                 pos={"sticky"}
@@ -459,7 +469,7 @@ const DataListTableRow = memo(
     styleProps,
   }: DataViewTableRowProps) => {
     // Contexts & Stores
-    const { page, pageSize, renderTdCell, activeItemMenuId } =
+    const { page, pageSize, renderTdCell, activeItemMenuId, withStickyMenu } =
       useDataViewTableContext();
     const { theme } = useThemeStore();
 
@@ -629,6 +639,8 @@ const DataListTableRow = memo(
                   action.sticky,
               );
 
+              if (!withStickyMenu && !hasStickyActions) return null;
+
               return (
                 <Center
                   pos={"sticky"}
@@ -654,21 +666,23 @@ const DataListTableRow = memo(
                       item={item}
                     />
 
-                    <DataListItemActionsTrigger
-                      itemActions={itemActions}
-                      item={item}
-                    >
-                      <IconButton
-                        variant={"ghost"}
-                        opacity={isStickyMenuOpen ? 1 : 0}
-                        _groupHover={{ opacity: 1 }}
-                        _groupActive={{ opacity: 1 }}
-                        _focusVisible={{ opacity: 1 }}
-                        transition={"opacity 0.15s ease"}
+                    {withStickyMenu && (
+                      <DataListItemActionsTrigger
+                        itemActions={itemActions}
+                        item={item}
                       >
-                        <AppIcon icon={EllipsisIcon} />
-                      </IconButton>
-                    </DataListItemActionsTrigger>
+                        <IconButton
+                          variant={"ghost"}
+                          opacity={isStickyMenuOpen ? 1 : 0}
+                          _groupHover={{ opacity: 1 }}
+                          _groupActive={{ opacity: 1 }}
+                          _focusVisible={{ opacity: 1 }}
+                          transition={"opacity 0.15s ease"}
+                        >
+                          <AppIcon icon={EllipsisIcon} />
+                        </IconButton>
+                      </DataListItemActionsTrigger>
+                    )}
                   </HStack>
                 </Center>
               );

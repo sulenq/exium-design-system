@@ -52,11 +52,11 @@ const MenuContent = (props: MenuContentProps) => {
           borderColor={"border.subtle"}
           shadow={"sm"}
           _open={{
-            animation: "scale-up",
+            animationName: "scale-up",
             animationDuration: "slow",
           }}
           _closed={{
-            animation: "scale-down",
+            animationName: "scale-down",
             animationDuration: "moderate",
           }}
           {...restProps}

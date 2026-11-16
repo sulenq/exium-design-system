@@ -2463,6 +2463,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     component: DataViewTable.Root,
     defaultProps: {
       withNumbering: true,
+      withStickyMenu: false,
       canBatchSelect: true,
       fixedItemHeight: true,
       virtualized: true,
@@ -2507,6 +2508,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         type: "boolean",
         defaultValue: true,
         description: "Tampilkan kolom nomor urut baris data.",
+        controlKind: "boolean",
+      },
+      {
+        name: "withStickyMenu",
+        type: "boolean",
+        defaultValue: false,
+        description:
+          "Tampilkan tombol menu titik tiga (sticky) di sebelah kanan baris.",
         controlKind: "boolean",
       },
       {
@@ -5329,6 +5338,8 @@ const DataTablePlaygroundDemo = ({
   // Props
   const withNumbering =
     props?.withNumbering !== undefined ? Boolean(props.withNumbering) : true;
+  const withStickyMenu =
+    props?.withStickyMenu !== undefined ? Boolean(props.withStickyMenu) : false;
   const canBatchSelect =
     props?.canBatchSelect !== undefined ? Boolean(props.canBatchSelect) : true;
   const fixedItemHeight =
@@ -5418,6 +5429,7 @@ const DataTablePlaygroundDemo = ({
         itemActions={dataList.itemActions}
         batchActions={dataList.batchActions}
         withNumbering={withNumbering}
+        withStickyMenu={withStickyMenu}
         canBatchSelect={canBatchSelect}
         fixedItemHeight={fixedItemHeight}
         page={page}

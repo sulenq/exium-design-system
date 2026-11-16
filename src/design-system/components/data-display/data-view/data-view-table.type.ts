@@ -65,6 +65,7 @@ export type DataViewTableRootProps<
   batchActions?: DataViewBatchActionsGenerator<T>[];
   itemActions?: DataViewItemActionsGenerator<T>[];
   withNumbering?: boolean;
+  withStickyMenu?: boolean;
   virtualized?: boolean;
   fixedItemHeight?: boolean;
   renderTdCell?: (
@@ -127,6 +128,7 @@ export type DataViewTableContextValue<T = Record<string, unknown>> = {
   batchActions?: DataViewBatchActionsGenerator<T>[];
   itemActions?: DataViewItemActionsGenerator<T>[];
   withNumbering?: boolean;
+  withStickyMenu?: boolean;
   virtualized?: boolean;
   fixedItemHeight?: boolean;
   tableContainerRef: import("react").RefObject<HTMLDivElement | null>;
