@@ -20,7 +20,7 @@ import {
   SECONDS_COUNT,
 } from "@/design-system/components/input/utils/time.utils";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { P } from "@/design-system/components/typography/p/p";
@@ -103,13 +103,15 @@ const TimePickerPanel = (props: TimePickerPanelProps) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant={"outline"} onClick={onCancel}>
-          {t["action.cancel"]()}
-        </Button>
+        <VStack gap={2} w={"full"}>
+          <Button primary={true} onClick={handleConfirm}>
+            {t["action.confirm"]()}
+          </Button>
 
-        <Button primary={true} onClick={handleConfirm}>
-          {t["action.confirm"]()}
-        </Button>
+          <Button onClick={onCancel}>
+            {t["action.cancel"]()}
+          </Button>
+        </VStack>
       </Modal.Footer>
     </>
   );

@@ -347,17 +347,23 @@ const FileInputInner = (props: FileinputInnerProps) => {
               alignSelf={"stretch"}
               minH={"180px"}
               p={4}
-              bg={"bg.body"}
+              bg={disabled ? "bg.muted" : "bg.body"}
+              opacity={disabled ? 0.6 : 1}
               border={"2px dashed"}
-              borderColor={dragging ? "fg" : "border"}
+              borderColor={disabled ? "border.subtle" : dragging ? "fg" : "border"}
               rounded={theme.radii.component}
-              cursor={"pointer"}
+              cursor={disabled ? "not-allowed" : "pointer"}
+              pointerEvents={disabled ? "none" : undefined}
               boxSizing={"border-box"}
               flex={isDropzoneFlex ? (dropzoneProps?.flex ?? 1) : undefined}
               h={isDropzoneFlex ? (dropzoneProps?.h ?? "full") : undefined}
-              _hover={{
-                bg: "bg.subtle",
-              }}
+              _hover={
+                disabled
+                  ? undefined
+                  : {
+                      bg: "bg.subtle",
+                    }
+              }
               {...dropzoneProps}
             >
               <FileUpload.DropzoneContent
@@ -374,7 +380,7 @@ const FileInputInner = (props: FileinputInnerProps) => {
                   <AppIcon
                     icon={dragging ? ArrowDownIcon : UploadIcon}
                     size={"lg"}
-                    color={"fg.subtle"}
+                    color={disabled ? "fg.muted" : "fg.subtle"}
                     mb={dragging ? -2 : 0}
                     animation={dragging ? "bounce" : ""}
                   />
@@ -390,14 +396,17 @@ const FileInputInner = (props: FileinputInnerProps) => {
                 </VStack>
 
                 <VStack gap={2} maxW={"360px"}>
-                  <P textAlign={"center"}>
+                  <P
+                    textAlign={"center"}
+                    color={disabled ? "fg.muted" : undefined}
+                  >
                     {dragging ? t["common.drop_it_here"]() : dropzoneText}
                   </P>
 
                   <P
                     fontSize={"xs"}
                     textAlign={"center"}
-                    color={"fg.subtle"}
+                    color={disabled ? "fg.muted" : "fg.subtle"}
                     opacity={dragging ? 0 : 1}
                     transition={"200ms"}
                   >
@@ -420,6 +429,7 @@ const FileInputInner = (props: FileinputInnerProps) => {
                       ? undefined
                       : (dropzoneButtonProps?.variant ?? "outline")
                   }
+                  disabled={disabled}
                   opacity={dragging ? 0 : 1}
                   transition={"200ms"}
                   onClick={openFilePicker}
