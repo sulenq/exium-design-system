@@ -149,6 +149,12 @@ export const DataViewRowContextMenu = <
         shadow={"lg"}
         role={"menu"}
         aria-orientation={"vertical"}
+        animationName={"scale-up"}
+        animationDuration={"fast"}
+        css={{
+          animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+          transformOrigin: "top left",
+        }}
         onContextMenu={(e) => e.preventDefault()}
       >
         <VStack gap={1} align={"stretch"}>

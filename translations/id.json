@@ -140,7 +140,10 @@
     "draw": "Gambar",
     "show_less": "Tampilkan lebih sedikit",
     "back_to_main_page": "Kembali ke halaman utama",
-    "no_actions": "Tidak ada aksi tersedia"
+    "no_actions": "Tidak ada aksi tersedia",
+    "row_action_tooltip_mouse": "Klik kanan untuk buka aksi",
+    "row_action_tooltip_touch": "Hold untuk buka aksi",
+    "row_action_tooltip_dual": "Hold atau klik kanan untuk buka aksi"
   },
   "auth": {
     "signin": {

@@ -141,7 +141,10 @@
     "draw": "Draw",
     "show_less": "Show less",
     "back_to_main_page": "Back to main page",
-    "no_actions": "No actions available"
+    "no_actions": "No actions available",
+    "row_action_tooltip_mouse": "Right click to open actions",
+    "row_action_tooltip_touch": "Hold to open actions",
+    "row_action_tooltip_dual": "Hold or right click to open actions"
   },
   "auth": {
     "signin": {

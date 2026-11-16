@@ -32,13 +32,19 @@ import {
   DataViewStickyActions,
 } from "@/design-system/components/data-display/data-view/data-view-item-actions";
 import { DataViewRowContextMenu } from "@/design-system/components/data-display/data-view/data-view-row-context-menu";
+import { CursorTooltip } from "@/design-system/components/overlay/cursor-tooltip/cursor-tooltip";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Grid } from "@/design-system/components/layout/grid/grid";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
+import { useDeviceCapability } from "@/shared/hooks/use-device-capability";
+import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { tintAlpha } from "@/shared/utils/style/color";
 import { Box, Center } from "@chakra-ui/react";
@@ -473,11 +479,25 @@ const DataListTableRow = memo(
       useDataViewTableContext();
     const { theme } = useThemeStore();
 
+    // Hooks
+    const { inputType } = useDeviceCapability();
+
     // States
     const [contextMenuPoint, setContextMenuPoint] = useState<{
       x: number;
       y: number;
     } | null>(null);
+
+    // Derived Values
+    const hasRowActions = !isEmptyArray(itemActions);
+    const actionTooltipText =
+      inputType === "dual"
+        ? (t["action.row_action_tooltip_dual"]?.() ??
+          "Hold atau klik kanan untuk buka aksi")
+        : inputType === "touch"
+          ? (t["action.row_action_tooltip_touch"]?.() ?? "Hold untuk buka aksi")
+          : (t["action.row_action_tooltip_mouse"]?.() ??
+            "Klik kanan untuk buka aksi");
 
     // Refs
     const touchTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -527,181 +547,219 @@ const DataListTableRow = memo(
       ? tintAlpha(`${theme.colorPalette}.subtle`, 40)
       : "bg.body";
 
+    const cellHoverBg = hasRowActions
+      ? isItemSelected
+        ? tintAlpha(`${theme.colorPalette}.subtle`, 60)
+        : "bg.subtle"
+      : undefined;
+
     return (
       <>
-        <Box
-          ref={measureRef}
-          data-index={dataIndex}
-          role={"row"}
-          display={"grid"}
-          gridTemplateColumns={"subgrid"}
-          gridColumn={"1 / -1"}
-          minW={"full"}
-          minH={"56px"}
-          bg={"bg.body"}
-          borderBottom={"1px solid"}
-          borderColor={"bg.canvas"}
-          transition={"background-color 0.1s ease"}
-          className={"group"}
-          onContextMenu={handleContextMenu}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          _hover={{
-            bg: isItemSelected
-              ? tintAlpha(`${theme.colorPalette}.subtle`, 50)
-              : "bg.subtle",
-          }}
-          {...styleProps}
-        >
-        {canBatchSelect && (
-          <Center
-            pos={"sticky"}
-            left={0}
+        <CursorTooltip content={actionTooltipText} disabled={!hasRowActions}>
+          <Box
+            ref={measureRef}
+            data-index={dataIndex}
+            role={"row"}
+            display={"grid"}
+            gridTemplateColumns={"subgrid"}
+            gridColumn={"1 / -1"}
+            minW={"full"}
+            minH={"56px"}
             bg={"bg.body"}
-            cursor={"pointer"}
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleItemSelection(item);
-            }}
+            borderBottom={"1px solid"}
+            borderColor={"bg.canvas"}
+            transition={"background-color 0.1s ease"}
+            className={"group"}
+            onContextMenu={handleContextMenu}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            _hover={
+              hasRowActions
+                ? {
+                    bg: isItemSelected
+                      ? tintAlpha(`${theme.colorPalette}.subtle`, 50)
+                      : "bg.subtle",
+                  }
+                : undefined
+            }
+            {...styleProps}
           >
-            <Center w={"full"} h={"full"} px={2} bg={cellBg}>
-              <Checkbox
-                size={"sm"}
-                checked={isItemSelected}
-                variant={"subtle"}
-              />
-            </Center>
-          </Center>
-        )}
+            {canBatchSelect && (
+              <Center
+                pos={"sticky"}
+                left={0}
+                bg={"bg.body"}
+                cursor={"pointer"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleItemSelection(item);
+                }}
+              >
+                <Center
+                  w={"full"}
+                  h={"full"}
+                  px={2}
+                  bg={cellBg}
+                  _groupHover={cellHoverBg ? { bg: cellHoverBg } : undefined}
+                  transition={"background-color 0.1s ease"}
+                >
+                  <Checkbox
+                    size={"sm"}
+                    checked={isItemSelected}
+                    variant={"subtle"}
+                  />
+                </Center>
+              </Center>
+            )}
 
-        {withNumbering && (
-          <DataListTableCell bg={cellBg}>
-            <P>
-              {page && pageSize ? index + 1 + (page - 1) * pageSize : index + 1}
-            </P>
-          </DataListTableCell>
-        )}
+            {withNumbering && (
+              <DataListTableCell
+                bg={cellBg}
+                _groupHover={cellHoverBg ? { bg: cellHoverBg } : undefined}
+                transition={"background-color 0.1s ease"}
+              >
+                <P>
+                  {page && pageSize
+                    ? index + 1 + (page - 1) * pageSize
+                    : index + 1}
+                </P>
+              </DataListTableCell>
+            )}
 
-        {/* Main columns */}
-        {item.columns.map((col, colIndex) => (
-          <HStack
-            key={colIndex}
-            align={"center"}
-            justify={col.align}
-            w={"full"}
-            h={"full"}
-            px={4}
-            py={2}
-            opacity={item.dim || col.dim ? 0.5 : 1}
-            whiteSpace={"nowrap"}
-            bg={cellBg}
-            {...col?.cellProps}
-          >
-            {renderTdCell
-              ? renderTdCell(col, item, colIndex)
-              : typeof col.td === "string" || typeof col.td === "number"
-                ? <P>{col.td}</P>
-                : (col.td ?? <P>{String(col.value ?? "-")}</P>)}
-          </HStack>
-        ))}
-
-        {!isEmptyArray(itemActions) && (
-          <>
-            {/* Normal column cell for spread action buttons (only if present) */}
-            {itemActions.some(
-              (action) =>
-                typeof action === "object" &&
-                action !== null &&
-                !("sticky" in action && action.sticky) &&
-                (!("showInRow" in action) || action.showInRow !== false),
-            ) && (
+            {/* Main columns */}
+            {item.columns.map((col, colIndex) => (
               <HStack
-                justify={"end"}
+                key={colIndex}
                 align={"center"}
+                justify={col.align}
                 w={"full"}
                 h={"full"}
                 px={4}
+                py={2}
+                opacity={item.dim || col.dim ? 0.5 : 1}
+                whiteSpace={"nowrap"}
                 bg={cellBg}
-                gap={1}
+                _groupHover={cellHoverBg ? { bg: cellHoverBg } : undefined}
+                transition={"background-color 0.1s ease"}
+                {...col?.cellProps}
               >
-                <DataViewSpreadActions item={item} itemActions={itemActions} />
+                {renderTdCell ? (
+                  renderTdCell(col, item, colIndex)
+                ) : typeof col.td === "string" || typeof col.td === "number" ? (
+                  <P>{col.td}</P>
+                ) : (
+                  (col.td ?? <P>{String(col.value ?? "-")}</P>)
+                )}
               </HStack>
-            )}
+            ))}
 
-            {/* Sticky column cell for sticky menu trigger and sticky actions */}
-            {(() => {
-              const hasStickyActions = itemActions.some(
-                (action) =>
-                  typeof action === "object" &&
-                  action !== null &&
-                  "sticky" in action &&
-                  action.sticky,
-              );
-
-              if (!withStickyMenu && !hasStickyActions) return null;
-
-              return (
-                <Center
-                  pos={"sticky"}
-                  right={0}
-                  zIndex={2}
-                  minW={hasStickyActions ? "68px" : "56px"}
-                  bg={"bg.body"}
-                >
+            {!isEmptyArray(itemActions) && (
+              <>
+                {/* Normal column cell for spread action buttons (only if present) */}
+                {itemActions.some(
+                  (action) =>
+                    typeof action === "object" &&
+                    action !== null &&
+                    !("sticky" in action && action.sticky) &&
+                    (!("showInRow" in action) || action.showInRow !== false),
+                ) && (
                   <HStack
+                    justify={"end"}
+                    align={"center"}
                     w={"full"}
                     h={"full"}
-                    px={hasStickyActions ? undefined : 2}
-                    pl={hasStickyActions ? 4 : undefined}
-                    pr={hasStickyActions ? 2 : undefined}
-                    gap={1}
-                    align={"center"}
-                    justify={hasStickyActions ? "end" : "center"}
+                    px={4}
                     bg={cellBg}
-                    onClick={(e) => e.stopPropagation()}
+                    _groupHover={cellHoverBg ? { bg: cellHoverBg } : undefined}
+                    transition={"background-color 0.1s ease"}
+                    gap={1}
                   >
-                    <DataViewStickyActions
-                      itemActions={itemActions}
+                    <DataViewSpreadActions
                       item={item}
+                      itemActions={itemActions}
                     />
-
-                    {withStickyMenu && (
-                      <DataListItemActionsTrigger
-                        itemActions={itemActions}
-                        item={item}
-                      >
-                        <IconButton
-                          variant={"ghost"}
-                          opacity={isStickyMenuOpen ? 1 : 0}
-                          _groupHover={{ opacity: 1 }}
-                          _groupActive={{ opacity: 1 }}
-                          _focusVisible={{ opacity: 1 }}
-                          transition={"opacity 0.15s ease"}
-                        >
-                          <AppIcon icon={EllipsisIcon} />
-                        </IconButton>
-                      </DataListItemActionsTrigger>
-                    )}
                   </HStack>
-                </Center>
-              );
-            })()}
-          </>
-        )}
-      </Box>
+                )}
 
-      {contextMenuPoint && (
-        <DataViewRowContextMenu
-          item={item}
-          itemActions={itemActions}
-          point={contextMenuPoint}
-          onClose={() => setContextMenuPoint(null)}
-        />
-      )}
-    </>
-  );
-},
+                {/* Sticky column cell for sticky menu trigger and sticky actions */}
+                {(() => {
+                  const hasStickyActions = itemActions.some(
+                    (action) =>
+                      typeof action === "object" &&
+                      action !== null &&
+                      "sticky" in action &&
+                      action.sticky,
+                  );
+
+                  if (!withStickyMenu && !hasStickyActions) return null;
+
+                  return (
+                    <Center
+                      pos={"sticky"}
+                      right={0}
+                      zIndex={2}
+                      minW={hasStickyActions ? "68px" : "56px"}
+                      bg={"bg.body"}
+                    >
+                      <HStack
+                        w={"full"}
+                        h={"full"}
+                        px={hasStickyActions ? undefined : 2}
+                        pl={hasStickyActions ? 4 : undefined}
+                        pr={hasStickyActions ? 2 : undefined}
+                        gap={1}
+                        align={"center"}
+                        justify={hasStickyActions ? "end" : "center"}
+                        bg={cellBg}
+                        _groupHover={
+                          cellHoverBg ? { bg: cellHoverBg } : undefined
+                        }
+                        transition={"background-color 0.1s ease"}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <DataViewStickyActions
+                          itemActions={itemActions}
+                          item={item}
+                        />
+
+                        {withStickyMenu && (
+                          <DataListItemActionsTrigger
+                            itemActions={itemActions}
+                            item={item}
+                          >
+                            <IconButton
+                              variant={"ghost"}
+                              opacity={isStickyMenuOpen ? 1 : 0}
+                              _groupHover={{ opacity: 1 }}
+                              _groupActive={{ opacity: 1 }}
+                              _focusVisible={{ opacity: 1 }}
+                              transition={"opacity 0.15s ease"}
+                            >
+                              <AppIcon icon={EllipsisIcon} />
+                            </IconButton>
+                          </DataListItemActionsTrigger>
+                        )}
+                      </HStack>
+                    </Center>
+                  );
+                })()}
+              </>
+            )}
+          </Box>
+        </CursorTooltip>
+
+        {contextMenuPoint && (
+          <DataViewRowContextMenu
+            item={item}
+            itemActions={itemActions}
+            point={contextMenuPoint}
+            onClose={() => setContextMenuPoint(null)}
+          />
+        )}
+      </>
+    );
+  },
 );
 
 const DataListTableBody = () => {
