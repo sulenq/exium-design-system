@@ -41,6 +41,8 @@ import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-ale
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
 import { DateInput } from "@/design-system/components/input/date-input/date-input";
+import { PhoneInput } from "@/design-system/components/input/phone-input/phone-input";
+import { TimeInput } from "@/design-system/components/input/time-input/time-input";
 import { Field } from "@/design-system/components/input/field/field";
 import { FileInput } from "@/design-system/components/input/file-input/file-input";
 import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
@@ -68,6 +70,11 @@ import {
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { Separator } from "@/design-system/components/layout/separator/separator";
 import { Avatar } from "@/design-system/components/media/avatar/avatar";
+import { QrCode } from "@/design-system/components/media/qr-code/qr-code";
+import type {
+  QrCodeErrorCorrection,
+  QrCodeSize,
+} from "@/design-system/components/media/qr-code/qr-code.type";
 import { Image } from "@/design-system/components/media/image/image";
 import { ExternalLink } from "@/design-system/components/navigation/link/link";
 import { Sidebar } from "@/design-system/components/navigation/sidebar/sidebar";
@@ -80,6 +87,7 @@ import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
+import { ChecklistModal } from "@/design-system/components/overlay/checklist-modal/checklist-modal";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { toast } from "@/design-system/components/toast";
@@ -1550,6 +1558,205 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           datePickerSubtitle={String(
             props.datePickerSubtitle || "Pilih tanggal jadwal",
           )}
+        />
+      </Box>
+    ),
+  },
+
+  phone_input: {
+    key: "phone_input",
+    title: "Phone Input",
+    category: "Form Inputs",
+    description:
+      "Input nomor telepon dengan prefix kode negara yang terkunci. Nilai yang dihasilkan selalu berformat E.164 (+628123456789).",
+    importPath:
+      'import { PhoneInput } from "@/design-system/components/input/phone-input/phone-input";',
+    component: PhoneInput,
+    defaultProps: {
+      defaultCountry: "ID",
+      countryLocked: false,
+      stripLeadingZero: true,
+      disabled: false,
+    },
+    propsSpec: [
+      {
+        name: "country",
+        type: "string",
+        defaultValue: undefined,
+        description:
+          "Negara terkontrol (ISO alpha-2), menentukan prefix kode negara. Pasangkan dengan onCountryChange.",
+      },
+      {
+        name: "defaultCountry",
+        type: "string",
+        defaultValue: "ID",
+        description: "Negara awal (ISO alpha-2) untuk mode uncontrolled.",
+        controlKind: "select",
+        options: ["ID", "MY", "SG", "US", "GB", "JP"],
+      },
+      {
+        name: "countries",
+        type: "string[]",
+        defaultValue: undefined,
+        description: "Whitelist dan urutan negara yang bisa dipilih.",
+      },
+      {
+        name: "countryLocked",
+        type: "boolean",
+        defaultValue: false,
+        description:
+          "Menampilkan negara sebagai prefix statis tanpa pemilih negara.",
+        controlKind: "boolean",
+      },
+      {
+        name: "stripLeadingZero",
+        type: "boolean",
+        defaultValue: true,
+        description: "Membuang angka 0 di depan nomor (0812 menjadi 812).",
+        controlKind: "boolean",
+      },
+      {
+        name: "value / defaultValue",
+        type: "string",
+        defaultValue: undefined,
+        description: "Nilai E.164. String kosong bila nomor belum diisi.",
+      },
+      {
+        name: "onValueChange",
+        type: "(details: { value, country, dialCode, nationalNumber }) => void",
+        defaultValue: undefined,
+        description: "Dipanggil setiap nomor atau negara berubah.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: false,
+        description: "Menonaktifkan input dan pemilih negara.",
+        controlKind: "boolean",
+      },
+    ],
+    a11y: {
+      keyboardNav: [
+        { key: "Tab", action: "Pindah dari pemilih negara ke kolom nomor." },
+        {
+          key: "Enter / Space",
+          action: "Membuka daftar negara saat fokus di pemilih negara.",
+        },
+      ],
+      notes:
+        "Prefix kode negara bukan bagian dari teks yang bisa diedit, sehingga tidak bisa terhapus. Menempel nomor internasional lengkap (+62...) otomatis memisahkan kode negaranya.",
+    },
+    renderPlayground: (props) => (
+      <Box w={"320px"}>
+        <PhoneInput
+          key={String(props.defaultCountry)}
+          modalKey={"docs-phone-input"}
+          defaultCountry={String(props.defaultCountry || "ID")}
+          countryLocked={Boolean(props.countryLocked)}
+          stripLeadingZero={Boolean(props.stripLeadingZero)}
+          disabled={Boolean(props.disabled)}
+          placeholder={"8123456789"}
+        />
+      </Box>
+    ),
+  },
+
+  time_input: {
+    key: "time_input",
+    title: "Time Input",
+    category: "Form Inputs",
+    description:
+      "Input waktu 24 jam. Trigger membuka modal berisi roda angka vertikal untuk jam, menit, dan detik; nilai baru tersimpan setelah dikonfirmasi.",
+    importPath:
+      'import { TimeInput } from "@/design-system/components/input/time-input/time-input";',
+    component: TimeInput,
+    defaultProps: {
+      withSeconds: true,
+      minuteStep: 1,
+      secondStep: 1,
+      disabled: false,
+    },
+    propsSpec: [
+      {
+        name: "modalKey",
+        type: "string",
+        required: true,
+        defaultValue: undefined,
+        description: "Key unik modal, tersinkron dengan URL param overlay.",
+      },
+      {
+        name: "value / defaultValue",
+        type: "string | null",
+        defaultValue: undefined,
+        description: 'Waktu berformat "HH:mm:ss" (atau "HH:mm" tanpa detik).',
+      },
+      {
+        name: "onValueChange",
+        type: "(value: string | null) => void",
+        defaultValue: undefined,
+        description: "Dipanggil saat pengguna menekan tombol konfirmasi.",
+      },
+      {
+        name: "withSeconds",
+        type: "boolean",
+        defaultValue: true,
+        description: "Menampilkan kolom detik.",
+        controlKind: "boolean",
+      },
+      {
+        name: "minuteStep",
+        type: "number",
+        defaultValue: 1,
+        description: "Interval pilihan menit.",
+        controlKind: "select",
+        options: [1, 5, 10, 15, 30],
+      },
+      {
+        name: "secondStep",
+        type: "number",
+        defaultValue: 1,
+        description: "Interval pilihan detik.",
+        controlKind: "select",
+        options: [1, 5, 10, 15, 30],
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        defaultValue: undefined,
+        description: "Trigger kustom pengganti trigger bawaan.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        defaultValue: false,
+        description: "Menonaktifkan trigger.",
+        controlKind: "boolean",
+      },
+    ],
+    a11y: {
+      role: "spinbutton (tiap kolom)",
+      keyboardNav: [
+        { key: "ArrowUp / ArrowDown", action: "Mengubah nilai satu langkah." },
+        { key: "PageUp / PageDown", action: "Mengubah nilai lima langkah." },
+        { key: "Home / End", action: "Lompat ke nilai pertama atau terakhir." },
+        {
+          key: "0-9",
+          action: "Mengetik angka untuk lompat ke nilai terdekat.",
+        },
+        { key: "Tab", action: "Pindah antar kolom lalu ke tombol footer." },
+      ],
+      notes:
+        "Menutup modal tanpa konfirmasi (Batal, Esc, klik luar) membuang perubahan.",
+    },
+    renderPlayground: (props) => (
+      <Box w={"280px"}>
+        <TimeInput
+          modalKey={"docs-time-input"}
+          defaultValue={"09:30:00"}
+          withSeconds={Boolean(props.withSeconds)}
+          minuteStep={Number(props.minuteStep) || 1}
+          secondStep={Number(props.secondStep) || 1}
+          disabled={Boolean(props.disabled)}
         />
       </Box>
     ),
@@ -3148,6 +3355,86 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ),
   },
 
+  checklist_modal: {
+    key: "checklist_modal",
+    title: "Checklist Modal",
+    category: "Overlays & Modals",
+    description:
+      "Modal berisi daftar centang. Tombol konfirmasi baru aktif setelah semua item wajib dicentang.",
+    importPath:
+      'import { ChecklistModal } from "@/design-system/components/overlay/checklist-modal/checklist-modal";',
+    component: ChecklistModal,
+    defaultProps: {
+      size: "sm",
+    },
+    propsSpec: [
+      {
+        name: "modalKey",
+        type: "string",
+        required: true,
+        defaultValue: undefined,
+        description: "Key unik modal, tersinkron dengan URL param overlay.",
+      },
+      {
+        name: "title",
+        type: "string",
+        required: true,
+        defaultValue: undefined,
+        description: "Judul modal.",
+      },
+      {
+        name: "items",
+        type: "{ id: string; label: string; description?: string; optional?: boolean }[]",
+        required: true,
+        defaultValue: undefined,
+        description:
+          "Daftar item. Item optional tidak menahan tombol konfirmasi.",
+      },
+      {
+        name: "defaultCheckedIds",
+        type: "string[]",
+        defaultValue: undefined,
+        description: "Item yang sudah tercentang saat modal dibuka.",
+      },
+      {
+        name: "onConfirm",
+        type: "(checkedIds: string[]) => void | Promise<void>",
+        required: true,
+        defaultValue: undefined,
+        description:
+          "Dipanggil dengan id yang dicentang. Modal menutup setelah selesai; lempar error untuk menahannya tetap terbuka.",
+      },
+      {
+        name: "size",
+        type: '"xs" | "sm" | "md" | "lg"',
+        defaultValue: "sm",
+        description: "Lebar modal pada mode dialog desktop.",
+        controlKind: "select",
+        options: ["xs", "sm", "md", "lg"],
+      },
+    ],
+    renderPlayground: (props) => (
+      <ChecklistModal
+        modalKey={"docs-checklist-modal"}
+        title={"Sebelum publikasi"}
+        description={"Pastikan semua poin berikut sudah terpenuhi."}
+        size={(props.size as "xs" | "sm" | "md" | "lg") || "sm"}
+        items={[
+          { id: "review", label: "Konten sudah direview" },
+          {
+            id: "backup",
+            label: "Backup data sudah dibuat",
+            description: "Backup terakhir tidak lebih dari 24 jam.",
+          },
+          { id: "notify", label: "Tim sudah diberi tahu", optional: true },
+        ]}
+        onConfirm={() => undefined}
+      >
+        <Button variant={"outline"}>{"Buka checklist"}</Button>
+      </ChecklistModal>
+    ),
+  },
+
   box: {
     key: "box",
     title: "Box",
@@ -3735,6 +4022,79 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       <ExternalLink href={String(props.href || "https://youtube.com")}>
         {String(props.children || "Youtube")}
       </ExternalLink>
+    ),
+  },
+
+  qr_code: {
+    key: "qr_code",
+    title: "QR Code",
+    category: "Media & Icons",
+    description:
+      "Kode QR dari teks atau URL. Selalu dirender gelap di atas putih agar tetap terbaca pemindai pada dark mode.",
+    importPath:
+      'import { QrCode } from "@/design-system/components/media/qr-code/qr-code";',
+    component: QrCode,
+    defaultProps: {
+      value: "https://exium-docs.vercel.app",
+      size: "md",
+      errorCorrection: "M",
+      downloadable: false,
+    },
+    propsSpec: [
+      {
+        name: "value",
+        type: "string",
+        required: true,
+        defaultValue: undefined,
+        description: "Teks atau URL yang dikodekan.",
+        controlKind: "text",
+      },
+      {
+        name: "size",
+        type: '"2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"',
+        defaultValue: "md",
+        description: "Ukuran kode QR.",
+        controlKind: "select",
+        options: ["2xs", "xs", "sm", "md", "lg", "xl", "2xl"],
+      },
+      {
+        name: "errorCorrection",
+        type: '"L" | "M" | "Q" | "H"',
+        defaultValue: "M",
+        description:
+          "Tingkat koreksi error (L 7%, M 15%, Q 25%, H 30%). Otomatis H bila overlay dipakai.",
+        controlKind: "select",
+        options: ["L", "M", "Q", "H"],
+      },
+      {
+        name: "overlay",
+        type: "ReactNode",
+        defaultValue: undefined,
+        description: "Elemen kecil di tengah kode, misalnya logo.",
+      },
+      {
+        name: "downloadable",
+        type: "boolean",
+        defaultValue: false,
+        description: "Menampilkan tombol unduh PNG di bawah kode.",
+        controlKind: "boolean",
+      },
+      {
+        name: "downloadFileName",
+        type: "string",
+        defaultValue: "qr-code.png",
+        description: "Nama file hasil unduhan.",
+      },
+    ],
+    renderPlayground: (props) => (
+      <QrCode
+        value={String(props.value || "https://exium-docs.vercel.app")}
+        size={(props.size as QrCodeSize) || "md"}
+        errorCorrection={
+          (props.errorCorrection as QrCodeErrorCorrection) || "M"
+        }
+        downloadable={Boolean(props.downloadable)}
+      />
     ),
   },
 
