@@ -174,7 +174,10 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
     const target = element ?? iconFallback;
     if (!target) return null;
     if (isValidElement(target)) return target;
-    if (typeof target === "function") {
+    if (
+      typeof target === "function" ||
+      (typeof target === "object" && target !== null && "render" in target)
+    ) {
       const Component = target as React.ComponentType;
       return <AppIcon icon={Component} size={fallbackIconSize} />;
     }
