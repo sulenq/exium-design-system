@@ -466,26 +466,32 @@ const DataListTableRow = memo(
       : "bg.body";
 
     return (
-      <Box
-        ref={measureRef}
-        data-index={dataIndex}
-        role={"row"}
-        display={"grid"}
-        gridTemplateColumns={"subgrid"}
-        gridColumn={"1 / -1"}
-        minW={"full"}
-        minH={"56px"}
-        bg={"bg.body"}
-        borderBottom={"1px solid"}
-        borderColor={"bg.canvas"}
-        transition={"background-color 0.1s ease"}
-        _hover={{
-          bg: isItemSelected
-            ? tintAlpha(`${theme.colorPalette}.subtle`, 50)
-            : "bg.subtle",
-        }}
-        {...styleProps}
+      <DataListItemActionsTrigger
+        itemActions={itemActions}
+        item={item}
+        contextedTrigger={true}
       >
+        <Box
+          ref={measureRef}
+          data-index={dataIndex}
+          role={"row"}
+          display={"grid"}
+          gridTemplateColumns={"subgrid"}
+          gridColumn={"1 / -1"}
+          minW={"full"}
+          minH={"56px"}
+          bg={"bg.body"}
+          borderBottom={"1px solid"}
+          borderColor={"bg.canvas"}
+          transition={"background-color 0.1s ease"}
+          className={"group"}
+          _hover={{
+            bg: isItemSelected
+              ? tintAlpha(`${theme.colorPalette}.subtle`, 50)
+              : "bg.subtle",
+          }}
+          {...styleProps}
+        >
         {canBatchSelect && (
           <Center
             pos={"sticky"}
@@ -600,7 +606,14 @@ const DataListTableRow = memo(
                       itemActions={itemActions}
                       item={item}
                     >
-                      <IconButton variant={"ghost"}>
+                      <IconButton
+                        variant={"ghost"}
+                        opacity={0}
+                        _groupHover={{ opacity: 1 }}
+                        _groupActive={{ opacity: 1 }}
+                        _focusVisible={{ opacity: 1 }}
+                        transition={"opacity 0.15s ease"}
+                      >
                         <AppIcon icon={EllipsisIcon} />
                       </IconButton>
                     </DataListItemActionsTrigger>
@@ -611,8 +624,9 @@ const DataListTableRow = memo(
           </>
         )}
       </Box>
-    );
-  },
+    </DataListItemActionsTrigger>
+  );
+},
 );
 
 const DataListTableBody = () => {
