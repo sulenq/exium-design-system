@@ -1385,7 +1385,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       const szProp =
         props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
-      return `<RadioCardInput.Root defaultValue={"standard"}${cpProp}${szProp}${disProp} w={"full"}>\n  <HStack gap={3} w={"full"}>\n    <RadioCardInput.Item value={"standard"} flex={1} p={3}>\n      <RadioCardInput.ItemControl justifyContent={"space-between"}>\n        <RadioCardInput.ItemText>\n          <P fontWeight={"semibold"} fontSize={"sm"}>{"Standard"}</P>\n          <P fontSize={"xs"} color={"fg.muted"}>{"Fitur esensial"}</P>\n        </RadioCardInput.ItemText>\n        <RadioCardInput.ItemIndicator />\n      </RadioCardInput.ItemControl>\n    </RadioCardInput.Item>\n    <RadioCardInput.Item value={"pro"} flex={1} p={3}>\n      <RadioCardInput.ItemControl justifyContent={"space-between"}>\n        <RadioCardInput.ItemText>\n          <P fontWeight={"semibold"} fontSize={"sm"}>{"Enterprise"}</P>\n          <P fontSize={"xs"} color={"fg.muted"}>{"Akses menyeluruh"}</P>\n        </RadioCardInput.ItemText>\n        <RadioCardInput.ItemIndicator />\n      </RadioCardInput.ItemControl>\n    </RadioCardInput.Item>\n  </HStack>\n</RadioCardInput.Root>`;
+      return `<RadioCardInput.Root defaultValue={"standard"}${cpProp}${szProp}${disProp} w={"full"}>\n  <HStack gap={3} w={"full"}>\n    <RadioCardInput.Item value={"standard"} flex={1}>\n      <RadioCardInput.ItemControl p={4} justifyContent={"space-between"}>\n        <RadioCardInput.ItemText>\n          <P fontWeight={"semibold"} fontSize={"sm"}>{"Standard"}</P>\n          <P fontSize={"xs"} color={"fg.muted"}>{"Fitur esensial"}</P>\n        </RadioCardInput.ItemText>\n        <RadioCardInput.ItemIndicator />\n      </RadioCardInput.ItemControl>\n    </RadioCardInput.Item>\n    <RadioCardInput.Item value={"pro"} flex={1}>\n      <RadioCardInput.ItemControl p={4} justifyContent={"space-between"}>\n        <RadioCardInput.ItemText>\n          <P fontWeight={"semibold"} fontSize={"sm"}>{"Enterprise"}</P>\n          <P fontSize={"xs"} color={"fg.muted"}>{"Akses menyeluruh"}</P>\n        </RadioCardInput.ItemText>\n        <RadioCardInput.ItemIndicator />\n      </RadioCardInput.ItemControl>\n    </RadioCardInput.Item>\n  </HStack>\n</RadioCardInput.Root>`;
     },
     renderPlayground: (props) => (
       <RadioCardInput.Root
@@ -1397,8 +1397,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         w={"full"}
       >
         <HStack gap={3} w={"full"}>
-          <RadioCardInput.Item value={"standard"} flex={1} p={3}>
-            <RadioCardInput.ItemControl justifyContent={"space-between"}>
+          <RadioCardInput.Item value={"standard"} flex={1}>
+            <RadioCardInput.ItemControl p={4} justifyContent={"space-between"}>
               <RadioCardInput.ItemText>
                 <P fontWeight={"semibold"} fontSize={"sm"}>
                   {"Standard"}
@@ -1410,8 +1410,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
               <RadioCardInput.ItemIndicator />
             </RadioCardInput.ItemControl>
           </RadioCardInput.Item>
-          <RadioCardInput.Item value={"pro"} flex={1} p={3}>
-            <RadioCardInput.ItemControl justifyContent={"space-between"}>
+          <RadioCardInput.Item value={"pro"} flex={1}>
+            <RadioCardInput.ItemControl p={4} justifyContent={"space-between"}>
               <RadioCardInput.ItemText>
                 <P fontWeight={"semibold"} fontSize={"sm"}>
                   {"Enterprise"}
