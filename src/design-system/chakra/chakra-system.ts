@@ -7,6 +7,7 @@ import { checkboxRecipe } from "@/design-system/chakra/slot-recipes/checkbox.rec
 import { dialogRecipe } from "@/design-system/chakra/slot-recipes/dialog.recipe";
 import { drawerRecipe } from "@/design-system/chakra/slot-recipes/drawer.recipe";
 import { selectRecipe } from "@/design-system/chakra/slot-recipes/select.recipe";
+import { stepsRecipe } from "@/design-system/chakra/slot-recipes/steps.recipe";
 import {
   DIALOG_OFFSET_X_VAR,
   DIALOG_OFFSET_Y_VAR,
@@ -2675,6 +2676,7 @@ export const chakraConfig = defineConfig({
       dialog: dialogRecipe,
       drawer: drawerRecipe,
       carousel: carouselRecipe,
+      steps: stepsRecipe,
     },
   },
 });
