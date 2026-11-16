@@ -45,7 +45,7 @@ export function executeItemAction<T = Record<string, unknown>>(
   void action.onClick?.(item.data, item);
 }
 
-function resolveLoading<T>(
+export function resolveLoading<T>(
   loadingProp:
     | boolean
     | ((item: T, formattedItem: FormattedListItem<T>) => boolean)
@@ -59,7 +59,7 @@ function resolveLoading<T>(
   return Boolean(loadingProp);
 }
 
-function resolveBoolean<T>(
+export function resolveBoolean<T>(
   boolProp:
     | boolean
     | ((item: T, formattedItem: FormattedListItem<T>) => boolean)
@@ -73,7 +73,7 @@ function resolveBoolean<T>(
   return Boolean(boolProp);
 }
 
-function resolveIcon<T>(
+export function resolveIcon<T>(
   iconProp: ActionIconType | ((item: T) => ActionIconType) | undefined,
   item: T,
 ): ActionIconType | undefined {
@@ -83,7 +83,7 @@ function resolveIcon<T>(
   return iconProp;
 }
 
-function resolveLabel<T>(
+export function resolveLabel<T>(
   labelProp: string | ((item: T) => string),
   item: T,
 ): string {
@@ -93,7 +93,7 @@ function resolveLabel<T>(
   return labelProp;
 }
 
-function resolveDisabledMessage<T>(
+export function resolveDisabledMessage<T>(
   disabledMessageProp:
     | string
     | ((item: T, formattedItem: FormattedListItem<T>) => string | undefined)
@@ -109,7 +109,7 @@ function resolveDisabledMessage<T>(
   return disabledMessageProp;
 }
 
-function resolveTooltip<T>(
+export function resolveTooltip<T>(
   tooltipProp:
     | string
     | ((item: T) => string | undefined | null)
@@ -126,7 +126,7 @@ function resolveTooltip<T>(
   return tooltipProp ?? fallbackLabel;
 }
 
-function resolveColorPalette<T>(
+export function resolveColorPalette<T>(
   paletteProp: string | ((item: T) => string | undefined) | undefined,
   item: T,
 ): string | undefined {
@@ -136,7 +136,7 @@ function resolveColorPalette<T>(
   return paletteProp;
 }
 
-function resolveHref<T>(
+export function resolveHref<T>(
   hrefProp: DataViewDeclarativeItemAction<T>["href"],
   item: T,
   formattedItem: FormattedListItem<T>,
@@ -148,13 +148,13 @@ function resolveHref<T>(
   return hrefProp ?? undefined;
 }
 
-function renderIcon(icon: ActionIconType | undefined) {
+export function renderIcon(icon: ActionIconType | undefined) {
   if (!icon) return null;
   if (isValidElement(icon)) return icon;
   return <AppIcon icon={icon as ComponentType} />;
 }
 
-function resolveTriggerElement<T>(
+export function resolveTriggerElement<T>(
   modalProp: DataViewDeclarativeItemAction<T>["modal"],
   item: FormattedListItem<T>,
 ): ReactElement<{ children?: ReactNode }> | null {
@@ -489,14 +489,13 @@ export const DataListItemActionsTrigger = <
     return true;
   });
 
-  const triggerId = contextedTrigger ? `${item.id}-context` : item.id;
   const isMenuOpen = tableContext?.setActiveItemMenuId
-    ? tableContext.activeItemMenuId === triggerId
+    ? tableContext.activeItemMenuId === item.id
     : undefined;
 
   const handleOpenChange = (details: { open: boolean }) => {
     if (tableContext?.setActiveItemMenuId) {
-      tableContext.setActiveItemMenuId(details.open ? triggerId : null);
+      tableContext.setActiveItemMenuId(details.open ? item.id : null);
     }
     restProps.onOpenChange?.(details);
   };

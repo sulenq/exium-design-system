@@ -31,6 +31,7 @@ import {
   DataViewSpreadActions,
   DataViewStickyActions,
 } from "@/design-system/components/data-display/data-view/data-view-item-actions";
+import { DataViewRowContextMenu } from "@/design-system/components/data-display/data-view/data-view-row-context-menu";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
@@ -458,19 +459,66 @@ const DataListTableRow = memo(
     styleProps,
   }: DataViewTableRowProps) => {
     // Contexts & Stores
-    const { page, pageSize, renderTdCell } = useDataViewTableContext();
+    const { page, pageSize, renderTdCell, activeItemMenuId } =
+      useDataViewTableContext();
     const { theme } = useThemeStore();
 
+    // States
+    const [contextMenuPoint, setContextMenuPoint] = useState<{
+      x: number;
+      y: number;
+    } | null>(null);
+
+    // Refs
+    const touchTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const touchStartPointRef = useRef<{ x: number; y: number } | null>(null);
+
+    // Handlers
+    const handleContextMenu = (e: React.MouseEvent) => {
+      if (isEmptyArray(itemActions)) return;
+      e.preventDefault();
+      setContextMenuPoint({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+      if (isEmptyArray(itemActions)) return;
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      touchStartPointRef.current = { x: touch.clientX, y: touch.clientY };
+
+      if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
+      touchTimerRef.current = setTimeout(() => {
+        setContextMenuPoint({ x: touch.clientX, y: touch.clientY });
+      }, 500);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+      if (!touchStartPointRef.current || !touchTimerRef.current) return;
+      const touch = e.touches[0];
+      const deltaX = Math.abs(touch.clientX - touchStartPointRef.current.x);
+      const deltaY = Math.abs(touch.clientY - touchStartPointRef.current.y);
+
+      // Cancel long press on movement > 10px
+      if (deltaX > 10 || deltaY > 10) {
+        clearTimeout(touchTimerRef.current);
+        touchTimerRef.current = null;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (touchTimerRef.current) {
+        clearTimeout(touchTimerRef.current);
+        touchTimerRef.current = null;
+      }
+    };
+
+    const isStickyMenuOpen = activeItemMenuId === item.id;
     const cellBg = isItemSelected
       ? tintAlpha(`${theme.colorPalette}.subtle`, 40)
       : "bg.body";
 
     return (
-      <DataListItemActionsTrigger
-        itemActions={itemActions}
-        item={item}
-        contextedTrigger={true}
-      >
+      <>
         <Box
           ref={measureRef}
           data-index={dataIndex}
@@ -485,6 +533,10 @@ const DataListTableRow = memo(
           borderColor={"bg.canvas"}
           transition={"background-color 0.1s ease"}
           className={"group"}
+          onContextMenu={handleContextMenu}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
           _hover={{
             bg: isItemSelected
               ? tintAlpha(`${theme.colorPalette}.subtle`, 50)
@@ -608,7 +660,7 @@ const DataListTableRow = memo(
                     >
                       <IconButton
                         variant={"ghost"}
-                        opacity={0}
+                        opacity={isStickyMenuOpen ? 1 : 0}
                         _groupHover={{ opacity: 1 }}
                         _groupActive={{ opacity: 1 }}
                         _focusVisible={{ opacity: 1 }}
@@ -624,7 +676,16 @@ const DataListTableRow = memo(
           </>
         )}
       </Box>
-    </DataListItemActionsTrigger>
+
+      {contextMenuPoint && (
+        <DataViewRowContextMenu
+          item={item}
+          itemActions={itemActions}
+          point={contextMenuPoint}
+          onClose={() => setContextMenuPoint(null)}
+        />
+      )}
+    </>
   );
 },
 );
