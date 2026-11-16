@@ -90,6 +90,8 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "field" },
           { key: "file_input" },
           { key: "date_input" },
+          { key: "time_input" },
+          { key: "phone_input" },
         ],
       },
       {
@@ -130,6 +132,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_overlay",
         children: [
           { key: "modal" },
+          { key: "checklist_modal" },
           { key: "dialog" },
           { key: "drawer" },
           { key: "popover" },
@@ -154,7 +157,12 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
       },
       {
         key: "cat_media",
-        children: [{ key: "avatar" }, { key: "image" }, { key: "app_icon" }],
+        children: [
+          { key: "avatar" },
+          { key: "image" },
+          { key: "qr_code" },
+          { key: "app_icon" },
+        ],
       },
       {
         key: "cat_utilities",
