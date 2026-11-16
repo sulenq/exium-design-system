@@ -16,8 +16,8 @@ import {
 } from "@chakra-ui/react";
 
 const shineAnimationProps = {
-  "--animate-from": "-100%",
-  "--animate-to": "100%",
+  "--animate-from": "-200%",
+  "--animate-to": "200%",
   backgroundImage: {
     _light:
       "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.95) 50%, transparent 100%)",
@@ -26,7 +26,7 @@ const shineAnimationProps = {
   },
   backgroundSize: "200% 100%",
   backgroundRepeat: "no-repeat",
-  animation: "bg-position 1.5s ease-in-out infinite",
+  animation: "bg-position 1.8s ease-in-out infinite",
 };
 
 export const Skeleton = (props: SkeletonProps) => {
