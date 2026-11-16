@@ -9,7 +9,6 @@ import SelectInput from "@/design-system/components/input/select/select";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { Portal } from "@/design-system/components/utilities/portal/portal";
 import type { IconButtonProps } from "@chakra-ui/react";
 import { ColorSwatch } from "@chakra-ui/react";
 import "@tiptap/extension-font-family";
@@ -204,41 +203,37 @@ export function createSwatchControl(config: SwatchControlConfig) {
             </Popover.Trigger>
           </Tooltip>
 
-          <Portal>
-            <Popover.Positioner>
-              <Popover.Content width={"auto"}>
-                <Popover.Body p={2}>
-                  <HStack align={"center"} wrap={"wrap"} gap={1}>
-                    {swatches.map((swatch) => (
-                      <ColorSwatch
-                        key={swatch.value}
-                        cursor="button"
-                        value={swatch.color}
-                        onClick={() => {
-                          command(editor, swatch.value);
-                          setOpen(false);
-                        }}
-                      />
-                    ))}
+          <Popover.Content width={"auto"}>
+            <Popover.Body p={2}>
+              <HStack align={"center"} wrap={"wrap"} gap={1}>
+                {swatches.map((swatch) => (
+                  <ColorSwatch
+                    key={swatch.value}
+                    cursor="button"
+                    value={swatch.color}
+                    onClick={() => {
+                      command(editor, swatch.value);
+                      setOpen(false);
+                    }}
+                  />
+                ))}
 
-                    {showRemove && onRemove && (
-                      <Popover.CloseTrigger asChild pos={"static"}>
-                        <IconButton
-                          size={"2xs"}
-                          onClick={() => {
-                            onRemove(editor);
-                            setOpen(false);
-                          }}
-                        >
-                          <AppIcon icon={EraserIcon} />
-                        </IconButton>
-                      </Popover.CloseTrigger>
-                    )}
-                  </HStack>
-                </Popover.Body>
-              </Popover.Content>
-            </Popover.Positioner>
-          </Portal>
+                {showRemove && onRemove && (
+                  <Popover.CloseTrigger asChild pos={"static"}>
+                    <IconButton
+                      size={"2xs"}
+                      onClick={() => {
+                        onRemove(editor);
+                        setOpen(false);
+                      }}
+                    >
+                      <AppIcon icon={EraserIcon} />
+                    </IconButton>
+                  </Popover.CloseTrigger>
+                )}
+              </HStack>
+            </Popover.Body>
+          </Popover.Content>
         </Popover.Root>
       );
     },

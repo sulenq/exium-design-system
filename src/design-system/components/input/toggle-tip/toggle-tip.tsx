@@ -7,7 +7,6 @@ import type {
   ToggleTipProps,
 } from "@/design-system/components/input/toggle-tip/toggle-tip.type";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
-import { Portal } from "@/design-system/components/utilities/portal/portal";
 import { InfoIcon } from "lucide-react";
 import * as React from "react";
 
@@ -27,26 +26,24 @@ export const ToggleTip = React.forwardRef<HTMLDivElement, ToggleTipProps>(
       <Popover.Root {...rest} positioning={{ ...rest.positioning, gutter: 4 }}>
         <Popover.Trigger asChild>{children}</Popover.Trigger>
 
-        <Portal disabled={!portalled} container={portalRef}>
-          <Popover.Positioner>
-            <Popover.Content
-              width={"auto"}
-              px={"2"}
-              py={"1"}
-              textStyle={"xs"}
-              rounded={"sm"}
-              ref={ref}
-              {...contentProps}
-            >
-              {showArrow && (
-                <Popover.Arrow>
-                  <Popover.ArrowTip />
-                </Popover.Arrow>
-              )}
-              {content}
-            </Popover.Content>
-          </Popover.Positioner>
-        </Portal>
+        <Popover.Content
+          portalled={portalled}
+          portalRef={portalRef}
+          width={"auto"}
+          px={"2"}
+          py={"1"}
+          textStyle={"xs"}
+          rounded={"sm"}
+          ref={ref}
+          {...contentProps}
+        >
+          {showArrow && (
+            <Popover.Arrow>
+              <Popover.ArrowTip />
+            </Popover.Arrow>
+          )}
+          {content}
+        </Popover.Content>
       </Popover.Root>
     );
   },

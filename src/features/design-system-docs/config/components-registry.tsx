@@ -2992,18 +2992,16 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         <Popover.Trigger asChild>
           <Button variant={"outline"}>Klik Popover</Button>
         </Popover.Trigger>
-        <Popover.Positioner>
-          <Popover.Content p={4} maxW={"260px"}>
-            <Popover.Header>
-              <P fontWeight={"bold"}>Detail Info</P>
-            </Popover.Header>
-            <Popover.Body>
-              <P fontSize={"sm"} color={"fg.muted"}>
-                Ini adalah konten informasi di dalam Popover floating box.
-              </P>
-            </Popover.Body>
-          </Popover.Content>
-        </Popover.Positioner>
+        <Popover.Content p={4} maxW={"260px"}>
+          <Popover.Header>
+            <P fontWeight={"bold"}>Detail Info</P>
+          </Popover.Header>
+          <Popover.Body>
+            <P fontSize={"sm"} color={"fg.muted"}>
+              Ini adalah konten informasi di dalam Popover floating box.
+            </P>
+          </Popover.Body>
+        </Popover.Content>
       </Popover.Root>
     ),
   },
