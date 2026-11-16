@@ -704,9 +704,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Masukkan teks..."}';
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
-      const mlProp = props.maxLength && props.maxLength !== 20 ? ` maxLength={${props.maxLength}}` : "";
+      const phProp = props.placeholder
+        ? ` placeholder={"${props.placeholder}"}`
+        : ' placeholder={"Masukkan teks..."}';
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const mlProp =
+        props.maxLength && props.maxLength !== 20
+          ? ` maxLength={${props.maxLength}}`
+          : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<Input${phProp}${szProp}${mlProp}${disProp} />`;
     },
@@ -880,10 +886,18 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     generateCode: (props) => {
       const val = props.value !== undefined ? props.value : 10;
-      const minProp = props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
-      const maxProp = props.max !== undefined && props.max !== 100 ? ` max={${props.max}}` : "";
-      const stepProp = props.step !== undefined && props.step !== 1 ? ` step={${props.step}}` : "";
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const minProp =
+        props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
+      const maxProp =
+        props.max !== undefined && props.max !== 100
+          ? ` max={${props.max}}`
+          : "";
+      const stepProp =
+        props.step !== undefined && props.step !== 1
+          ? ` step={${props.step}}`
+          : "";
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<NumberInput\n  value={"${val}"}${minProp}${maxProp}${stepProp}${szProp}${disProp}\n  onValueChange={(details) => console.log(details.value)}\n/>`;
     },
@@ -941,8 +955,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Masukkan kata sandi..."}';
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const phProp = props.placeholder
+        ? ` placeholder={"${props.placeholder}"}`
+        : ' placeholder={"Masukkan kata sandi..."}';
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<PasswordInput${phProp}${szProp}${disProp} />`;
     },
@@ -992,8 +1009,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Pilih opsi..."}';
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const phProp = props.placeholder
+        ? ` placeholder={"${props.placeholder}"}`
+        : ' placeholder={"Pilih opsi..."}';
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<SelectInput${phProp}${szProp}${disProp}\n  options={[\n    { label: "Opsi 1", value: "opt1" },\n    { label: "Opsi 2", value: "opt2" },\n    { label: "Opsi 3", value: "opt3" },\n  ]}\n  onValueChange={(val) => console.log(val)}\n/>`;
     },
@@ -1135,7 +1155,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     generateCode: (props) => {
       const label = props.children || "Accept Terms & Conditions";
-      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
+      const cpProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<Checkbox${cpProp}${disProp}>\n  {"${label}"}\n</Checkbox>`;
     },
@@ -1189,8 +1212,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     generateCode: (props) => {
       const label = props.children || "Enable Notifications";
-      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const cpProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<Switch${cpProp}${szProp}${disProp}>\n  {"${label}"}\n</Switch>`;
     },
@@ -1226,7 +1253,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Masukkan keterangan..."}';
+      const phProp = props.placeholder
+        ? ` placeholder={"${props.placeholder}"}`
+        : ' placeholder={"Masukkan keterangan..."}';
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<Textarea${phProp}${disProp} />`;
     },
@@ -1277,8 +1306,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const cpProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<RadioInput\n  defaultValue={"opt1"}${cpProp}${szProp}${disProp}\n  options={[\n    { value: "opt1", label: "Option 1" },\n    { value: "opt2", label: "Option 2" },\n    { value: "opt3", label: "Option 3" },\n  ]}\n  onValueChange={(details) => console.log(details.value)}\n/>`;
     },
@@ -1338,8 +1371,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const cpProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<RadioCardInput.Root defaultValue={"standard"}${cpProp}${szProp}${disProp} w={"full"}>\n  <HStack gap={3} w={"full"}>\n    <RadioCardInput.Item value={"standard"} flex={1} p={3}>\n      <RadioCardInput.ItemText>\n        <P fontWeight={"semibold"} fontSize={"sm"}>{"Standard"}</P>\n        <P fontSize={"xs"} color={"fg.muted"}>{"Fitur esensial"}</P>\n      </RadioCardInput.ItemText>\n    </RadioCardInput.Item>\n    <RadioCardInput.Item value={"pro"} flex={1} p={3}>\n      <RadioCardInput.ItemText>\n        <P fontWeight={"semibold"} fontSize={"sm"}>{"Enterprise"}</P>\n        <P fontSize={"xs"} color={"fg.muted"}>{"Akses menyeluruh"}</P>\n      </RadioCardInput.ItemText>\n    </RadioCardInput.Item>\n  </HStack>\n</RadioCardInput.Root>`;
     },
@@ -1419,8 +1456,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const cpProp = props.colorPalette && props.colorPalette !== "blue" ? ` colorPalette={"${props.colorPalette}"}` : "";
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const cpProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? ` colorPalette={"${props.colorPalette}"}`
+          : "";
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<SegmentGroupInput\n  defaultValue={"grid"}${cpProp}${szProp}${disProp}\n  options={[\n    { value: "list", label: "List View" },\n    { value: "grid", label: "Grid View" },\n    { value: "map", label: "Map View" },\n  ]}\n  onValueChange={(details) => console.log(details.value)}\n/>`;
     },
@@ -1471,8 +1512,12 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const minProp = props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
-      const maxProp = props.max !== undefined && props.max !== 100 ? ` max={${props.max}}` : "";
+      const minProp =
+        props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
+      const maxProp =
+        props.max !== undefined && props.max !== 100
+          ? ` max={${props.max}}`
+          : "";
       return `<Slider\n  defaultValue={[40]}${minProp}${maxProp}\n  showValue={true}\n  label={"Volume / Ukuran"}\n/>`;
     },
     renderPlayground: (props) => (
@@ -1558,8 +1603,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const phProp = props.placeholder ? ` placeholder={"${props.placeholder}"}` : ' placeholder={"Cari..."}';
-      const szProp = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const phProp = props.placeholder
+        ? ` placeholder={"${props.placeholder}"}`
+        : ' placeholder={"Cari..."}';
+      const szProp =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       return `<SearchInput${phProp}${szProp} value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />`;
     },
     renderPlayground: (props) => (
@@ -1610,7 +1658,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const lbl = props.label ? ` label={"${props.label}"}` : ' label={"Label"}';
+      const lbl = props.label
+        ? ` label={"${props.label}"}`
+        : ' label={"Label"}';
       const ht = props.helperText ? ` helperText={"${props.helperText}"}` : "";
       const opt = props.optional ? ` optional={true}` : "";
       return `<Field${lbl}${ht}${opt}>\n  <Input placeholder={"Masukkan teks..."} />\n</Field>`;
@@ -1668,8 +1718,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const vProp = props.variant && props.variant !== "dropzone" ? ` variant={"${props.variant}"}` : "";
-      const mfProp = props.maxFiles && props.maxFiles !== 3 ? ` maxFiles={${props.maxFiles}}` : "";
+      const vProp =
+        props.variant && props.variant !== "dropzone"
+          ? ` variant={"${props.variant}"}`
+          : "";
+      const mfProp =
+        props.maxFiles && props.maxFiles !== 3
+          ? ` maxFiles={${props.maxFiles}}`
+          : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<FileInput${vProp}${mfProp}${disProp} accept={[".jpeg", ".jpg", ".png", ".pdf"]} onFileChange={(files) => console.log(files)} />`;
     },
@@ -1717,7 +1773,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const subProp = props.datePickerSubtitle && props.datePickerSubtitle !== "Pilih tanggal" ? ` datePickerSubtitle={"${props.datePickerSubtitle}"}` : "";
+      const subProp =
+        props.datePickerSubtitle && props.datePickerSubtitle !== "Pilih tanggal"
+          ? ` datePickerSubtitle={"${props.datePickerSubtitle}"}`
+          : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<DateInput modalKey={"pilih-tanggal"}${subProp}${disProp} onValueChange={(val) => console.log(val)} />`;
     },
