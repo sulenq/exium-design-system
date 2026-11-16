@@ -17,8 +17,11 @@ import {
 
 const shineAnimationCss = {
   "--start-color": "colors.an1",
-  "--end-color": "colors.an4",
-  backgroundImage:
+  "--end-color": {
+    _light: "rgba(255, 255, 255, 0.75)",
+    _dark: "rgba(255, 255, 255, 0.18)",
+  },
+  background:
     "linear-gradient(270deg, var(--start-color), var(--end-color), var(--end-color), var(--start-color))",
   backgroundSize: "400% 100%",
   animation: "bg-position 2.5s ease-in-out infinite",
