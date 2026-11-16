@@ -50,11 +50,10 @@ export const Skeleton = (props: SkeletonProps) => {
           variant={variant}
           w={"full"}
           h={"full"}
-          bg={"an1"}
           rounded={theme.radii.container}
           css={{
-            "--start-color": "transparent",
-            "--end-color": "colors.bg.subtle",
+            "--start-color": "colors.bg.subtle",
+            "--end-color": "colors.bg.emphasized",
           }}
         >
           {children}
@@ -78,8 +77,8 @@ export const Skeleton = (props: SkeletonProps) => {
         h={"full"}
         rounded={theme.radii.container}
         css={{
-          "--start-color": "transparent",
-          "--end-color": "colors.bg.subtle",
+          "--start-color": "colors.bg.subtle",
+          "--end-color": "colors.bg.emphasized",
         }}
       />
     </Center>
@@ -91,8 +90,8 @@ export const SkeletonCircle = (props: SkeletonCircleProps) => {
     <ChakraSkeletonCircle
       variant={"shine"}
       css={{
-        "--start-color": "transparent",
-        "--end-color": "colors.bg.subtle",
+        "--start-color": "colors.bg.subtle",
+        "--end-color": "colors.bg.emphasized",
       }}
       {...props}
     />
@@ -104,8 +103,8 @@ export const SkeletonText = (props: SkeletonTextProps) => {
     <ChakraSkeletonText
       variant={"shine"}
       css={{
-        "--start-color": "transparent",
-        "--end-color": "colors.bg.subtle",
+        "--start-color": "colors.bg.subtle",
+        "--end-color": "colors.bg.emphasized",
       }}
       {...props}
     />
