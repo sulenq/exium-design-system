@@ -15,6 +15,15 @@ import {
   SkeletonText as ChakraSkeletonText,
 } from "@chakra-ui/react";
 
+const shineAnimationCss = {
+  "--start-color": "colors.an1",
+  "--end-color": "colors.an4",
+  backgroundImage:
+    "linear-gradient(270deg, var(--start-color), var(--end-color), var(--end-color), var(--start-color))",
+  backgroundSize: "400% 100%",
+  animation: "bg-position 2.5s ease-in-out infinite",
+};
+
 export const Skeleton = (props: SkeletonProps) => {
   // Props
   const { loading, loaded, children, variant = "shine", ...restProps } = props;
@@ -52,10 +61,7 @@ export const Skeleton = (props: SkeletonProps) => {
           h={"full"}
           bg={"an1"}
           rounded={theme.radii.container}
-          css={{
-            "--start-color": "transparent",
-            "--end-color": "colors.an3",
-          }}
+          css={variant === "shine" ? shineAnimationCss : undefined}
         >
           {children}
         </ChakraSkeleton>
@@ -78,10 +84,7 @@ export const Skeleton = (props: SkeletonProps) => {
         h={"full"}
         bg={"an1"}
         rounded={theme.radii.container}
-        css={{
-          "--start-color": "transparent",
-          "--end-color": "colors.an3",
-        }}
+        css={variant === "shine" ? shineAnimationCss : undefined}
       />
     </Center>
   );
@@ -92,10 +95,7 @@ export const SkeletonCircle = (props: SkeletonCircleProps) => {
     <ChakraSkeletonCircle
       variant={"shine"}
       bg={"an1"}
-      css={{
-        "--start-color": "transparent",
-        "--end-color": "colors.an3",
-      }}
+      css={shineAnimationCss}
       {...props}
     />
   );
@@ -106,10 +106,7 @@ export const SkeletonText = (props: SkeletonTextProps) => {
     <ChakraSkeletonText
       variant={"shine"}
       bg={"an1"}
-      css={{
-        "--start-color": "transparent",
-        "--end-color": "colors.an3",
-      }}
+      css={shineAnimationCss}
       {...props}
     />
   );
