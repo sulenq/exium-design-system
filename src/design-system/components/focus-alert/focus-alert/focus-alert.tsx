@@ -29,6 +29,7 @@ import {
   XIcon,
   ZapIcon,
 } from "lucide-react";
+import { AbsoluteCenter } from "@/design-system/components/layout/center/center";
 
 export const FocusAlertItem = (props: FocusAlertItemProps) => {
   // Props
@@ -297,15 +298,15 @@ export const FocusAlertView = (props: FocusAlertViewProps) => {
         mb={"md"}
       >
         {/* Outer expanding elegant pulse ripple */}
-        <Circle
-          pos={"absolute"}
-          inset={0}
-          size={"76px"}
-          bg={`${resolvedColorPalette}.emphasized`}
-          opacity={0.35}
-          pointerEvents={"none"}
-          animation={"ping 2s cubic-bezier(0, 0, 0.2, 1) infinite"}
-        />
+        <AbsoluteCenter>
+          <Circle
+            size={"64px"}
+            bg={`${resolvedColorPalette}.emphasized`}
+            opacity={0.35}
+            pointerEvents={"none"}
+            animation={"ping 2s cubic-bezier(0, 0, 0.2, 1) infinite"}
+          />
+        </AbsoluteCenter>
 
         {/* Inner Icon / Emoji Circle */}
         <Circle
@@ -315,6 +316,7 @@ export const FocusAlertView = (props: FocusAlertViewProps) => {
           color={`${resolvedColorPalette}.fg`}
           border={"12px solid"}
           borderColor={`${resolvedColorPalette}.subtle`}
+          // my={"32px"}
         >
           {icon ? (
             isValidElement(icon) ? (
