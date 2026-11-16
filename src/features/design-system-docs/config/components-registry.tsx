@@ -2465,7 +2465,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
           <Accordion.ItemContent>
-            <Accordion.ItemBody>
+            <Accordion.ItemBody color={"fg.subtle"}>
               Detail dokumen dan berkas terverifikasi di dalam sistem ATR BPN.
             </Accordion.ItemBody>
           </Accordion.ItemContent>
@@ -2476,7 +2476,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
             <Accordion.ItemIndicator />
           </Accordion.ItemTrigger>
           <Accordion.ItemContent>
-            <Accordion.ItemBody>
+            <Accordion.ItemBody color={"fg.subtle"}>
               Sinkronisasi data layer peta spasial GeoServer terakhir berhasil.
             </Accordion.ItemBody>
           </Accordion.ItemContent>
