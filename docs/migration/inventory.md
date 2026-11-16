@@ -72,5 +72,5 @@ Komponen design system yang aktif dikonsumsi oleh fitur aplikasi:
 | **DataViewTable / DataListTable** | 5 | 6 | `table.tsx` + TanStack |
 | **Carousel** | 5 | 4 | `carousel.tsx` (Embla) |
 | **HStack / VStack / Box / SimpleGrid** | 6 | 66+ | Semantic HTML (`div`, `flex`, `grid`) + Tailwind |
-| **P / ClampedP / Heading** | 6 | 19+ | Semantic HTML (`p`, `h1`-`h6`) + Tailwind |
+| **P / Heading** | 6 | 19+ | Semantic HTML (`p`, `h1`-`h6`) + Tailwind |
 

@@ -69,5 +69,5 @@ Status yang digunakan: `todo` → `in-progress` → `review` → `done`.
 | Komponen / Route Slice | Batch | Scope | Status | Catatan |
 |---|:---:|---|:---:|---|
 | **Box, Flex, HStack, VStack, Grid** | 6 | Codebase-wide | todo | Migrasi per-halaman/route slice |
-| **P, ClampedP, Heading, Span** | 6 | Codebase-wide | todo | Semantic HTML + typography tokens |
+| **P, Heading, Span** | 6 | Codebase-wide | todo | Semantic HTML + typography tokens |
 

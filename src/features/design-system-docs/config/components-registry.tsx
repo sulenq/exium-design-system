@@ -3701,13 +3701,13 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       <HStack align={"center"} gap={2}>
         <Logo boxSize={18} ml={1.5} flexShrink={0} />
         {isOpened && (
-          <P lineClamp={1} fontSize={"lg"} fontWeight={"semibold"}>
+          <P lineClamp={1} fontSize={"lg"} fontWeight={"semibold"}
             {"exium"}
           </P>
         )}
       </HStack>
       {isOpened && (
-        <P lineClamp={1} mr={1} fontSize={"sm"} color={"fg.subtle"} lineHeight={1}>
+        <P lineClamp={1} mr={1} fontSize={"sm"} color={"fg.subtle"} lineHeight={1}
           {"v1.0"}
         </P>
       )}
@@ -5224,7 +5224,8 @@ const SidebarPlaygroundDemo = ({
             <HStack align={"center"} gap={2}>
               <Logo boxSize={18} ml={1.5} flexShrink={0} />
 
-              <P lineClamp={1}
+              <P
+                lineClamp={1}
                 w={expanded ? "" : 0}
                 fontSize={"lg"}
                 fontWeight={"semibold"}
@@ -5235,7 +5236,8 @@ const SidebarPlaygroundDemo = ({
               </P>
             </HStack>
 
-            <P lineClamp={1}
+            <P
+              lineClamp={1}
               w={expanded ? "" : 0}
               mr={1}
               fontSize={"sm"}
