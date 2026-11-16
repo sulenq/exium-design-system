@@ -15,16 +15,18 @@ import {
   SkeletonText as ChakraSkeletonText,
 } from "@chakra-ui/react";
 
-const shineAnimationCss = {
-  "--start-color": "colors.an1",
-  "--end-color": {
-    _light: "rgba(255, 255, 255, 0.75)",
-    _dark: "rgba(255, 255, 255, 0.18)",
+const shineAnimationProps = {
+  "--animate-from": "-100%",
+  "--animate-to": "100%",
+  backgroundImage: {
+    _light:
+      "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.95) 50%, transparent 100%)",
+    _dark:
+      "linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%)",
   },
-  background:
-    "linear-gradient(270deg, var(--start-color), var(--end-color), var(--end-color), var(--start-color))",
-  backgroundSize: "400% 100%",
-  animation: "bg-position 2.5s ease-in-out infinite",
+  backgroundSize: "200% 100%",
+  backgroundRepeat: "no-repeat",
+  animation: "bg-position 1.5s ease-in-out infinite",
 };
 
 export const Skeleton = (props: SkeletonProps) => {
@@ -64,7 +66,7 @@ export const Skeleton = (props: SkeletonProps) => {
           h={"full"}
           bg={"an1"}
           rounded={theme.radii.container}
-          css={variant === "shine" ? shineAnimationCss : undefined}
+          {...(variant === "shine" ? shineAnimationProps : {})}
         >
           {children}
         </ChakraSkeleton>
@@ -87,7 +89,7 @@ export const Skeleton = (props: SkeletonProps) => {
         h={"full"}
         bg={"an1"}
         rounded={theme.radii.container}
-        css={variant === "shine" ? shineAnimationCss : undefined}
+        {...(variant === "shine" ? shineAnimationProps : {})}
       />
     </Center>
   );
@@ -98,7 +100,7 @@ export const SkeletonCircle = (props: SkeletonCircleProps) => {
     <ChakraSkeletonCircle
       variant={"shine"}
       bg={"an1"}
-      css={shineAnimationCss}
+      {...shineAnimationProps}
       {...props}
     />
   );
@@ -109,7 +111,7 @@ export const SkeletonText = (props: SkeletonTextProps) => {
     <ChakraSkeletonText
       variant={"shine"}
       bg={"an1"}
-      css={shineAnimationCss}
+      {...shineAnimationProps}
       {...props}
     />
   );
