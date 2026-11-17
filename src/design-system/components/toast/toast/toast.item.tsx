@@ -9,7 +9,10 @@ import { CloseButton } from "@/design-system/components/button/close-button/clos
 import { Collapsible } from "@/design-system/components/disclosure/collapsible/collapsible";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { getToastConfig } from "@/design-system/components/toast/core/toast.config";
 import {
   toast,
@@ -41,28 +44,28 @@ import { memo, useState } from "react";
 export const TOAST_VARIANT_MAP: ToastVariantMap = {
   success: {
     icon: <AppIcon icon={CheckCircleIcon} size={"sm"} />,
-    bg: "green.solid",
-    color: "bg.body",
+    bg: "green.muted",
+    color: "green.fg",
   },
   error: {
     icon: <AppIcon icon={XCircleIcon} size={"sm"} />,
-    bg: "red.solid",
-    color: "bg.body",
+    bg: "red.muted",
+    color: "red.fg",
   },
   warning: {
     icon: <AppIcon icon={AlertCircleIcon} size={"sm"} />,
-    bg: "orange.solid",
-    color: "bg.body",
+    bg: "orange.muted",
+    color: "orange.fg",
   },
   info: {
     icon: <AppIcon icon={InfoIcon} size={"sm"} />,
-    bg: "blue.solid",
-    color: "bg.body",
+    bg: "bg.muted",
+    color: "fg",
   },
   loading: {
-    icon: <Loader size={"xs"} color={"bg.body"} />,
-    bg: "neutral.solid",
-    color: "bg.body",
+    icon: <Loader size={"xs"} color={"fg"} />,
+    bg: "bg.muted",
+    color: "fg",
   },
   custom: {
     icon: null,

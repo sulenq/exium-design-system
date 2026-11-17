@@ -184,37 +184,41 @@ export const DataViewRowContextMenu = <
   return (
     <Portal>
       <Presence
-        present={isOpen && isReady}
+        ref={menuRef}
+        present={isOpen}
         unmountOnExit={true}
         onExitComplete={handleExitComplete}
-        animationName={{
-          _open: "scale-up",
-          _closed: "scale-down",
-        }}
+        animationName={
+          isReady
+            ? {
+                _open: "scale-up",
+                _closed: "scale-down",
+              }
+            : undefined
+        }
         animationDuration={"moderate"}
+        pos={"fixed"}
+        top={`${adjustedPos.top}px`}
+        left={`${adjustedPos.left}px`}
+        zIndex={"popover"}
+        minW={"160px"}
+        p={1}
+        bg={"bg.body"}
+        rounded={theme.radii.container}
+        border={"1px solid"}
+        borderColor={"border.subtle"}
+        shadow={"lg"}
+        role={"menu"}
+        aria-orientation={"vertical"}
+        visibility={isReady ? "visible" : "hidden"}
+        transformOrigin={adjustedPos.transformOrigin}
+        css={{
+          animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+          transformOrigin: adjustedPos.transformOrigin,
+          ["--transform-origin" as string]: adjustedPos.transformOrigin,
+        }}
+        onContextMenu={(e) => e.preventDefault()}
       >
-        <Box
-          ref={menuRef}
-          pos={"fixed"}
-          top={`${adjustedPos.top}px`}
-          left={`${adjustedPos.left}px`}
-          zIndex={"popover"}
-          minW={"160px"}
-          p={1}
-          bg={"bg.body"}
-          rounded={theme.radii.container}
-          border={"1px solid"}
-          borderColor={"border.subtle"}
-          shadow={"lg"}
-          role={"menu"}
-          aria-orientation={"vertical"}
-          visibility={isReady ? "visible" : "hidden"}
-          css={{
-            animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-            transformOrigin: adjustedPos.transformOrigin,
-          }}
-          onContextMenu={(e) => e.preventDefault()}
-        >
         <VStack gap={1} align={"stretch"}>
           {isEmptyArray(visibleActions) && (
             <Box
@@ -431,7 +435,6 @@ export const DataViewRowContextMenu = <
               );
             })}
         </VStack>
-        </Box>
       </Presence>
     </Portal>
   );
