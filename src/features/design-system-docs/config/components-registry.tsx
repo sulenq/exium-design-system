@@ -2287,7 +2287,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
                 ? "red"
                 : props.variant === "warning"
                   ? "orange"
-                  : "blue"
+                  : "neutral"
           }
           onClick={() => {
             const v =
