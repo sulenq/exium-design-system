@@ -66,16 +66,21 @@ export const DataViewRowContextMenu = <
   const [activePoint, setActivePoint] = useState<{ x: number; y: number } | null>(
     point,
   );
-  const [adjustedPos, setAdjustedPos] = useState<{ top: number; left: number }>({
+  const [adjustedPos, setAdjustedPos] = useState<{
+    top: number;
+    left: number;
+    transformOrigin: string;
+  }>({
     top: point?.y ?? 0,
     left: point?.x ?? 0,
+    transformOrigin: "top left",
   });
 
   // Adjust state during render when point changes (React standard pattern)
   if (point && point !== activePoint) {
     setActivePoint(point);
     setIsOpen(true);
-    setAdjustedPos({ top: point.y, left: point.x });
+    setAdjustedPos({ top: point.y, left: point.x, transformOrigin: "top left" });
   }
 
   // Handlers
@@ -122,7 +127,15 @@ export const DataViewRowContextMenu = <
       top = Math.max(padding, top - rect.height);
     }
 
-    setAdjustedPos({ top, left });
+    // Calculate exact click origin relative to the menu box
+    const originX = activePoint.x - left;
+    const originY = activePoint.y - top;
+
+    setAdjustedPos({
+      top,
+      left,
+      transformOrigin: `${originX}px ${originY}px`,
+    });
   }, [activePoint]);
 
   // Effects: Dismiss on click outside or Escape
@@ -189,7 +202,7 @@ export const DataViewRowContextMenu = <
           aria-orientation={"vertical"}
           css={{
             animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-            transformOrigin: "top left",
+            transformOrigin: adjustedPos.transformOrigin,
           }}
           onContextMenu={(e) => e.preventDefault()}
         >
