@@ -8,7 +8,7 @@ export type DataViewRowContextMenuProps<
 > = {
   item: FormattedListItem<T>;
   itemActions?: DataViewItemActionsGenerator<T>[];
-  point: { x: number; y: number };
+  point: { x: number; y: number } | null;
   onClose: () => void;
 };
 

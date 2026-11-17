@@ -61,24 +61,36 @@ export const DataViewRowContextMenu = <
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   // States
-  const [isOpen, setIsOpen] = useState(true);
+  const [closing, setClosing] = useState(false);
+  const [lastPoint, setLastPoint] = useState<{ x: number; y: number } | null>(
+    point,
+  );
   const [adjustedPos, setAdjustedPos] = useState<{ top: number; left: number }>({
-    top: point.y,
-    left: point.x,
+    top: point?.y ?? 0,
+    left: point?.x ?? 0,
   });
+
+  // Adjust state during render when point changes (React standard pattern)
+  if (point && point !== lastPoint) {
+    setLastPoint(point);
+    setClosing(false);
+    setAdjustedPos({ top: point.y, left: point.x });
+  }
 
   // Handlers
   const handleClose = useCallback(() => {
-    setIsOpen(false);
+    setClosing(true);
   }, []);
 
   const handleAnimationEnd = () => {
-    if (!isOpen) {
+    if (closing) {
       onClose();
     }
   };
 
   // Derived Values
+  const isVisible = Boolean(point) || closing;
+
   const visibleActions = itemActions.filter((action) => {
     if (isDeclarativeAction(action)) {
       if (action.showInMenu === false) return false;
@@ -90,6 +102,8 @@ export const DataViewRowContextMenu = <
 
   // Effects: Viewport collision detection (flip/shift)
   useEffect(() => {
+    if (!lastPoint) return;
+
     const el = menuRef.current;
     if (!el) return;
 
@@ -98,8 +112,8 @@ export const DataViewRowContextMenu = <
     const vh = window.innerHeight;
     const padding = 8;
 
-    let left = point.x;
-    let top = point.y;
+    let left = lastPoint.x;
+    let top = lastPoint.y;
 
     // Horizontal collision
     if (left + rect.width > vw - padding) {
@@ -112,10 +126,12 @@ export const DataViewRowContextMenu = <
     }
 
     setAdjustedPos({ top, left });
-  }, [point]);
+  }, [lastPoint]);
 
   // Effects: Dismiss on click outside or Escape
   useEffect(() => {
+    if (!isVisible || closing) return;
+
     const handlePointerDownOutside = (event: PointerEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         handleClose();
@@ -143,7 +159,9 @@ export const DataViewRowContextMenu = <
       window.removeEventListener("scroll", handleScrollOrResize, true);
       window.removeEventListener("resize", handleScrollOrResize);
     };
-  }, [handleClose]);
+  }, [isVisible, closing, handleClose]);
+
+  if (!isVisible) return null;
 
   return (
     <Portal>
@@ -162,7 +180,7 @@ export const DataViewRowContextMenu = <
         shadow={"lg"}
         role={"menu"}
         aria-orientation={"vertical"}
-        animationName={isOpen ? "scale-up" : "scale-down"}
+        animationName={closing ? "scale-down" : "scale-up"}
         animationDuration={"fast"}
         animationFillMode={"forwards"}
         onAnimationEnd={handleAnimationEnd}

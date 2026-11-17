@@ -749,14 +749,12 @@ const DataListTableRow = memo(
           </Box>
         </CursorTooltip>
 
-        {contextMenuPoint && (
-          <DataViewRowContextMenu
-            item={item}
-            itemActions={itemActions}
-            point={contextMenuPoint}
-            onClose={() => setContextMenuPoint(null)}
-          />
-        )}
+        <DataViewRowContextMenu
+          item={item}
+          itemActions={itemActions}
+          point={contextMenuPoint}
+          onClose={() => setContextMenuPoint(null)}
+        />
       </>
     );
   },
