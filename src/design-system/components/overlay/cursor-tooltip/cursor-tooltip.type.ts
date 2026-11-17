@@ -7,5 +7,7 @@ export type CursorTooltipProps = {
   content?: ReactNode;
   disabled?: boolean;
   offset?: { x: number; y: number };
+  openDelay?: number;
+  closeDelay?: number;
 };
 

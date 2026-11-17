@@ -5,12 +5,10 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { Portal } from "@/design-system/components/utilities/portal/portal";
 import { useDeviceCapability } from "@/shared/hooks/use-device-capability";
 import {
-  cloneElement,
-  isValidElement,
   useCallback,
   useEffect,
+  useRef,
   useState,
-  type ReactElement,
 } from "react";
 
 export const CursorTooltip = (props: CursorTooltipProps) => {
@@ -20,6 +18,8 @@ export const CursorTooltip = (props: CursorTooltipProps) => {
     content,
     disabled = false,
     offset = { x: 12, y: 16 },
+    openDelay = 300,
+    closeDelay = 100,
   } = props;
 
   // Hooks
@@ -29,14 +29,36 @@ export const CursorTooltip = (props: CursorTooltipProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  // Refs
+  const timerIds = useRef<{
+    open: ReturnType<typeof setTimeout> | null;
+    close: ReturnType<typeof setTimeout> | null;
+  }>({
+    open: null,
+    close: null,
+  });
+
   // Handlers
   const handlePointerEnter = useCallback(
     (e: React.PointerEvent) => {
       if (e.pointerType === "touch") return;
       setCoords({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+
+      if (timerIds.current.close) {
+        clearTimeout(timerIds.current.close);
+        timerIds.current.close = null;
+      }
+
+      if (openDelay > 0) {
+        if (timerIds.current.open) clearTimeout(timerIds.current.open);
+        timerIds.current.open = setTimeout(() => {
+          setIsVisible(true);
+        }, openDelay);
+      } else {
+        setIsVisible(true);
+      }
     },
-    [],
+    [openDelay],
   );
 
   const handlePointerMove = useCallback(
@@ -48,10 +70,30 @@ export const CursorTooltip = (props: CursorTooltipProps) => {
   );
 
   const handlePointerLeave = useCallback(() => {
-    setIsVisible(false);
-  }, []);
+    if (timerIds.current.open) {
+      clearTimeout(timerIds.current.open);
+      timerIds.current.open = null;
+    }
+
+    if (closeDelay > 0) {
+      if (timerIds.current.close) clearTimeout(timerIds.current.close);
+      timerIds.current.close = setTimeout(() => {
+        setIsVisible(false);
+      }, closeDelay);
+    } else {
+      setIsVisible(false);
+    }
+  }, [closeDelay]);
 
   // Effects
+  useEffect(() => {
+    const currentTimers = timerIds.current;
+    return () => {
+      if (currentTimers.open) clearTimeout(currentTimers.open);
+      if (currentTimers.close) clearTimeout(currentTimers.close);
+    };
+  }, []);
+
   useEffect(() => {
     if (!isVisible) return;
 
@@ -70,37 +112,19 @@ export const CursorTooltip = (props: CursorTooltipProps) => {
 
   const shouldRenderTooltip = !disabled && hasPointer && Boolean(content) && isVisible;
 
-  if (!isValidElement(children)) {
-    return children;
-  }
-
-  const child = children as ReactElement<{
-    onPointerEnter?: (e: React.PointerEvent) => void;
-    onPointerMove?: (e: React.PointerEvent) => void;
-    onPointerLeave?: (e: React.PointerEvent) => void;
-  }>;
-
-  const wrappedChild = cloneElement(child, {
-    onPointerEnter: (e: React.PointerEvent) => {
-      child.props.onPointerEnter?.(e);
-      handlePointerEnter(e);
-    },
-    onPointerMove: (e: React.PointerEvent) => {
-      child.props.onPointerMove?.(e);
-      handlePointerMove(e);
-    },
-    onPointerLeave: (e: React.PointerEvent) => {
-      child.props.onPointerLeave?.(e);
-      handlePointerLeave();
-    },
-  });
-
   const posX = coords.x + offset.x;
   const posY = coords.y + offset.y;
 
   return (
     <>
-      {wrappedChild}
+      <Box
+        asChild
+        onPointerEnter={handlePointerEnter}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+      >
+        {children}
+      </Box>
 
       {shouldRenderTooltip && (
         <Portal>
