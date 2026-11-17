@@ -18,6 +18,7 @@ import {
   resolveTooltip,
   resolveTriggerElement,
 } from "@/design-system/components/data-display/data-view/data-view-item-actions";
+import { Presence } from "@/design-system/components/disclosure/presence/presence";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
 import { Box } from "@/design-system/components/layout/box/box";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
@@ -61,8 +62,8 @@ export const DataViewRowContextMenu = <
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   // States
-  const [closing, setClosing] = useState(false);
-  const [lastPoint, setLastPoint] = useState<{ x: number; y: number } | null>(
+  const [isOpen, setIsOpen] = useState(Boolean(point));
+  const [activePoint, setActivePoint] = useState<{ x: number; y: number } | null>(
     point,
   );
   const [adjustedPos, setAdjustedPos] = useState<{ top: number; left: number }>({
@@ -71,26 +72,22 @@ export const DataViewRowContextMenu = <
   });
 
   // Adjust state during render when point changes (React standard pattern)
-  if (point && point !== lastPoint) {
-    setLastPoint(point);
-    setClosing(false);
+  if (point && point !== activePoint) {
+    setActivePoint(point);
+    setIsOpen(true);
     setAdjustedPos({ top: point.y, left: point.x });
   }
 
   // Handlers
   const handleClose = useCallback(() => {
-    setClosing(true);
+    setIsOpen(false);
   }, []);
 
-  const handleAnimationEnd = () => {
-    if (closing) {
-      onClose();
-    }
+  const handleExitComplete = () => {
+    onClose();
   };
 
   // Derived Values
-  const isVisible = Boolean(point) || closing;
-
   const visibleActions = itemActions.filter((action) => {
     if (isDeclarativeAction(action)) {
       if (action.showInMenu === false) return false;
@@ -102,7 +99,7 @@ export const DataViewRowContextMenu = <
 
   // Effects: Viewport collision detection (flip/shift)
   useEffect(() => {
-    if (!lastPoint) return;
+    if (!activePoint) return;
 
     const el = menuRef.current;
     if (!el) return;
@@ -112,8 +109,8 @@ export const DataViewRowContextMenu = <
     const vh = window.innerHeight;
     const padding = 8;
 
-    let left = lastPoint.x;
-    let top = lastPoint.y;
+    let left = activePoint.x;
+    let top = activePoint.y;
 
     // Horizontal collision
     if (left + rect.width > vw - padding) {
@@ -126,11 +123,11 @@ export const DataViewRowContextMenu = <
     }
 
     setAdjustedPos({ top, left });
-  }, [lastPoint]);
+  }, [activePoint]);
 
   // Effects: Dismiss on click outside or Escape
   useEffect(() => {
-    if (!isVisible || closing) return;
+    if (!isOpen) return;
 
     const handlePointerDownOutside = (event: PointerEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -159,37 +156,43 @@ export const DataViewRowContextMenu = <
       window.removeEventListener("scroll", handleScrollOrResize, true);
       window.removeEventListener("resize", handleScrollOrResize);
     };
-  }, [isVisible, closing, handleClose]);
+  }, [isOpen, handleClose]);
 
-  if (!isVisible) return null;
+  if (!point && !isOpen) return null;
 
   return (
     <Portal>
-      <Box
-        ref={menuRef}
-        pos={"fixed"}
-        top={`${adjustedPos.top}px`}
-        left={`${adjustedPos.left}px`}
-        zIndex={"popover"}
-        minW={"160px"}
-        p={1}
-        bg={"bg.body"}
-        rounded={theme.radii.container}
-        border={"1px solid"}
-        borderColor={"border.subtle"}
-        shadow={"lg"}
-        role={"menu"}
-        aria-orientation={"vertical"}
-        animationName={closing ? "scale-down" : "scale-up"}
-        animationDuration={"fast"}
-        animationFillMode={"forwards"}
-        onAnimationEnd={handleAnimationEnd}
-        css={{
-          animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-          transformOrigin: "top left",
+      <Presence
+        present={isOpen}
+        unmountOnExit={true}
+        onExitComplete={handleExitComplete}
+        animationName={{
+          _open: "scale-up",
+          _closed: "scale-down",
         }}
-        onContextMenu={(e) => e.preventDefault()}
+        animationDuration={"moderate"}
       >
+        <Box
+          ref={menuRef}
+          pos={"fixed"}
+          top={`${adjustedPos.top}px`}
+          left={`${adjustedPos.left}px`}
+          zIndex={"popover"}
+          minW={"160px"}
+          p={1}
+          bg={"bg.body"}
+          rounded={theme.radii.container}
+          border={"1px solid"}
+          borderColor={"border.subtle"}
+          shadow={"lg"}
+          role={"menu"}
+          aria-orientation={"vertical"}
+          css={{
+            animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+            transformOrigin: "top left",
+          }}
+          onContextMenu={(e) => e.preventDefault()}
+        >
         <VStack gap={1} align={"stretch"}>
           {isEmptyArray(visibleActions) && (
             <Box
@@ -406,7 +409,8 @@ export const DataViewRowContextMenu = <
               );
             })}
         </VStack>
-      </Box>
+        </Box>
+      </Presence>
     </Portal>
   );
 };
