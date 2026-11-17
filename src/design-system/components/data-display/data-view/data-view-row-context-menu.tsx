@@ -196,11 +196,14 @@ export const DataViewRowContextMenu = <
               }
             : undefined
         }
-        animationDuration={"moderate"}
+        animationDuration={{
+          _open: "slow",
+          _closed: "moderate",
+        }}
         pos={"fixed"}
         top={`${adjustedPos.top}px`}
         left={`${adjustedPos.left}px`}
-        zIndex={"popover"}
+        zIndex={"dropdown"}
         minW={"160px"}
         p={1}
         bg={"bg.body"}

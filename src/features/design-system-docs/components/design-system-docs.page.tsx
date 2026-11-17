@@ -27,7 +27,7 @@ import { locales } from "@/paraglide/runtime";
 import { getLocaleLabel } from "@/shared/libs/i18n";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { LanguagesIcon, MenuIcon } from "lucide-react";
+import { MenuIcon } from "lucide-react";
 import { useCallback, useMemo } from "react";
 
 export const DesignSystemDocsPage = () => {
@@ -46,7 +46,6 @@ export const DesignSystemDocsPage = () => {
     return locales.map((loc) => ({
       label: `${loc.toUpperCase()} - ${getLocaleLabel(loc)}`,
       value: loc,
-      icon: LanguagesIcon,
     }));
   }, []);
 

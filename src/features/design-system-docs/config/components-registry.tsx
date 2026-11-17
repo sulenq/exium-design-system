@@ -3123,9 +3123,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     generateCode: (props) => {
       const orientation = (props.orientation as string) || "horizontal";
       const orientationProp =
-        orientation !== "horizontal"
-          ? ` orientation={"${orientation}"}`
-          : "";
+        orientation !== "horizontal" ? ` orientation={"${orientation}"}` : "";
       const sizeProp =
         props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const colorProp =
@@ -4341,11 +4339,14 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       },
     ],
     generateCode: (props) => {
-      const val = props.value ? ` value={"${props.value}"}` : ' value={"https://exium-docs.vercel.app"}';
-      const sz = props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
+      const val = props.value
+        ? ` value={"${props.value}"}`
+        : ' value={"https://exium-docs.vercel.app"}';
+      const sz =
+        props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const dl = props.downloadable ? ` downloadable={true}` : "";
       if (props.withLogo) {
-        return `<QrCode${val}${sz}${dl}\n  overlay={<Logo boxSize={18} />}\n/>`;
+        return `<QrCode${val}${sz}${dl}\n  overlay={\n    <Image src={"/assets/images/logo.png"} alt={"Exium Logo"} w={"full"} h={"full"} objectFit={"contain"} />\n  }\n/>`;
       }
       return `<QrCode${val}${sz}${dl} />`;
     },
@@ -4356,7 +4357,17 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         errorCorrection={
           (props.errorCorrection as QrCodeErrorCorrection) || "M"
         }
-        overlay={props.withLogo ? <Logo boxSize={18} /> : undefined}
+        overlay={
+          props.withLogo ? (
+            <Image
+              src={"/assets/images/logo.png"}
+              alt={"Exium Logo"}
+              w={"full"}
+              h={"full"}
+              objectFit={"contain"}
+            />
+          ) : undefined
+        }
         downloadable={Boolean(props.downloadable)}
       />
     ),
