@@ -33,6 +33,7 @@ import {
   cloneElement,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ReactElement,
@@ -66,6 +67,7 @@ export const DataViewRowContextMenu = <
   const [activePoint, setActivePoint] = useState<{ x: number; y: number } | null>(
     point,
   );
+  const [isReady, setIsReady] = useState(false);
   const [adjustedPos, setAdjustedPos] = useState<{
     top: number;
     left: number;
@@ -80,7 +82,12 @@ export const DataViewRowContextMenu = <
   if (point && point !== activePoint) {
     setActivePoint(point);
     setIsOpen(true);
-    setAdjustedPos({ top: point.y, left: point.x, transformOrigin: "top left" });
+    setIsReady(false);
+    setAdjustedPos({
+      top: point.y,
+      left: point.x,
+      transformOrigin: "top left",
+    });
   }
 
   // Handlers
@@ -102,8 +109,8 @@ export const DataViewRowContextMenu = <
     return true;
   });
 
-  // Effects: Viewport collision detection (flip/shift)
-  useEffect(() => {
+  // Effects: Viewport collision detection (flip/shift) before browser paint
+  useLayoutEffect(() => {
     if (!activePoint) return;
 
     const el = menuRef.current;
@@ -136,6 +143,7 @@ export const DataViewRowContextMenu = <
       left,
       transformOrigin: `${originX}px ${originY}px`,
     });
+    setIsReady(true);
   }, [activePoint]);
 
   // Effects: Dismiss on click outside or Escape
@@ -176,7 +184,7 @@ export const DataViewRowContextMenu = <
   return (
     <Portal>
       <Presence
-        present={isOpen}
+        present={isOpen && isReady}
         unmountOnExit={true}
         onExitComplete={handleExitComplete}
         animationName={{
@@ -200,6 +208,7 @@ export const DataViewRowContextMenu = <
           shadow={"lg"}
           role={"menu"}
           aria-orientation={"vertical"}
+          visibility={isReady ? "visible" : "hidden"}
           css={{
             animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
             transformOrigin: adjustedPos.transformOrigin,
