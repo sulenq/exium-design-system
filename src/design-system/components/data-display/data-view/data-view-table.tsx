@@ -155,6 +155,10 @@ const DataListTableRootInternal = <
     onSelectedItemChangeHandler,
   );
   const [activeItemMenuId, setActiveItemMenuId] = useState<string | null>(null);
+  const [activeContextMenu, setActiveContextMenu] = useState<{
+    item: FormattedListItem<T>;
+    point: { x: number; y: number };
+  } | null>(null);
 
   // Resolved Values
   const contextValue = useMemo<DataViewTableContextValue<T>>(
@@ -177,7 +181,10 @@ const DataListTableRootInternal = <
       tableContainerEl,
 
       sortConfig,
-      toggleSort,
+      toggleSort: (columnIndex: number) => {
+        setActiveContextMenu(null);
+        toggleSort(columnIndex);
+      },
       sortedItems: sortedItems as unknown as FormattedListItem<T>[],
       selectedItemIds,
       selectedItems: selectedItems as unknown as FormattedListItem<T>[],
@@ -190,6 +197,13 @@ const DataListTableRootInternal = <
       canBatchSelect: !isEmptyArray(batchActions) || canBatchSelect,
       activeItemMenuId,
       setActiveItemMenuId,
+      activeContextMenu,
+      setActiveContextMenu: setActiveContextMenu as unknown as (
+        context: {
+          item: FormattedListItem<T>;
+          point: { x: number; y: number };
+        } | null,
+      ) => void,
       renderTdCell: renderTdCellHandler as unknown as (
         column: FormattedTableColumn,
         item: FormattedListItem<T>,
@@ -223,6 +237,8 @@ const DataListTableRootInternal = <
       canBatchSelect,
       activeItemMenuId,
       setActiveItemMenuId,
+      activeContextMenu,
+      setActiveContextMenu,
       renderTdCellHandler,
     ],
   );
@@ -311,6 +327,15 @@ const DataListTableRootInternal = <
           {children}
         </Grid>
       </VStack>
+
+      {activeContextMenu && (
+        <DataViewRowContextMenu
+          item={activeContextMenu.item}
+          itemActions={itemActionsList}
+          point={activeContextMenu.point}
+          onClose={() => setActiveContextMenu(null)}
+        />
+      )}
 
       {!isEmptyArray(batchActions) && (
         <DataViewBatchActionBar
@@ -475,18 +500,18 @@ const DataListTableRow = memo(
     styleProps,
   }: DataViewTableRowProps) => {
     // Contexts & Stores
-    const { page, pageSize, renderTdCell, activeItemMenuId, withStickyMenu } =
-      useDataViewTableContext();
+    const {
+      page,
+      pageSize,
+      renderTdCell,
+      activeItemMenuId,
+      withStickyMenu,
+      setActiveContextMenu,
+    } = useDataViewTableContext();
     const { theme } = useThemeStore();
 
     // Hooks
     const { inputType } = useDeviceCapability();
-
-    // States
-    const [contextMenuPoint, setContextMenuPoint] = useState<{
-      x: number;
-      y: number;
-    } | null>(null);
 
     // Derived Values
     const hasRowActions = !isEmptyArray(itemActions);
@@ -507,7 +532,10 @@ const DataListTableRow = memo(
     const handleContextMenu = (e: React.MouseEvent) => {
       if (isEmptyArray(itemActions)) return;
       e.preventDefault();
-      setContextMenuPoint({ x: e.clientX, y: e.clientY });
+      setActiveContextMenu?.({
+        item,
+        point: { x: e.clientX, y: e.clientY },
+      });
     };
 
     const handleTouchStart = (e: React.TouchEvent) => {
@@ -518,7 +546,10 @@ const DataListTableRow = memo(
 
       if (touchTimerRef.current) clearTimeout(touchTimerRef.current);
       touchTimerRef.current = setTimeout(() => {
-        setContextMenuPoint({ x: touch.clientX, y: touch.clientY });
+        setActiveContextMenu?.({
+          item,
+          point: { x: touch.clientX, y: touch.clientY },
+        });
       }, 500);
     };
 
@@ -748,13 +779,6 @@ const DataListTableRow = memo(
             )}
           </Box>
         </CursorTooltip>
-
-        <DataViewRowContextMenu
-          item={item}
-          itemActions={itemActions}
-          point={contextMenuPoint}
-          onClose={() => setContextMenuPoint(null)}
-        />
       </>
     );
   },

@@ -64,29 +64,69 @@ export const DataViewRowContextMenu = <
 
   // States
   const [isOpen, setIsOpen] = useState(Boolean(point));
-  const [activePoint, setActivePoint] = useState<{ x: number; y: number } | null>(
-    point,
-  );
-  const [isReady, setIsReady] = useState(false);
+  const [activePoint, setActivePoint] = useState<{
+    x: number;
+    y: number;
+  } | null>(point);
   const [adjustedPos, setAdjustedPos] = useState<{
     top: number;
     left: number;
     transformOrigin: string;
-  }>({
-    top: point?.y ?? 0,
-    left: point?.x ?? 0,
-    transformOrigin: "top left",
+  }>(() => {
+    if (!point) {
+      return { top: 0, left: 0, transformOrigin: "top left" };
+    }
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1024;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 768;
+    const padding = 8;
+    const estimatedWidth = 180;
+    const estimatedHeight = 160;
+
+    let left = point.x;
+    let top = point.y;
+    if (left + estimatedWidth > vw - padding) {
+      left = Math.max(padding, left - estimatedWidth);
+    }
+    if (top + estimatedHeight > vh - padding) {
+      top = Math.max(padding, top - estimatedHeight);
+    }
+
+    const originX = point.x - left;
+    const originY = point.y - top;
+
+    return {
+      top,
+      left,
+      transformOrigin: `${originX}px ${originY}px`,
+    };
   });
 
   // Adjust state during render when point changes (React standard pattern)
   if (point && point !== activePoint) {
     setActivePoint(point);
     setIsOpen(true);
-    setIsReady(false);
+    const vw = typeof window !== "undefined" ? window.innerWidth : 1024;
+    const vh = typeof window !== "undefined" ? window.innerHeight : 768;
+    const padding = 8;
+    const estimatedWidth = 180;
+    const estimatedHeight = 160;
+
+    let left = point.x;
+    let top = point.y;
+    if (left + estimatedWidth > vw - padding) {
+      left = Math.max(padding, left - estimatedWidth);
+    }
+    if (top + estimatedHeight > vh - padding) {
+      top = Math.max(padding, top - estimatedHeight);
+    }
+
+    const originX = point.x - left;
+    const originY = point.y - top;
+
     setAdjustedPos({
-      top: point.y,
-      left: point.x,
-      transformOrigin: "top left",
+      top,
+      left,
+      transformOrigin: `${originX}px ${originY}px`,
     });
   }
 
@@ -143,7 +183,6 @@ export const DataViewRowContextMenu = <
       left,
       transformOrigin: `${originX}px ${originY}px`,
     });
-    setIsReady(true);
   }, [activePoint]);
 
   // Effects: Dismiss on click outside or Escape
@@ -172,7 +211,11 @@ export const DataViewRowContextMenu = <
     window.addEventListener("resize", handleScrollOrResize);
 
     return () => {
-      document.removeEventListener("pointerdown", handlePointerDownOutside, true);
+      document.removeEventListener(
+        "pointerdown",
+        handlePointerDownOutside,
+        true,
+      );
       document.removeEventListener("keydown", handleKeyDown, true);
       window.removeEventListener("scroll", handleScrollOrResize, true);
       window.removeEventListener("resize", handleScrollOrResize);
@@ -188,14 +231,10 @@ export const DataViewRowContextMenu = <
         present={isOpen}
         unmountOnExit={true}
         onExitComplete={handleExitComplete}
-        animationName={
-          isReady
-            ? {
-                _open: "scale-up",
-                _closed: "scale-down",
-              }
-            : undefined
-        }
+        animationName={{
+          _open: "scale-up",
+          _closed: "scale-down",
+        }}
         animationDuration={{
           _open: "slow",
           _closed: "moderate",
@@ -213,7 +252,6 @@ export const DataViewRowContextMenu = <
         shadow={"lg"}
         role={"menu"}
         aria-orientation={"vertical"}
-        visibility={isReady ? "visible" : "hidden"}
         transformOrigin={adjustedPos.transformOrigin}
         css={{
           animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -429,10 +467,7 @@ export const DataViewRowContextMenu = <
               if (!node) return null;
 
               return (
-                <span
-                  key={index}
-                  onClick={() => onClose()}
-                >
+                <span key={index} onClick={() => onClose()}>
                   {node}
                 </span>
               );
@@ -442,4 +477,3 @@ export const DataViewRowContextMenu = <
     </Portal>
   );
 };
-

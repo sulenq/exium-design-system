@@ -146,6 +146,16 @@ export type DataViewTableContextValue<T = Record<string, unknown>> = {
   canBatchSelect: boolean;
   activeItemMenuId?: string | null;
   setActiveItemMenuId?: (id: string | null) => void;
+  activeContextMenu?: {
+    item: FormattedListItem<T>;
+    point: { x: number; y: number };
+  } | null;
+  setActiveContextMenu?: (
+    context: {
+      item: FormattedListItem<T>;
+      point: { x: number; y: number };
+    } | null,
+  ) => void;
   renderTdCell?: (
     column: FormattedTableColumn,
     item: FormattedListItem<T>,
