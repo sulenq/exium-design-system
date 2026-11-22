@@ -10,6 +10,7 @@ export type DrawerRootProps = Omit<ChakraDrawer.RootProps, "open"> & {
   open?: () => void;
   close?: () => void;
   swipeToDismiss?: boolean;
+  trapFocus?: boolean;
 };
 
 export type DrawerContentProps = ChakraDrawer.ContentProps & {

@@ -42,21 +42,26 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
 
   // Resolved Values
   const resolvedColorPalette = colorPalette ?? theme.colorPalette;
-  const resolvedTitle = title ?? t["action.confirm"]();
+  const resolvedTitle = title ?? t["action.confirm"]?.() ?? "Konfirmasi";
   const resolvedDesc =
-    description ?? desc ?? "Tindakan ini akan diproses pada sistem.";
-  const resolvedConfirmLabel = confirmLabel ?? t["action.confirm"]();
-  const resolvedCancelLabel = cancelLabel ?? t["action.cancel"]();
+    description ??
+    desc ??
+    t["confirm.default_description"]?.() ??
+    "Tindakan ini akan diproses pada sistem.";
+  const resolvedConfirmLabel =
+    confirmLabel ?? t["action.confirm"]?.() ?? "Konfirmasi";
+  const resolvedCancelLabel =
+    cancelLabel ?? t["action.cancel"]?.() ?? "Batal";
 
   // Handlers
   const handleCancel = () => {
-    onCancel?.();
     popModal.close();
+    void Promise.resolve(onCancel?.()).catch(console.error);
   };
 
   const handleConfirm = () => {
-    onConfirm?.();
     popModal.close();
+    void Promise.resolve(onConfirm?.()).catch(console.error);
   };
 
   return (
@@ -65,7 +70,7 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
         modalKey={popModal.modalKey}
         opened={popModal.isOpen}
         open={popModal.open}
-        close={popModal.close}
+        close={handleCancel}
       >
         <Modal.Trigger>{children}</Modal.Trigger>
 

@@ -12,7 +12,6 @@ import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
 import { AlertTriangleIcon } from "lucide-react";
-import { useState } from "react";
 
 export const ConfirmDialogModal = (props: {
   modalKey: string;
@@ -36,34 +35,31 @@ export const ConfirmDialogModal = (props: {
   // Hooks
   const { isOpen, close } = usePopModal({ modalKey });
 
-  // States
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   // Resolved Values
-  const resolvedTitle = title ?? t["action.confirm"]();
+  const resolvedTitle = title ?? t["action.confirm"]?.() ?? "Konfirmasi";
   const resolvedDesc =
-    description ?? desc ?? "Tindakan ini akan diproses pada sistem.";
-  const resolvedConfirmLabel = confirmLabel ?? t["action.confirm"]();
-  const resolvedCancelLabel = cancelLabel ?? t["action.cancel"]();
+    description ??
+    desc ??
+    t["confirm.default_description"]?.() ??
+    "Tindakan ini akan diproses pada sistem.";
+  const resolvedConfirmLabel =
+    confirmLabel ?? t["action.confirm"]?.() ?? "Konfirmasi";
+  const resolvedCancelLabel =
+    cancelLabel ?? t["action.cancel"]?.() ?? "Batal";
 
   // Handlers
-  const handleCancel = async () => {
-    try {
-      await onCancel?.();
-    } finally {
-      close();
-    }
+  const handleCancel = () => {
+    close();
+    void Promise.resolve(onCancel?.()).catch(console.error);
   };
 
-  const handleConfirm = async () => {
-    try {
-      setIsSubmitting(true);
-      await onConfirm?.();
-    } finally {
-      setIsSubmitting(false);
-      close();
-    }
+  const handleConfirm = () => {
+    close();
+    void Promise.resolve(onConfirm?.()).catch(console.error);
   };
+
+  // Destructive palette check (for initialFocusEl: focus cancel button when destructive)
+  const isDestructive = colorPalette === "red" || colorPalette === "danger";
 
   return (
     <Modal.Root modalKey={modalKey} opened={isOpen} close={handleCancel}>
@@ -111,13 +107,13 @@ export const ConfirmDialogModal = (props: {
               variant={"solid"}
               colorPalette={colorPalette}
               onClick={handleConfirm}
-              loading={isSubmitting}
+              autoFocus={!isDestructive}
               {...confirmButtonProps}
             >
               {resolvedConfirmLabel}
             </Button>
 
-            <Button onClick={handleCancel} disabled={isSubmitting}>
+            <Button onClick={handleCancel} autoFocus={isDestructive}>
               {resolvedCancelLabel}
             </Button>
           </VStack>
@@ -127,8 +123,11 @@ export const ConfirmDialogModal = (props: {
   );
 };
 
+let confirmDialogCounter = 0;
+
 export function confirmDialog(options: ConfirmDialogOptions) {
-  const modalKey = `confirm-dialog-${Date.now()}`;
+  confirmDialogCounter += 1;
+  const modalKey = `confirm-dialog-${Date.now()}-${confirmDialogCounter}`;
   focusAlert(modalKey, () => (
     <ConfirmDialogModal modalKey={modalKey} options={options} />
   ));

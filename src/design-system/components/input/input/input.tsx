@@ -8,6 +8,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
+import { t } from "@/shared/libs/i18n";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import {
   Input as ChakraInput,
@@ -75,6 +76,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       colorPalette={"neutral"}
       fontSize={"md"}
       rounded={theme.radii.component}
+      {...restProps}
       onFocusCapture={(e) => {
         setIsFocused(true);
         restProps.onFocusCapture?.(e);
@@ -98,7 +100,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             (e.currentTarget.selectionStart ?? 0);
           if (selectionLen === 0 && currentVal.length >= restProps.maxLength) {
             toast.warning(
-              `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
+              t["input.max_length_warning"]?.({
+                max: restProps.maxLength,
+              }) ??
+                `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
               { id: "input-max-length-warning" },
             );
           }
@@ -116,7 +121,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             currentVal.length - selectionLen + pastedText.length;
           if (projectedLen > restProps.maxLength) {
             toast.warning(
-              `Teks melebihi batas maksimal (${restProps.maxLength} karakter) dan otomatis dipotong.`,
+              t["input.paste_max_length_warning"]?.({
+                max: restProps.maxLength,
+              }) ??
+                `Teks melebihi batas maksimal (${restProps.maxLength} karakter) dan otomatis dipotong.`,
               { id: "input-max-length-warning" },
             );
           }
@@ -129,7 +137,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           e.currentTarget.value.length >= restProps.maxLength
         ) {
           toast.warning(
-            `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
+            t["input.max_length_warning"]?.({
+              max: restProps.maxLength,
+            }) ??
+              `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
             { id: "input-max-length-warning" },
           );
         }
@@ -148,7 +159,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           color: "transparent",
         },
       })}
-      {...restProps}
     />
   );
 

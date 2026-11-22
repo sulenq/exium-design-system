@@ -8,13 +8,37 @@ import type {
 } from "@/design-system/components/button/button/button.type";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { useThemeStore } from "@/design-system/stores/theme-store";
+import { isTextTruncated } from "@/shared/utils/dom/text-truncation.utils";
 import type { ButtonProps as ChakraButtonProps } from "@chakra-ui/react";
 import {
   Button as ChakraButton,
   IconButton as ChakraIconButton,
   Span,
 } from "@chakra-ui/react";
-import { Children, forwardRef, useMemo } from "react";
+import { Children, forwardRef, useMemo, useRef, useState } from "react";
+
+const AutoTruncatedButtonTooltip = ({
+  text,
+  children,
+}: {
+  text: string;
+  children: (ref: React.RefObject<HTMLSpanElement | null>) => React.ReactNode;
+}) => {
+  const [open, setOpen] = useState(false);
+  const textRef = useRef<HTMLSpanElement | null>(null);
+
+  return (
+    <Tooltip
+      content={text}
+      open={open}
+      onOpenChange={({ open: nextOpen }) =>
+        setOpen(nextOpen && isTextTruncated(textRef.current))
+      }
+    >
+      {children(textRef)}
+    </Tooltip>
+  );
+};
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(props, ref) {
@@ -46,9 +70,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           const combinedText = currentTextGroup.join("");
           const clampVal = lineClamp != null ? Number(lineClamp) : 1;
 
-          const textNode = (
+          const renderTextNode = (spanRef?: React.Ref<HTMLSpanElement>) => (
             <Span
-              key={`button-text-group-${result.length}`}
+              ref={spanRef}
               minW={0}
               maxW={"full"}
               overflow={"hidden"}
@@ -69,15 +93,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             combinedText.trim()
           ) {
             result.push(
-              <Tooltip
+              <AutoTruncatedButtonTooltip
                 key={`button-tooltip-${result.length}`}
-                content={combinedText}
+                text={combinedText}
               >
-                {textNode}
-              </Tooltip>,
+                {(textSpanRef) => renderTextNode(textSpanRef)}
+              </AutoTruncatedButtonTooltip>,
             );
           } else {
-            result.push(textNode);
+            result.push(
+              <span key={`button-text-group-${result.length}`}>
+                {renderTextNode()}
+              </span>,
+            );
           }
           currentTextGroup = [];
         }

@@ -22,7 +22,7 @@ import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { type DrawerRootProps } from "@chakra-ui/react";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 
 export const ModalContext = createContext<ModalContextValue | null>(null);
 
@@ -51,48 +51,85 @@ const ModalRoot = (props: ModalRootProps) => {
     drawerPlacement = "bottom",
     drawerSwipeToDismiss = true,
     closeOnInteractOutside = true,
+    beforeClose,
+    trapFocus = true,
     ...restProps
   } = props;
 
   // Hooks
   const isSmallViewport = useIsSmallViewport();
 
+  // 3a. Freeze viewport mode while open
+  // If the modal was opened, keep the mode frozen until it is closed.
+  const [prevOpened, setPrevOpened] = useState(opened);
+  const [frozenMode, setFrozenMode] = useState(isSmallViewport);
+
+  if (opened !== prevOpened) {
+    setPrevOpened(opened);
+    if (opened) {
+      // Just opened: freeze the mode to current viewport size
+      setFrozenMode(isSmallViewport);
+    }
+  }
+
+  const mode = opened ? frozenMode : isSmallViewport;
+
   // States
   const [fullscreen, setFullscreen] = useState<boolean>(false);
+
+  // 3b. beforeClose guard
+  const isGuardingCloseRef = useRef(false);
+  const requestClose = useCallback(async () => {
+    if (isGuardingCloseRef.current) return;
+    if (beforeClose) {
+      try {
+        isGuardingCloseRef.current = true;
+        const canClose = await beforeClose();
+        if (canClose === false) {
+          return;
+        }
+      } finally {
+        isGuardingCloseRef.current = false;
+      }
+    }
+    close?.();
+  }, [beforeClose, close]);
 
   const contextValue = useMemo<ModalContextValue>(
     () => ({
       modalKey,
       opened,
       open,
-      close,
+      close: requestClose,
       fullscreen,
       setFullscreen,
-      isSmallViewport,
+      isSmallViewport: mode,
       closeOnInteractOutside,
     }),
     [
       modalKey,
       opened,
       open,
-      close,
+      requestClose,
       fullscreen,
       setFullscreen,
-      isSmallViewport,
+      mode,
       closeOnInteractOutside,
     ],
   );
+
   return (
     <ModalContext.Provider value={contextValue}>
-      {isSmallViewport ? (
+      {mode ? (
         <Drawer.Root
           modalKey={modalKey}
           opened={opened}
           open={open}
-          close={close}
+          close={requestClose}
           size={size as DrawerRootProps["size"]}
           swipeToDismiss={drawerSwipeToDismiss}
           closeOnInteractOutside={closeOnInteractOutside}
+          trapFocus={trapFocus}
           {...restProps}
           placement={drawerPlacement}
         >
@@ -103,10 +140,11 @@ const ModalRoot = (props: ModalRootProps) => {
           modalKey={modalKey}
           opened={opened}
           open={open}
-          close={close}
+          close={requestClose}
           clickOriginAnimation={dialogClickOriginAnimation}
           size={size as DialogRootProps["size"]}
           closeOnInteractOutside={closeOnInteractOutside}
+          trapFocus={trapFocus}
           {...restProps}
         >
           {children}

@@ -301,5 +301,23 @@
     "unit_hour": "Hour",
     "unit_day": "Day",
     "unit_week": "Week"
+  },
+  "confirm": {
+    "default_description": "This action will be processed by the system."
+  },
+  "pagination": {
+    "previous": "Previous page",
+    "next": "Next page",
+    "total": "Total {total}",
+    "total_unknown": "Total ?"
+  },
+  "input": {
+    "max_length_warning": "Character limit reached ({max} characters).",
+    "paste_max_length_warning": "Text exceeds maximum limit ({max} characters) and was automatically truncated."
+  },
+  "map": {
+    "search_attributes": "Search attributes...",
+    "layer_symbology_management": "IGT Layer & Symbology Management",
+    "failed_loading_symbology": "Failed to Load Symbology"
   }
 }

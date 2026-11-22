@@ -194,18 +194,26 @@ export type DataViewFooterProps = Omit<StackProps, "page"> & {
   page: number;
   setPage?: (page: number) => void;
   totalPage?: number;
+  hasNextPage?: boolean;
+  prevButtonProps?: Partial<IconButtonProps>;
+  nextButtonProps?: Partial<IconButtonProps>;
 };
 
 export type DataViewPageSizeProps = SelectProps & {
   pageSize: number;
   setPageSize?: (pageSize: number) => void;
   options?: number[];
+  page?: number;
+  setPage?: (page: number) => void;
 };
 
-export type DataViewPaginationProps = IconButtonProps & {
+export type DataViewPaginationProps = Partial<IconButtonProps> & {
   page: number;
   setPage?: (page: number) => void;
   totalPage?: number;
+  hasNextPage?: boolean;
+  prevButtonProps?: Partial<IconButtonProps>;
+  nextButtonProps?: Partial<IconButtonProps>;
 };
 
 export type DataListFilterProps<T = Record<string, unknown>> = SelectProps & {

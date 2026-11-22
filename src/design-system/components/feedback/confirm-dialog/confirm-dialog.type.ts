@@ -13,6 +13,9 @@ export type ConfirmDialogOptions = {
   colorPalette?: string;
   variant?: EmojiVariant;
   icon?: ComponentType | ReactNode;
+  /**
+   * Props passed to the confirm button. Note: `loading` is ignored/deprecated as the dialog closes immediately upon confirmation.
+   */
   confirmButtonProps?: Partial<ButtonProps>;
   onConfirm?: () => void | Promise<void>;
   onCancel?: () => void | Promise<void>;

@@ -10,6 +10,7 @@ export type DialogRootProps = Omit<ChakraDialog.RootProps, "open"> & {
   open?: () => void;
   close?: () => void;
   clickOriginAnimation?: boolean;
+  trapFocus?: boolean;
 };
 
 export type DialogContentProps = ChakraDialog.ContentProps & {

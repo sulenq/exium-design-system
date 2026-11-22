@@ -70,20 +70,17 @@ const DialogRoot = (props: DialogRootProps) => {
     clickOriginAnimation = true,
     size = "xs",
     closeOnInteractOutside = true,
+    trapFocus = true,
     ...restProps
   } = props;
 
   // States
-  const [delayedOpened, setDelayedOpened] = useState(opened);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   useFirstMountEffect(
     {
-      onFirstMount: () => {
-        setDelayedOpened(opened);
-      },
+      onFirstMount: () => {},
       onUpdate: () => {
-        setDelayedOpened(opened);
         if (!opened) {
           setTimeout(() => {
             setFullscreen(false);
@@ -98,7 +95,7 @@ const DialogRoot = (props: DialogRootProps) => {
     if (!opened) {
       const timeoutId = setTimeout(() => {
         clearDialogOffset(modalKey);
-      }, 350);
+      }, 250);
       return () => clearTimeout(timeoutId);
     }
   }, [opened, modalKey]);
@@ -131,14 +128,14 @@ const DialogRoot = (props: DialogRootProps) => {
   return (
     <DialogContext.Provider value={contextValue}>
       <ChakraDialog.Root
-        open={delayedOpened}
+        open={opened}
         lazyMount
         unmountOnExit
         size={fullscreen ? "full" : size}
         scrollBehavior={"outside"}
         {...restProps}
         placement={"center"}
-        trapFocus={false}
+        trapFocus={trapFocus}
         preventScroll
         onEscapeKeyDown={() => {
           if (close) {
@@ -199,11 +196,16 @@ const DialogBackdrop = (props: ChakraDialog.BackdropProps) => {
   const { onClick, ...restProps } = props;
 
   // Contexts
-  const { close, setFullscreen, closeOnInteractOutside } = useDialogContext();
+  const { modalKey, close, setFullscreen, closeOnInteractOutside } =
+    useDialogContext();
+
+  const nestingLevel = modalKey.split(".").length;
+  const baseZIndex = 1400 + nestingLevel * 10;
 
   return (
     <ChakraDialog.Backdrop
       pointerEvents={"auto"}
+      zIndex={baseZIndex - 1}
       onClick={(event) => {
         if (!closeOnInteractOutside) return;
         if (close) {
@@ -234,7 +236,8 @@ const DialogContent = (props: DialogContentProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const isFullscreen = fullscreen || size === "full";
-  const zIndex = 1400 + modalKey.split(".").length;
+  const nestingLevel = modalKey.split(".").length;
+  const zIndex = 1400 + nestingLevel * 10;
 
   // Pre-calculate dialog offset synchronously before browser paint
   updateDialogOffset(modalKey);
@@ -307,13 +310,13 @@ const DialogContent = (props: DialogContentProps) => {
             animation: clickOriginAnimation
               ? "scale-up-from-click-origin"
               : "scale-up",
-            animationDuration: clickOriginAnimation ? "slow" : "faster",
+            animationDuration: clickOriginAnimation ? "moderate" : "faster",
           }}
           _closed={{
             animation: clickOriginAnimation
               ? "scale-down-to-click-origin"
               : "scale-down",
-            animationDuration: clickOriginAnimation ? "slow" : "faster",
+            animationDuration: "faster",
           }}
           {...restProps}
         />

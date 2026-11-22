@@ -13,6 +13,11 @@ export const OVERLAY_SEARCH_PARAM_KEY = "overlay";
  */
 export const MODAL_SEARCH_PARAM_KEY = OVERLAY_SEARCH_PARAM_KEY;
 
+// Module-level tracking for overlays opened through open() in this session
+const openedByApp = new Set<string>();
+// Per-key guard to prevent duplicate rapid closing of the same key
+const keysCurrentlyClosing = new Set<string>();
+
 export function usePopDisclosure(
   options: UsePopDisclosureOptions,
 ): UsePopDisclosureReturn {
@@ -22,7 +27,6 @@ export function usePopDisclosure(
   // Refs — stable references so callbacks have zero unstable dependencies
   const modalKeyRef = useRef(modalKey);
   const depthRef = useRef(depth);
-  const lastCloseAtRef = useRef(0);
 
   useEffect(() => {
     modalKeyRef.current = modalKey;
@@ -40,13 +44,8 @@ export function usePopDisclosure(
 
   const navigate = useNavigate();
 
-  // Manage body scroll/pointer cleanup when overlay is closed
-  useEffect(() => {
-    if (!activeOverlayKey) {
-      document.body.style.overflow = "";
-      document.body.style.pointerEvents = "";
-    }
-  }, [activeOverlayKey]);
+  // Item 4: Manage body scroll/pointer cleanup safely per-instance
+  const wasOpenRef = useRef(false);
 
   // Matches either exact key OR nested child key (separated by dot '.')
   const isOpen = useMemo(() => {
@@ -56,6 +55,28 @@ export function usePopDisclosure(
       activeOverlayKey === modalKey || activeOverlayKey.startsWith(`${modalKey}.`)
     );
   }, [modalKey, activeOverlayKey]);
+
+  useEffect(() => {
+    if (wasOpenRef.current && !isOpen) {
+      document.body.style.overflow = "";
+      document.body.style.pointerEvents = "";
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (wasOpenRef.current) {
+        document.body.style.overflow = "";
+        document.body.style.pointerEvents = "";
+      }
+    };
+  }, []);
+
+  // Clear keysCurrentlyClosing on activeOverlayKey change
+  useEffect(() => {
+    keysCurrentlyClosing.clear();
+  }, [activeOverlayKey]);
 
   // Helper function to check if any specific key is currently active
   const isKeyOpen = useCallback(
@@ -74,6 +95,9 @@ export function usePopDisclosure(
       const targetKey = subKey
         ? `${modalKeyRef.current}.${subKey}`
         : modalKeyRef.current;
+
+      openedByApp.add(targetKey);
+
       navigate({
         to: ".",
         resetScroll: false,
@@ -88,21 +112,69 @@ export function usePopDisclosure(
   );
 
   const close = useCallback(() => {
-    const now = Date.now();
-
-    if (now - lastCloseAtRef.current < 200) {
+    const currentKey = modalKeyRef.current;
+    if (keysCurrentlyClosing.has(currentKey)) {
       return;
     }
 
-    lastCloseAtRef.current = now;
+    keysCurrentlyClosing.add(currentKey);
 
     const d = depthRef.current;
-    if (d && d > 1) {
-      window.history.go(-d);
-    } else {
-      window.history.back();
+    const effectiveDepth = d && d > 1 ? d : 1;
+
+    // Check if every key being closed is tracked in openedByApp
+    // If activeOverlayKey matches currentKey or is a child of currentKey
+    const targetKey = activeOverlayKey;
+    const isTargetOpenedByApp =
+      typeof targetKey === "string" && openedByApp.has(targetKey);
+
+    if (isTargetOpenedByApp) {
+      if (typeof targetKey === "string") {
+        openedByApp.delete(targetKey);
+      }
+      if (effectiveDepth > 1) {
+        window.history.go(-effectiveDepth);
+      } else {
+        window.history.back();
+      }
+      return;
     }
-  }, []);
+
+    // Otherwise (deep link, refresh, direct URL, or not opened via open()):
+    // Navigate with overlay param removed (or reduced to parent key if nested)
+    let nextOverlayKey: string | undefined;
+    if (typeof activeOverlayKey === "string") {
+      openedByApp.delete(activeOverlayKey);
+      if (activeOverlayKey.startsWith(`${currentKey}.`)) {
+        // We are closing currentKey while active is a child, or currentKey itself is being closed
+        nextOverlayKey = undefined;
+      } else if (currentKey.includes(".")) {
+        // currentKey is a child (e.g. parent.child)
+        const lastDot = currentKey.lastIndexOf(".");
+        nextOverlayKey = currentKey.substring(0, lastDot);
+      } else {
+        nextOverlayKey = undefined;
+      }
+    }
+
+    void navigate({
+      to: ".",
+      replace: true,
+      resetScroll: false,
+      search: (old) => {
+        const next = { ...old };
+        if (nextOverlayKey) {
+          next[OVERLAY_SEARCH_PARAM_KEY] = nextOverlayKey;
+        } else {
+          delete (next as Record<string, unknown>)[OVERLAY_SEARCH_PARAM_KEY];
+        }
+        delete (next as Record<string, unknown>).activeModalKey;
+        return next;
+      },
+    }).finally(() => {
+      keysCurrentlyClosing.delete(currentKey);
+    });
+  }, [activeOverlayKey, navigate]);
 
   const toggle = useCallback(() => {
     if (isOpen) {

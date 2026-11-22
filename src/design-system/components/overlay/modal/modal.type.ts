@@ -24,6 +24,8 @@ export type ModalRootProps = (
   dialogClickOriginAnimation?: boolean;
   drawerPlacement?: ChakraDrawer.RootProps["placement"];
   drawerSwipeToDismiss?: boolean;
+  beforeClose?: () => boolean | Promise<boolean>;
+  trapFocus?: boolean;
 };
 
 export type ModalTriggerProps = (

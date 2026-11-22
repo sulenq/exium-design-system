@@ -5612,44 +5612,92 @@ const ModalPlaygroundDemo = ({
     modalKey: "docs-modal",
   });
 
+  const childModal = usePopModal({
+    modalKey: `${modalKey}.child`,
+  });
+
   return (
-    <Modal.Root
-      modalKey={modalKey}
-      opened={isOpen}
-      open={open}
-      close={close}
-      size={size}
-    >
-      <Modal.Trigger asChild>
-        <Button variant={"outline"}>Buka Modal Adaptif</Button>
-      </Modal.Trigger>
-      <Modal.Content>
-        <Modal.Header>
-          <Modal.Title textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
-            Exium Adaptive Modal
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <VStack gap={4}>
-            <P color={"fg.muted"}>
-              Modal adaptif Exium secara cerdas merender komponen Dialog
-              mengambang pada layar desktop, dan otomatis bertransformasi
-              menjadi Drawer geser bawah pada layar ponsel.
-            </P>
-            <P color={"fg.muted"}>
-              Perubahan ukuran viewport langsung mengadaptasi layout modal
-              secara mulus tanpa kehilangan data form atau memicu reload status
-              URL.
-            </P>
-          </VStack>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button w={"full"} variant={"outline"} onClick={close}>
-            Tutup Modal
-          </Button>
-        </Modal.Footer>
-      </Modal.Content>
-    </Modal.Root>
+    <>
+      <Modal.Root
+        modalKey={modalKey}
+        opened={isOpen}
+        open={open}
+        close={close}
+        size={size}
+      >
+        <Modal.Trigger asChild>
+          <Button variant={"outline"}>Buka Modal Adaptif</Button>
+        </Modal.Trigger>
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
+              Exium Adaptive Modal (Parent)
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <VStack gap={4}>
+              <P color={"fg.muted"}>
+                Modal adaptif Exium secara cerdas merender komponen Dialog
+                mengambang pada layar desktop, dan otomatis bertransformasi
+                menjadi Drawer geser bawah pada layar ponsel.
+              </P>
+              <P color={"fg.muted"}>
+                Coba buka child modal bersarang (nested) di bawah ini untuk menguji
+                urutan z-index, stack backdrop, dan ketahanan saat browser di-refresh.
+              </P>
+              <Button
+                variant={"solid"}
+                primary
+                onClick={() => childModal.open()}
+              >
+                Buka Nested Child Modal
+              </Button>
+            </VStack>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button w={"full"} variant={"outline"} onClick={close}>
+              Tutup Modal Parent
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+
+      {/* Nested Child Modal */}
+      <Modal.Root
+        modalKey={childModal.modalKey}
+        opened={childModal.isOpen}
+        open={childModal.open}
+        close={childModal.close}
+        size={"xs"}
+      >
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
+              Nested Child Modal
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <VStack gap={3} textAlign={"center"}>
+              <P color={"fg.muted"}>
+                Ini adalah modal anak bersarang dengan key:
+              </P>
+              <P fontWeight={"semibold"} color={"fg.default"}>
+                {childModal.modalKey}
+              </P>
+              <P fontSize={"sm"} color={"fg.subtle"}>
+                Backdrop dan dialog anak selalu berada di atas modal induk, baik saat
+                dibuka interaktif maupun saat di-refresh pada URL langsung (?overlay=docs-modal.child).
+              </P>
+            </VStack>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button w={"full"} variant={"solid"} primary onClick={childModal.close}>
+              Tutup Child Modal
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+    </>
   );
 };
 

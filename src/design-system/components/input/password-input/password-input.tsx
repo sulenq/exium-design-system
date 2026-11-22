@@ -13,6 +13,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
+import { t } from "@/shared/libs/i18n";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import {
   Input as ChakraInput,
@@ -118,7 +119,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         e.currentTarget.value.length >= restProps.maxLength
       ) {
         toast.warning(
-          `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
+          t["input.max_length_warning"]?.({
+            max: restProps.maxLength,
+          }) ??
+            `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
           { id: "input-max-length-warning" },
         );
       }
@@ -188,7 +192,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               currentVal.length >= restProps.maxLength
             ) {
               toast.warning(
-                `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
+                t["input.max_length_warning"]?.({
+                  max: restProps.maxLength,
+                }) ??
+                  `Karakter telah mencapai batas maksimal (${restProps.maxLength} karakter).`,
                 { id: "input-max-length-warning" },
               );
             }
@@ -206,7 +213,10 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               currentVal.length - selectionLen + pastedText.length;
             if (projectedLen > restProps.maxLength) {
               toast.warning(
-                `Teks melebihi batas maksimal (${restProps.maxLength} karakter) dan otomatis dipotong.`,
+                t["input.paste_max_length_warning"]?.({
+                  max: restProps.maxLength,
+                }) ??
+                  `Teks melebihi batas maksimal (${restProps.maxLength} karakter) dan otomatis dipotong.`,
                 { id: "input-max-length-warning" },
               );
             }

@@ -12,6 +12,8 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
   const {
     pageSize,
     setPageSize,
+    page,
+    setPage,
     options = DEFAULT_PAGE_SIZE_OPTIONS,
     title = t["common.page_size"](),
     ...restProps
@@ -29,7 +31,17 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
       value={String(pageSize)}
       options={selectOptions}
       onValueChange={(val) => {
-        setPageSize?.(parseInt(val, 10));
+        const nextSize = parseInt(val, 10);
+        if (Number.isNaN(nextSize)) return;
+
+        setPageSize?.(nextSize);
+
+        if (setPage && page) {
+          // Keep first visible item in view
+          const nextTargetPage =
+            Math.floor(((page - 1) * pageSize) / nextSize) + 1;
+          setPage(nextTargetPage);
+        }
       }}
       clearable={false}
       suffixLabel={<Span ml={1}>{"/page"}</Span>}

@@ -300,5 +300,23 @@
     "unit_hour": "Jam",
     "unit_day": "Hari",
     "unit_week": "Minggu"
+  },
+  "confirm": {
+    "default_description": "Tindakan ini akan diproses pada sistem."
+  },
+  "pagination": {
+    "previous": "Halaman Sebelumnya",
+    "next": "Halaman Selanjutnya",
+    "total": "Total {total}",
+    "total_unknown": "Total ?"
+  },
+  "input": {
+    "max_length_warning": "Karakter telah mencapai batas maksimal ({max} karakter).",
+    "paste_max_length_warning": "Teks melebihi batas maksimal ({max} karakter) dan otomatis dipotong."
+  },
+  "map": {
+    "search_attributes": "Cari atribut...",
+    "layer_symbology_management": "Manajemen Layer & Simbologi IGT",
+    "failed_loading_symbology": "Gagal Memuat Simbologi"
   }
 }

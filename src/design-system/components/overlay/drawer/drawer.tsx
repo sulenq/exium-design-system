@@ -74,20 +74,17 @@ const DrawerRoot = (props: DrawerRootProps) => {
     placement = "bottom",
     size = "xs",
     closeOnInteractOutside = true,
+    trapFocus = true,
     ...restProps
   } = props;
 
   // States
-  const [delayedOpened, setDelayedOpened] = useState(opened);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   useFirstMountEffect(
     {
-      onFirstMount: () => {
-        setDelayedOpened(opened);
-      },
+      onFirstMount: () => {},
       onUpdate: () => {
-        setDelayedOpened(opened);
         if (!opened) {
           setTimeout(() => {
             setFullscreen(false);
@@ -130,14 +127,14 @@ const DrawerRoot = (props: DrawerRootProps) => {
   return (
     <DrawerContext.Provider value={contextValue}>
       <ChakraDrawer.Root
-        open={delayedOpened}
+        open={opened}
         placement={placement}
         size={size}
         lazyMount
         unmountOnExit
-        {...restProps}
-        trapFocus={false}
+        trapFocus={trapFocus}
         preventScroll
+        {...restProps}
         onEscapeKeyDown={() => {
           if (close) {
             close();
@@ -178,11 +175,15 @@ const DrawerBackdrop = (props: ChakraDrawer.BackdropProps) => {
   const { onClick, ...restProps } = props;
 
   // Contexts
-  const { close, closeOnInteractOutside } = useDrawerContext();
+  const { modalKey, close, closeOnInteractOutside } = useDrawerContext();
+
+  const nestingLevel = modalKey.split(".").length;
+  const baseZIndex = 1400 + nestingLevel * 10;
 
   return (
     <ChakraDrawer.Backdrop
       pointerEvents={"auto"}
+      zIndex={baseZIndex - 1}
       onClick={(event) => {
         if (!closeOnInteractOutside) return;
         if (close) {
@@ -239,7 +240,8 @@ const DrawerContent = (props: DrawerContentProps) => {
   };
 
   // Derived Values
-  const zIndex = 1400 + modalKey.split(".").length;
+  const nestingLevel = modalKey.split(".").length;
+  const zIndex = 1400 + nestingLevel * 10;
 
   // Effects
   useEffect(() => {

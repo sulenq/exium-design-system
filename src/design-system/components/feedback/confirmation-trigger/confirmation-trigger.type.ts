@@ -13,7 +13,10 @@ export type ConfirmationTriggerProps = {
   cancelLabel?: string;
   colorPalette?: string;
   modalKey: string;
+  /**
+   * Props passed to the confirm button. Note: `loading` is ignored/deprecated as the dialog closes immediately upon confirmation.
+   */
   confirmButtonProps?: Partial<ButtonProps>;
-  onConfirm?: () => void;
-  onCancel?: () => void;
+  onConfirm?: () => void | Promise<void>;
+  onCancel?: () => void | Promise<void>;
 };

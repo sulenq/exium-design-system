@@ -8,6 +8,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
+import { t } from "@/shared/libs/i18n";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { Textarea as ChakraTextarea } from "@chakra-ui/react";
 import * as React from "react";
@@ -72,6 +73,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         rounded={theme.radii.component}
         fontSize={"md"}
         minH={"135px"}
+        {...restProps}
         onFocusCapture={(e) => {
           setIsFocused(true);
           props.onFocusCapture?.(e);
@@ -95,7 +97,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               (e.currentTarget.selectionStart ?? 0);
             if (selectionLen === 0 && currentVal.length >= props.maxLength) {
               toast.warning(
-                `Karakter telah mencapai batas maksimal (${props.maxLength} karakter).`,
+                t["input.max_length_warning"]?.({
+                  max: props.maxLength,
+                }) ??
+                  `Karakter telah mencapai batas maksimal (${props.maxLength} karakter).`,
                 { id: "input-max-length-warning" },
               );
             }
@@ -113,7 +118,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               currentVal.length - selectionLen + pastedText.length;
             if (projectedLen > props.maxLength) {
               toast.warning(
-                `Teks melebihi batas maksimal (${props.maxLength} karakter) dan otomatis dipotong.`,
+                t["input.paste_max_length_warning"]?.({
+                  max: props.maxLength,
+                }) ??
+                  `Teks melebihi batas maksimal (${props.maxLength} karakter) dan otomatis dipotong.`,
                 { id: "input-max-length-warning" },
               );
             }
@@ -126,7 +134,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             e.currentTarget.value.length >= props.maxLength
           ) {
             toast.warning(
-              `Karakter telah mencapai batas maksimal (${props.maxLength} karakter).`,
+              t["input.max_length_warning"]?.({
+                max: props.maxLength,
+              }) ??
+                `Karakter telah mencapai batas maksimal (${props.maxLength} karakter).`,
               { id: "input-max-length-warning" },
             );
           }
@@ -149,7 +160,6 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             color: "transparent",
           },
         })}
-        {...restProps}
       />
     );
 

@@ -5,41 +5,71 @@ import type { DataViewPaginationProps } from "@/design-system/components/data-di
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P, TNum } from "@/design-system/components/typography/p/p";
+import { t } from "@/shared/libs/i18n";
 import { formatNumber } from "@/shared/utils/formatter/number.formatter";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 export const DataViewPagination = (props: DataViewPaginationProps) => {
   // Props
-  const { page, setPage, totalPage, ...restProps } = props;
+  const {
+    page,
+    setPage,
+    totalPage,
+    hasNextPage,
+    prevButtonProps,
+    nextButtonProps,
+    ...flatProps
+  } = props;
+
+  // Strip onClick from flatProps so consumer cannot accidentally overwrite both Prev & Next buttons
+  const { onClick: _ignoredOnClick, ...safeFlatProps } = flatProps;
 
   // Derived Values
   const canGoPrev = page > 1;
-  const canGoNext = totalPage ? page < totalPage : false;
+  const canGoNext =
+    totalPage != null ? page < totalPage : hasNextPage !== false;
+
+  const previousLabel =
+    t["pagination.previous"]?.() ?? "Halaman Sebelumnya";
+  const nextLabel =
+    t["pagination.next"]?.() ?? "Halaman Selanjutnya";
 
   return (
     <HStack align={"center"} gap={2}>
       <IconButton
         variant={"ghost"}
         disabled={!canGoPrev}
-        aria-label={"Halaman Sebelumnya"}
-        title={"Halaman Sebelumnya"}
-        onClick={() => setPage?.(page - 1)}
-        {...restProps}
+        aria-label={previousLabel}
+        title={previousLabel}
+        {...safeFlatProps}
+        {...prevButtonProps}
+        onClick={(e) => {
+          setPage?.(page - 1);
+          prevButtonProps?.onClick?.(e);
+        }}
       >
         <AppIcon icon={ChevronLeftIcon} />
       </IconButton>
 
       <P whiteSpace={"nowrap"}>
-        <TNum>{formatNumber(page)}</TNum>
+        <TNum>
+          {totalPage != null
+            ? `${formatNumber(page)} / ${formatNumber(totalPage)}`
+            : formatNumber(page)}
+        </TNum>
       </P>
 
       <IconButton
         variant={"ghost"}
         disabled={!canGoNext}
-        aria-label={"Halaman Selanjutnya"}
-        title={"Halaman Selanjutnya"}
-        onClick={() => setPage?.(page + 1)}
-        {...restProps}
+        aria-label={nextLabel}
+        title={nextLabel}
+        {...safeFlatProps}
+        {...nextButtonProps}
+        onClick={(e) => {
+          setPage?.(page + 1);
+          nextButtonProps?.onClick?.(e);
+        }}
       >
         <AppIcon icon={ChevronRightIcon} />
       </IconButton>
