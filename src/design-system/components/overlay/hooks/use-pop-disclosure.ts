@@ -5,7 +5,7 @@ import type {
   UsePopDisclosureReturn,
 } from "@/design-system/components/overlay/modal/modal.type";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const OVERLAY_SEARCH_PARAM_KEY = "overlay";
 /**
@@ -44,17 +44,25 @@ export function usePopDisclosure(
 
   const navigate = useNavigate();
 
+  // Compute URL-based open condition
+  const isUrlOpen =
+    typeof activeOverlayKey === "string" &&
+    (activeOverlayKey === modalKey || activeOverlayKey.startsWith(`${modalKey}.`));
+
+  // Optimistic local state: track URL changes during render without cascading effects
+  const [prevUrlOpen, setPrevUrlOpen] = useState(isUrlOpen);
+  const [optimisticOpen, setOptimisticOpen] = useState<boolean>(isUrlOpen);
+
+  // Sync state during render when URL updates from outside (browser back/forward, deep-link, refresh)
+  if (isUrlOpen !== prevUrlOpen) {
+    setPrevUrlOpen(isUrlOpen);
+    setOptimisticOpen(isUrlOpen);
+  }
+
+  const isOpen = optimisticOpen;
+
   // Item 4: Manage body scroll/pointer cleanup safely per-instance
   const wasOpenRef = useRef(false);
-
-  // Matches either exact key OR nested child key (separated by dot '.')
-  const isOpen = useMemo(() => {
-    if (typeof activeOverlayKey !== "string") return false;
-
-    return (
-      activeOverlayKey === modalKey || activeOverlayKey.startsWith(`${modalKey}.`)
-    );
-  }, [modalKey, activeOverlayKey]);
 
   useEffect(() => {
     if (wasOpenRef.current && !isOpen) {
@@ -81,13 +89,14 @@ export function usePopDisclosure(
   // Helper function to check if any specific key is currently active
   const isKeyOpen = useCallback(
     (checkKey: string): boolean => {
+      if (checkKey === modalKeyRef.current) return isOpen;
       if (typeof activeOverlayKey !== "string") return false;
       return (
         activeOverlayKey === checkKey ||
         activeOverlayKey.startsWith(`${checkKey}.`)
       );
     },
-    [activeOverlayKey],
+    [activeOverlayKey, isOpen],
   );
 
   const open = useCallback(
@@ -98,6 +107,10 @@ export function usePopDisclosure(
 
       openedByApp.add(targetKey);
 
+      // 1. Optimistic instant response (0ms)
+      setOptimisticOpen(true);
+
+      // 2. Synchronize URL asynchronously
       navigate({
         to: ".",
         resetScroll: false,
@@ -116,6 +129,9 @@ export function usePopDisclosure(
     if (keysCurrentlyClosing.has(currentKey)) {
       return;
     }
+
+    // 1. Optimistic instant response (0ms)
+    setOptimisticOpen(false);
 
     keysCurrentlyClosing.add(currentKey);
 
