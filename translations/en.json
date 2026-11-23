@@ -309,7 +309,9 @@
     "previous": "Previous page",
     "next": "Next page",
     "total": "Total {total}",
-    "total_unknown": "Total ?"
+    "total_unknown": "Total ?",
+    "page_size_suffix": "/page",
+    "page_size_title": "Rows per page"
   },
   "input": {
     "max_length_warning": "Character limit reached ({max} characters).",

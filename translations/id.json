@@ -308,7 +308,9 @@
     "previous": "Halaman Sebelumnya",
     "next": "Halaman Selanjutnya",
     "total": "Total {total}",
-    "total_unknown": "Total ?"
+    "total_unknown": "Total ?",
+    "page_size_suffix": "/halaman",
+    "page_size_title": "Baris per halaman"
   },
   "input": {
     "max_length_warning": "Karakter telah mencapai batas maksimal ({max} karakter).",

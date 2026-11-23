@@ -15,7 +15,7 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
     page,
     setPage,
     options = DEFAULT_PAGE_SIZE_OPTIONS,
-    title = t["common.page_size"](),
+    title = t["pagination.page_size_title"]?.() ?? "Baris per halaman",
     ...restProps
   } = props;
 
@@ -44,11 +44,15 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
         }
       }}
       clearable={false}
-      suffixLabel={<Span ml={1}>{"/page"}</Span>}
+      suffixLabel={
+        <Span ml={1}>
+          {t["pagination.page_size_suffix"]?.() ?? "/halaman"}
+        </Span>
+      }
       variant={"ghost"}
       title={title}
-      minW={"120px"}
-      w={"120px"}
+      minW={"130px"}
+      w={"130px"}
       fontSize={"md"}
       {...restProps}
     />

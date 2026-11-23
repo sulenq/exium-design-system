@@ -48,7 +48,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant,
       // clicky = true,
       colorPalette,
-      lineClamp = 1,
+      lineClamp,
       children,
       minW = 0,
       maxW = "full",
@@ -68,26 +68,34 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       const flushTextGroup = () => {
         if (currentTextGroup.length > 0) {
           const combinedText = currentTextGroup.join("");
-          const clampVal = lineClamp != null ? Number(lineClamp) : 1;
+          const hasLineClamp = lineClamp !== undefined && lineClamp !== null;
+          const clampVal = hasLineClamp ? Number(lineClamp) : undefined;
 
           const renderTextNode = (spanRef?: React.Ref<HTMLSpanElement>) => (
             <Span
               ref={spanRef}
               minW={0}
               maxW={"full"}
-              overflow={"hidden"}
+              overflow={hasLineClamp ? "hidden" : undefined}
               py={"1px"}
               display={"inline-block"}
               fontSize={restProps?.fontSize}
               lineHeight={"normal"}
-              lineClamp={clampVal > 0 ? clampVal : undefined}
-              wordBreak={"break-all"}
+              lineClamp={clampVal !== undefined && clampVal > 0 ? clampVal : undefined}
+              wordBreak={
+                hasLineClamp
+                  ? clampVal && clampVal > 1
+                    ? "break-word"
+                    : "break-all"
+                  : undefined
+              }
             >
               {combinedText}
             </Span>
           );
 
           if (
+            hasLineClamp &&
             !tooltip &&
             typeof combinedText === "string" &&
             combinedText.trim()

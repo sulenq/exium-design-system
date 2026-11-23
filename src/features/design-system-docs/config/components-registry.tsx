@@ -2205,6 +2205,103 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     },
   },
 
+  confirmation_trigger: {
+    key: "confirmation_trigger",
+    title: "Confirmation Trigger",
+    category: "Feedback & Status",
+    description:
+      "Trigger dialog konfirmasi aksi destruktif atau penting yang otomatis sinkron dengan state overlay URL.",
+    importPath:
+      'import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";',
+    component: ConfirmationTrigger,
+    defaultProps: {
+      modalKey: "demo-confirmation",
+      title: "Hapus Data?",
+      description: "Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin melanjutkan?",
+      confirmLabel: "Ya, Lanjutkan",
+      cancelLabel: "Batal",
+      colorPalette: "red",
+    },
+    propsSpec: [
+      {
+        name: "modalKey",
+        type: "string",
+        defaultValue: "demo-confirmation",
+        description: "Identifier modal key unik untuk URL sync.",
+        controlKind: "text",
+      },
+      {
+        name: "title",
+        type: "string",
+        defaultValue: "Hapus Data?",
+        description: "Judul konfirmasi.",
+        controlKind: "text",
+      },
+      {
+        name: "description",
+        type: "string",
+        defaultValue: "Tindakan ini tidak dapat dibatalkan.",
+        description: "Keterangan konfirmasi.",
+        controlKind: "text",
+      },
+      {
+        name: "confirmLabel",
+        type: "string",
+        defaultValue: "Ya, Lanjutkan",
+        description: "Label tombol konfirmasi.",
+        controlKind: "text",
+      },
+      {
+        name: "cancelLabel",
+        type: "string",
+        defaultValue: "Batal",
+        description: "Label tombol batal.",
+        controlKind: "text",
+      },
+      {
+        name: "colorPalette",
+        type: "string",
+        defaultValue: "red",
+        description: "Palette warna tombol konfirmasi.",
+        controlKind: "select",
+        options: ["red", "blue", "green", "orange", "purple", "gray"],
+      },
+    ],
+    generateCode: (props) => {
+      const modalKey = (props.modalKey as string) || "demo-confirmation";
+      const title = (props.title as string) || "Konfirmasi Tindakan";
+      const desc = (props.description as string) || "Apakah Anda yakin?";
+      const confirmLabel = (props.confirmLabel as string) || "Konfirmasi";
+      const cancelLabel = (props.cancelLabel as string) || "Batal";
+      const colorPalette = (props.colorPalette as string) || "red";
+
+      return `<ConfirmationTrigger\n  modalKey={"${modalKey}"}\n  title={"${title}"}\n  description={"${desc}"}\n  confirmLabel={"${confirmLabel}"}\n  cancelLabel={"${cancelLabel}"}\n  colorPalette={"${colorPalette}"}\n  onConfirm={() => console.log("Confirmed!")}\n>\n  <Button colorPalette={"${colorPalette}"} variant={"outline"}>\n    {"Buka Konfirmasi"}\n  </Button>\n</ConfirmationTrigger>`;
+    },
+    renderPlayground: (props) => (
+      <ConfirmationTrigger
+        modalKey={(props.modalKey as string) || "demo-confirmation"}
+        title={(props.title as string) || "Hapus Data?"}
+        description={
+          (props.description as string) ||
+          "Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin melanjutkan?"
+        }
+        confirmLabel={(props.confirmLabel as string) || "Ya, Lanjutkan"}
+        cancelLabel={(props.cancelLabel as string) || "Batal"}
+        colorPalette={(props.colorPalette as string) || "red"}
+        onConfirm={() => {
+          console.log("Confirmed!");
+        }}
+      >
+        <Button
+          colorPalette={(props.colorPalette as string) || "red"}
+          variant={"outline"}
+        >
+          {"Buka Dialog Konfirmasi"}
+        </Button>
+      </ConfirmationTrigger>
+    ),
+  },
+
   alert: {
     key: "alert",
     title: "Alert",

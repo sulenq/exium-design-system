@@ -240,6 +240,10 @@ export const DS_NAVS_MAP = {
   },
 
   // Components - Feedback & Status
+  confirmation_trigger: {
+    icon: WarningCircleIcon,
+    title: "Confirmation Trigger",
+  },
   alert: {
     icon: WarningCircleIcon,
     title: "Alert",
