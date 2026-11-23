@@ -66,6 +66,7 @@ export type DataViewTableRootProps<
   itemActions?: DataViewItemActionsGenerator<T>[];
   withNumbering?: boolean;
   withStickyMenu?: boolean;
+  rowContextMenu?: boolean;
   virtualized?: boolean;
   fixedItemHeight?: boolean;
   renderTdCell?: (
@@ -129,6 +130,7 @@ export type DataViewTableContextValue<T = Record<string, unknown>> = {
   itemActions?: DataViewItemActionsGenerator<T>[];
   withNumbering?: boolean;
   withStickyMenu?: boolean;
+  rowContextMenu?: boolean;
   virtualized?: boolean;
   fixedItemHeight?: boolean;
   tableContainerRef: import("react").RefObject<HTMLDivElement | null>;
@@ -145,7 +147,7 @@ export type DataViewTableContextValue<T = Record<string, unknown>> = {
   clearSelectedItems: () => void;
   canBatchSelect: boolean;
   activeItemMenuId?: string | null;
-  setActiveItemMenuId?: (id: string | null) => void;
+  setActiveItemMenuId?: React.Dispatch<React.SetStateAction<string | null>>;
   activeContextMenu?: {
     item: FormattedListItem<T>;
     point: { x: number; y: number };
@@ -154,6 +156,18 @@ export type DataViewTableContextValue<T = Record<string, unknown>> = {
     context: {
       item: FormattedListItem<T>;
       point: { x: number; y: number };
+    } | null,
+  ) => void;
+  modalHost?: {
+    item: FormattedListItem<T>;
+    action: import("@/design-system/components/data-display/data-view/data-view.type").DataViewDeclarativeItemAction<T>;
+    modalKey: string;
+  } | null;
+  setModalHost?: (
+    host: {
+      item: FormattedListItem<T>;
+      action: import("@/design-system/components/data-display/data-view/data-view.type").DataViewDeclarativeItemAction<T>;
+      modalKey: string;
     } | null,
   ) => void;
   renderTdCell?: (

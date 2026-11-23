@@ -459,19 +459,13 @@ export const DataViewStickyActions = <
   );
 };
 
-export const DataListItemActionsTrigger = <
+export const DataViewItemActionsMenuContent = <
   T extends Record<string, unknown> = Record<string, unknown>,
 >(
-  props: DataViewItemActionsTriggerProps<T>,
+  props: import("@/design-system/components/data-display/data-view/data-view-item-actions.type").DataViewItemActionsMenuContentProps<T>,
 ) => {
   // Props
-  const {
-    children,
-    item,
-    itemActions = [],
-    contextedTrigger = false,
-    ...restProps
-  } = props;
+  const { item, itemActions = [], onActionClick } = props;
 
   // Hooks
   const navigate = useNavigate();
@@ -488,6 +482,215 @@ export const DataListItemActionsTrigger = <
     }
     return true;
   });
+
+  return (
+    <Menu.Content minW={"160px"} zIndex={"dropdown"}>
+      <VStack gap={1}>
+        {isEmptyArray(visibleActions) && (
+          <Menu.Item
+            value={"no-action"}
+            disabled={true}
+            color={"fg.muted"}
+            cursor={"default"}
+          >
+            {t["action.no_actions"]?.() ?? "Tidak ada aksi"}
+          </Menu.Item>
+        )}
+
+        {!isEmptyArray(visibleActions) &&
+          visibleActions.map((action, index) => {
+            if (isDeclarativeAction(action)) {
+              const key = action.key ?? `menu-action-${index}`;
+              const isLoading = resolveLoading(
+                action.loading,
+                item.data,
+                item,
+              );
+              const isDisabled =
+                isLoading || resolveBoolean(action.disabled, item.data, item);
+              const disabledMessage = resolveDisabledMessage(
+                action.disabledMessage,
+                item.data,
+                item,
+              );
+              const resolvedLabel = resolveLabel(action.label, item.data);
+              const baseTooltip = action.tooltip
+                ? resolveTooltip(action.tooltip, item.data, resolvedLabel)
+                : resolvedLabel;
+              const menuTooltipContent =
+                isDisabled && disabledMessage ? disabledMessage : baseTooltip;
+              const resolvedIcon = resolveIcon(action.icon, item.data);
+              const resolvedColorPalette = resolveColorPalette(
+                action.colorPalette,
+                item.data,
+              );
+              const resolvedHref = resolveHref(action.href, item.data, item);
+              const iconNode = renderIcon(resolvedIcon);
+              const triggerElement = resolveTriggerElement(
+                action.modal,
+                item,
+              );
+
+              const menuItemContent = (
+                <>
+                  {isLoading ? <Loader /> : iconNode}
+
+                  {resolvedLabel}
+                </>
+              );
+
+              let rawMenuItemNode: ReactElement;
+
+              if (resolvedHref) {
+                rawMenuItemNode = (
+                  <Menu.Item
+                    asChild
+                    value={key}
+                    disabled={isDisabled}
+                    color={
+                      resolvedColorPalette
+                        ? `${resolvedColorPalette}.fg`
+                        : undefined
+                    }
+                  >
+                    <a
+                      href={resolvedHref}
+                      target={action.target ?? "_blank"}
+                      rel={action.rel ?? "noopener noreferrer"}
+                      onClick={(e) => {
+                        if (isDisabled) {
+                          e.preventDefault();
+                          return;
+                        }
+                        onActionClick?.();
+                        void action.onClick?.(item.data, item);
+                      }}
+                    >
+                      {menuItemContent}
+                    </a>
+                  </Menu.Item>
+                );
+              } else {
+                rawMenuItemNode = (
+                  <Menu.Item
+                    value={key}
+                    disabled={isDisabled}
+                    color={
+                      resolvedColorPalette
+                        ? `${resolvedColorPalette}.fg`
+                        : undefined
+                    }
+                    onPointerDown={(e) => {
+                      const triggerProps = triggerElement?.props as
+                        | { modalKey?: string }
+                        | undefined;
+                      if (triggerProps?.modalKey) {
+                        updateClickOrigin(triggerProps.modalKey, {
+                          x: e.clientX,
+                          y: e.clientY,
+                        });
+                      }
+                    }}
+                    onClick={
+                      triggerElement
+                        ? () => {
+                            if (isDisabled) return;
+                            onActionClick?.();
+                            const triggerProps = triggerElement.props as {
+                              modalKey?: string;
+                            };
+                            const targetKey =
+                              triggerProps?.modalKey ??
+                              (action.key
+                                ? `${action.key}-${item.id}`
+                                : undefined);
+                            if (targetKey) {
+                              if (tableContext?.setModalHost) {
+                                tableContext.setModalHost({
+                                  item: item as unknown as FormattedListItem<Record<string, unknown>>,
+                                  action: action as unknown as import("@/design-system/components/data-display/data-view/data-view.type").DataViewDeclarativeItemAction<Record<string, unknown>>,
+                                  modalKey: targetKey,
+                                });
+                              }
+                              navigate({
+                                to: ".",
+                                resetScroll: false,
+                                search: (old: Record<string, unknown>) => ({
+                                  ...old,
+                                  overlay: targetKey,
+                                }),
+                              });
+                            }
+                          }
+                        : () => {
+                            if (isDisabled) return;
+                            onActionClick?.();
+                            executeItemAction(action, item);
+                          }
+                    }
+                  >
+                    {menuItemContent}
+                  </Menu.Item>
+                );
+              }
+
+              let menuItemNode = rawMenuItemNode;
+              if (menuTooltipContent) {
+                menuItemNode = (
+                  <Tooltip
+                    content={menuTooltipContent}
+                    positioning={{ placement: "right" }}
+                  >
+                    <Box
+                      w={"full"}
+                      cursor={isDisabled ? "not-allowed" : undefined}
+                      pointerEvents={"auto"}
+                    >
+                      {rawMenuItemNode}
+                    </Box>
+                  </Tooltip>
+                );
+              }
+
+              return <span key={key}>{menuItemNode}</span>;
+            }
+
+            // Legacy functional generator fallback
+            const node = action(item, index);
+            if (!node) return null;
+
+            return (
+              <span
+                key={index}
+                onClick={() => {
+                  onActionClick?.();
+                }}
+              >
+                {node}
+              </span>
+            );
+          })}
+      </VStack>
+    </Menu.Content>
+  );
+};
+
+export const DataListItemActionsTrigger = <
+  T extends Record<string, unknown> = Record<string, unknown>,
+>(
+  props: DataViewItemActionsTriggerProps<T>,
+) => {
+  // Props
+  const {
+    children,
+    item,
+    itemActions = [],
+    contextedTrigger = false,
+    ...restProps
+  } = props;
+
+  // Contexts
+  const tableContext = useContext(DataViewTableContext);
 
   const isMenuOpen = tableContext?.setActiveItemMenuId
     ? tableContext.activeItemMenuId === item.id
@@ -526,178 +729,7 @@ export const DataListItemActionsTrigger = <
         <Menu.Trigger aria-label={"item-actions"}>{children}</Menu.Trigger>
       )}
 
-      <Menu.Content minW={"160px"} zIndex={"dropdown"}>
-        <VStack gap={1}>
-          {isEmptyArray(visibleActions) && (
-            <Menu.Item
-              value={"no-action"}
-              disabled={true}
-              color={"fg.muted"}
-              cursor={"default"}
-            >
-              {t["action.no_actions"]?.() ?? "Tidak ada aksi"}
-            </Menu.Item>
-          )}
-
-          {!isEmptyArray(visibleActions) &&
-            visibleActions.map((action, index) => {
-              if (isDeclarativeAction(action)) {
-                const key = action.key ?? `menu-action-${index}`;
-                const isLoading = resolveLoading(
-                  action.loading,
-                  item.data,
-                  item,
-                );
-                const isDisabled =
-                  isLoading || resolveBoolean(action.disabled, item.data, item);
-                const disabledMessage = resolveDisabledMessage(
-                  action.disabledMessage,
-                  item.data,
-                  item,
-                );
-                const resolvedLabel = resolveLabel(action.label, item.data);
-                const baseTooltip = action.tooltip
-                  ? resolveTooltip(action.tooltip, item.data, resolvedLabel)
-                  : resolvedLabel;
-                const menuTooltipContent =
-                  isDisabled && disabledMessage ? disabledMessage : baseTooltip;
-                const resolvedIcon = resolveIcon(action.icon, item.data);
-                const resolvedColorPalette = resolveColorPalette(
-                  action.colorPalette,
-                  item.data,
-                );
-                const resolvedHref = resolveHref(action.href, item.data, item);
-                const iconNode = renderIcon(resolvedIcon);
-                const triggerElement = resolveTriggerElement(
-                  action.modal,
-                  item,
-                );
-                const shouldMountModalInMenu =
-                  Boolean(triggerElement) && action.showInRow === false;
-
-                const menuItemContent = (
-                  <>
-                    {isLoading ? <Loader /> : iconNode}
-
-                    {resolvedLabel}
-                  </>
-                );
-
-                let rawMenuItemNode: ReactElement;
-
-                if (resolvedHref) {
-                  rawMenuItemNode = (
-                    <Menu.Item
-                      asChild
-                      value={key}
-                      disabled={isDisabled}
-                      color={
-                        resolvedColorPalette
-                          ? `${resolvedColorPalette}.fg`
-                          : undefined
-                      }
-                    >
-                      <a
-                        href={resolvedHref}
-                        target={action.target ?? "_blank"}
-                        rel={action.rel ?? "noopener noreferrer"}
-                        onClick={(e) => {
-                          if (isDisabled) {
-                            e.preventDefault();
-                            return;
-                          }
-                          void action.onClick?.(item.data, item);
-                        }}
-                      >
-                        {menuItemContent}
-                      </a>
-                    </Menu.Item>
-                  );
-                } else {
-                  rawMenuItemNode = (
-                    <Menu.Item
-                      value={key}
-                      disabled={isDisabled}
-                      color={
-                        resolvedColorPalette
-                          ? `${resolvedColorPalette}.fg`
-                          : undefined
-                      }
-                      onPointerDown={(e) => {
-                        const triggerProps = triggerElement?.props as
-                          | { modalKey?: string }
-                          | undefined;
-                        if (triggerProps?.modalKey) {
-                          updateClickOrigin(triggerProps.modalKey, {
-                            x: e.clientX,
-                            y: e.clientY,
-                          });
-                        }
-                      }}
-                      onClick={
-                        triggerElement
-                          ? () => {
-                              if (isDisabled) return;
-                              const triggerProps = triggerElement.props as {
-                                modalKey?: string;
-                              };
-                              const targetKey =
-                                triggerProps?.modalKey ??
-                                (action.key
-                                  ? `${action.key}-${item.id}`
-                                  : undefined);
-                              if (targetKey) {
-                                navigate({
-                                  to: ".",
-                                  resetScroll: false,
-                                  search: (old: Record<string, unknown>) => ({
-                                    ...old,
-                                    overlay: targetKey,
-                                  }),
-                                });
-                              }
-                            }
-                          : () => executeItemAction(action, item)
-                      }
-                    >
-                      {menuItemContent}
-                    </Menu.Item>
-                  );
-                }
-
-                let menuItemNode = rawMenuItemNode;
-                if (menuTooltipContent) {
-                  menuItemNode = (
-                    <Tooltip
-                      content={menuTooltipContent}
-                      positioning={{ placement: "right" }}
-                    >
-                      <Box
-                        w={"full"}
-                        cursor={isDisabled ? "not-allowed" : undefined}
-                        pointerEvents={"auto"}
-                      >
-                        {rawMenuItemNode}
-                      </Box>
-                    </Tooltip>
-                  );
-                }
-
-                if (shouldMountModalInMenu && triggerElement) {
-                  return cloneElement(triggerElement, { key }, menuItemNode);
-                }
-
-                return <span key={key}>{menuItemNode}</span>;
-              }
-
-              // Legacy functional generator fallback
-              const node = action(item, index);
-              if (!node) return null;
-
-              return <span key={index}>{node}</span>;
-            })}
-        </VStack>
-      </Menu.Content>
+      <DataViewItemActionsMenuContent item={item} itemActions={itemActions} />
     </Menu.Root>
   );
 };

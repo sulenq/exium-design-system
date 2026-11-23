@@ -30,6 +30,7 @@ import {
   DataListItemActionsTrigger,
   DataViewSpreadActions,
   DataViewStickyActions,
+  resolveTriggerElement,
 } from "@/design-system/components/data-display/data-view/data-view-item-actions";
 import { DataViewRowContextMenu } from "@/design-system/components/data-display/data-view/data-view-row-context-menu";
 import { CursorTooltip } from "@/design-system/components/overlay/cursor-tooltip/cursor-tooltip";
@@ -49,11 +50,13 @@ import { isEmptyArray } from "@/shared/utils/data/array";
 import { tintAlpha } from "@/shared/utils/style/color";
 import { Box, Center } from "@chakra-ui/react";
 import { IconListCheck } from "@tabler/icons-react";
+import { useSearch } from "@tanstack/react-router";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { ChevronDownIcon, ChevronUpIcon, EllipsisIcon } from "lucide-react";
 import {
   memo,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -81,6 +84,7 @@ const DataListTableRootInternal = <
     initialSortOrder = "asc",
     withNumbering = true,
     withStickyMenu = false,
+    rowContextMenu = true,
     canBatchSelect = false,
     selectedItems: controlledSelectedItems,
     onSelectedItemChange,
@@ -159,6 +163,42 @@ const DataListTableRootInternal = <
     item: FormattedListItem<T>;
     point: { x: number; y: number };
   } | null>(null);
+  const [rawModalHost, setModalHost] = useState<{
+    item: FormattedListItem<T>;
+    action: import("@/design-system/components/data-display/data-view/data-view.type").DataViewDeclarativeItemAction<T>;
+    modalKey: string;
+  } | null>(null);
+
+  const activeOverlayKey = useSearch({
+    strict: false,
+    select: (s) => {
+      const state = s as Record<string, unknown> | undefined;
+      return (state?.overlay ?? state?.activeModalKey) as string | undefined;
+    },
+  });
+
+  // modalHost is derived directly during render: active only while overlay matches modalKey
+  const modalHost =
+    rawModalHost && activeOverlayKey === rawModalHost.modalKey
+      ? rawModalHost
+      : null;
+
+  // Virtualization safety: close active menus on table scroll
+  useEffect(() => {
+    if (!activeItemMenuId && !activeContextMenu) return;
+    const container = tableContainerEl ?? tableContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      if (activeItemMenuId) setActiveItemMenuId(null);
+      if (activeContextMenu) setActiveContextMenu(null);
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, [activeItemMenuId, activeContextMenu, tableContainerEl]);
 
   // Resolved Values
   const contextValue = useMemo<DataViewTableContextValue<T>>(
@@ -175,6 +215,7 @@ const DataListTableRootInternal = <
         itemActionsList as unknown as DataViewItemActionsGenerator<T>[],
       withNumbering,
       withStickyMenu,
+      rowContextMenu,
       virtualized,
       fixedItemHeight,
       tableContainerRef,
@@ -204,6 +245,8 @@ const DataListTableRootInternal = <
           point: { x: number; y: number };
         } | null,
       ) => void,
+      modalHost: modalHost as unknown as DataViewTableContextValue<T>["modalHost"],
+      setModalHost: setModalHost as unknown as DataViewTableContextValue<T>["setModalHost"],
       renderTdCell: renderTdCellHandler as unknown as (
         column: FormattedTableColumn,
         item: FormattedListItem<T>,
@@ -221,6 +264,7 @@ const DataListTableRootInternal = <
       itemActionsList,
       withNumbering,
       withStickyMenu,
+      rowContextMenu,
       virtualized,
       fixedItemHeight,
       tableContainerRef,
@@ -239,6 +283,8 @@ const DataListTableRootInternal = <
       setActiveItemMenuId,
       activeContextMenu,
       setActiveContextMenu,
+      modalHost,
+      setModalHost,
       renderTdCellHandler,
     ],
   );
@@ -336,6 +382,16 @@ const DataListTableRootInternal = <
           onClose={() => setActiveContextMenu(null)}
         />
       )}
+
+      {modalHost && (() => {
+        const triggerElement = resolveTriggerElement(modalHost.action.modal, modalHost.item);
+        if (!triggerElement) return null;
+        return (
+          <Box key={`modal-host-${modalHost.modalKey}`} display={"contents"}>
+            {triggerElement}
+          </Box>
+        );
+      })()}
 
       {!isEmptyArray(batchActions) && (
         <DataViewBatchActionBar
@@ -505,13 +561,23 @@ const DataListTableRow = memo(
       pageSize,
       renderTdCell,
       activeItemMenuId,
+      setActiveItemMenuId,
+      activeContextMenu,
       withStickyMenu,
+      rowContextMenu = true,
       setActiveContextMenu,
     } = useDataViewTableContext();
     const { theme } = useThemeStore();
 
     // Hooks
     const { inputType } = useDeviceCapability();
+
+    // Virtualization safety: cleanup activeItemMenuId when unmounted
+    useEffect(() => {
+      return () => {
+        setActiveItemMenuId?.((prev) => (prev === item.id ? null : prev));
+      };
+    }, [item.id, setActiveItemMenuId]);
 
     // Derived Values
     const hasRowActions = !isEmptyArray(itemActions);
@@ -530,7 +596,18 @@ const DataListTableRow = memo(
 
     // Handlers
     const handleContextMenu = (e: React.MouseEvent) => {
-      if (isEmptyArray(itemActions)) return;
+      if (isEmptyArray(itemActions) || !rowContextMenu) return;
+      // Allow browser native context menu inside interactive elements
+      const targetEl = e.target as Element | null;
+      if (
+        targetEl?.closest?.(
+          'input, textarea, select, [contenteditable=""], [contenteditable="true"], a[href]',
+        )
+      ) {
+        e.stopPropagation();
+        return;
+      }
+
       e.preventDefault();
       setActiveContextMenu?.({
         item,
@@ -539,7 +616,17 @@ const DataListTableRow = memo(
     };
 
     const handleTouchStart = (e: React.TouchEvent) => {
-      if (isEmptyArray(itemActions)) return;
+      if (isEmptyArray(itemActions) || !rowContextMenu) return;
+      // Allow native interaction on editable/link elements
+      const targetEl = e.target as Element | null;
+      if (
+        targetEl?.closest?.(
+          'input, textarea, select, [contenteditable=""], [contenteditable="true"], a[href]',
+        )
+      ) {
+        return;
+      }
+
       if (e.touches.length !== 1) return;
       const touch = e.touches[0];
       touchStartPointRef.current = { x: touch.clientX, y: touch.clientY };
@@ -559,8 +646,8 @@ const DataListTableRow = memo(
       const deltaX = Math.abs(touch.clientX - touchStartPointRef.current.x);
       const deltaY = Math.abs(touch.clientY - touchStartPointRef.current.y);
 
-      // Cancel long press on movement > 10px
-      if (deltaX > 10 || deltaY > 10) {
+      // Cancel long press on movement > 8px
+      if (deltaX > 8 || deltaY > 8) {
         clearTimeout(touchTimerRef.current);
         touchTimerRef.current = null;
       }
@@ -573,10 +660,30 @@ const DataListTableRow = memo(
       }
     };
 
+    const handleTouchCancel = () => {
+      if (touchTimerRef.current) {
+        clearTimeout(touchTimerRef.current);
+        touchTimerRef.current = null;
+      }
+    };
+
+    // Cleanup touchTimer on unmount
+    useEffect(() => {
+      return () => {
+        if (touchTimerRef.current) {
+          clearTimeout(touchTimerRef.current);
+          touchTimerRef.current = null;
+        }
+      };
+    }, []);
+
     const isStickyMenuOpen = activeItemMenuId === item.id;
+    const isMenuOpen = isStickyMenuOpen || activeContextMenu?.item?.id === item.id;
     const cellBg = isItemSelected
       ? tintAlpha(`${theme.colorPalette}.subtle`, 40)
-      : "bg.body";
+      : isMenuOpen
+        ? "bg.subtle"
+        : "bg.body";
 
     const cellHoverBg = hasRowActions
       ? isItemSelected
@@ -586,17 +693,18 @@ const DataListTableRow = memo(
 
     return (
       <>
-        <CursorTooltip content={actionTooltipText} disabled={!hasRowActions}>
+        <CursorTooltip content={actionTooltipText} disabled={!hasRowActions || !rowContextMenu}>
           <Box
             ref={measureRef}
             data-index={dataIndex}
+            data-menu-open={isMenuOpen ? "true" : undefined}
             role={"row"}
             display={"grid"}
             gridTemplateColumns={"subgrid"}
             gridColumn={"1 / -1"}
             minW={"full"}
             minH={"56px"}
-            bg={"bg.body"}
+            bg={cellBg}
             borderBottom={"1px solid"}
             borderColor={"bg.canvas"}
             transition={"background-color 0.1s ease"}
@@ -605,6 +713,13 @@ const DataListTableRow = memo(
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchCancel}
+            css={{
+              "@media (hover: none)": {
+                WebkitTouchCallout: "none",
+                userSelect: "none",
+              },
+            }}
             _hover={
               hasRowActions
                 ? {
