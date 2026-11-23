@@ -15,6 +15,8 @@ export type FieldProps = Omit<
   errorText?: ReactNode;
   optional?: boolean;
   variant?: FieldVariant;
+  /** @deprecated Kept only for DurationInput; remove together with it. */
   hasValue?: boolean;
+  /** @deprecated Kept only for DurationInput; remove together with it. */
   isFloating?: boolean;
 };

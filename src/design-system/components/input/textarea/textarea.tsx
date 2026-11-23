@@ -1,18 +1,20 @@
 // src/design-system/components/input/ui/textarea.tsx
 
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import {
+  floatingLabelWrapperCss,
+  getFloatingPlaceholder,
+} from "@/design-system/components/input/floating-label/floating-label.css";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type { TextareaProps } from "@/design-system/components/input/textarea/textarea.type";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { Badge } from "@/design-system/components/typography/badge/badge";
-import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { Textarea as ChakraTextarea } from "@chakra-ui/react";
 import * as React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   function Textarea(props, ref) {
@@ -39,30 +41,6 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const floatingLabel = isFloatingVariant ? fieldContext?.label : undefined;
     const isOptional = fieldContext?.optional;
 
-    // States
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [hasValueState, setHasValueState] = useState<boolean>(
-      Boolean(restProps.value) || Boolean(restProps.defaultValue),
-    );
-
-    // Effects
-    useEffect(() => {
-      if (
-        internalTextareaRef.current &&
-        Boolean(internalTextareaRef.current.value) !== hasValueState
-      ) {
-        setHasValueState(Boolean(internalTextareaRef.current.value));
-      }
-    }, [hasValueState, restProps.defaultValue, restProps.value]);
-
-    // Derived Values
-    const hasValue =
-      hasValueState ||
-      Boolean(restProps.value) ||
-      Boolean(restProps.defaultValue) ||
-      Boolean(fieldContext?.hasValue);
-    const isLabelFloating = isFocused || hasValue;
-
     // Stores
     const { theme } = useThemeStore();
 
@@ -74,15 +52,12 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         fontSize={"md"}
         minH={"135px"}
         {...restProps}
-        onFocusCapture={(e) => {
-          setIsFocused(true);
-          props.onFocusCapture?.(e);
-        }}
-        onBlurCapture={(e) => {
-          setIsFocused(false);
-          setHasValueState(Boolean(e.currentTarget.value));
-          props.onBlurCapture?.(e);
-        }}
+        {...(isFloatingVariant && {
+          placeholder: getFloatingPlaceholder(restProps.placeholder),
+          h: "60px",
+          pt: floatingLabel ? "28px" : "8px",
+          pb: "md",
+        })}
         onKeyDown={(e) => {
           if (
             props.maxLength !== undefined &&
@@ -141,24 +116,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
               { id: "input-max-length-warning" },
             );
           }
-          setHasValueState(Boolean(e.currentTarget.value));
           props.onChange?.(e);
-        }}
-        onInput={(e) => {
-          setHasValueState(Boolean(e.currentTarget.value));
-          props.onInput?.(e);
         }}
         pb={4}
         {...(startElement && {
           ps: `${(startElementWidth || 20) + 20}px`,
-        })}
-        {...(isFloatingVariant && {
-          h: "60px",
-          pt: floatingLabel ? "28px" : "8px",
-          pb: "md",
-          _placeholder: {
-            color: "transparent",
-          },
         })}
       />
     );
@@ -189,8 +151,9 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         : "12px";
 
       return (
-        <Box position={"relative"} w={"full"}>
+        <Box css={floatingLabelWrapperCss} w={"full"}>
           <Box
+            data-part={"floating-textarea-gradient"}
             position={"absolute"}
             top={"1px"}
             left={"1px"}
@@ -202,43 +165,14 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             bg={
               "linear-gradient(to bottom, {colors.bg.body} 20%,transparent 100%)"
             }
-            opacity={isLabelFloating ? 1 : 0}
-            transition={"opacity 0.18s ease"}
           />
 
-          <Box
-            position={"absolute"}
+          <FloatingLabel
+            label={floatingLabel}
+            optional={isOptional}
             left={labelLeft}
-            top={"7px"}
-            zIndex={2}
-            pointerEvents={"none"}
-            transform={isLabelFloating ? "translateY(0)" : "translateY(12px)"}
-            transition={
-              "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease"
-            }
-          >
-            <HStack align={"center"} gap={2}>
-              <P lineClamp={1}
-                fontSize={isLabelFloating ? "xs" : "md"}
-                fontWeight={"medium"}
-                color={"fg.subtle"}
-                transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-              >
-                {floatingLabel}
-              </P>
-
-              {isOptional && (
-                <Badge
-                  size={"xs"}
-                  fontSize={"2xs"}
-                  colorPalette={"gray"}
-                  color={"fg.subtle"}
-                >
-                  Optional
-                </Badge>
-              )}
-            </HStack>
-          </Box>
+            right={"12px"}
+          />
 
           {textareaWrapper}
         </Box>

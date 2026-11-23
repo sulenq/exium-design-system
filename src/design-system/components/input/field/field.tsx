@@ -30,7 +30,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
     } = props;
 
     // Derived Values
-    // Inspect children props recursively to resolve hasValue if not explicitly provided
+    // @deprecated Inspect children props recursively to resolve hasValue - kept only for DurationInput; remove together with it.
     const childHasValue = useMemo(() => {
       let found = false;
       const scan = (nodes: ReactNode) => {

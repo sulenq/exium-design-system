@@ -3,22 +3,24 @@
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import {
+  floatingLabelWrapperCss,
+  getFloatingPlaceholder,
+} from "@/design-system/components/input/floating-label/floating-label.css";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type {
   NumberInputProps,
   SteppedNumberInputProps,
 } from "@/design-system/components/input/number-input/number-input.type";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Group } from "@/design-system/components/layout/group/group";
-import { Badge } from "@/design-system/components/typography/badge/badge";
-import { P } from "@/design-system/components/typography/p/p";
 import { VISUALLY_HIDDEN_INPUT_STYLE } from "@/design-system/constants/css-preset";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { dispatchNativeInputEvent } from "@/shared/utils/dom/dispatch-native-input-event";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
-import { MinusIcon, PlusIcon, ChevronUp, ChevronDown } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronUp, MinusIcon, PlusIcon } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
 
 // `valueAsNumber` is NaN while the input is empty (Number("") === NaN).
 function toSyncValue(valueAsNumber: number): string {
@@ -37,16 +39,6 @@ function normalizeNumberInputValue(val: unknown): string | undefined {
     return "";
   }
   return String(val);
-}
-
-function checkHasValue(val: unknown): boolean {
-  return (
-    val !== undefined &&
-    val !== null &&
-    val !== "" &&
-    val !== "NaN" &&
-    !Number.isNaN(val)
-  );
 }
 
 export const NumberInput = (props: NumberInputProps) => {
@@ -124,36 +116,6 @@ export const NumberInput = (props: NumberInputProps) => {
   const normalizedValue = normalizeNumberInputValue(value);
   const normalizedDefaultValue = normalizeNumberInputValue(defaultValue);
 
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [hasValueState, setHasValueState] = useState<boolean>(
-    checkHasValue(normalizedValue) ||
-      checkHasValue(normalizedDefaultValue) ||
-      checkHasValue(inputProps?.value) ||
-      checkHasValue(inputProps?.defaultValue),
-  );
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-
-  // Effects
-  useEffect(() => {
-    if (visibleInputRef.current) {
-      const domHasValue = Boolean(visibleInputRef.current.value);
-      if (domHasValue !== hasValueState) {
-        setHasValueState(domHasValue);
-      }
-    }
-    setIsMounted(true);
-  }, [hasValueState, normalizedValue, normalizedDefaultValue]);
-
-  // Derived Values
-  const hasValue =
-    hasValueState ||
-    checkHasValue(normalizedValue) ||
-    checkHasValue(normalizedDefaultValue) ||
-    checkHasValue(inputProps?.value) ||
-    checkHasValue(inputProps?.defaultValue) ||
-    Boolean(fieldContext?.hasValue);
-  const isLabelFloating = isFocused || hasValue;
-
   const numberInputCore = (
     <ChakraNumberInput.Root
       {...restProps}
@@ -162,7 +124,6 @@ export const NumberInput = (props: NumberInputProps) => {
         defaultValue: normalizedDefaultValue,
       })}
       onValueChange={(details) => {
-        setHasValueState(details.value !== "");
         restProps.onValueChange?.({
           value: details.valueAsNumber,
           formattedValue: details.value,
@@ -207,7 +168,11 @@ export const NumberInput = (props: NumberInputProps) => {
         )}
         <ChakraNumberInput.Input
           ref={visibleInputRef}
-          placeholder={placeholder}
+          placeholder={
+            isFloatingVariant && floatingLabel
+              ? getFloatingPlaceholder(placeholder)
+              : placeholder
+          }
           fontSize={"md"}
           rounded={theme.radii.component}
           {...(startElement && {
@@ -220,20 +185,10 @@ export const NumberInput = (props: NumberInputProps) => {
             : stepper
               ? { pe: `${stepperConfig.peExtra}px` }
               : {})}
-          onFocusCapture={() => {
-            setIsFocused(true);
-          }}
-          onBlurCapture={(e) => {
-            setIsFocused(false);
-            setHasValueState(Boolean(e.currentTarget.value));
-          }}
           {...(isFloatingVariant && {
             h: "60px",
             pt: floatingLabel ? "22px" : "0px",
             pb: floatingLabel ? "4px" : "0px",
-            _placeholder: {
-              color: "transparent",
-            },
           })}
         />
 
@@ -329,46 +284,16 @@ export const NumberInput = (props: NumberInputProps) => {
       : "12px";
 
     return (
-      <Box position={"relative"} w={restProps.w || "full"}>
-        <Box
-          position={"absolute"}
+      <Box
+        position={"relative"}
+        w={restProps.w || "full"}
+        css={floatingLabelWrapperCss}
+      >
+        <FloatingLabel
+          label={floatingLabel}
+          optional={isOptional}
           left={labelLeft}
-          top={"7px"}
-          zIndex={1}
-          pointerEvents={"none"}
-          transform={isLabelFloating ? "translateY(0)" : "translateY(12px)"}
-          transition={
-            isMounted
-              ? "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease"
-              : "none"
-          }
-        >
-          <HStack align={"center"} gap={2}>
-            <P lineClamp={1}
-              fontSize={isLabelFloating ? "xs" : "md"}
-              fontWeight={"medium"}
-              color={"fg.subtle"}
-              transition={
-                isMounted
-                  ? "font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"
-                  : "none"
-              }
-            >
-              {floatingLabel}
-            </P>
-
-            {isOptional && (
-              <Badge
-                size={"xs"}
-                fontSize={"2xs"}
-                colorPalette={"gray"}
-                color={"fg.subtle"}
-              >
-                Optional
-              </Badge>
-            )}
-          </HStack>
-        </Box>
+        />
 
         {numberInputCore}
       </Box>

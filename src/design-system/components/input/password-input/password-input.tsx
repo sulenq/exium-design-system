@@ -3,14 +3,17 @@
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import {
+  floatingLabelWrapperCss,
+  getFloatingPlaceholder,
+} from "@/design-system/components/input/floating-label/floating-label.css";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type {
   PasswordInputProps,
   PasswordStrengthMeterProps,
 } from "@/design-system/components/input/password-input/password-input.type";
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { Badge } from "@/design-system/components/typography/badge/badge";
-import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
@@ -26,7 +29,6 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import {
   forwardRef,
   useCallback,
-  useEffect,
   useRef,
   useState,
   type ChangeEvent,
@@ -82,36 +84,12 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     const { theme } = useThemeStore();
 
     // States
-    const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [hasValueState, setHasValueState] = useState<boolean>(
-      Boolean(restProps.value) || Boolean(restProps.defaultValue),
-    );
-    const [isMounted, setIsMounted] = useState<boolean>(false);
     const [visible, setVisible] = useControllableState({
       value: visibleProp,
       defaultValue: defaultVisible || false,
       onChange: onVisibleChange,
     });
     const [strength, setStrength] = useState(0);
-
-    // Effects
-    useEffect(() => {
-      if (
-        inputRef.current &&
-        Boolean(inputRef.current.value) !== hasValueState
-      ) {
-        setHasValueState(Boolean(inputRef.current.value));
-      }
-      setIsMounted(true);
-    }, [hasValueState, restProps.defaultValue, restProps.value]);
-
-    // Derived Values
-    const hasValue =
-      hasValueState ||
-      Boolean(restProps.value) ||
-      Boolean(restProps.defaultValue) ||
-      Boolean(fieldContext?.hasValue);
-    const isLabelFloating = isFocused || hasValue;
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
       if (
@@ -126,7 +104,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           { id: "input-max-length-warning" },
         );
       }
-      setHasValueState(Boolean(e.currentTarget.value));
       onChange?.(e);
 
       if (!withPasswordStrength) return;
@@ -166,15 +143,12 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         rounded={theme.radii.component}
         placeholder={"••••••••"}
         {...restProps}
-        onFocusCapture={(e) => {
-          setIsFocused(true);
-          restProps.onFocusCapture?.(e);
-        }}
-        onBlurCapture={(e) => {
-          setIsFocused(false);
-          setHasValueState(Boolean(e.currentTarget.value));
-          restProps.onBlurCapture?.(e);
-        }}
+        {...(isFloatingVariant && {
+          placeholder: getFloatingPlaceholder(restProps.placeholder),
+          h: "60px",
+          pt: floatingLabel ? "22px" : "0px",
+          pb: floatingLabel ? "4px" : "0px",
+        })}
         onKeyDown={(e) => {
           if (
             restProps.maxLength !== undefined &&
@@ -224,14 +198,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           restProps.onPaste?.(e);
         }}
         onChange={handleChange}
-        {...(isFloatingVariant && {
-          h: "60px",
-          pt: floatingLabel ? "22px" : "0px",
-          pb: floatingLabel ? "4px" : "0px",
-          _placeholder: {
-            color: "transparent",
-          },
-        })}
       />
     );
 
@@ -259,48 +225,13 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     return (
       <VStack gap={2} w={restProps?.w || "full"}>
         {isFloatingVariant && floatingLabel ? (
-          <Box position={"relative"} w={"full"}>
-            <Box
-              position={"absolute"}
+          <Box css={floatingLabelWrapperCss} w={"full"}>
+            <FloatingLabel
+              label={floatingLabel}
+              optional={isOptional}
               left={labelLeft}
               right={"44px"}
-              top={"7px"}
-              zIndex={1}
-              pointerEvents={"none"}
-              transform={isLabelFloating ? "translateY(0)" : "translateY(12px)"}
-              transition={
-                isMounted
-                  ? "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease"
-                  : "none"
-              }
-            >
-              <HStack align={"center"} gap={2}>
-                <P lineClamp={1}
-                  fontSize={isLabelFloating ? "xs" : "md"}
-                  fontWeight={"medium"}
-                  color={"fg.subtle"}
-                  transition={
-                    isMounted
-                      ? "font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"
-                      : "none"
-                  }
-                >
-                  {floatingLabel}
-                </P>
-
-                {isOptional && (
-                  <Badge
-                    size={"xs"}
-                    fontSize={"2xs"}
-                    colorPalette={"gray"}
-                    color={"fg.subtle"}
-                  >
-                    Optional
-                  </Badge>
-                )}
-              </HStack>
-            </Box>
-
+            />
             {inputGroupElement}
           </Box>
         ) : (

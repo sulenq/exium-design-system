@@ -1,11 +1,13 @@
 // src/design-system/components/input/ui/input.tsx
 
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import {
+  floatingLabelWrapperCss,
+  getFloatingPlaceholder,
+} from "@/design-system/components/input/floating-label/floating-label.css";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type { InputProps } from "@/design-system/components/input/input/input.type";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { Badge } from "@/design-system/components/typography/badge/badge";
-import { P } from "@/design-system/components/typography/p/p";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
@@ -14,7 +16,7 @@ import {
   Input as ChakraInput,
   InputGroup as ChakraInputGroup,
 } from "@chakra-ui/react";
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useRef, useState } from "react";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   // Props
@@ -40,33 +42,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const floatingLabel = isFloatingVariant ? fieldContext?.label : undefined;
   const isOptional = fieldContext?.optional;
 
-  // States
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [hasValueState, setHasValueState] = useState<boolean>(
-    Boolean(restProps.value) || Boolean(restProps.defaultValue),
-  );
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-
-  // Effects
-  // Detect DOM value before paint and mark component as mounted
-  useEffect(() => {
-    if (
-      internalInputRef.current &&
-      Boolean(internalInputRef.current.value) !== hasValueState
-    ) {
-      setHasValueState(Boolean(internalInputRef.current.value));
-    }
-    setIsMounted(true);
-  }, [hasValueState, restProps.defaultValue, restProps.value]);
-
-  // Derived Values
-  const hasValue =
-    hasValueState ||
-    Boolean(restProps.value) ||
-    Boolean(restProps.defaultValue) ||
-    Boolean(fieldContext?.hasValue);
-  const isLabelFloating = isFocused || hasValue;
-
   // Stores
   const { theme } = useThemeStore();
 
@@ -77,15 +52,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       fontSize={"md"}
       rounded={theme.radii.component}
       {...restProps}
-      onFocusCapture={(e) => {
-        setIsFocused(true);
-        restProps.onFocusCapture?.(e);
-      }}
-      onBlurCapture={(e) => {
-        setIsFocused(false);
-        setHasValueState(Boolean(e.currentTarget.value));
-        restProps.onBlurCapture?.(e);
-      }}
+      {...(isFloatingVariant && {
+        placeholder: getFloatingPlaceholder(restProps.placeholder),
+        h: "60px",
+        pt: floatingLabel ? "22px" : "0px",
+        pb: floatingLabel ? "4px" : "0px",
+      })}
       onKeyDown={(e) => {
         if (
           restProps.maxLength !== undefined &&
@@ -144,21 +116,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             { id: "input-max-length-warning" },
           );
         }
-        setHasValueState(Boolean(e.currentTarget.value));
         restProps.onChange?.(e);
       }}
-      onInput={(e) => {
-        setHasValueState(Boolean(e.currentTarget.value));
-        restProps.onInput?.(e);
-      }}
-      {...(isFloatingVariant && {
-        h: "60px",
-        pt: floatingLabel ? "22px" : "0px",
-        pb: floatingLabel ? "4px" : "0px",
-        _placeholder: {
-          color: "transparent",
-        },
-      })}
     />
   );
 
@@ -189,48 +148,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     const labelRight = endElement ? "44px" : "12px";
 
     return (
-      <Box position={"relative"} w={"full"}>
-        <Box
-          position={"absolute"}
+      <Box css={floatingLabelWrapperCss} w={"full"}>
+        <FloatingLabel
+          label={floatingLabel}
+          optional={isOptional}
           left={labelLeft}
           right={labelRight}
-          top={"7px"}
-          zIndex={1}
-          pointerEvents={"none"}
-          transform={isLabelFloating ? "translateY(0)" : "translateY(12px)"}
-          transition={
-            isMounted
-              ? "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease"
-              : "none"
-          }
-        >
-          <HStack align={"center"} gap={2}>
-            <P lineClamp={1}
-              fontSize={isLabelFloating ? "xs" : "md"}
-              fontWeight={"medium"}
-              color={"fg.subtle"}
-              transition={
-                isMounted
-                  ? "font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"
-                  : "none"
-              }
-            >
-              {floatingLabel}
-            </P>
-
-            {isOptional && (
-              <Badge
-                size={"xs"}
-                fontSize={"2xs"}
-                colorPalette={"gray"}
-                color={"fg.subtle"}
-              >
-                Optional
-              </Badge>
-            )}
-          </HStack>
-        </Box>
-
+        />
         {inputElement}
       </Box>
     );
