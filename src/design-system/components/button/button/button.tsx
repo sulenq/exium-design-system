@@ -81,7 +81,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               display={"inline-block"}
               fontSize={restProps?.fontSize}
               lineHeight={"normal"}
-              lineClamp={clampVal !== undefined && clampVal > 0 ? clampVal : undefined}
+              lineClamp={
+                clampVal !== undefined && clampVal > 0 ? clampVal : undefined
+              }
               wordBreak={
                 hasLineClamp
                   ? clampVal && clampVal > 1
