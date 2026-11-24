@@ -16,7 +16,10 @@ import type {
 } from "@/design-system/components/input/file-input/file-input.type";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Center } from "@/design-system/components/layout/center/center";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Image } from "@/design-system/components/media/image/image";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { P } from "@/design-system/components/typography/p/p";
@@ -350,7 +353,9 @@ const FileInputInner = (props: FileinputInnerProps) => {
               bg={disabled ? "bg.muted" : "bg.body"}
               opacity={disabled ? 0.6 : 1}
               border={"2px dashed"}
-              borderColor={disabled ? "border.subtle" : dragging ? "fg" : "border"}
+              borderColor={
+                disabled ? "border.subtle" : dragging ? "fg" : "border"
+              }
               rounded={theme.radii.component}
               cursor={disabled ? "not-allowed" : "pointer"}
               pointerEvents={disabled ? "none" : undefined}
@@ -563,6 +568,7 @@ const FileItem = (props: FileItemProps) => {
           fallback={<AppIcon icon={ImageOffIcon} opacity={contentOpacity} />}
           w={"20px"}
           h={"20px"}
+          rounded={`calc(${theme.radii.component} - 4px)`}
           objectFit={"cover"}
           opacity={contentOpacity}
         />
@@ -570,7 +576,8 @@ const FileItem = (props: FileItemProps) => {
         <FileIcon mimeType={mimeType} opacity={contentOpacity} />
       )}
 
-      <P lineClamp={1}
+      <P
+        lineClamp={1}
         flex={1}
         textDecoration={markedForDelete ? "line-through" : undefined}
         opacity={contentOpacity}

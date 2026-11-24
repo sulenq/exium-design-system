@@ -1766,14 +1766,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { DateInput } from "@/design-system/components/input/date-input/date-input";',
     component: DateInput,
     defaultProps: {
-      datePickerSubtitle: "Pilih tanggal",
+      datePickerSubtitle: "",
       disabled: false,
     },
     propsSpec: [
       {
         name: "datePickerSubtitle",
         type: "string",
-        defaultValue: "Pilih tanggal",
+        defaultValue: "",
         description: "Subjudul penjelasan pada modal kalender.",
         controlKind: "text",
       },
@@ -1786,10 +1786,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const subProp =
-        props.datePickerSubtitle && props.datePickerSubtitle !== "Pilih tanggal"
-          ? ` datePickerSubtitle={"${props.datePickerSubtitle}"}`
-          : "";
+      const subProp = props.datePickerSubtitle
+        ? ` datePickerSubtitle={"${props.datePickerSubtitle}"}`
+        : "";
       const disProp = props.disabled ? ` disabled={true}` : "";
       return `<DateInput modalKey={"pilih-tanggal"}${subProp}${disProp} onValueChange={(val) => console.log(val)} />`;
     },
@@ -1798,9 +1797,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         <DateInput
           modalKey={"docs-date-input"}
           disabled={Boolean(props.disabled)}
-          datePickerSubtitle={String(
-            props.datePickerSubtitle || "Pilih tanggal",
-          )}
+          datePickerSubtitle={
+            props.datePickerSubtitle ? String(props.datePickerSubtitle) : undefined
+          }
         />
       </Box>
     ),

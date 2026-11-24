@@ -54,6 +54,7 @@ export const FileItem = (props: FileItemProps) => {
           w={"20px"}
           h={"20px"}
           objectFit={"cover"}
+          // rounded={1}
         />
       ) : (
         <FileIcon mimeType={mimeType} />

@@ -427,11 +427,8 @@ const SteppedNumberInputCard = () => {
 const DateInputCard = () => {
   return (
     <DemoCard title={"DateInput"} icon={TextCursorInputIcon}>
-      <Field label={"Pilih Tanggal"}>
-        <DateInput
-          modalKey={"demo-date-input"}
-          datePickerSubtitle={"Pilih tanggal jadwal"}
-        />
+      <Field label={"Tanggal"}>
+        <DateInput modalKey={"demo-date-input"} />
       </Field>
     </DemoCard>
   );

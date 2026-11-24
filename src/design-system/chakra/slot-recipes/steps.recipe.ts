@@ -31,6 +31,7 @@ export const stepsRecipe = defineSlotRecipe({
       vertical: {
         list: {
           alignItems: "stretch",
+          "--steps-gutter": "spacing.1",
         },
         item: {
           minH: "16",
@@ -41,14 +42,15 @@ export const stepsRecipe = defineSlotRecipe({
           width: "var(--steps-thickness)",
           height: "auto",
           maxHeight: "none",
-          minH: "4",
+          minH: "4px",
           top: "calc(var(--steps-size) + var(--steps-gutter))",
           bottom: "var(--steps-gutter)",
-          insetStart: "calc(var(--steps-size) / 2 - 1px)",
+          insetStart: "calc(var(--steps-size) / 2 - var(--steps-thickness) / 2)",
         },
       },
     },
   },
 });
+
 
 
