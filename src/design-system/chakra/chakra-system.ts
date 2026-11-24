@@ -730,22 +730,40 @@ export const chakraConfig = defineConfig({
         // Foreground text tokens tuned for WCAG 2.2 AA (>= 4.5:1 on bg.body and bg.canvas).
         fg: {
           muted: {
-            value: { base: "{colors.gray.600} !important", _dark: "{colors.gray.300} !important" },
+            value: {
+              base: "{colors.gray.600} !important",
+              _dark: "{colors.gray.300} !important",
+            },
           },
           subtle: {
-            value: { base: "{colors.neutral.600} !important", _dark: "{colors.neutral.400} !important" },
+            value: {
+              base: "{colors.neutral.600} !important",
+              _dark: "{colors.neutral.400} !important",
+            },
           },
           error: {
-            value: { base: "{colors.red.600} !important", _dark: "{colors.red.300} !important" },
+            value: {
+              base: "{colors.red.600} !important",
+              _dark: "{colors.red.300} !important",
+            },
           },
           warning: {
-            value: { base: "{colors.orange.700} !important", _dark: "{colors.orange.300} !important" },
+            value: {
+              base: "{colors.orange.700} !important",
+              _dark: "{colors.orange.300} !important",
+            },
           },
           success: {
-            value: { base: "{colors.green.800} !important", _dark: "{colors.green.300} !important" },
+            value: {
+              base: "{colors.green.800} !important",
+              _dark: "{colors.green.300} !important",
+            },
           },
           info: {
-            value: { base: "{colors.blue.600} !important", _dark: "{colors.blue.400} !important" },
+            value: {
+              base: "{colors.blue.600} !important",
+              _dark: "{colors.blue.400} !important",
+            },
           },
         },
         bg: {
@@ -2519,151 +2537,6 @@ export const chakraConfig = defineConfig({
           },
         },
       },
-      glassTop: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.1), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.14), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassBottom: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 -1px 1px 0 rgba(255, 255, 255, 0.45), inset -1px 0 1px 0 rgba(255, 255, 255, 0.35), inset 1px 1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 -1px 1px 0 rgba(255, 255, 255, 0.12), inset -1px 0 1px 0 rgba(255, 255, 255, 0.08), inset 1px 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassTopRight: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset -1px 0 1px 0 rgba(255, 255, 255, 0.35), inset 1px -1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset -1px 0 1px 0 rgba(255, 255, 255, 0.08), inset 1px -1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassBottomLeft: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 -1px 1px 0 rgba(255, 255, 255, 0.45), inset 1px 0 1px 0 rgba(255, 255, 255, 0.35), inset -1px 1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 -1px 1px 0 rgba(255, 255, 255, 0.12), inset 1px 0 1px 0 rgba(255, 255, 255, 0.08), inset -1px 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassTopLeft: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 1px 0 1px 0 rgba(255, 255, 255, 0.35), inset -1px -1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 1px 0 1px 0 rgba(255, 255, 255, 0.08), inset -1px -1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassBottomRight: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 -1px 1px 0 rgba(255, 255, 255, 0.45), inset -1px 0 1px 0 rgba(255, 255, 255, 0.35), inset 1px 1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 -1px 1px 0 rgba(255, 255, 255, 0.12), inset -1px 0 1px 0 rgba(255, 255, 255, 0.08), inset 1px 1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassTopBottom: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-      glassAll: {
-        value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
-          },
-          boxShadow: {
-            _light:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.3), inset 1px 0 1px 0 rgba(255, 255, 255, 0.35), inset -1px 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
-            _dark:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.08), inset 1px 0 1px 0 rgba(255, 255, 255, 0.08), inset -1px 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
-          },
-        },
-      },
-
       frosted: {
         value: {
           bg: "bg.bodyAlpha",
