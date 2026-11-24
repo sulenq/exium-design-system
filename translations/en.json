@@ -502,5 +502,8 @@
     "hint_document": "Place the document on a flat surface",
     "hint_livestock": "Shoot from the side with the whole body visible",
     "hint_scale": "The scale reading must be clearly legible"
+  },
+  "print_layout": {
+    "preview_label": "Print preview {size}"
   }
 }

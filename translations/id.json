@@ -501,5 +501,8 @@
     "hint_document": "Letakkan dokumen di permukaan rata",
     "hint_livestock": "Ambil dari samping, seluruh badan terlihat",
     "hint_scale": "Angka timbangan harus terbaca jelas"
+  },
+  "print_layout": {
+    "preview_label": "Pratinjau cetak {size}"
   }
 }

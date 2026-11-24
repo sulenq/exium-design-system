@@ -130,12 +130,12 @@ describe("CameraCapture", () => {
     const { dialog } = await openCamera();
     expect(dialog.querySelector('[data-frame="ktp"]')).not.toBeNull();
     expect(within(dialog).getByText(/sudut KTP terlihat/)).toBeInTheDocument();
-    expect(getUserMedia.mock.calls[0][0].video.facingMode).toEqual({ ideal: "environment" });
+    expect((getUserMedia.mock.calls[0][0].video as MediaTrackConstraints).facingMode).toEqual({ ideal: "environment" });
     unmount();
 
     renderWithSystem(<CameraCapture frameVariant={"selfie"} />);
     await openCamera();
-    expect(getUserMedia.mock.lastCall?.[0].video.facingMode).toEqual({ ideal: "user" });
+    expect((getUserMedia.mock.lastCall?.[0].video as MediaTrackConstraints).facingMode).toEqual({ ideal: "user" });
   });
 
   it("explains a denied camera permission", async () => {

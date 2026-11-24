@@ -21,7 +21,9 @@ export function createFakeStream() {
 /** Install navigator.mediaDevices and make <video> look ready. Returns the getUserMedia mock. */
 export function installFakeCamera(impl?: () => Promise<MediaStream>) {
   const fake = createFakeStream();
-  const getUserMedia = vi.fn(impl ?? (() => Promise.resolve(fake.stream)));
+  const getUserMedia = vi.fn<(constraints: MediaStreamConstraints) => Promise<MediaStream>>(
+    impl ?? (() => Promise.resolve(fake.stream)),
+  );
   Object.defineProperty(navigator, "mediaDevices", {
     configurable: true,
     value: { getUserMedia },
