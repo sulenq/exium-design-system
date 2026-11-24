@@ -4,7 +4,7 @@ import type { FloatingLabelProps } from "@/design-system/components/input/floati
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { P } from "@/design-system/components/typography/p/p";
+import { Field as ChakraField } from "@chakra-ui/react";
 import { t } from "@/shared/libs/i18n";
 
 export const FloatingLabel = (props: FloatingLabelProps) => {
@@ -22,14 +22,20 @@ export const FloatingLabel = (props: FloatingLabelProps) => {
       pointerEvents={"none"}
     >
       <HStack align={"center"} gap={2}>
-        <P
+        {/* A real <label> linked to the field's input, so the input has an accessible name */}
+        <ChakraField.Label
           data-part={"floating-label-text"}
-          lineClamp={1}
+          display={"block"}
+          m={0}
+          minW={0}
+          overflow={"hidden"}
+          textOverflow={"ellipsis"}
+          whiteSpace={"nowrap"}
           fontWeight={"medium"}
           color={"fg.subtle"}
         >
           {label}
-        </P>
+        </ChakraField.Label>
 
         {optional && (
           <Badge
