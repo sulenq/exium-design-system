@@ -446,5 +446,8 @@
   },
   "welcome": {
     "subtitle": "Hope your day goes well"
+  },
+  "currency_input": {
+    "conversion": "≈ {amount} · rate {date}"
   }
 }

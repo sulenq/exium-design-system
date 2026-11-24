@@ -445,5 +445,8 @@
   },
   "welcome": {
     "subtitle": "Semoga hari ini berjalan lancar"
+  },
+  "currency_input": {
+    "conversion": "≈ {amount} · kurs {date}"
   }
 }
