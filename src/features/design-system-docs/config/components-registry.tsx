@@ -8,7 +8,10 @@ import { Clipboard } from "@/design-system/components/data-display/clipboard/cli
 import { Countdown } from "@/design-system/components/data-display/countdown/countdown";
 import { CloseButton } from "@/design-system/components/button/close-button/close-button";
 import { DatePicker } from "@/design-system/components/input/date-picker/date-picker";
-import { InfoTip, ToggleTip } from "@/design-system/components/input/toggle-tip/toggle-tip";
+import {
+  InfoTip,
+  ToggleTip,
+} from "@/design-system/components/input/toggle-tip/toggle-tip";
 import { Snackbar } from "@/design-system/components/navigation/snackbar/snackbar";
 import { Url } from "@/design-system/components/typography/url/url";
 import { FormatNumber } from "@/design-system/components/utilities/format-number/format-number";
@@ -230,7 +233,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       'import { Button } from "@/design-system/components/button/button/button";\nimport { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";',
     component: Button,
     defaultProps: {
-      label: "Button",
       iconPlacement: "none",
       size: "md",
       colorPalette: "blue",
@@ -238,13 +240,6 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       disabled: false,
     },
     propsSpec: [
-      {
-        name: "label",
-        type: "string",
-        defaultValue: "Button",
-        description: "Teks label tombol.",
-        controlKind: "text",
-      },
       {
         name: "iconPlacement",
         type: '"none" | "start" | "end"',
@@ -293,40 +288,46 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           : "";
       const loadingProp = props.loading ? " loading={true}" : "";
       const disabledProp = props.disabled ? " disabled={true}" : "";
-      const label = String(props.label || "Button");
       const iconPlacement = (props.iconPlacement as string) || "none";
 
       if (iconPlacement === "start") {
-        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  <AppIcon icon={SparklesIcon} />\n  {"${label}"}\n</Button>`;
+        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  <AppIcon icon={SparklesIcon} />\n  {"Button"}\n</Button>`;
       }
       if (iconPlacement === "end") {
-        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"${label}"}\n  <AppIcon icon={SparklesIcon} />\n</Button>`;
+        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"Button"}\n  <AppIcon icon={SparklesIcon} />\n</Button>`;
       }
-      return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"${label}"}\n</Button>`;
+      return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"Button"}\n</Button>`;
     },
     renderPlayground: (props) => {
-      const variants = ["solid", "subtle", "outline", "ghost"] as const;
-      const label = String(props.label || "Button");
+      const variants = [
+        "solid",
+        "subtle",
+        "outline",
+        "ghost",
+        "glass",
+        "frosted",
+        "blend",
+      ] as const;
       const iconPlacement = (props.iconPlacement as string) || "none";
 
-      const renderChildren = () => {
+      const renderChildren = (variantLabel: string) => {
         if (iconPlacement === "start") {
           return (
             <>
               <AppIcon icon={SparklesIcon} />
-              {label}
+              {variantLabel}
             </>
           );
         }
         if (iconPlacement === "end") {
           return (
             <>
-              {label}
+              {variantLabel}
               <AppIcon icon={SparklesIcon} />
             </>
           );
         }
-        return label;
+        return variantLabel;
       };
 
       return (
@@ -340,7 +341,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
               loading={Boolean(props.loading)}
               disabled={Boolean(props.disabled)}
             >
-              {renderChildren()}
+              {renderChildren(variant)}
             </Button>
           ))}
         </HStack>
@@ -538,7 +539,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         description:
           "Status semantik. Mengatur colorPalette dan icon, sehingga status tidak hanya dibedakan warna. Menimpa colorPalette.",
         controlKind: "select",
-        options: ["", "success", "warning", "danger", "info", "neutral", "locked"],
+        options: [
+          "",
+          "success",
+          "warning",
+          "danger",
+          "info",
+          "neutral",
+          "locked",
+        ],
       },
       {
         name: "withStatusIcon",
@@ -1831,7 +1840,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           modalKey={"docs-date-input"}
           disabled={Boolean(props.disabled)}
           datePickerSubtitle={
-            props.datePickerSubtitle ? String(props.datePickerSubtitle) : undefined
+            props.datePickerSubtitle
+              ? String(props.datePickerSubtitle)
+              : undefined
           }
         />
       </Box>
@@ -2249,7 +2260,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     defaultProps: {
       modalKey: "demo-confirmation",
       title: "Hapus Data?",
-      description: "Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin melanjutkan?",
+      description:
+        "Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin melanjutkan?",
       confirmLabel: "Ya, Lanjutkan",
       cancelLabel: "Batal",
       colorPalette: "red",
@@ -2879,7 +2891,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       keyboardNav: [
         { key: "Arrow keys", action: "Pindah satu hari atau satu minggu" },
         { key: "Home / End", action: "Awal atau akhir minggu" },
-        { key: "PageUp / PageDown", action: "Bulan sebelumnya atau berikutnya" },
+        {
+          key: "PageUp / PageDown",
+          action: "Bulan sebelumnya atau berikutnya",
+        },
         { key: "Enter / Space", action: "Pilih tanggal" },
       ],
       notes:
@@ -2888,7 +2903,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     renderPlayground: (props) => {
       const today = new Date();
       const iso = (offset: number) =>
-        new Date(today.getTime() + offset * 86400000).toISOString().slice(0, 10);
+        new Date(today.getTime() + offset * 86400000)
+          .toISOString()
+          .slice(0, 10);
       const mode = String(props.availableMode || "range");
       const availableDates =
         mode === "array"
@@ -2897,11 +2914,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
             ? [iso(0)]
             : { start: iso(0), end: iso(30) };
       return (
-        <DatePicker
-          key={mode}
-          availableDates={availableDates}
-          maxW={"360px"}
-        />
+        <DatePicker key={mode} availableDates={availableDates} maxW={"360px"} />
       );
     },
   },
@@ -2945,7 +2958,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     importPath:
       'import { ToggleTip } from "@/design-system/components/input/toggle-tip/toggle-tip";',
     component: ToggleTip,
-    defaultProps: { content: "Masa henti obat dihitung sejak tanggal pemberian." },
+    defaultProps: {
+      content: "Masa henti obat dihitung sejak tanggal pemberian.",
+    },
     propsSpec: [
       {
         name: "content",
@@ -2962,7 +2977,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     renderPlayground: (props) => (
-      <InfoTip content={String(props.content || "")} showArrow={Boolean(props.showArrow)} />
+      <InfoTip
+        content={String(props.content || "")}
+        showArrow={Boolean(props.showArrow)}
+      />
     ),
   },
 
@@ -3068,7 +3086,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       {
         name: "items",
         type: "{ key; label; icon; badge? }[]",
-        description: "3 sampai 5 item. Lebih dari 5, sisanya masuk menu Lainnya.",
+        description:
+          "3 sampai 5 item. Lebih dari 5, sisanya masuk menu Lainnya.",
       },
       {
         name: "activeKey / onSelect",
@@ -5107,7 +5126,13 @@ const SnackbarPlaygroundDemo = (props: Record<string, unknown>) => {
   const [activeKey, setActiveKey] = useState("home");
 
   return (
-    <Box w={"full"} maxW={"420px"} borderWidth={"1px"} rounded={"lg"} overflow={"hidden"}>
+    <Box
+      w={"full"}
+      maxW={"420px"}
+      borderWidth={"1px"}
+      rounded={"lg"}
+      overflow={"hidden"}
+    >
       <Snackbar
         items={SNACKBAR_DEMO_ITEMS.slice(0, Number(props.itemCount) || 4)}
         activeKey={activeKey}
@@ -6092,7 +6117,11 @@ const ModalPlaygroundDemo = ({
         </Modal.Trigger>
         <Modal.Content>
           <Modal.Header>
-            <Modal.Title textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
+            <Modal.Title
+              textAlign={"center"}
+              fontWeight={"bold"}
+              fontSize={"lg"}
+            >
               Exium Adaptive Modal (Parent)
             </Modal.Title>
           </Modal.Header>
@@ -6104,8 +6133,9 @@ const ModalPlaygroundDemo = ({
                 menjadi Drawer geser bawah pada layar ponsel.
               </P>
               <P color={"fg.muted"}>
-                Coba buka child modal bersarang (nested) di bawah ini untuk menguji
-                urutan z-index, stack backdrop, dan ketahanan saat browser di-refresh.
+                Coba buka child modal bersarang (nested) di bawah ini untuk
+                menguji urutan z-index, stack backdrop, dan ketahanan saat
+                browser di-refresh.
               </P>
               <Button
                 variant={"solid"}
@@ -6134,7 +6164,11 @@ const ModalPlaygroundDemo = ({
       >
         <Modal.Content>
           <Modal.Header>
-            <Modal.Title textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
+            <Modal.Title
+              textAlign={"center"}
+              fontWeight={"bold"}
+              fontSize={"lg"}
+            >
               Nested Child Modal
             </Modal.Title>
           </Modal.Header>
@@ -6147,13 +6181,19 @@ const ModalPlaygroundDemo = ({
                 {childModal.modalKey}
               </P>
               <P fontSize={"sm"} color={"fg.subtle"}>
-                Backdrop dan dialog anak selalu berada di atas modal induk, baik saat
-                dibuka interaktif maupun saat di-refresh pada URL langsung (?overlay=docs-modal.child).
+                Backdrop dan dialog anak selalu berada di atas modal induk, baik
+                saat dibuka interaktif maupun saat di-refresh pada URL langsung
+                (?overlay=docs-modal.child).
               </P>
             </VStack>
           </Modal.Body>
           <Modal.Footer>
-            <Button w={"full"} variant={"solid"} primary onClick={childModal.close}>
+            <Button
+              w={"full"}
+              variant={"solid"}
+              primary
+              onClick={childModal.close}
+            >
               Tutup Child Modal
             </Button>
           </Modal.Footer>
