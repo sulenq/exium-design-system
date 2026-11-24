@@ -5,17 +5,20 @@ import { Loader } from "@/design-system/components/feedback/loader/loader";
 import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";
 import { StateNoResult } from "@/design-system/components/feedback/state-no-result/state.no-result";
 import { StateRetry } from "@/design-system/components/feedback/state-retry/state.retry";
-import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import { Field } from "@/design-system/components/input/field/field";
 import type {
   FocusSelectInputProps,
   FocusSelectOption,
 } from "@/design-system/components/input/focus-select/focus-select.type";
-import { Field } from "@/design-system/components/input/field/field";
 import { SearchInput } from "@/design-system/components/input/search-input/search-input";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
@@ -24,9 +27,16 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { CheckIcon, ChevronDownIcon, PlusIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronsUpDownIcon, PlusIcon, XIcon } from "lucide-react";
 import type React from "react";
-import { isValidElement, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  isValidElement,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 const SKELETON_LIST_COUNT = 5;
 
@@ -238,7 +248,8 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
             }
           >
             <HStack align={"center"} gap={2}>
-              <P lineClamp={1}
+              <P
+                lineClamp={1}
                 fontSize={isLabelFloating ? "xs" : "md"}
                 fontWeight={"medium"}
                 color={"fg.subtle"}
@@ -322,7 +333,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
             />
           ) : (
             <AppIcon
-              icon={ChevronDownIcon}
+              icon={ChevronsUpDownIcon}
               size={iconSize}
               color={"fg"}
               mr={"-2px"}
@@ -373,7 +384,11 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
     const target = keyMap[event.key];
     if (!target) return;
     event.preventDefault();
-    if (target === "prev" && listboxRef.current?.querySelector('[role="option"]') === document.activeElement) {
+    if (
+      target === "prev" &&
+      listboxRef.current?.querySelector('[role="option"]') ===
+        document.activeElement
+    ) {
       searchInputRef.current?.focus();
       return;
     }
@@ -520,7 +535,8 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                         >
                           {renderStartElement(opt.startElement, opt.icon, "sm")}
                           <VStack align={"start"}>
-                            <P lineClamp={1}
+                            <P
+                              lineClamp={1}
                               fontWeight={isSelected ? "semibold" : "normal"}
                               textAlign={"start"}
                             >
@@ -528,7 +544,8 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                             </P>
 
                             {opt.description && (
-                              <P lineClamp={1}
+                              <P
+                                lineClamp={1}
                                 fontSize={"xs"}
                                 textAlign={"start"}
                                 color={"fg.subtle"}
