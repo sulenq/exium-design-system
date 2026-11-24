@@ -6,7 +6,6 @@ import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import type { MapOverlayProps } from "@/design-system/components/map/map/map.type";
 import { MapAttribution } from "@/design-system/components/map/map/map.basemap-attribution";
 import { MapControls } from "@/design-system/components/map/map/map.controls";
-import { MapMasterIgtLayerManagement } from "@/design-system/components/map/map/map.controls/map.master-igt-layer-management";
 import { MapCoordinates } from "@/design-system/components/map/map/map.coordinates";
 import { MapFeatureInfoPanel } from "@/design-system/components/map/map/map.feature-info-panel";
 import { MapSearch } from "@/design-system/components/map/map/map.search";
@@ -15,9 +14,7 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 
 export const MapOverlay = (props: MapOverlayProps) => {
   // Props
-  const {
-    showMasterIgtLayerSelect = true,
-  } = props;
+  const { layerManagement } = props;
 
   // Hooks
   const isSmallViewport = useIsSmallViewport();
@@ -52,7 +49,7 @@ export const MapOverlay = (props: MapOverlayProps) => {
 
         <HStack align={"center"} gap={2} pointerEvents={"none"} flexShrink={0}>
           
-          {showMasterIgtLayerSelect && <MapMasterIgtLayerManagement />}
+          {layerManagement}
           <MapAttribution />
         </HStack>
       </HStack>

@@ -2,11 +2,23 @@
 
 import type { TooltipProps } from "@/design-system/components/overlay/tooltip/tooltip.type";
 import { Tooltip as ChakraTooltip, Portal } from "@chakra-ui/react";
-import { forwardRef } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type PointerEvent,
+} from "react";
+
+const LONG_PRESS_MS = 500;
+const TOUCH_VISIBLE_MS = 1500;
 
 /**
- * Hover and focus only: Tooltip does not open on touch devices. For information
- * people must be able to read on mobile, use `ToggleTip` instead.
+ * Opens on hover and focus. On touch devices it opens on long-press (500 ms) and
+ * hides itself after 1.5 s; a normal tap still triggers the element's action.
+ * For information people must read on mobile without discovering a gesture,
+ * use `ToggleTip` instead.
  */
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip(props, ref) {
@@ -24,8 +36,67 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       minW,
       minWidth,
       openDelay = 300,
+      open: openProp,
+      onOpenChange,
       ...restProps
     } = props;
+
+    // States
+    const [internalOpen, setInternalOpen] = useState(false);
+
+    // Refs
+    const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const suppressClick = useRef(false);
+
+    // Utils
+    function clearTimers() {
+      if (longPressTimer.current) clearTimeout(longPressTimer.current);
+      if (hideTimer.current) clearTimeout(hideTimer.current);
+      longPressTimer.current = null;
+      hideTimer.current = null;
+    }
+
+    // Handlers
+    function handleOpenChange(details: { open: boolean }) {
+      setInternalOpen(details.open);
+      onOpenChange?.(details);
+    }
+
+    function handlePointerDown(event: PointerEvent) {
+      if (event.pointerType !== "touch") return;
+      clearTimers();
+      longPressTimer.current = setTimeout(() => {
+        suppressClick.current = true;
+        handleOpenChange({ open: true });
+        hideTimer.current = setTimeout(
+          () => handleOpenChange({ open: false }),
+          TOUCH_VISIBLE_MS,
+        );
+      }, LONG_PRESS_MS);
+    }
+
+    function handlePointerEnd(event: PointerEvent) {
+      if (event.pointerType !== "touch") return;
+      if (longPressTimer.current) clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+
+    function handleClickCapture(event: MouseEvent) {
+      if (!suppressClick.current) return;
+      // The long-press only revealed the tooltip; do not also trigger the action
+      suppressClick.current = false;
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    function handleContextMenu(event: MouseEvent) {
+      // Long-press on mobile opens the native context menu; the tooltip replaces it
+      if (suppressClick.current || longPressTimer.current) event.preventDefault();
+    }
+
+    // Effects
+    useEffect(() => clearTimers, []);
 
     if (disabled) return children;
 
@@ -50,7 +121,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       "navigate",
     ]);
 
-    const rootProps: Record<string, unknown> = { openDelay };
+    const rootProps: Record<string, unknown> = {
+      openDelay,
+      open: openProp ?? internalOpen,
+      onOpenChange: handleOpenChange,
+    };
     const triggerProps: Record<string, unknown> = {};
 
     for (const [key, value] of Object.entries(restProps)) {
@@ -69,6 +144,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           asChild
           w={w ?? width}
           minW={minW ?? minWidth}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+          onPointerLeave={handlePointerEnd}
+          onClickCapture={handleClickCapture}
+          onContextMenu={handleContextMenu}
           {...triggerProps}
         >
           {children}

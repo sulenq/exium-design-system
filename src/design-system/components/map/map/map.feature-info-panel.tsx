@@ -22,7 +22,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { FocusIcon, Grid2X2Icon, Layers2Icon } from "lucide-react";
+import { FocusIcon, Layers2Icon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 
@@ -57,22 +57,10 @@ export const MapFeatureInfoPanel = () => {
   // Derived Values
   const isOpen = Boolean(selectedFeature || isLoading);
   const displayFeature = selectedFeature ?? cachedFeature;
-  const normalizedBasis = (
-    displayFeature?.spatialBasis ??
-    displayFeature?.basis ??
-    ""
-  )
-    .toString()
-    .toLowerCase();
-  const isKawasan = normalizedBasis === "kawasan";
-  const isBidang = normalizedBasis === "bidang";
-  const colorPalette = isKawasan ? "orange" : isBidang ? "blue" : "gray";
-  const LayerIcon = isKawasan ? Grid2X2Icon : Layers2Icon;
-  const basisLabel = isKawasan
-    ? "Kawasan"
-    : isBidang
-      ? "Bidang"
-      : (displayFeature?.spatialBasis ?? displayFeature?.basis ?? "Layer IGT");
+  const appearance = displayFeature?.appearance;
+  const colorPalette = appearance?.colorPalette ?? "gray";
+  const LayerIcon = appearance?.icon ?? Layers2Icon;
+  const categoryLabel = appearance?.categoryLabel ?? t["map.layer"]();
 
   const properties = useMemo(
     () => displayFeature?.properties ?? {},
@@ -111,7 +99,7 @@ export const MapFeatureInfoPanel = () => {
     try {
       zoomToFeatureSafe(map, geom, coord, isSmallViewport);
     } catch {
-      toast.error("Gagal melakukan zoom ke fitur.");
+      toast.error(t["map.zoom_to_feature_failed"]());
     }
   };
 
@@ -180,11 +168,11 @@ export const MapFeatureInfoPanel = () => {
               <P lineClamp={1} fontWeight={"medium"} lineHeight={"tight"}>
                 {displayFeature?.title ??
                   displayFeature?.layerTitle ??
-                  "Informasi Fitur"}
+                  t["map.feature_info"]()}
               </P>
 
               <P lineClamp={1} fontSize={"sm"} color={"fg.subtle"}>
-                {basisLabel}
+                {categoryLabel}
               </P>
             </VStack>
           </HStack>

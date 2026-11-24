@@ -71,6 +71,17 @@ const createLoadingMarkerElement = (): HTMLElement => {
   return container;
 };
 
+const FALLBACK_PIN_COLOR = "#3b82f6";
+
+/** Resolve a Chakra palette to a concrete color; MapLibre markers need a real value, not a CSS var. */
+const resolvePaletteColor = (colorPalette: string): string => {
+  if (typeof window === "undefined") return FALLBACK_PIN_COLOR;
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(`--chakra-colors-${colorPalette}-500`)
+    .trim();
+  return value || FALLBACK_PIN_COLOR;
+};
+
 const createStandardMarkerElement = (
   color: string,
   onToggleOff: () => void,
@@ -144,14 +155,9 @@ export const useMapFeatureInfo = (
 
     if (selectedFeature?.coordinate) {
       clickMarkerRef.current?.remove();
-      const rawBasis = (
-        selectedFeature.spatialBasis ??
-        selectedFeature.basis ??
-        ""
-      )
-        .toString()
-        .toLowerCase();
-      const pinColor = rawBasis === "bidang" ? "#3b82f6" : "#f97316";
+      const pinColor = resolvePaletteColor(
+        selectedFeature.appearance?.colorPalette ?? "blue",
+      );
 
       const standardEl = createStandardMarkerElement(
         pinColor,
@@ -663,8 +669,7 @@ export const useMapFeatureInfo = (
               layerId: layer.id,
               title: humanTitle,
               layerTitle: humanTitle,
-              spatialBasis: layer.spatialBasis,
-              basis: layer.spatialBasis,
+              appearance: layer.appearance,
               typeName,
               properties: (feat.properties as Record<string, unknown>) ?? {},
               geometry: feat.geometry ?? null,

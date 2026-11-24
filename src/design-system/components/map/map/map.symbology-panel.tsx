@@ -24,18 +24,15 @@ import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
-import { getMapLayers } from "@/design-system/components/map/services/map-layers.service";
-import type { IgtLayerItem } from "@/design-system/components/map/map/map.type";
-import { queryKeys } from "@/shared/libs/tanstack-query/query.keys";
-import { getUserSession } from "@/shared/utils/user/user-session.utils";
+import type { GenericMapLayer } from "@/design-system/components/map/map/map.layer-management.type";
 import { useQuery } from "@tanstack/react-query";
-import { EyeOffIcon, Grid2X2Icon, Layers2Icon, XIcon } from "lucide-react";
+import { EyeOffIcon, Layers2Icon, XIcon } from "lucide-react";
 import { memo, useMemo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 
 export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
   // Props
-  const { layers: propLayers } = props;
+  const { layers } = props;
 
   // Stores
   const { theme } = useThemeStore();
@@ -49,28 +46,13 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
     (s) => s.setSymbologyLayerEnabled,
   );
 
-  // Queries — fetch layers if not provided via props
-  const userSession = getUserSession();
-  const isAuthenticated = Boolean(userSession?.id);
-  const { data: layersData } = useQuery({
-    queryKey: queryKeys.map.layers(),
-    queryFn: ({ signal }) => getMapLayers(signal),
-    staleTime: 1000 * 60 * 5,
-    enabled: isAuthenticated && (!propLayers || propLayers.length === 0),
-  });
-
   // Derived Values
-  const allLayers: IgtLayerItem[] = useMemo(() => {
-    if (propLayers && propLayers.length > 0) return propLayers as IgtLayerItem[];
-    return (layersData?.items ?? []) as IgtLayerItem[];
-  }, [propLayers, layersData]);
-
-  const activeSymbologyLayers: IgtLayerItem[] = useMemo(() => {
-    return allLayers.filter((l: IgtLayerItem) => Boolean(enabledSymbologyLayerIds[l.id]));
-  }, [allLayers, enabledSymbologyLayerIds]);
+  const activeSymbologyLayers: GenericMapLayer[] = useMemo(() => {
+    return layers.filter((l: GenericMapLayer) => Boolean(enabledSymbologyLayerIds[l.id]));
+  }, [layers, enabledSymbologyLayerIds]);
 
   const activeLayerIds = useMemo(() => {
-    return activeSymbologyLayers.map((l: IgtLayerItem) => l.id);
+    return activeSymbologyLayers.map((l: GenericMapLayer) => l.id);
   }, [activeSymbologyLayers]);
 
   // States — open accordion item keys
@@ -162,16 +144,15 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
             onValueChange={(details) => setOpenValues(details.value)}
             w={"full"}
           >
-            {activeSymbologyLayers.map((layer: IgtLayerItem) => {
+            {activeSymbologyLayers.map((layer: GenericMapLayer) => {
               const displayName =
                 layer.title ||
                 layer.id.split(":")[1] ||
                 layer.wfs?.wfsTypeName ||
                 layer.id;
-              const isKawasan = layer.spatialBasis === "kawasan";
-              const colorPalette = isKawasan ? "orange" : "blue";
-              const LayerIcon = isKawasan ? Grid2X2Icon : Layers2Icon;
-              const basisLabel = isKawasan ? "Kawasan" : "Bidang";
+              const colorPalette = layer.appearance?.colorPalette ?? "blue";
+              const LayerIcon = layer.appearance?.icon ?? Layers2Icon;
+              const categoryLabel = layer.appearance?.categoryLabel;
 
               return (
                 <Accordion.Item key={layer.id} value={layer.id}>
@@ -201,9 +182,11 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
                           {displayName.replace(/_/g, " ")}
                         </P>
 
-                        <P lineClamp={1} fontSize={"sm"} color={"fg.subtle"}>
-                          {basisLabel}
-                        </P>
+                        {categoryLabel && (
+                          <P lineClamp={1} fontSize={"sm"} color={"fg.subtle"}>
+                            {categoryLabel}
+                          </P>
+                        )}
                       </VStack>
                     </HStack>
 
@@ -291,7 +274,7 @@ export const LayerSymbologyContent = memo(
           <LegendRuleItem
             key={rule.name ?? idx}
             rule={rule}
-            fallbackBasis={layer.spatialBasis}
+            fallbackAppearance={layer.appearance}
           />
         ))}
       </VStack>
@@ -301,10 +284,10 @@ export const LayerSymbologyContent = memo(
 
 const LegendRuleItem = memo((props: LegendRuleItemProps) => {
   // Props
-  const { rule, fallbackBasis } = props;
+  const { rule, fallbackAppearance } = props;
 
   // Derived Values
-  const ruleTitle = rule.title || rule.name || "Fitur Standar";
+  const ruleTitle = rule.title || rule.name || t["map.default_feature"]();
   const symbolizers = rule.symbolizers ?? [];
 
   return (
@@ -326,10 +309,10 @@ const LegendRuleItem = memo((props: LegendRuleItemProps) => {
           if (symb.Point) {
             return <PointSwatch key={idx} point={symb.Point} />;
           }
-          return <DefaultThematicSwatch key={idx} basis={fallbackBasis} />;
+          return <DefaultThematicSwatch key={idx} appearance={fallbackAppearance} />;
         })}
         {symbolizers.length === 0 && (
-          <DefaultThematicSwatch basis={fallbackBasis} />
+          <DefaultThematicSwatch appearance={fallbackAppearance} />
         )}
 
         <P lineClamp={1}
@@ -416,13 +399,13 @@ const PointSwatch = memo((props: PointSwatchProps) => {
 
 const DefaultThematicSwatch = memo((props: DefaultThematicSwatchProps) => {
   // Props
-  const { basis } = props;
+  const { appearance } = props;
 
   // Derived Values
-  const isKawasan = basis === "kawasan";
-  const fillColor = isKawasan ? "orange.subtle" : "blue.subtle";
-  const strokeColor = isKawasan ? "orange.emphasized" : "blue.emphasized";
-  const label = isKawasan ? "Poligon Kawasan" : "Poligon Bidang Tanah";
+  const colorPalette = appearance?.colorPalette ?? "blue";
+  const fillColor = `${colorPalette}.subtle`;
+  const strokeColor = `${colorPalette}.emphasized`;
+  const label = appearance?.categoryLabel ?? t["map.default_feature"]();
 
   return (
     <HStack gap={3} align={"center"}>

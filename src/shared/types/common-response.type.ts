@@ -52,10 +52,6 @@ export type PaginatedParams = {
   search?: string;
 };
 
-export type IgtThemeItem = {
-  name: string;
-  description?: string | null;
-};
 
 // Auth
 export type UserRole = "internal" | "mitra";

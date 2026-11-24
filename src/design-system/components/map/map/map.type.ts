@@ -19,6 +19,19 @@ export type MapServerEndpoint = {
   srsName?: string;
 };
 
+/**
+ * Visual identity of a layer, chosen by the app's domain adapter (e.g. one color per
+ * land-use category). The map components only render it and never interpret domain data.
+ */
+export type MapLayerAppearance = {
+  /** Chakra color palette used for the layer accent, badge and click pin. Defaults to "blue". */
+  colorPalette?: string;
+  /** Icon shown next to the layer name. Defaults to a generic layers icon. */
+  icon?: import("react").ComponentType;
+  /** Short category label shown under the layer name, e.g. "Kawasan". */
+  categoryLabel?: string;
+};
+
 /** Discriminated union describing every layer that can be added to the map via config. */
 export type MapLayerConfig =
   | WfsLayerConfig
@@ -32,10 +45,8 @@ export type BaseLayerConfig = {
   typeName?: string;
   /** Human-readable title of the layer */
   title?: string;
-  /** IGT Basis of this layer ("bidang" or "kawasan"). */
-  igtBasis?: "bidang" | "kawasan";
-  /** Spatial basis alias for backward compatibility */
-  spatialBasis?: "bidang" | "kawasan";
+  /** Visual identity of the layer (accent color, icon, category label). Set by the domain adapter. */
+  appearance?: MapLayerAppearance;
   /** Bounding box of the layer [minLon, minLat, maxLon, maxLat]. */
   bbox?: [number, number, number, number];
   /** When false the layer is added but hidden (layout visibility "none"). Defaults to true. */
@@ -87,8 +98,8 @@ export type WmsRasterLayerConfig = BaseLayerConfig & {
   styles?: string;
 };
 
-/** WFS-specific query configuration for an IGT layer */
-export type IgtLayerWfsConfig = {
+/** WFS query configuration of a catalog layer */
+export type MapLayerWfsConfig = {
   url?: string;
   baseUrl?: string;
   wfsTypeName: string;
@@ -98,8 +109,8 @@ export type IgtLayerWfsConfig = {
   srsName: string;
 };
 
-/** WMS-specific tile rendering configuration for an IGT layer */
-export type IgtLayerWmsConfig = {
+/** WMS tile rendering configuration of a catalog layer */
+export type MapLayerWmsConfig = {
   url?: string;
   baseUrl?: string;
   layers: string;
@@ -112,22 +123,24 @@ export type IgtLayerWmsConfig = {
   srs?: string;
 };
 
-/** Centralized IGT Layer Item containing metadata, WFS query config, and WMS render config */
-export type IgtLayerItem = {
+/**
+ * A layer from a server-side catalog: metadata plus WFS query and WMS render config.
+ * Apps extend it with their own fields and fill `appearance`.
+ */
+export type CatalogMapLayer = {
   id: string;
   workspaceName?: string;
   layerName?: string | null;
   typeName?: string;
   title: string;
-  igtBasis: "bidang" | "kawasan";
-  spatialBasis: "bidang" | "kawasan";
+  appearance?: MapLayerAppearance;
   bbox: [number, number, number, number];
   visible: boolean;
   defaultVisible: boolean;
   zIndex: number;
   minZoom?: number;
-  wfs: IgtLayerWfsConfig;
-  wms: IgtLayerWmsConfig;
+  wfs: MapLayerWfsConfig;
+  wms: MapLayerWmsConfig;
 };
 
 import type { PaginationMeta } from "@/shared/types/common-response.type";
@@ -149,41 +162,41 @@ export const isMapActive = (
   return Boolean(internal.style && !internal._removed);
 };
 
-export type IgtLayersResponse = {
-  items: IgtLayerItem[];
+export type CatalogMapLayersResponse<TLayer extends CatalogMapLayer = CatalogMapLayer> = {
+  items: TLayer[];
   pagination: PaginationMeta;
 };
 
-/** Helper converter to build WmsRasterLayerConfig for map rendering from an IgtLayerItem */
-export const getWmsRasterConfigFromIgtLayer = (
-  igtLayer: IgtLayerItem,
+/** Build the WmsRasterLayerConfig used for rendering from a catalog layer */
+export const getWmsRasterConfigFromCatalogLayer = (
+  catalogLayer: CatalogMapLayer,
   visible = true,
   opacity = 0.5,
 ): WmsRasterLayerConfig => {
-  const wmsUrl = igtLayer.wms?.wmsUrl ?? "";
-  const layers = igtLayer.wms?.layers || igtLayer.typeName || "";
-  const wfsUrl = igtLayer.wfs?.wfsUrl;
-  const wfsTypeName = igtLayer.wfs?.wfsTypeName || igtLayer.typeName || "";
+  const wmsUrl = catalogLayer.wms?.wmsUrl ?? "";
+  const layers = catalogLayer.wms?.layers || catalogLayer.typeName || "";
+  const wfsUrl = catalogLayer.wfs?.wfsUrl;
+  const wfsTypeName = catalogLayer.wfs?.wfsTypeName || catalogLayer.typeName || "";
 
   return {
-    id: igtLayer.id,
-    typeName: igtLayer.typeName || layers || wfsTypeName,
-    title: igtLayer.title,
+    id: catalogLayer.id,
+    typeName: catalogLayer.typeName || layers || wfsTypeName,
+    title: catalogLayer.title,
     type: "wms-raster",
-    spatialBasis: igtLayer.spatialBasis,
-    bbox: igtLayer.bbox,
+    appearance: catalogLayer.appearance,
+    bbox: catalogLayer.bbox,
     visible,
     opacity,
-    zIndex: igtLayer.zIndex,
-    minZoom: igtLayer.minZoom ?? 12,
+    zIndex: catalogLayer.zIndex,
+    minZoom: catalogLayer.minZoom ?? 12,
     wmsUrl,
     layers,
     wfsUrl,
     wfsTypeName,
-    tileSize: igtLayer.wms?.tileSize,
-    format: igtLayer.wms?.format,
-    transparent: igtLayer.wms?.transparent,
-    styles: igtLayer.wms?.styles,
+    tileSize: catalogLayer.wms?.tileSize,
+    format: catalogLayer.wms?.format,
+    transparent: catalogLayer.wms?.transparent,
+    styles: catalogLayer.wms?.styles,
   };
 };
 
@@ -249,7 +262,6 @@ export type MapLayerState = {
 };
 
 export type MapOverlayProps = {
-  showMasterIgtLayerSelect?: boolean;
-  showMyDataLayerSelect?: boolean;
-  showWorkspaceLayerSelect?: boolean;
+  /** Layer management control shown top-right, e.g. a catalog of the app's layers. */
+  layerManagement?: import("react").ReactNode;
 };

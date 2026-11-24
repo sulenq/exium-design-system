@@ -372,7 +372,6 @@
   },
   "map": {
     "search_attributes": "Search attributes...",
-    "layer_symbology_management": "IGT Layer & Symbology Management",
     "failed_loading_symbology": "Failed to Load Symbology",
     "attribution": "Map attribution",
     "zoom_in": "Zoom in",
@@ -395,7 +394,19 @@
     "properties": "Properties",
     "basemap": "Basemap",
     "search_location": "Search location",
-    "drag_to_reorder": "Hold and drag to reorder"
+    "drag_to_reorder": "Hold and drag to reorder",
+    "default_feature": "Default feature",
+    "layer": "Layer",
+    "feature_info": "Feature information",
+    "layer_management": "Layer management",
+    "no_layers": "No layers available",
+    "loading_layers": "Loading layers...",
+    "failed_loading_layers": "Failed to load layers",
+    "failed_loading_layers_description": "Something went wrong while loading the layers.",
+    "failed_loading_map_layer": "Failed to load map layer",
+    "invalid_tile_format": "The layer tile format is invalid or the layer was not found.",
+    "zoom_to_feature_failed": "Could not zoom to the feature.",
+    "polygon_drawn": "Area drawn"
   },
   "data_view": {
     "row_actions": "Row actions",
@@ -407,7 +418,9 @@
     "custom_hint": "Type above to add a custom value..."
   },
   "string_array_input": {
-    "placeholder": "Enter a value..."
+    "placeholder": "Enter a value...",
+    "add_item": "Add item",
+    "empty": "No items added yet."
   },
   "url": {
     "copy_url": "Copy URL"
@@ -427,5 +440,11 @@
   },
   "snackbar": {
     "label": "Main navigation"
+  },
+  "masked_text": {
+    "copy": "Copy text"
+  },
+  "welcome": {
+    "subtitle": "Hope your day goes well"
   }
 }

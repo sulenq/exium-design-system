@@ -1,6 +1,7 @@
 // src/design-system/components/map/map/map.layer-management.type.ts
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
+import type { MapLayerAppearance } from "@/design-system/components/map/map/map.type";
 import type React from "react";
 
 export type FlyToLayerOptions = {
@@ -19,8 +20,7 @@ export type GenericMapLayer = {
   id: string;
   title?: string;
   label?: string | null;
-  spatialBasis?: "bidang" | "kawasan";
-  igtBasis?: "bidang" | "kawasan";
+  appearance?: MapLayerAppearance;
   bbox?: [number, number, number, number];
   zIndex?: number;
   wfs?: {
@@ -74,14 +74,3 @@ export type MapLayerManagementPanelProps<T extends GenericMapLayer = GenericMapL
     | ((props: MapLayerManagementTriggerRenderProps) => React.ReactNode);
 };
 
-export type MapMasterIgtLayerManagementProps = {
-  children?:
-    | React.ReactNode
-    | ((props: MapLayerManagementTriggerRenderProps) => React.ReactNode);
-};
-
-export type MapWorkspaceLayerManagementProps = {
-  children?:
-    | React.ReactNode
-    | ((props: MapLayerManagementTriggerRenderProps) => React.ReactNode);
-};

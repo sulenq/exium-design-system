@@ -15,7 +15,7 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
     page,
     setPage,
     options = DEFAULT_PAGE_SIZE_OPTIONS,
-    title = t["pagination.page_size_title"]?.() ?? "Baris per halaman",
+    title = t["pagination.page_size_title"](),
     ...restProps
   } = props;
 

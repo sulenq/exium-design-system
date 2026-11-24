@@ -607,7 +607,7 @@ const DataListTableRow = memo(
         ? (t["action.row_action_tooltip_dual"]?.() ??
           "Hold atau klik kanan untuk buka aksi")
         : inputType === "touch"
-          ? (t["action.row_action_tooltip_touch"]?.() ?? "Hold untuk buka aksi")
+          ? t["action.row_action_tooltip_touch"]()
           : (t["action.row_action_tooltip_mouse"]?.() ??
             "Klik kanan untuk buka aksi");
 

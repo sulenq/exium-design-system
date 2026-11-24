@@ -18,7 +18,7 @@ export const MaskedText = memo((props: MaskedTextProps) => {
     maskLength = 16,
     maskChar = "•",
     withCopy = true,
-    copyLabel = "Salin Teks",
+    copyLabel = t["masked_text.copy"](),
     withToggle = true,
     ...restProps
   } = props;

@@ -70,7 +70,7 @@ export const fetchLegendGraphic = async (
   url.searchParams.set("format", "application/json");
   url.searchParams.set("layer", layerName);
 
-  // Backend proxy requirement: layerId parameter (must be layer UUID if master IGT, or existing layerId param)
+  // Proxy requirement: layerId identifies the layer (its id, source layer id, or name)
   if (!url.searchParams.has("layerId")) {
     const layerId = raw?.id || raw?.sourceLayerId || layerName;
     url.searchParams.set("layerId", layerId);

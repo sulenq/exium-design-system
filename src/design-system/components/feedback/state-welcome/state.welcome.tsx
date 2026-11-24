@@ -22,7 +22,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { ArrowUpRightIcon } from "lucide-react";
 import { useMemo } from "react";
 
-const getDisplayNavItems = (isMitra: boolean) => {
+const NO_FALLBACK_NAV_KEYS: string[] = [];
+
+const getDisplayNavItems = (isMitra: boolean, fallbackNavKeys: string[]) => {
   const navsMap = (isMitra ? APP_NAVS_MAP : INTERNAL_APP_NAVS_MAP) as Record<
     string,
     NavItem
@@ -53,11 +55,7 @@ const getDisplayNavItems = (isMitra: boolean) => {
     return fromHistory.slice(0, 3);
   }
 
-  const defaultNavKeys = isMitra
-    ? ["data_request", "my_data", "transaction_history"]
-    : ["master_igt_layer", "order_review", "master_geoserver"];
-
-  const fallbackItems = defaultNavKeys
+  const fallbackItems = fallbackNavKeys
     .map((key) => {
       const nav = navsMap[key];
       if (!nav || !nav.pathname) return null;
@@ -88,15 +86,18 @@ export const StateWelcome = (props: StateWelcomeProps) => {
   const navigate = useNavigate();
 
   // Props
-  const { title, subtitle, ...restProps } = props;
+  const { title, subtitle, fallbackNavKeys = NO_FALLBACK_NAV_KEYS, ...restProps } = props;
 
   // Derived Values
   const user = useMemo(() => getUserSession(), []);
   const isMitra = user?.role === "mitra";
 
   const resolvedTitle = title ?? t["common.welcome_intro"]();
-  const resolvedSubtitle = subtitle ?? "Semoga hari ini berjalan lancar";
-  const displayNavItems = useMemo(() => getDisplayNavItems(isMitra), [isMitra]);
+  const resolvedSubtitle = subtitle ?? t["welcome.subtitle"]();
+  const displayNavItems = useMemo(
+    () => getDisplayNavItems(isMitra, fallbackNavKeys),
+    [isMitra, fallbackNavKeys],
+  );
 
   return (
     <AppContentContainer
