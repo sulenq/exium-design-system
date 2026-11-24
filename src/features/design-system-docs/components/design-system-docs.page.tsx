@@ -179,6 +179,8 @@ export const DesignSystemDocsPage = () => {
           </HStack>
 
           <HStack align={"center"} gap={2}>
+            <ColorModeToggleButton />
+
             <SelectInput
               value={locale}
               onValueChange={(val) => {
@@ -190,8 +192,8 @@ export const DesignSystemDocsPage = () => {
               clearable={false}
               w={"160px"}
               size={"sm"}
+              variant={"ghost"}
             />
-            <ColorModeToggleButton />
           </HStack>
         </HStack>
 

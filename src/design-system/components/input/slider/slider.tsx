@@ -76,9 +76,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             }}
           >
             <ChakraSlider.Range
-              bg={`linear-gradient(to right, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 35)})`}
+              bg={`linear-gradient(to right, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`}
               _vertical={{
-                bg: `linear-gradient(to top, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 35)})`,
+                bg: `linear-gradient(to top, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`,
               }}
             />
           </ChakraSlider.Track>
