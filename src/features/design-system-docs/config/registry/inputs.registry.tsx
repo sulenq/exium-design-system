@@ -10,6 +10,7 @@ import { VersionInput } from "@/design-system/components/input/version-input/ver
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import type { SearchIndex } from "@/design-system/types/search.type";
+import { DS_NAVS_MAP } from "@/features/design-system-docs/constants/ds.navs";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { useState } from "react";
 
@@ -57,12 +58,14 @@ const VersionInputDemo = (props: { withPrefix: boolean; disabled: boolean }) => 
   );
 };
 
-const FOCUS_SEARCH_DEMO_INDEX: SearchIndex = [
-  { id: "ternak", title: "Daftar ternak", description: "Semua hewan terdaftar", keywords: ["sapi", "kambing"] },
-  { id: "vaksin", title: "Jadwal vaksinasi", description: "Vaksin yang akan datang", keywords: ["pmk", "imunisasi"] },
-  { id: "pakan", title: "Stok pakan", description: "Sisa pakan per kandang", keywords: ["hijauan", "konsentrat"] },
-  { id: "laporan", title: "Laporan bulanan", description: "Ringkasan produksi", keywords: ["export", "pdf"] },
-];
+const FOCUS_SEARCH_DEMO_INDEX: SearchIndex = Object.entries(DS_NAVS_MAP)
+  .filter(([key]) => !key.startsWith("cat_"))
+  .map(([id, item]) => ({
+    id,
+    title: item.title,
+    description: `Komponen & navigasi ${item.title}`,
+    keywords: [id, item.title.toLowerCase()],
+  }));
 
 const FocusSearchDemo = () => {
   // States
@@ -76,7 +79,7 @@ const FocusSearchDemo = () => {
         searchIndex={FOCUS_SEARCH_DEMO_INDEX}
         onResultSelect={(result) => setSelected(result.title)}
       >
-        <Button variant={"outline"}>{"Cari menu"}</Button>
+        <Button variant={"outline"}>{"Cari navigasi & komponen"}</Button>
       </FocusSearchTrigger>
       <P fontSize={"xs"} color={"fg.muted"}>
         {`Dipilih: ${selected ?? "-"}`}
