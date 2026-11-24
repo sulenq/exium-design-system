@@ -286,6 +286,7 @@ export default function SelectInput(props: SelectProps) {
             <P fontSize={"sm"} whiteSpace={"nowrap"}>
               {selectedOption?.label ?? placeholder}
             </P>
+
             {suffixLabel}
           </HStack>
         }
@@ -295,6 +296,10 @@ export default function SelectInput(props: SelectProps) {
             rounded={theme.radii.component}
             cursor={"pointer"}
             minW={0}
+            _active={{
+              transform: "scale(0.95)",
+            }}
+            transition={"transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"}
           >
             {renderTriggerContent()}
           </ChakraSelect.Trigger>

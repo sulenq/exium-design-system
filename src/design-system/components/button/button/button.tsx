@@ -192,6 +192,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
             : undefined
         }
+        _active={{
+          transform: "scale(0.95)",
+        }}
         onPointerDown={(e) => {
           if (bouncy) onBouncePointerDown(e);
           onPointerDown?.(e);
@@ -292,6 +295,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
               : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
             : undefined
         }
+        _active={{
+          transform: "scale(0.95)",
+        }}
         onPointerDown={(e) => {
           if (bouncy) onBouncePointerDown(e);
           onPointerDown?.(e);
