@@ -16,6 +16,7 @@ export type ButtonProps = Omit<ChakraButtonProps, "variant"> & {
     | (string & {});
   lineClamp?: ChakraButtonProps["lineClamp"];
   clicky?: boolean;
+  bouncy?: boolean;
   tooltip?: ReactNode;
 };
 

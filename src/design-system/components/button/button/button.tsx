@@ -7,8 +7,11 @@ import type {
   IconButtonProps,
 } from "@/design-system/components/button/button/button.type";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
+import { useBounceDrag } from "@/design-system/hooks/use-bounce-drag";
+import { useMergedRefs } from "@/design-system/hooks/use-merge-refs";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isTextTruncated } from "@/shared/utils/dom/text-truncation.utils";
+import { tintLight } from "@/shared/utils/style/color";
 import type { ButtonProps as ChakraButtonProps } from "@chakra-ui/react";
 import {
   Button as ChakraButton,
@@ -47,19 +50,41 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       primary,
       variant,
       // clicky = true,
+      bouncy = true,
       colorPalette,
       lineClamp,
       children,
       minW = 0,
       maxW = "full",
       tooltip,
+      onPointerDown,
+      onPointerUp,
+      onPointerCancel,
       ...restProps
     } = props;
+
+    // Hooks
+    const {
+      ref: bounceRef,
+      isHolding,
+      handlePointerDown: onBouncePointerDown,
+      handlePointerUp: onBouncePointerUp,
+    } = useBounceDrag<HTMLButtonElement>({
+      maxOffset: 5,
+      damping: 0.05,
+    });
+
+    const mergedRef = useMergedRefs({
+      refs: bouncy ? [ref, bounceRef] : [ref],
+    });
 
     // Stores
     const { theme } = useThemeStore();
 
     // Derived Values — Combine contiguous text nodes into a single clamped Span
+    const resolvedVariant = variant || (primary ? "solid" : "ghost");
+    const isSolid = resolvedVariant === "solid";
+
     const formattedChildren = useMemo(() => {
       const childArray = Children.toArray(children);
       const result: React.ReactNode[] = [];
@@ -137,13 +162,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const buttonNode = (
       <ChakraButton
-        ref={ref}
-        variant={
-          (variant ||
-            (primary ? "solid" : "ghost")) as ChakraButtonProps["variant"]
-        }
+        ref={mergedRef}
+        variant={resolvedVariant as ChakraButtonProps["variant"]}
         colorPalette={
           colorPalette ?? (primary ? theme.colorPalette : "neutral")
+        }
+        bg={
+          isSolid
+            ? `linear-gradient(20deg, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`
+            : undefined
         }
         gap={2}
         rounded={theme.radii.component}
@@ -153,9 +180,30 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         minW={minW}
         maxW={maxW}
         overflow={"hidden"}
-        // _active={{
-        //   transform: clicky ? "translateY(2px)" : "none",
-        // }}
+        transform={
+          bouncy
+            ? "translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"
+            : undefined
+        }
+        transition={
+          bouncy
+            ? isHolding
+              ? "transform 80ms ease-out"
+              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+            : undefined
+        }
+        onPointerDown={(e) => {
+          if (bouncy) onBouncePointerDown(e);
+          onPointerDown?.(e);
+        }}
+        onPointerUp={(e) => {
+          if (bouncy) onBouncePointerUp();
+          onPointerUp?.(e);
+        }}
+        onPointerCancel={(e) => {
+          if (bouncy) onBouncePointerUp();
+          onPointerCancel?.(e);
+        }}
         {...restProps}
       >
         {formattedChildren}
@@ -183,24 +231,79 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   function Iconbutton(props, ref) {
     // Props
-    const { primary, variant, colorPalette, tooltip, ...restProps } = props;
+    const {
+      primary,
+      variant,
+      bouncy = true,
+      colorPalette,
+      tooltip,
+      onPointerDown,
+      onPointerUp,
+      onPointerCancel,
+      ...restProps
+    } = props;
+
+    // Hooks
+    const {
+      ref: bounceRef,
+      isHolding,
+      handlePointerDown: onBouncePointerDown,
+      handlePointerUp: onBouncePointerUp,
+    } = useBounceDrag<HTMLButtonElement>({
+      maxOffset: 5,
+      damping: 0.05,
+    });
+
+    const mergedRef = useMergedRefs({
+      refs: bouncy ? [ref, bounceRef] : [ref],
+    });
 
     // Stores
     const { theme } = useThemeStore();
 
+    // Derived Values
+    const resolvedVariant = variant || (primary ? "solid" : "ghost");
+    const isSolid = resolvedVariant === "solid";
+
     const buttonNode = (
       <ChakraIconButton
-        ref={ref}
-        variant={
-          (variant ||
-            (primary ? "solid" : "ghost")) as ChakraButtonProps["variant"]
-        }
+        ref={mergedRef}
+        variant={resolvedVariant as ChakraButtonProps["variant"]}
         colorPalette={
           colorPalette ?? (primary ? theme.colorPalette : "neutral")
+        }
+        bg={
+          isSolid
+            ? `linear-gradient(35deg, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 15)})`
+            : undefined
         }
         rounded={theme.radii.component}
         fontWeight={"normal"}
         userSelect={"none"}
+        transform={
+          bouncy
+            ? "translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"
+            : undefined
+        }
+        transition={
+          bouncy
+            ? isHolding
+              ? "transform 80ms ease-out"
+              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+            : undefined
+        }
+        onPointerDown={(e) => {
+          if (bouncy) onBouncePointerDown(e);
+          onPointerDown?.(e);
+        }}
+        onPointerUp={(e) => {
+          if (bouncy) onBouncePointerUp();
+          onPointerUp?.(e);
+        }}
+        onPointerCancel={(e) => {
+          if (bouncy) onBouncePointerUp();
+          onPointerCancel?.(e);
+        }}
         {...restProps}
       />
     );
