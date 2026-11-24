@@ -24,7 +24,7 @@ const ImageImpl = (props: ImageProps) => {
     onError,
     objectFit,
     objectPosition,
-    loading = "lazy",
+    loading = "eager",
     crossOrigin,
     referrerPolicy,
     srcSet,
