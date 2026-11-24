@@ -10,6 +10,8 @@ export type BaseMapProps = {
 
 export type MapProps = BaseMapProps & {
   layers: MapLayerConfig[];
+  /** Layer management control shown top-right, e.g. the app's layer catalog. */
+  layerManagement?: React.ReactNode;
   onDrawFinish?: (
     feature: GeoJSON.Feature<GeoJSON.Polygon>,
     originalPoints: { lng: number; lat: number }[],

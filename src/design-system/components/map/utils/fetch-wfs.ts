@@ -46,13 +46,10 @@ export const buildWfsUrl = (
     url.searchParams.set("layerId", typeName);
   }
 
-  // Only apply apiKey for workspace proxy endpoints or workspace services (not master IGT /api/proxy/wfs)
-  const isWorkspaceEndpoint =
-    url.pathname.includes("/proxy/workspace/") ||
-    url.pathname.includes("/workspace/") ||
-    (wfsUrl && wfsUrl.includes("workspace="));
+  // The caller decides authentication: an apiKey means key-based access to the endpoint
+  const usesApiKey = Boolean(apiKey);
 
-  if (apiKey && isWorkspaceEndpoint && !url.searchParams.has("apiKey")) {
+  if (apiKey && usesApiKey && !url.searchParams.has("apiKey")) {
     url.searchParams.set("apiKey", apiKey);
   }
   url.searchParams.set("service", "WFS");
@@ -147,12 +144,9 @@ export const getLayerGeometryColumnName = async (
       url.searchParams.set("layerId", typeName);
     }
 
-    const isWorkspaceEndpoint =
-      url.pathname.includes("/proxy/workspace/") ||
-      url.pathname.includes("/workspace/") ||
-      (wfsUrl && wfsUrl.includes("workspace="));
+    const usesApiKey = Boolean(apiKey);
 
-    if (apiKey && isWorkspaceEndpoint && !url.searchParams.has("apiKey")) {
+    if (apiKey && usesApiKey && !url.searchParams.has("apiKey")) {
       url.searchParams.set("apiKey", apiKey);
     }
     url.searchParams.set("service", "WFS");
@@ -164,14 +158,14 @@ export const getLayerGeometryColumnName = async (
     const authToken =
       typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
     const headers: Record<string, string> = {};
-    if (apiKey && isWorkspaceEndpoint) {
+    if (apiKey && usesApiKey) {
       headers["X-API-Key"] = apiKey;
     }
     if (authToken) {
       headers["Authorization"] = `Bearer ${authToken}`;
     }
 
-    const credentialsMode: RequestCredentials = isWorkspaceEndpoint
+    const credentialsMode: RequestCredentials = usesApiKey
       ? "same-origin"
       : "include";
 
@@ -220,14 +214,11 @@ const fetchWfsPost = async (
 ): Promise<Response> => {
   const url = buildWfsUrl(params, includeStartIndex);
 
-  const isWorkspaceEndpoint =
-    url.pathname.includes("/proxy/workspace/") ||
-    url.pathname.includes("/workspace/") ||
-    (params.wfsUrl && params.wfsUrl.includes("workspace="));
+  const usesApiKey = Boolean(params.apiKey);
 
   // Extract base endpoint
   let baseUrl = `${url.origin}${url.pathname}`;
-  if (params.apiKey && isWorkspaceEndpoint) {
+  if (params.apiKey && usesApiKey) {
     baseUrl += `?apiKey=${encodeURIComponent(params.apiKey)}`;
   }
   const body = url.searchParams.toString();
@@ -237,14 +228,14 @@ const fetchWfsPost = async (
 
   const headers: Record<string, string> = {
     "Content-Type": "application/x-www-form-urlencoded",
-    ...(params.apiKey && isWorkspaceEndpoint
+    ...(params.apiKey && usesApiKey
       ? { "X-API-Key": params.apiKey }
       : {}),
     ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
     ...(params.headers ?? {}),
   };
 
-  const credentialsMode: RequestCredentials = isWorkspaceEndpoint
+  const credentialsMode: RequestCredentials = usesApiKey
     ? "same-origin"
     : "include";
 
@@ -273,20 +264,17 @@ export const fetchWfs = async (
     Boolean(params.cqlFilter) ||
     url.toString().length > 2000;
 
-  const isWorkspaceEndpoint =
-    url.pathname.includes("/proxy/workspace/") ||
-    url.pathname.includes("/workspace/") ||
-    (params.wfsUrl && params.wfsUrl.includes("workspace="));
+  const usesApiKey = Boolean(params.apiKey);
 
   const authToken =
     typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
 
-  const credentialsMode: RequestCredentials = isWorkspaceEndpoint
+  const credentialsMode: RequestCredentials = usesApiKey
     ? "same-origin"
     : "include";
 
   const getHeaders: Record<string, string> = {
-    ...(params.apiKey && isWorkspaceEndpoint
+    ...(params.apiKey && usesApiKey
       ? { "X-API-Key": params.apiKey }
       : {}),
     ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),

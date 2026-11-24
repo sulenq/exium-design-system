@@ -371,7 +371,6 @@
   },
   "map": {
     "search_attributes": "Cari atribut...",
-    "layer_symbology_management": "Manajemen Layer & Simbologi IGT",
     "failed_loading_symbology": "Gagal Memuat Simbologi",
     "attribution": "Atribusi peta",
     "zoom_in": "Perbesar",
@@ -394,7 +393,10 @@
     "properties": "Properti",
     "basemap": "Peta dasar",
     "search_location": "Cari lokasi",
-    "drag_to_reorder": "Tahan dan geser untuk mengubah urutan"
+    "drag_to_reorder": "Tahan dan geser untuk mengubah urutan",
+    "default_feature": "Fitur standar",
+    "layer": "Layer",
+    "feature_info": "Informasi fitur"
   },
   "data_view": {
     "row_actions": "Aksi baris",

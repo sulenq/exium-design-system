@@ -63,23 +63,25 @@ export type GeoServerLegendLayer = {
   rules?: GeoServerLegendRule[];
 };
 
-import type { IgtLayerItem } from "@/design-system/components/map/map/map.type";
+import type { GenericMapLayer } from "@/design-system/components/map/map/map.layer-management.type";
+import type { MapLayerAppearance } from "@/design-system/components/map/map/map.type";
 
 export type GeoServerLegendResponse = {
   Legend?: GeoServerLegendLayer[];
 };
 
 export type MapSymbologyPanelProps = {
-  layers?: IgtLayerItem[];
+  /** Layers whose legend can be shown; only those enabled in the layer store are listed. */
+  layers: GenericMapLayer[];
 };
 
 export type LayerSymbologyContentProps = {
-  layer: IgtLayerItem;
+  layer: GenericMapLayer;
 };
 
 export type LegendRuleItemProps = {
   rule: GeoServerLegendRule;
-  fallbackBasis?: "bidang" | "kawasan";
+  fallbackAppearance?: MapLayerAppearance;
 };
 
 export type PolygonSwatchProps = {
@@ -95,11 +97,11 @@ export type PointSwatchProps = {
 };
 
 export type DefaultThematicSwatchProps = {
-  basis?: "bidang" | "kawasan";
+  appearance?: MapLayerAppearance;
 };
 
 export type FetchLegendGraphicParams = {
-  layer: IgtLayerItem;
+  layer: GenericMapLayer;
   signal?: AbortSignal;
 };
 

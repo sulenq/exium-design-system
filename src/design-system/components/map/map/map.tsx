@@ -7,6 +7,7 @@ import { useMapInstanceStore } from "@/design-system/components/map/stores/map.i
 import type { MapProps } from "@/design-system/components/map/map/map.basemap.type";
 import { BaseMap } from "@/design-system/components/map/map/map.basemap";
 import { MapOverlay } from "@/design-system/components/map/map/map.overlay";
+import type { ReactNode } from "react";
 
 /**
  * Shell rendered inside BaseMap — reads the map instance from Zustand store
@@ -16,15 +17,12 @@ export const MapShell = ({
   layers,
   cqlFilter,
   onDrawFinish,
-  showMasterIgtLayerSelect,
-  showMyDataLayerSelect,
-  showWorkspaceLayerSelect,
+  layerManagement,
   children,
 }: Omit<MapProps, "styleUrl"> & {
   cqlFilter?: string;
-  showMasterIgtLayerSelect?: boolean;
-  showMyDataLayerSelect?: boolean;
-  showWorkspaceLayerSelect?: boolean;
+  /** Layer management control shown top-right; see `MapOverlay`. */
+  layerManagement?: ReactNode;
 }) => {
   const map = useMapInstanceStore((state) => state.map);
 
@@ -34,11 +32,7 @@ export const MapShell = ({
 
   return (
     <>
-      <MapOverlay
-        showMasterIgtLayerSelect={showMasterIgtLayerSelect}
-        showMyDataLayerSelect={showMyDataLayerSelect}
-        showWorkspaceLayerSelect={showWorkspaceLayerSelect}
-      />
+      <MapOverlay layerManagement={layerManagement} />
       {children}
     </>
   );
@@ -52,11 +46,11 @@ export { BaseMap };
  */
 export const Map = (props: MapProps) => {
   // Props
-  const { layers, styleUrl, onDrawFinish, children } = props;
+  const { layers, styleUrl, onDrawFinish, layerManagement, children } = props;
 
   return (
     <BaseMap styleUrl={styleUrl}>
-      <MapShell layers={layers} onDrawFinish={onDrawFinish}>
+      <MapShell layers={layers} onDrawFinish={onDrawFinish} layerManagement={layerManagement}>
         {children}
       </MapShell>
     </BaseMap>

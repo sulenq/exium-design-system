@@ -1,6 +1,5 @@
 // src/design-system/components/shell/gis-app-shell/gis-app-shell.tsx
 
-import { getMapLayers } from "@/design-system/components/map/services/map-layers.service";
 // src/design-system/components/shell/ui/gis-app-shell.tsx
 
 import { Logo } from "@/design-system/components/branding/logo/logo";
@@ -14,8 +13,8 @@ import { useMapInstanceStore } from "@/design-system/components/map/stores/map.i
 import { useMapLayerStore } from "@/design-system/components/map/stores/map.layer.store";
 import { fitBoundsSafe } from "@/design-system/components/map/utils/map-camera";
 import {
-  getWmsRasterConfigFromIgtLayer,
-  type IgtLayerItem,
+  getWmsRasterConfigFromCatalogLayer,
+  type CatalogMapLayer,
   type MapLayerConfig,
 } from "@/design-system/components/map/map/map.type";
 import { BaseMap, MapShell } from "@/design-system/components/map/map/map";
@@ -51,10 +50,8 @@ import {
 import { t } from "@/shared/libs/i18n";
 import type { AdminAppNavKey, AppNavKey } from "@/shared/types/app-navs.type";
 import type { NavGroup, NavItem, NavNode } from "@/shared/types/nav.type";
-import { queryKeys } from "@/shared/libs/tanstack-query/query.keys";
 import { getUserSession } from "@/shared/utils/user/user-session.utils";
-import { Box } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { Box } from "@/design-system/components/layout/box/box";
 import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { recordRecentNav } from "@/shared/utils/navigation/recent-nav.utils";
 import { UserIcon } from "lucide-react";
@@ -69,9 +66,12 @@ const SIDEBAR_EXPANDED_W = 240;
 const DEFAULT_SPLITTER_SIZE = [50, 50];
 const SPLITTER_KEY = "gis-app";
 
+/** Stable fallback so effects and memos do not re-run on every render. */
+const EMPTY_CATALOG_LAYERS: CatalogMapLayer[] = [];
+
 export const GisAppShell = (props: GisAppShellProps) => {
   // Props
-  const { ...restProps } = props;
+  const { catalogLayers, layerManagement, ...restProps } = props;
 
   // Hooks
   const isSmallViewport = useIsSmallViewport();
@@ -117,7 +117,7 @@ export const GisAppShell = (props: GisAppShellProps) => {
     >
       {!isSmallViewport && <GisAppSidebar />}
 
-      <Content />
+      <Content catalogLayers={catalogLayers} layerManagement={layerManagement} />
 
       {isSmallViewport && <MobileBottomNav />}
     </AppPageContainer>
@@ -313,7 +313,10 @@ const SidebarFooter = () => {
 
 // -------------------------------------------------------------------------------------
 
-const Content = (_props: GisContentProps) => {
+const Content = (props: GisContentProps) => {
+  // Props
+  const { catalogLayers = EMPTY_CATALOG_LAYERS, layerManagement } = props;
+
   // Refs
   const contentPanelRef = useRef<HTMLDivElement | null>(null);
 
@@ -331,23 +334,7 @@ const Content = (_props: GisContentProps) => {
   // Hooks
   const isSmallViewport = useIsSmallViewport();
   const hasInitializedDefaultsRef = useRef(false);
-  const location = useLocation();
 
-  const userSession = getUserSession();
-  const isAuthenticated = Boolean(userSession?.id);
-
-  // Derived Values
-  const isWorkspaceDetailRoute =
-    location.pathname.startsWith("/mitra/my-data/") &&
-    location.pathname.split("/").length > 3;
-
-  // Derived Values — Build layer config from fetched layer list
-  const { data: fetchedLayers } = useQuery({
-    queryKey: queryKeys.map.layers(),
-    queryFn: ({ signal }) => getMapLayers(signal),
-    staleTime: 1000 * 60 * 5,
-    enabled: isAuthenticated,
-  });
 
   const {
     enabledLayerIds,
@@ -359,13 +346,13 @@ const Content = (_props: GisContentProps) => {
 
   // Auto-enable layers configured with defaultVisible on initial load and fit map camera
   useEffect(() => {
-    const rawList = fetchedLayers?.items;
-    if (rawList && rawList.length > 0 && !hasInitializedDefaultsRef.current) {
+    const rawList = catalogLayers;
+    if (rawList.length > 0 && !hasInitializedDefaultsRef.current) {
       hasInitializedDefaultsRef.current = true;
-      const defaultActiveLayers = (rawList as IgtLayerItem[]).filter((l: IgtLayerItem) =>
+      const defaultActiveLayers = rawList.filter((l: CatalogMapLayer) =>
         Boolean(l.defaultVisible),
       );
-      defaultActiveLayers.forEach((l: IgtLayerItem) => {
+      defaultActiveLayers.forEach((l: CatalogMapLayer) => {
         useMapLayerStore.getState().setLayerEnabled(l.id, true);
       });
 
@@ -378,10 +365,10 @@ const Content = (_props: GisContentProps) => {
         });
       }
     }
-  }, [fetchedLayers, map]);
+  }, [catalogLayers, map]);
 
   const mapLayers = useMemo<MapLayerConfig[]>(() => {
-    const rawList = fetchedLayers?.items ?? [];
+    const rawList = catalogLayers;
     const sorted = [...rawList].sort((a, b) => {
       if (layerOrder.length > 0) {
         const indexA = layerOrder.indexOf(a.id);
@@ -397,16 +384,16 @@ const Content = (_props: GisContentProps) => {
       return (a.zIndex ?? 0) - (b.zIndex ?? 0);
     });
     const configs: MapLayerConfig[] = sorted
-      .filter((layer: IgtLayerItem) =>
+      .filter((layer: CatalogMapLayer) =>
         Boolean(layer.wms?.wmsUrl || layer.wms?.layers || layer.id),
       )
-      .map((layer: IgtLayerItem) => {
+      .map((layer: CatalogMapLayer) => {
         const isEnabled = Boolean(enabledLayerIds[layer.id]);
         const individualOpacity = layerOpacities[layer.id] ?? 1.0;
         const customOverride = customLayerConfigs[layer.id];
 
         if (customOverride) {
-          const baseConfig = getWmsRasterConfigFromIgtLayer(
+          const baseConfig = getWmsRasterConfigFromCatalogLayer(
             layer,
             wmsVisible && isEnabled,
             individualOpacity * globalOpacity,
@@ -420,7 +407,7 @@ const Content = (_props: GisContentProps) => {
         }
 
         const effectiveOpacity = individualOpacity * globalOpacity;
-        return getWmsRasterConfigFromIgtLayer(
+        return getWmsRasterConfigFromCatalogLayer(
           layer,
           wmsVisible && isEnabled,
           effectiveOpacity,
@@ -436,7 +423,6 @@ const Content = (_props: GisContentProps) => {
         customConfigs.push({
           id: layerId,
           type: "wms-raster",
-          spatialBasis: customOverride.spatialBasis ?? "bidang",
           visible: wmsVisible && Boolean(isEnabled),
           opacity: (layerOpacities[layerId] ?? 1.0) * globalOpacity,
           wmsUrl: customOverride.wmsUrl,
@@ -464,7 +450,7 @@ const Content = (_props: GisContentProps) => {
 
     return configs;
   }, [
-    fetchedLayers,
+    catalogLayers,
     wmsVisible,
     enabledLayerIds,
     layerOpacities,
@@ -538,8 +524,7 @@ const Content = (_props: GisContentProps) => {
       >
         <MapShell
           layers={mapLayers}
-          showMasterIgtLayerSelect={true}
-          showWorkspaceLayerSelect={isWorkspaceDetailRoute}
+          layerManagement={layerManagement}
         />
       </VStack>
     </Splitter.Panel>

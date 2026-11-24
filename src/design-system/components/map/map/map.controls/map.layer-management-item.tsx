@@ -11,7 +11,6 @@ import type {
   GenericMapLayer,
   MapLayerManagementItemProps,
 } from "@/design-system/components/map/map/map.layer-management.type";
-import type { IgtLayerItem } from "@/design-system/components/map/map/map.type";
 import { LayerSymbologyContent } from "@/design-system/components/map/map/map.symbology-panel";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
@@ -156,11 +155,9 @@ function MapLayerManagementItemComponent<
   };
 
   // Derived Values
-  const rawBasis = layer.spatialBasis ?? layer.igtBasis ?? "kawasan";
   const displayName =
     layer.title || layer.id.split(":")[1] || layer.wfs?.wfsTypeName || layer.id;
-  const normalizedBasis = rawBasis ? rawBasis.toLowerCase() : "";
-  const colorPalette = normalizedBasis === "kawasan" ? "orange" : "blue";
+  const colorPalette = layer.appearance?.colorPalette ?? "blue";
 
   return (
     <VStack align={"stretch"} w={"full"} position={"relative"} {...restProps}>
@@ -244,13 +241,17 @@ function MapLayerManagementItemComponent<
           gap={4}
           pl={"28px"}
         >
-          <Badge
-            colorPalette={isEnabled ? colorPalette : "gray"}
-            variant={"subtle"}
-            opacity={isEnabled ? 1 : 0.5}
-          >
-            {normalizedBasis}
-          </Badge>
+          <Box>
+            {layer.appearance?.categoryLabel && (
+              <Badge
+                colorPalette={isEnabled ? colorPalette : "gray"}
+                variant={"subtle"}
+                opacity={isEnabled ? 1 : 0.5}
+              >
+                {layer.appearance.categoryLabel}
+              </Badge>
+            )}
+          </Box>
 
           <HStack align={"center"} gap={1}>
             <Popover.Root
@@ -362,7 +363,7 @@ function MapLayerManagementItemComponent<
                 </P>
               </HStack>
 
-              <LayerSymbologyContent layer={layer as unknown as IgtLayerItem} />
+              <LayerSymbologyContent layer={layer} />
             </VStack>
           </Collapsible.Content>
         </Collapsible.Root>

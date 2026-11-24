@@ -160,10 +160,6 @@ export const queryKeys = {
         [...queryKeys.internal.mitraLayerSyncJobs.all, "quick-view"] as const,
     },
   },
-  map: {
-    all: ["map"] as const,
-    layers: () => [...queryKeys.map.all, "layers"] as const,
-  },
   userGuide: {
     all: ["user-guide"] as const,
     list: (params?: Record<string, unknown>) =>
