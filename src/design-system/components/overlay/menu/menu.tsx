@@ -53,7 +53,7 @@ const MenuContent = (props: MenuContentProps) => {
           shadow={"sm"}
           _open={{
             animationName: "scale-up",
-            animationDuration: "slow",
+            animationDuration: "moderate",
           }}
           _closed={{
             animationName: "scale-down",
