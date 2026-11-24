@@ -309,7 +309,7 @@
     "next": "Halaman Selanjutnya",
     "total": "Total {total}",
     "total_unknown": "Total ?",
-    "page_size_suffix": "/halaman",
+    "page_size_suffix": "/ halaman",
     "page_size_title": "Baris per halaman"
   },
   "input": {

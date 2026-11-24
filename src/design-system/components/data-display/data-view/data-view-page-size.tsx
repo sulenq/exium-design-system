@@ -44,15 +44,10 @@ export const DataViewPageSize = (props: DataViewPageSizeProps) => {
         }
       }}
       clearable={false}
-      suffixLabel={
-        <Span ml={1}>
-          {t["pagination.page_size_suffix"]?.() ?? "/halaman"}
-        </Span>
-      }
+      suffixLabel={<Span>{t["pagination.page_size_suffix"]?.()}</Span>}
       variant={"ghost"}
       title={title}
       minW={"130px"}
-      w={"130px"}
       fontSize={"md"}
       {...restProps}
     />

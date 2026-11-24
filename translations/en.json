@@ -310,7 +310,7 @@
     "next": "Next page",
     "total": "Total {total}",
     "total_unknown": "Total ?",
-    "page_size_suffix": "/page",
+    "page_size_suffix": "/ page",
     "page_size_title": "Rows per page"
   },
   "input": {

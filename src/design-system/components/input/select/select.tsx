@@ -194,7 +194,7 @@ export default function SelectInput(props: SelectProps) {
 
     return (
       <HStack w={"full"} justify={"space-between"} align={"center"}>
-        <HStack flex={1} minW={0} gap={2} align={"center"}>
+        <HStack flex={1} minW={0} gap={1} align={"center"}>
           {renderStartElement(
             selectedOption?.startElement,
             selectedOption?.icon,
@@ -276,7 +276,7 @@ export default function SelectInput(props: SelectProps) {
       <Tooltip
         disabled={!hasValue && !placeholder}
         content={
-          <HStack align={"center"} gap={2}>
+          <HStack align={"center"} gap={1}>
             {renderStartElement(
               selectedOption?.startElement,
               selectedOption?.icon,
