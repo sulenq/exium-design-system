@@ -504,5 +504,10 @@
   },
   "print_layout": {
     "preview_label": "Pratinjau cetak {size}"
+  },
+  "tree_view": {
+    "unknown": "Tidak diketahui",
+    "expand": "Tampilkan induk",
+    "collapse": "Sembunyikan induk"
   }
 }

@@ -505,5 +505,10 @@
   },
   "print_layout": {
     "preview_label": "Print preview {size}"
+  },
+  "tree_view": {
+    "unknown": "Unknown",
+    "expand": "Show parents",
+    "collapse": "Hide parents"
   }
 }
