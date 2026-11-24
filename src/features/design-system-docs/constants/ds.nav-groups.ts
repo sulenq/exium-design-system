@@ -55,6 +55,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         children: [
           { key: "button" },
           { key: "button_group" },
+          { key: "close_button" },
           { key: "clipboard" },
         ],
       },
@@ -66,6 +67,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "badge" },
           { key: "count_badge" },
           { key: "kbd" },
+          { key: "url" },
           { key: "rich_text_editor" },
         ],
       },
@@ -90,6 +92,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "field" },
           { key: "file_input" },
           { key: "date_input" },
+          { key: "date_picker" },
           { key: "time_input" },
           { key: "phone_input" },
         ],
@@ -137,6 +140,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "drawer" },
           { key: "popover" },
           { key: "tooltip" },
+          { key: "toggle_tip" },
           { key: "menu" },
         ],
       },
@@ -153,7 +157,12 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
       },
       {
         key: "cat_navigation",
-        children: [{ key: "sidebar" }, { key: "v_navs" }, { key: "link" }],
+        children: [
+          { key: "sidebar" },
+          { key: "v_navs" },
+          { key: "snackbar" },
+          { key: "link" },
+        ],
       },
       {
         key: "cat_media",
@@ -166,7 +175,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
       },
       {
         key: "cat_utilities",
-        children: [{ key: "utilities" }],
+        children: [{ key: "utilities" }, { key: "format_number" }],
       },
     ],
   },

@@ -2,7 +2,24 @@
 
 import { defineRecipe } from "@chakra-ui/react";
 
+// Minimum touch target on touch devices (WCAG 2.5.8 and field use with gloves).
+// The visual size stays as designed; an invisible ::after expands the hit area
+// to at least 48 x 48 px and never shrinks buttons that are already larger.
+const TOUCH_TARGET_INSET = "min(0px, calc(50% - 24px))";
+
 export const buttonRecipe = defineRecipe({
+  base: {
+    "@media (pointer: coarse)": {
+      _after: {
+        content: '""',
+        position: "absolute",
+        top: TOUCH_TARGET_INSET,
+        bottom: TOUCH_TARGET_INSET,
+        left: TOUCH_TARGET_INSET,
+        right: TOUCH_TARGET_INSET,
+      },
+    },
+  },
   variants: {
     variant: {
       subtle: {

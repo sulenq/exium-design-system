@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/ui/data-view-item-actions.tsx
+// src/design-system/components/data-display/data-view/data-view-item-actions.tsx
 
 import {
   Button,
@@ -720,13 +720,13 @@ export const DataListItemActionsTrigger = <
       {...restProps}
     >
       {contextedTrigger && (
-        <Menu.ContextTrigger aria-label={"context-item-actions"}>
+        <Menu.ContextTrigger aria-label={t["data_view.row_context_menu"]()}>
           {children}
         </Menu.ContextTrigger>
       )}
 
       {!contextedTrigger && (
-        <Menu.Trigger aria-label={"item-actions"}>{children}</Menu.Trigger>
+        <Menu.Trigger aria-label={t["data_view.row_actions"]()}>{children}</Menu.Trigger>
       )}
 
       <DataViewItemActionsMenuContent item={item} itemActions={itemActions} />

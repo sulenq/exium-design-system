@@ -1,3 +1,5 @@
+// src/design-system/components/shell/gis-app-shell/gis-app-shell.tsx
+
 import { getMapLayers } from "@/design-system/components/map/services/map-layers.service";
 // src/design-system/components/shell/ui/gis-app-shell.tsx
 
@@ -30,6 +32,7 @@ import type {
 import { P } from "@/design-system/components/typography/p/p";
 import { APP_CONFIG } from "@/design-system/constants/_meta";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
+import { SnackbarContainer } from "@/design-system/components/navigation/snackbar/snackbar";
 import { useSidebarStore } from "@/design-system/stores/sidebar-store";
 import { useSplitterStore } from "@/design-system/stores/splitter-store";
 import { useThemeStore } from "@/design-system/stores/theme-store";
@@ -620,18 +623,7 @@ const MobileBottomNav = () => {
   const activeKey = getNavKeyFromPathname(navsMap, pathname);
 
   return (
-    <HStack
-      w={"full"}
-      bg={"bg.body"}
-      borderTop={"1px solid"}
-      borderColor={"border.subtle"}
-      pt={3}
-      pb={4}
-      align={"center"}
-      zIndex={2}
-      pointerEvents={"auto"}
-      flexShrink={0}
-    >
+    <SnackbarContainer pointerEvents={"auto"}>
       <Box flex={1} minW={0} overflow={"hidden"}>
         <HNavs<AdminAppNavKey | AppNavKey>
           navs={navsMap}
@@ -683,6 +675,6 @@ const MobileBottomNav = () => {
           </VStack>
         </NavButton>
       </UserProfilePopoverTrigger>
-    </HStack>
+    </SnackbarContainer>
   );
 };

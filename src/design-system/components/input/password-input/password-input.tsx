@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/password-input.tsx
+// src/design-system/components/input/password-input/password-input.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -261,7 +261,7 @@ const VisibilityTrigger = forwardRef<HTMLButtonElement, ButtonProps>(
         mr={-2}
         position={"relative"}
         zIndex={10}
-        aria-label={"Toggle password visibility"}
+        aria-label={t["common.toggle_password_visibility"]()}
         {...props}
       />
     );

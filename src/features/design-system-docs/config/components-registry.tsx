@@ -6,6 +6,12 @@ import { Button } from "@/design-system/components/button/button/button";
 import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";
 import { Clipboard } from "@/design-system/components/data-display/clipboard/clipboard";
 import { Countdown } from "@/design-system/components/data-display/countdown/countdown";
+import { CloseButton } from "@/design-system/components/button/close-button/close-button";
+import { DatePicker } from "@/design-system/components/input/date-picker/date-picker";
+import { InfoTip, ToggleTip } from "@/design-system/components/input/toggle-tip/toggle-tip";
+import { Snackbar } from "@/design-system/components/navigation/snackbar/snackbar";
+import { Url } from "@/design-system/components/typography/url/url";
+import { FormatNumber } from "@/design-system/components/utilities/format-number/format-number";
 import { FileItem } from "@/design-system/components/data-display/file-item/file-item";
 import { MaskedText } from "@/design-system/components/data-display/masked-text/masked-text";
 import { StatGrid } from "@/design-system/components/data-display/stat-grid/stat-grid";
@@ -104,12 +110,19 @@ import type {
   TableDemoItem,
 } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import {
+  BellRingIcon,
   ChevronDownIcon,
+  CircleUserIcon,
+  ClipboardCheckIcon,
   EditIcon,
   EyeIcon,
   FolderIcon,
   HomeIcon,
+  HouseIcon,
   LayersIcon,
+  PawPrintIcon,
+  ScanLineIcon,
+  Settings2Icon,
   SettingsIcon,
   SparklesIcon,
   Trash2Icon,
@@ -502,6 +515,21 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         description: "Ukuran badge.",
         controlKind: "select",
         options: ["sm", "md", "lg"],
+      },
+      {
+        name: "status",
+        type: '"success" | "warning" | "danger" | "info" | "neutral" | "locked"',
+        description:
+          "Status semantik. Mengatur colorPalette dan icon, sehingga status tidak hanya dibedakan warna. Menimpa colorPalette.",
+        controlKind: "select",
+        options: ["", "success", "warning", "danger", "info", "neutral", "locked"],
+      },
+      {
+        name: "withStatusIcon",
+        type: "boolean",
+        defaultValue: true,
+        description: "Tampilkan icon status.",
+        controlKind: "boolean",
       },
     ],
   },
@@ -2762,6 +2790,25 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           "fg",
         ],
       },
+      {
+        name: "clockOffsetMs",
+        type: "number",
+        defaultValue: 0,
+        description:
+          "Selisih server time dengan device time (ms) dari sync terakhir. Deadline dari server tetap benar walau jam perangkat diubah.",
+        controlKind: "number",
+      },
+      {
+        name: "onFinish",
+        type: "() => void",
+        description: "Dipanggil sekali saat waktu habis.",
+      },
+      {
+        name: "onThresholdChange",
+        type: '(level: "normal" | "warning" | "danger" | "finished") => void',
+        description:
+          "Dipanggil setiap kali level berubah, misalnya untuk memunculkan reminder.",
+      },
     ],
     renderPlayground: (props) => {
       const tomorrow = new Date(Date.now() + 86400000 * 2).toISOString();
@@ -2774,6 +2821,289 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         />
       );
     },
+  },
+
+  date_picker: {
+    key: "date_picker",
+    title: "DatePicker",
+    category: "Inputs",
+    description:
+      "Kalender inline dengan batas min, max, blacklist, dan whitelist tanggal. Mendukung navigasi keyboard penuh dan label tanggal sesuai locale aktif.",
+    importPath:
+      'import { DatePicker } from "@/design-system/components/input/date-picker/date-picker";',
+    component: DatePicker,
+    defaultProps: { availableMode: "range" },
+    propsSpec: [
+      {
+        name: "value / defaultValue",
+        type: "string | null",
+        description: "Tanggal terpilih dalam format ISO YYYY-MM-DD.",
+      },
+      {
+        name: "min / max",
+        type: "string",
+        description: "Batas luar tanggal yang bisa dipilih.",
+      },
+      {
+        name: "disabledDates",
+        type: "string[]",
+        description: "Blacklist tanggal yang tidak bisa dipilih.",
+      },
+      {
+        name: "availableDates",
+        type: "{ start: string; end: string } | string[]",
+        description:
+          "Whitelist tanggal. Object untuk range, array untuk tanggal spesifik. Satu tanggal di array langsung terpilih bila uncontrolled.",
+      },
+      {
+        name: "availableMode",
+        type: "string",
+        defaultValue: "range",
+        description: "Hanya untuk playground: contoh range atau array tanggal.",
+        controlKind: "select",
+        options: ["range", "array", "today-only"],
+      },
+      {
+        name: "timezone",
+        type: "string",
+        description: "IANA timezone, misalnya Asia/Jakarta.",
+      },
+    ],
+    a11y: {
+      role: "group",
+      keyboardNav: [
+        { key: "Arrow keys", action: "Pindah satu hari atau satu minggu" },
+        { key: "Home / End", action: "Awal atau akhir minggu" },
+        { key: "PageUp / PageDown", action: "Bulan sebelumnya atau berikutnya" },
+        { key: "Enter / Space", action: "Pilih tanggal" },
+      ],
+      notes:
+        "Hanya satu tanggal yang ada di tab order (roving tabindex). Tanggal di luar whitelist tetap bisa difokus dengan aria-disabled.",
+    },
+    renderPlayground: (props) => {
+      const today = new Date();
+      const iso = (offset: number) =>
+        new Date(today.getTime() + offset * 86400000).toISOString().slice(0, 10);
+      const mode = String(props.availableMode || "range");
+      const availableDates =
+        mode === "array"
+          ? [iso(1), iso(3), iso(8), iso(10)]
+          : mode === "today-only"
+            ? [iso(0)]
+            : { start: iso(0), end: iso(30) };
+      return (
+        <DatePicker
+          key={mode}
+          availableDates={availableDates}
+          maxW={"360px"}
+        />
+      );
+    },
+  },
+
+  close_button: {
+    key: "close_button",
+    title: "CloseButton",
+    category: "Buttons",
+    description:
+      "Tombol tutup untuk overlay dan notifikasi. Di layar sentuh, hit area otomatis minimal 48 × 48 px tanpa mengubah ukuran visual.",
+    importPath:
+      'import { CloseButton } from "@/design-system/components/button/close-button/close-button";',
+    component: CloseButton,
+    defaultProps: { size: "md" },
+    propsSpec: [
+      {
+        name: "size",
+        type: "string",
+        defaultValue: "md",
+        description: "Ukuran visual tombol.",
+        controlKind: "select",
+        options: ["2xs", "xs", "sm", "md", "lg"],
+      },
+      {
+        name: "aria-label",
+        type: "string",
+        description: "Label untuk screen reader; default dari i18n.",
+      },
+    ],
+    renderPlayground: (props) => (
+      <CloseButton size={(props.size as "md") || "md"} />
+    ),
+  },
+
+  toggle_tip: {
+    key: "toggle_tip",
+    title: "ToggleTip",
+    category: "Overlay",
+    description:
+      "Info yang dibuka dengan tap atau klik. Pakai ini, bukan Tooltip, untuk informasi yang harus terbaca di perangkat sentuh.",
+    importPath:
+      'import { ToggleTip } from "@/design-system/components/input/toggle-tip/toggle-tip";',
+    component: ToggleTip,
+    defaultProps: { content: "Masa henti obat dihitung sejak tanggal pemberian." },
+    propsSpec: [
+      {
+        name: "content",
+        type: "ReactNode",
+        defaultValue: "Masa henti obat dihitung sejak tanggal pemberian.",
+        description: "Isi info.",
+        controlKind: "text",
+      },
+      {
+        name: "showArrow",
+        type: "boolean",
+        description: "Tampilkan panah popover.",
+        controlKind: "boolean",
+      },
+    ],
+    renderPlayground: (props) => (
+      <InfoTip content={String(props.content || "")} showArrow={Boolean(props.showArrow)} />
+    ),
+  },
+
+  url: {
+    key: "url",
+    title: "Url",
+    category: "Typography",
+    description:
+      "Menampilkan URL dengan tombol salin dan tautan keluar. Teks dipotong rapi sesuai lineClamp.",
+    importPath:
+      'import { Url } from "@/design-system/components/typography/url/url";',
+    component: Url,
+    defaultProps: { url: "https://ternaqin.com/q/7KX9M2QH", lineClamp: 1 },
+    propsSpec: [
+      {
+        name: "url",
+        type: "string | null",
+        defaultValue: "https://ternaqin.com/q/7KX9M2QH",
+        description: "URL yang ditampilkan.",
+        controlKind: "text",
+      },
+      {
+        name: "label",
+        type: "string",
+        description: "Label tombol salin; default dari i18n.",
+      },
+      {
+        name: "isExternalLink",
+        type: "boolean",
+        defaultValue: true,
+        description: "Tampilkan tombol buka di tab baru.",
+        controlKind: "boolean",
+      },
+      {
+        name: "lineClamp",
+        type: "number",
+        defaultValue: 1,
+        description: "Jumlah baris sebelum teks dipotong.",
+        controlKind: "number",
+      },
+    ],
+    renderPlayground: (props) => (
+      <Url
+        url={String(props.url || "")}
+        isExternalLink={props.isExternalLink !== false}
+        lineClamp={Number(props.lineClamp) || 1}
+      />
+    ),
+  },
+
+  format_number: {
+    key: "format_number",
+    title: "FormatNumber",
+    category: "Utilities",
+    description:
+      "Format angka, mata uang, dan persen mengikuti locale aktif lewat Intl.NumberFormat.",
+    importPath:
+      'import { FormatNumber } from "@/design-system/components/utilities/format-number/format-number";',
+    component: FormatNumber,
+    defaultProps: { value: 1500000, style: "currency" },
+    propsSpec: [
+      {
+        name: "value",
+        type: "number",
+        defaultValue: 1500000,
+        description: "Angka yang diformat.",
+        controlKind: "number",
+      },
+      {
+        name: "style",
+        type: "string",
+        defaultValue: "currency",
+        description: "Gaya format Intl.",
+        controlKind: "select",
+        options: ["decimal", "currency", "percent", "unit"],
+      },
+    ],
+    renderPlayground: (props) => {
+      const style = String(props.style || "currency");
+      return (
+        <FormatNumber
+          value={Number(props.value) || 0}
+          style={style as "currency"}
+          currency={style === "currency" ? "IDR" : undefined}
+          maximumFractionDigits={style === "currency" ? 0 : undefined}
+          unit={style === "unit" ? "kilogram" : undefined}
+        />
+      );
+    },
+  },
+
+  snackbar: {
+    key: "snackbar",
+    title: "Snackbar",
+    category: "Navigation",
+    description:
+      "Bottom navigation untuk mobile. Di Exium, Snackbar adalah navigasi bawah, bukan pesan sementara; untuk pesan pakai Toast. Safe area iPhone dan sembunyi otomatis saat keyboard terbuka.",
+    importPath:
+      'import { Snackbar } from "@/design-system/components/navigation/snackbar/snackbar";',
+    component: Snackbar,
+    defaultProps: { itemCount: 4, withCenterAction: true },
+    propsSpec: [
+      {
+        name: "items",
+        type: "{ key; label; icon; badge? }[]",
+        description: "3 sampai 5 item. Lebih dari 5, sisanya masuk menu Lainnya.",
+      },
+      {
+        name: "activeKey / onSelect",
+        type: "string / (key: string) => void",
+        description: "Controlled; app yang melakukan navigasi.",
+      },
+      {
+        name: "centerAction",
+        type: "{ icon; label; onClick }",
+        description: "Tombol utama di tengah, misalnya Scan.",
+      },
+      {
+        name: "safeArea",
+        type: "boolean",
+        defaultValue: true,
+        description: "Padding bawah env(safe-area-inset-bottom).",
+      },
+      {
+        name: "hideOnKeyboard",
+        type: "boolean",
+        defaultValue: true,
+        description: "Sembunyi saat keyboard virtual terbuka.",
+      },
+      {
+        name: "itemCount",
+        type: "number",
+        defaultValue: 4,
+        description: "Hanya untuk playground.",
+        controlKind: "select",
+        options: [3, 4, 5, 6],
+      },
+      {
+        name: "withCenterAction",
+        type: "boolean",
+        defaultValue: true,
+        description: "Hanya untuk playground.",
+        controlKind: "boolean",
+      },
+    ],
+    renderPlayground: (props) => <SnackbarPlaygroundDemo {...props} />,
   },
 
   stat_grid: {
@@ -4756,6 +5086,37 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       </DownloadTrigger>
     ),
   },
+};
+
+const SNACKBAR_DEMO_ITEMS = [
+  { key: "home", label: "Beranda", icon: HouseIcon },
+  { key: "animals", label: "Ternak", icon: PawPrintIcon, badge: 3 },
+  { key: "tasks", label: "Tugas", icon: ClipboardCheckIcon },
+  { key: "notifications", label: "Notifikasi", icon: BellRingIcon, badge: 12 },
+  { key: "profile", label: "Profil", icon: CircleUserIcon },
+  { key: "settings", label: "Pengaturan", icon: Settings2Icon },
+];
+
+const SnackbarPlaygroundDemo = (props: Record<string, unknown>) => {
+  // States
+  const [activeKey, setActiveKey] = useState("home");
+
+  return (
+    <Box w={"full"} maxW={"420px"} borderWidth={"1px"} rounded={"lg"} overflow={"hidden"}>
+      <Snackbar
+        items={SNACKBAR_DEMO_ITEMS.slice(0, Number(props.itemCount) || 4)}
+        activeKey={activeKey}
+        onSelect={setActiveKey}
+        safeArea={false}
+        hideOnKeyboard={false}
+        centerAction={
+          props.withCenterAction === false
+            ? undefined
+            : { icon: ScanLineIcon, label: "Scan", onClick: () => undefined }
+        }
+      />
+    </Box>
+  );
 };
 
 const SelectPlaygroundDemo = (props: Record<string, unknown>) => {

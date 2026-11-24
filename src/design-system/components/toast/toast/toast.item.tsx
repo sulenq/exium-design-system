@@ -1,4 +1,4 @@
-// src/design-system/components/toast/ui/toast.item.tsx
+// src/design-system/components/toast/toast/toast.item.tsx
 
 import {
   Button,
@@ -40,6 +40,7 @@ import {
   XCircleIcon,
 } from "lucide-react";
 import { memo, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const TOAST_VARIANT_MAP: ToastVariantMap = {
   success: {
@@ -289,7 +290,7 @@ export const ToastItem = memo(function ToastItem(
               )}
 
               <CloseButton
-                aria-label={"Close notification"}
+                aria-label={t["toast.close"]()}
                 variant={"subtle"}
                 size={"2xs"}
                 rounded={"full"}
@@ -356,7 +357,7 @@ export const ToastItem = memo(function ToastItem(
             {showDeletedFromHistoryIndicator &&
               toastData.isDeletedFromHistory && (
                 <P fontSize={"xs"} color={"fg.muted"} mt={1}>
-                  {"Removed from history"}
+                  {t["toast.removed_from_history"]()}
                 </P>
               )}
           </VStack>

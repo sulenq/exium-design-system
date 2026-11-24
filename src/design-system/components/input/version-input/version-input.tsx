@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/version-input.tsx
+// src/design-system/components/input/version-input/version-input.tsx
 
 "use client";
 
@@ -28,6 +28,7 @@ import {
   type MouseEvent,
   type RefObject,
 } from "react";
+import { t } from "@/shared/libs/i18n";
 
 // Helpers
 const DEFAULT_FIELDS: VersionFieldValues = {
@@ -407,7 +408,7 @@ export const VersionInput = memo(
                   colorPalette={"gray"}
                   color={"fg.subtle"}
                 >
-                  {"Optional"}
+                  {t["common.optional"]()}
                 </Badge>
               )}
             </HStack>

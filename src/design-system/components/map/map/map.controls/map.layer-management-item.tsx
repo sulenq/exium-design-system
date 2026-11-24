@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.layer-management-item.tsx
+// src/design-system/components/map/map/map.controls/map.layer-management-item.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { Collapsible } from "@/design-system/components/disclosure/collapsible/collapsible";
@@ -36,6 +36,7 @@ import {
   SwatchBookIcon,
 } from "lucide-react";
 import React, { memo, useEffect, useRef, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 function MapLayerManagementItemComponent<
   T extends GenericMapLayer = GenericMapLayer,
@@ -207,10 +208,10 @@ function MapLayerManagementItemComponent<
           w={"full"}
         >
           <HStack flex={1} align={"center"} gap={2}>
-            <Tooltip content={"Tahan & geser untuk mengubah urutan (z-index)"}>
+            <Tooltip content={t["map.drag_to_reorder"]()}>
               <IconButton
                 ref={dragHandleRef}
-                aria-label={"Ubah urutan layer"}
+                aria-label={t["map.reorder_layer"]()}
                 variant={"plain"}
                 size={"2xs"}
                 px={0}
@@ -260,11 +261,11 @@ function MapLayerManagementItemComponent<
               portalled={true}
             >
               <Popover.Trigger>
-                <Tooltip content={"Atur Opasitas"}>
+                <Tooltip content={t["map.set_opacity"]()}>
                   <IconButton
                     size={"xs"}
                     variant={"ghost"}
-                    aria-label={"Atur Opasitas"}
+                    aria-label={t["map.set_opacity"]()}
                     onClick={(e) => e.stopPropagation()}
                   >
                     <AppIcon icon={SquareDashedIcon} />
@@ -306,11 +307,11 @@ function MapLayerManagementItemComponent<
               </Popover.Content>
             </Popover.Root>
 
-            <Tooltip content={"Zoom ke Layer"}>
+            <Tooltip content={t["map.zoom_to_layer"]()}>
               <IconButton
                 size={"xs"}
                 variant={"ghost"}
-                aria-label={"Zoom ke Layer"}
+                aria-label={t["map.zoom_to_layer"]()}
                 onClick={handleFlyTo}
               >
                 <AppIcon icon={FocusIcon} />
@@ -328,7 +329,7 @@ function MapLayerManagementItemComponent<
                 <IconButton
                   size={"xs"}
                   variant={"ghost"}
-                  aria-label={"Simbologi"}
+                  aria-label={t["map.symbology"]()}
                   onClick={handleToggleSymbology}
                 >
                   <AppIcon

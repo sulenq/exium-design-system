@@ -1,10 +1,13 @@
-// src/design-system/components/utilities/ui/offline-alert.tsx
+// src/design-system/components/utilities/offline-alert/offline-alert.tsx
 
 "use client";
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box, Circle } from "@/design-system/components/layout/box/box";
-import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { P } from "@/design-system/components/typography/p/p";
+import type { OfflineAlertProps } from "@/design-system/components/utilities/offline-alert/offline-alert.type";
+import { t } from "@/shared/libs/i18n";
 import { toast } from "@/design-system/components/toast";
 
 import { Portal } from "@/design-system/components/utilities/portal/portal";
@@ -13,9 +16,15 @@ import { WifiOffIcon } from "lucide-react";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export const OfflineAlert = () => {
+export const OfflineAlert = (props: OfflineAlertProps) => {
+  // Props
+  const { persistent = true } = props;
+
   // States
   const [isVisible, setIsVisible] = useState(false);
+  const [isOffline, setIsOffline] = useState(
+    typeof navigator !== "undefined" ? !navigator.onLine : false,
+  );
 
   // Refs
   const isOfflineRef = useRef(
@@ -37,19 +46,21 @@ export const OfflineAlert = () => {
   const handleOffline = useCallback(() => {
     if (typeof navigator !== "undefined" && !navigator.onLine) {
       isOfflineRef.current = true;
+      setIsOffline(true);
       triggerAlert();
     }
   }, [triggerAlert]);
 
   const handleOnline = useCallback(() => {
     isOfflineRef.current = false;
+    setIsOffline(false);
     if (hideTimerRef.current) {
       clearTimeout(hideTimerRef.current);
     }
     setIsVisible(false);
     toast.create({
       variant: "success",
-      title: "You're back online",
+      title: t["offline_alert.back_online"](),
     });
   }, []);
 
@@ -62,6 +73,7 @@ export const OfflineAlert = () => {
 
       if (isCurrentlyOffline) {
         isOfflineRef.current = true;
+        setIsOffline(true);
         triggerAlert();
       } else if (isOfflineRef.current) {
         handleOnline();
@@ -85,7 +97,35 @@ export const OfflineAlert = () => {
 
   return (
     <Portal>
+      {/* Persistent, non-blocking indicator for as long as the device stays offline */}
+      {persistent && isOffline && (
+        <HStack
+          role={"status"}
+          aria-live={"polite"}
+          pos={"fixed"}
+          top={"calc(env(safe-area-inset-top) + 8px)"}
+          left={"50%"}
+          transform={"translateX(-50%)"}
+          zIndex={"max"}
+          gap={2}
+          px={3}
+          py={1}
+          rounded={"full"}
+          bg={"red.subtle"}
+          color={"red.fg"}
+          borderWidth={"1px"}
+          borderColor={"red.muted"}
+          pointerEvents={"none"}
+        >
+          <AppIcon icon={WifiOffIcon} boxSize={4} />
+          <P fontSize={"sm"} fontWeight={"medium"}>
+            {t["offline_alert.title"]()}
+          </P>
+        </HStack>
+      )}
+
       <Box
+        aria-hidden={true}
         pos={"fixed"}
         inset={0}
         zIndex={"max"}

@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.compass.tsx
+// src/design-system/components/map/map/map.controls/map.compass.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -10,6 +10,7 @@ import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { P, TNum } from "@/design-system/components/typography/p/p";
 import { Navigation2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapCompass = (props: StackProps) => {
   const map = useMapInstanceStore((state) => state.map);
@@ -50,9 +51,9 @@ export const MapCompass = (props: StackProps) => {
         </P>
       </ToggleTip>
 
-      <Tooltip content={"Reset Arah Utara"} positioning={{ placement: "top" }}>
+      <Tooltip content={t["map.reset_north"]()} positioning={{ placement: "top" }}>
         <IconButton
-          aria-label={"Reset north"}
+          aria-label={t["map.reset_north"]()}
           size={"sm"}
           roundedLeft={0}
           onClick={resetNorth}

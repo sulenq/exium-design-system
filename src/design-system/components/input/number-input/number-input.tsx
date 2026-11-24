@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/number-input.tsx
+// src/design-system/components/input/number-input/number-input.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -21,6 +21,7 @@ import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
 import { ChevronDown, ChevronUp, MinusIcon, PlusIcon } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 // `valueAsNumber` is NaN while the input is empty (Number("") === NaN).
 function toSyncValue(valueAsNumber: number): string {
@@ -237,7 +238,7 @@ export const NumberInput = (props: NumberInputProps) => {
           zIndex={1}
         >
           <ChakraNumberInput.IncrementTrigger
-            aria-label={"Increase"}
+            aria-label={t["common.increase"]()}
             tabIndex={-1}
             border={"none !important"}
             borderBottomWidth={"0 !important"}
@@ -256,7 +257,7 @@ export const NumberInput = (props: NumberInputProps) => {
           </ChakraNumberInput.IncrementTrigger>
 
           <ChakraNumberInput.DecrementTrigger
-            aria-label={"Decrease"}
+            aria-label={t["common.decrease"]()}
             tabIndex={-1}
             border={"none !important"}
             borderTopWidth={"0 !important"}

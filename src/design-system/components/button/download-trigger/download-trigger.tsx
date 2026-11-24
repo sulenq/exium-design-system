@@ -1,10 +1,7 @@
-// src/design-system/components/button/ui/download-trigger.tsx
+// src/design-system/components/button/download-trigger/download-trigger.tsx
 
-import {
-  DownloadTrigger as ChakraDownloadTrigger,
-  type DownloadTriggerProps,
-} from "@chakra-ui/react";
-
-export const DownloadTrigger = (props: DownloadTriggerProps) => {
-  return <ChakraDownloadTrigger asChild {...props} />;
-};
+/**
+ * @deprecated Duplicate of `utilities/download-trigger`. Import from
+ * `@/design-system/components/utilities/download-trigger/download-trigger` instead.
+ */
+export { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";

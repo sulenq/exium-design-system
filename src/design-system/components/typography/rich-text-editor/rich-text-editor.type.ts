@@ -1,4 +1,4 @@
-// src/design-system/components/typography/types/rich-text-editor.type.ts
+// src/design-system/components/typography/rich-text-editor/rich-text-editor.type.ts
 
 import type { SelectProps } from "@/design-system/components/input/select/select.type";
 import type { BoxProps, IconButtonProps, StackProps } from "@chakra-ui/react";
@@ -34,8 +34,11 @@ export type RichTextEditorContentProps = Omit<
 
 export type RichTextEditorControlGroupProps = StackProps;
 
+/** Plain text, or a Paraglide message function resolved at render time. */
+export type LocalizedLabel = string | (() => string);
+
 export type BaseControlConfig = {
-  label: string;
+  label: LocalizedLabel;
   icon?: ComponentType;
   isDisabled?: (editor: Editor) => boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,11 +59,11 @@ export type BooleanControlConfig = BaseControlConfig & {
 export type SelectOption = {
   icon?: ComponentType;
   value: string;
-  label: string;
+  label: LocalizedLabel;
 };
 
 export type SelectControlConfig = BaseControlConfig &
-  SelectProps & {
+  Omit<SelectProps, "options" | "placeholder"> & {
     options: SelectOption[];
     getValue: (editor: Editor) => string;
     command: (editor: Editor, value: string) => void;
@@ -71,7 +74,7 @@ export type SelectControlConfig = BaseControlConfig &
 export type SwatchOption = {
   value: string;
   color: string;
-  label?: string;
+  label?: LocalizedLabel;
 };
 
 export type SwatchControlConfig = BaseControlConfig & {

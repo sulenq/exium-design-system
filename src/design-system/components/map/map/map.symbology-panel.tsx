@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.symbology-panel.tsx
+// src/design-system/components/map/map/map.symbology-panel.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { Accordion } from "@/design-system/components/disclosure/accordion/accordion";
@@ -31,6 +31,7 @@ import { getUserSession } from "@/shared/utils/user/user-session.utils";
 import { useQuery } from "@tanstack/react-query";
 import { EyeOffIcon, Grid2X2Icon, Layers2Icon, XIcon } from "lucide-react";
 import { memo, useMemo, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
   // Props
@@ -132,7 +133,7 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
           borderColor={"border.subtle"}
         >
           <HStack gap={2} align={"center"} minW={0} flex={1}>
-            <P lineClamp={1} fontWeight={"medium"}>{"Simbologi & Legenda"}</P>
+            <P lineClamp={1} fontWeight={"medium"}>{t["map.symbology_and_legend"]()}</P>
 
             <Badge colorPalette={"blue"} size={"xs"}>
               {`${activeSymbologyLayers.length}`}
@@ -140,11 +141,11 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
           </HStack>
 
           <HStack align={"center"} gap={1} flexShrink={0}>
-            <Tooltip content={"Tutup Semua Simbologi"}>
+            <Tooltip content={t["map.close_all_symbology"]()}>
               <IconButton
                 size={"xs"}
                 variant={"ghost"}
-                aria-label={"Tutup Semua Simbologi"}
+                aria-label={t["map.close_all_symbology"]()}
                 onClick={handleCloseAll}
               >
                 <AppIcon icon={XIcon} />
@@ -207,11 +208,11 @@ export const MapSymbologyPanel = memo((props: MapSymbologyPanelProps) => {
                     </HStack>
 
                     <HStack gap={2} align={"center"} flexShrink={0}>
-                      <Tooltip content={"Sembunyikan Simbologi"}>
+                      <Tooltip content={t["map.hide_symbology"]()}>
                         <IconButton
                           as={"div"}
                           variant={"ghost"}
-                          aria-label={"Sembunyikan Simbologi"}
+                          aria-label={t["map.hide_symbology"]()}
                           onClick={(e) => {
                             e.stopPropagation();
                             toggleSymbologyLayerId(layer.id);
@@ -270,7 +271,7 @@ export const LayerSymbologyContent = memo(
       return (
         <Center w={"full"} py={2}>
           <StateRetry
-            title={"Gagal Memuat Simbologi"}
+            title={t["map.failed_loading_symbology"]()}
             description={
               error instanceof Error
                 ? error.message

@@ -1,4 +1,4 @@
-// src/design-system/components/shell/ui/common-app-shell.tsx
+// src/design-system/components/shell/common-app-shell/common-app-shell.tsx
 
 "use client";
 
@@ -9,6 +9,7 @@ import { PageContainer } from "@/design-system/components/layout/page-container/
 import type { CommonAppShellProps } from "@/design-system/components/shell/common-app-shell/common-app-shell.type";
 import { SettingsTrigger } from "@/features/settings/components/settings";
 import { Outlet } from "@tanstack/react-router";
+import { t } from "@/shared/libs/i18n";
 
 export const CommonAppShell = (props: CommonAppShellProps) => {
   // Props
@@ -19,7 +20,7 @@ export const CommonAppShell = (props: CommonAppShellProps) => {
       <SideBar />
 
       <SettingsTrigger modalKey={"settings"} mt={"auto"}>
-        <Button>Settings</Button>
+        <Button>{t["common.settings"]()}</Button>
       </SettingsTrigger>
       <Outlet />
     </PageContainer>

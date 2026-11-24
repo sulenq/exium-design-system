@@ -1,16 +1,22 @@
-// src/design-system/components/data-display/ui/countdown.tsx
+// src/design-system/components/data-display/countdown/countdown.tsx
 
-import type { CountdownProps } from "@/design-system/components/data-display/countdown/countdown.type";
+import type {
+  CountdownLevel,
+  CountdownProps,
+} from "@/design-system/components/data-display/countdown/countdown.type";
 import {
   formatCountdownParts,
   getCountdownParts,
 } from "@/design-system/components/data-display/utils/countdown.utils";
 import { P, TNum } from "@/design-system/components/typography/p/p";
-import { useEffect, useState } from "react";
+import { Span } from "@/design-system/components/typography/span/span";
+import { t } from "@/shared/libs/i18n";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const COUNTDOWN_INTERVAL_MS = 1000;
 
 export const Countdown = (props: CountdownProps) => {
+  // Props
   const {
     finishedAt,
     format,
@@ -20,15 +26,40 @@ export const Countdown = (props: CountdownProps) => {
     color,
     dangerColor = "fg.error",
     finishColor = "fg",
+    clockOffsetMs = 0,
+    onFinish,
+    onThresholdChange,
     ...restProps
   } = props;
-  const [countdown, setCountdown] = useState(() =>
-    getCountdownParts(finishedAt),
+
+  // Refs
+  const onFinishRef = useRef(onFinish);
+  const onThresholdChangeRef = useRef(onThresholdChange);
+  const previousLevelRef = useRef<CountdownLevel | null>(null);
+  const hasFinishedRef = useRef(false);
+
+  // Derived Values
+  const getNow = useCallback(
+    () => new Date(Date.now() + clockOffsetMs),
+    [clockOffsetMs],
   );
 
+  // States
+  const [countdown, setCountdown] = useState(() =>
+    getCountdownParts(finishedAt, getNow()),
+  );
+  const [announcement, setAnnouncement] = useState("");
+
   useEffect(() => {
+    onFinishRef.current = onFinish;
+    onThresholdChangeRef.current = onThresholdChange;
+  }, [onFinish, onThresholdChange]);
+
+  useEffect(() => {
+    hasFinishedRef.current = false;
+
     const updateCountdown = () => {
-      const nextCountdown = getCountdownParts(finishedAt);
+      const nextCountdown = getCountdownParts(finishedAt, getNow());
       setCountdown(nextCountdown);
       return nextCountdown.isFinished;
     };
@@ -39,8 +70,17 @@ export const Countdown = (props: CountdownProps) => {
       if (updateCountdown()) window.clearInterval(intervalId);
     }, COUNTDOWN_INTERVAL_MS);
 
-    return () => window.clearInterval(intervalId);
-  }, [finishedAt]);
+    // Browsers throttle intervals in background tabs; resync when the tab is visible again.
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") updateCountdown();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [finishedAt, getNow]);
 
   // Derived Values — Color based on remaining time threshold
   const totalMinutesRemaining =
@@ -58,6 +98,36 @@ export const Countdown = (props: CountdownProps) => {
       ? countdown.days === 0 && countdown.hours < warningThresholdHours
       : warningThresholdDays > 0 && countdown.days < warningThresholdDays);
 
+  const level: CountdownLevel = countdown.isFinished
+    ? "finished"
+    : isDanger
+      ? "danger"
+      : isNearExpiry
+        ? "warning"
+        : "normal";
+
+  const formatted = formatCountdownParts(countdown, format);
+
+  // Effects — notify level changes once per transition and announce them to screen readers
+  useEffect(() => {
+    if (previousLevelRef.current === level) return;
+    const isInitial = previousLevelRef.current === null;
+    previousLevelRef.current = level;
+
+    if (level === "finished" && !hasFinishedRef.current) {
+      hasFinishedRef.current = true;
+      onFinishRef.current?.();
+    }
+    onThresholdChangeRef.current?.(level);
+
+    if (isInitial) return;
+    setAnnouncement(
+      level === "finished"
+        ? t["countdown.finished"]()
+        : t["countdown.remaining"]({ time: formatted }),
+    );
+  }, [level, formatted]);
+
   const dynamicColor =
     color ??
     (countdown.isFinished
@@ -70,6 +140,7 @@ export const Countdown = (props: CountdownProps) => {
 
   return (
     <P
+      role={"timer"}
       whiteSpace={"nowrap"}
       color={dynamicColor}
       fontWeight={
@@ -77,7 +148,11 @@ export const Countdown = (props: CountdownProps) => {
       }
       {...restProps}
     >
-      <TNum>{formatCountdownParts(countdown, format)}</TNum>
+      <TNum>{formatted}</TNum>
+
+      <Span srOnly={true} aria-live={"polite"}>
+        {announcement}
+      </Span>
     </P>
   );
 };

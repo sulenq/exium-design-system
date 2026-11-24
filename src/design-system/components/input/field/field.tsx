@@ -1,10 +1,13 @@
-// src/design-system/components/input/ui/field.tsx
+// src/design-system/components/input/field/field.tsx
 
 import { FieldContext } from "@/design-system/components/input/context/field.context";
 import type { FieldProps } from "@/design-system/components/input/field/field.type";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { Field as ChakraField } from "@chakra-ui/react";
+import { LockIcon } from "lucide-react";
 import {
   Children,
   forwardRef,
@@ -12,6 +15,7 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const Field = forwardRef<HTMLDivElement, FieldProps>(
   function Field(props, ref) {
@@ -23,6 +27,8 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
       helperText,
       errorText,
       optional,
+      locked = false,
+      lockedText,
       variant = "floating",
       hasValue: hasValueProp,
       isFloating: isFloatingProp,
@@ -63,10 +69,22 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
       hasValueProp !== undefined ? hasValueProp : childHasValue;
     const isFloating =
       isFloatingProp !== undefined ? isFloatingProp : resolvedHasValue;
+    const lockedNotice = locked && (
+      <HStack gap={1} color={"fg.muted"}>
+        <AppIcon icon={LockIcon} boxSize={3.5} />
+        <P fontSize={"xs"}>{lockedText ?? t["common.locked"]()}</P>
+      </HStack>
+    );
 
     if (variant === "floating") {
       return (
-        <ChakraField.Root ref={ref} gap={1} {...restProps}>
+        <ChakraField.Root
+          ref={ref}
+          gap={1}
+          readOnly={locked || undefined}
+          data-locked={locked || undefined}
+          {...restProps}
+        >
           <FieldContext.Provider
             value={{
               variant,
@@ -90,6 +108,8 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
             </ChakraField.HelperText>
           )}
 
+          {lockedNotice}
+
           {errorText && (
             <ChakraField.ErrorText>{errorText}</ChakraField.ErrorText>
           )}
@@ -98,7 +118,13 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
     }
 
     return (
-      <ChakraField.Root ref={ref} gap={1} {...restProps}>
+      <ChakraField.Root
+          ref={ref}
+          gap={1}
+          readOnly={locked || undefined}
+          data-locked={locked || undefined}
+          {...restProps}
+        >
         {label && (
           <ChakraField.Label fontSize={"md"} {...labelProps}>
             <P fontSize={"xs"} fontWeight={"medium"} color={"fg.subtle"}>
@@ -107,7 +133,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
 
             {optional && (
               <Badge fontSize={"2xs"} colorPalette={"gray"} color={"fg.subtle"}>
-                Optional
+                {t["common.optional"]()}
               </Badge>
             )}
           </ChakraField.Label>
@@ -128,6 +154,8 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
             {helperText}
           </ChakraField.HelperText>
         )}
+
+        {lockedNotice}
 
         {errorText && (
           <ChakraField.ErrorText>{errorText}</ChakraField.ErrorText>

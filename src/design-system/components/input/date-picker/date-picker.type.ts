@@ -1,4 +1,4 @@
-// src/design-system/components/input/types/date-picker.type.ts
+// src/design-system/components/input/date-picker/date-picker.type.ts
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import type { CalendarDate } from "@internationalized/date";
@@ -18,6 +18,12 @@ export type DatePickerProps = Omit<
   max?: string;
 
   disabledDates?: string[];
+  /**
+   * Whitelist of selectable dates. Pass a `{ start, end }` range or an array of specific
+   * ISO dates. Combined with `min`, `max` and `disabledDates`: a date is selectable only
+   * when it passes all of them. A single-date array preselects that date when uncontrolled.
+   */
+  availableDates?: DateRange | string[];
 
   timezone?: string;
   locale?: string;
@@ -31,10 +37,15 @@ export type DateFormat = "dmy" | "mdy" | "ymd";
 
 export type DateValue = string | null;
 
+/** Inclusive ISO date range ("YYYY-MM-DD"). */
+export type DateRange = { start: string; end: string };
+
 export type NavHeaderProps = {
   label: string;
   onPrev: () => void;
   onNext: () => void;
+  prevDisabled?: boolean;
+  nextDisabled?: boolean;
   onLabelClick?: () => void;
   labelClickable?: boolean;
 };
@@ -48,6 +59,10 @@ export type DayViewProps = {
   onPrevMonth: () => void;
   onNextMonth: () => void;
   onGoToMonthView: () => void;
+  onFocusDate: (date: CalendarDate) => void;
+  prevMonthDisabled?: boolean;
+  nextMonthDisabled?: boolean;
+  locale: string;
 };
 
 export type MonthViewProps = {
@@ -56,6 +71,7 @@ export type MonthViewProps = {
   onPrevYear: () => void;
   onNextYear: () => void;
   onGoToYearView: () => void;
+  locale: string;
 };
 
 export type YearViewProps = {
@@ -80,6 +96,7 @@ export type ValidationOptions = {
   min?: string;
   max?: string;
   disabledDates?: string[];
+  availableDates?: DateRange | string[];
 };
 
 export type CalendarDay = {

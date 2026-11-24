@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.3d-toggle.tsx
+// src/design-system/components/map/map/map.controls/map.3d-toggle.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
@@ -9,6 +9,7 @@ import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useCallback, useEffect } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const Map3DToggle = (props: StackProps) => {
   // Stores
@@ -107,7 +108,7 @@ export const Map3DToggle = (props: StackProps) => {
         positioning={{ placement: "top" }}
       >
         <IconButton
-          aria-label={is3D ? "Switch to 2D view" : "Switch to 3D view"}
+          aria-label={is3D ? t["map.switch_to_2d"]() : t["map.switch_to_3d"]()}
           size={"sm"}
           color={is3D ? `${theme.colorPalette}.300` : undefined}
           onClick={handleToggle}

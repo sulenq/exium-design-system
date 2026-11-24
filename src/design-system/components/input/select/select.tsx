@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/select.tsx
+// src/design-system/components/input/select/select.tsx
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type {
@@ -28,6 +28,7 @@ import {
 import { ChevronDownIcon, XIcon } from "lucide-react";
 import type React from "react";
 import { isValidElement, useMemo, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 const EMPTY_OPTIONS: SelectOption[] = [];
 
@@ -42,7 +43,7 @@ export default function SelectInput(props: SelectProps) {
     onValueChange,
     options: optionsProp,
     selectOptions: deprecatedSelectOptions,
-    placeholder = "Select option",
+    placeholder = t["common.select_option"](),
     clearable = true,
     size = "md",
     iconSize = "sm",

@@ -1,16 +1,17 @@
-// src/design-system/components/typography/ui/url.tsx
+// src/design-system/components/typography/url/url.tsx
 
 import { ClipboardButton } from "@/design-system/components/data-display/clipboard/clipboard-button";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import type { UrlProps } from "@/design-system/components/typography/url/url.type";
 import { memo } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const Url = memo((props: UrlProps) => {
   // Props
   const {
     url,
-    label = "Salin URL",
+    label = t["url.copy_url"](),
     isExternalLink = true,
     maxW = "280px",
     lineClamp = 1,

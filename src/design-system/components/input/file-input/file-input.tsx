@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/file-input.tsx
+// src/design-system/components/input/file-input/file-input.tsx
 
 import {
   Button,
@@ -76,7 +76,7 @@ export const FileInputTrigger = ({
         <FileInput
           ref={inputRef}
           variant={"button"}
-          label={"Tambah file"}
+          label={t["file_input.add_file"]()}
           display={"none"}
           w={"fit"}
           {...fileInputProps}
@@ -99,7 +99,7 @@ export const FileInputTrigger = ({
       <FileInput
         ref={inputRef}
         variant={"button"}
-        label={"Tambah file"}
+        label={t["file_input.add_file"]()}
         display={"none"}
         w={"fit"}
         {...fileInputProps}

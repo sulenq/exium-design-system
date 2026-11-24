@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.locate.tsx
+// src/design-system/components/map/map/map.controls/map.locate.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -12,6 +12,7 @@ import {
   IconCurrentLocation,
   IconCurrentLocationFilled,
 } from "@tabler/icons-react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapLocate = (props: StackProps) => {
   // Stores
@@ -26,11 +27,11 @@ export const MapLocate = (props: StackProps) => {
   return (
     <MapOverlayContainer {...props}>
       <Tooltip
-        content={isActive ? "Matikan Lokasi Saya" : "Lokasi Saya Saat Ini"}
+        content={isActive ? t["map.hide_my_location"]() : t["map.show_my_location"]()}
         positioning={{ placement: "top" }}
       >
         <IconButton
-          aria-label={isActive ? "Turn off my location" : "Show my location"}
+          aria-label={isActive ? t["map.hide_my_location"]() : t["map.show_my_location"]()}
           size={"sm"}
           loading={isLocating}
           onClick={toggle}

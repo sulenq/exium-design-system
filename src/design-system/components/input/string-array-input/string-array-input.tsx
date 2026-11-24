@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/string-array-input.tsx
+// src/design-system/components/input/string-array-input/string-array-input.tsx
 
 import { Button, IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -9,13 +9,14 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { P } from "@/design-system/components/typography/p/p";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { PlusIcon, XIcon } from "lucide-react";
+import { t } from "@/shared/libs/i18n";
 
 export const StringArrayInput = (props: StringArrayInputProps) => {
   // Props
   const {
     value = [],
     onChange,
-    placeholder = "Masukkan nilai...",
+    placeholder = t["string_array_input.placeholder"](),
     addButtonText = "Tambah Item",
     emptyText = "Belum ada item ditambahkan.",
     itemPrefix,

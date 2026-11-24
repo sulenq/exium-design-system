@@ -1,4 +1,4 @@
-// src/design-system/components/button/ui/back-button.tsx
+// src/design-system/components/button/back-button/back-button.tsx
 
 "use client";
 
@@ -40,7 +40,7 @@ export const BackButton = forwardRef<HTMLButtonElement, BackButtonProps>(
           <IconButton
             ref={ref}
             variant={variant}
-            aria-label={"Kembali"}
+            aria-label={t["action.back"]()}
             onClick={handleClick}
             {...restProps}
           >

@@ -188,6 +188,24 @@ function annotateHistoryOnClose(
 }
 
 // ---------------------------------------------------------------------------
+// Safety net for consumer callbacks: an exception thrown by onShow/onClose/etc
+// must not interrupt the engine mid-transition.
+// ---------------------------------------------------------------------------
+
+function safeCall<TArgs extends unknown[]>(
+  name: string,
+  callback: ((...args: TArgs) => void) | undefined,
+  ...args: TArgs
+): void {
+  if (!callback) return;
+  try {
+    callback(...args);
+  } catch (error) {
+    console.error(`[toast] ${name} callback threw`, error);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
 
@@ -197,7 +215,9 @@ function resolveDuration(
 ): number | null {
   if (duration !== undefined) return duration;
   if (variant === "loading") return null;
-  return getToastConfig().defaultDuration;
+  const { variantDurations, defaultDuration } = getToastConfig();
+  const variantDuration = variantDurations[variant];
+  return variantDuration !== undefined ? variantDuration : defaultDuration;
 }
 
 function buildToastItem(options: ToastOptions, id: string): ToastItemData {
@@ -221,10 +241,11 @@ function buildToastItem(options: ToastOptions, id: string): ToastItemData {
 
 /** Marks a toast "leaving" and schedules its actual removal after `leaveAnimationDuration`. */
 function beginClose(toast: ToastItemData, reason: DismissedReason): void {
+  // Mark leaving first so a throwing callback can never leave the toast on screen
+  useToastVisibleStore.getState().update(toast.id, { status: "leaving" });
   toastEventBus.emit("close", { record: toast, reason });
   annotateHistoryOnClose(toast.id, reason);
-  toast.onClose?.(toast, reason);
-  useToastVisibleStore.getState().update(toast.id, { status: "leaving" });
+  safeCall("onClose", toast.onClose, toast, reason);
 
   const { leaveAnimationDuration } = getToastConfig();
   const timeoutId = setTimeout(() => {
@@ -239,7 +260,7 @@ function handleExpire(id: string): void {
   if (!toast) return;
 
   toastEventBus.emit("expire", toast);
-  toast.onExpire?.(toast);
+  safeCall("onExpire", toast.onExpire, toast);
   beginClose(toast, "timeout");
 }
 
@@ -269,9 +290,6 @@ function create(options: ToastOptions = {}): string {
   startTimer(id, toastItem.duration, () => handleExpire(id));
   recordHistorySnapshot(toastItem, "create");
 
-  toastEventBus.emit("show", toastItem);
-  toastItem.onShow?.(toastItem);
-
   nextFrame(() => {
     // Only flip if still present — it may have already been closed/removed synchronously.
     if (useToastVisibleStore.getState().find(id)) {
@@ -279,12 +297,30 @@ function create(options: ToastOptions = {}): string {
     }
   });
 
+  // Notify after the enter transition is scheduled, so a throwing listener cannot block it
+  toastEventBus.emit("show", toastItem);
+  safeCall("onShow", toastItem.onShow, toastItem);
+
   return id;
 }
 
 function update(id: string, patch: UpdateToastOptions): void {
   const existing = useToastVisibleStore.getState().find(id);
-  if (!existing) return;
+
+  // The toast was already closed (e.g. a loading toast dismissed before the request
+  // finished): show the update as a fresh toast with the same id instead of dropping it.
+  if (!existing) {
+    create({ ...patch, id });
+    return;
+  }
+
+  // Updating a toast that is mid-exit revives it: cancel the pending removal.
+  const pendingLeave = leaveTimeouts.get(id);
+  if (pendingLeave) {
+    clearTimeout(pendingLeave);
+    leaveTimeouts.delete(id);
+  }
+  const wasPaused = existing.paused;
 
   const nextVariant =
     patch.variant !== undefined ? patch.variant : existing.variant;
@@ -303,15 +339,19 @@ function update(id: string, patch: UpdateToastOptions): void {
     variant: nextVariant,
     duration,
     remainingDuration: duration,
+    status: existing.status === "leaving" ? "visible" : existing.status,
+    paused: wasPaused,
     updatedAt: Date.now(),
   };
 
   useToastVisibleStore.getState().update(id, nextToast);
   startTimer(id, duration, () => handleExpire(id)); // restart timer with the (possibly new) duration
+  // Keep the toast paused if the pointer is still over it
+  if (wasPaused) pauseTimer(id);
   recordHistorySnapshot(nextToast, "update");
 
   toastEventBus.emit("update", nextToast);
-  nextToast.onUpdate?.(nextToast);
+  safeCall("onUpdate", nextToast.onUpdate, nextToast);
 }
 
 function close(id: string, reason: DismissedReason = "manual"): void {
@@ -335,7 +375,7 @@ function remove(id: string): void {
   useToastVisibleStore.getState().remove(id);
   if (record) {
     toastEventBus.emit("remove", { id });
-    record.onRemove?.(record);
+    safeCall("onRemove", record.onRemove, record);
   }
 }
 

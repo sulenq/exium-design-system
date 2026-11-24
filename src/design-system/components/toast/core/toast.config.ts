@@ -6,6 +6,11 @@ export const DEFAULT_TOAST_GROUP = "Sistem";
 
 const DEFAULT_TOAST_CONFIG: ToastEngineConfig = {
   defaultDuration: 5000,
+  variantDurations: {
+    error: 10000,
+    warning: 8000,
+    success: 4000,
+  },
   // defaultDuration: null,
   maxVisiblePerGroup: 3,
   newestOnTop: true,

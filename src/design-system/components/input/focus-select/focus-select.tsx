@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/focus-select.tsx
+// src/design-system/components/input/focus-select/focus-select.tsx
 
 import { Button } from "@/design-system/components/button/button/button";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
@@ -26,7 +26,7 @@ import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { CheckIcon, ChevronDownIcon, PlusIcon, XIcon } from "lucide-react";
 import type React from "react";
-import { isValidElement, useEffect, useMemo, useRef, useState } from "react";
+import { isValidElement, useEffect, useId, useMemo, useRef, useState } from "react";
 
 const SKELETON_LIST_COUNT = 5;
 
@@ -91,6 +91,8 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
 
   // Refs
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const listboxRef = useRef<HTMLDivElement>(null);
+  const listboxId = useId();
 
   // Effects — focus search input when modal opens only if autoFocusSearch is true
   useEffect(() => {
@@ -252,7 +254,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                   colorPalette={"gray"}
                   color={"fg.subtle"}
                 >
-                  Optional
+                  {t["common.optional"]()}
                 </Badge>
               )}
             </HStack>
@@ -340,6 +342,44 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
   const isCustomValueSelected =
     Boolean(currentValue) && !options.some((opt) => opt.value === currentValue);
 
+  // Listbox keyboard navigation: ArrowUp/ArrowDown/Home/End move between options
+  function focusOption(target: "first" | "last" | "next" | "prev") {
+    const optionElements = Array.from(
+      listboxRef.current?.querySelectorAll<HTMLButtonElement>(
+        '[role="option"]',
+      ) ?? [],
+    );
+    if (isEmptyArray(optionElements)) return;
+    const currentIndex = optionElements.findIndex(
+      (element) => element === document.activeElement,
+    );
+    const lastIndex = optionElements.length - 1;
+    const nextIndex = {
+      first: 0,
+      last: lastIndex,
+      next: currentIndex < 0 ? 0 : Math.min(currentIndex + 1, lastIndex),
+      prev: currentIndex <= 0 ? 0 : currentIndex - 1,
+    }[target];
+    optionElements[nextIndex]?.focus();
+  }
+
+  function handleListboxKeyDown(event: React.KeyboardEvent) {
+    const keyMap: Record<string, "first" | "last" | "next" | "prev"> = {
+      ArrowDown: "next",
+      ArrowUp: "prev",
+      Home: "first",
+      End: "last",
+    };
+    const target = keyMap[event.key];
+    if (!target) return;
+    event.preventDefault();
+    if (target === "prev" && listboxRef.current?.querySelector('[role="option"]') === document.activeElement) {
+      searchInputRef.current?.focus();
+      return;
+    }
+    focusOption(target);
+  }
+
   return (
     <Modal.Root
       modalKey={resolvedModalKey}
@@ -376,6 +416,13 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                   onValueChange={setSearchQuery}
                   w={"full"}
                   autoFocus={autoFocusSearch}
+                  aria-controls={listboxId}
+                  onKeyDown={(event) => {
+                    if (event.key === "ArrowDown") {
+                      event.preventDefault();
+                      focusOption("first");
+                    }
+                  }}
                 />
               </Field>
             </VStack>
@@ -399,7 +446,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                     handleOptionSelect(searchQuery.trim(), {
                       label: searchQuery.trim(),
                       value: searchQuery.trim(),
-                      description: "Opsi kustom",
+                      description: t["focus_select.custom_option"](),
                     });
                   }
                 }}
@@ -410,10 +457,10 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
                   <P lineClamp={1}>
                     {searchQuery.trim()
                       ? searchQuery.trim()
-                      : "Ketik di atas untuk input kustom..."}
+                      : t["focus_select.custom_hint"]()}
                   </P>
                 </HStack>
-                <Badge>Opsi Kustom</Badge>
+                <Badge>{t["focus_select.custom_option"]()}</Badge>
               </Button>
             </VStack>
           )}
@@ -435,13 +482,23 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
             ) : isEmptyArray(filteredOptions) ? (
               <StateNoResult query={searchQuery || "..."} />
             ) : (
-              <VStack gap={1} w={"full"}>
+              <VStack
+                ref={listboxRef}
+                id={listboxId}
+                role={"listbox"}
+                aria-label={String(resolvedTitle)}
+                gap={1}
+                w={"full"}
+                onKeyDown={handleListboxKeyDown}
+              >
                 {filteredOptions.map((opt) => {
                   const isSelected = opt.value === currentValue;
 
                   return (
                     <Button
                       key={opt.value}
+                      role={"option"}
+                      aria-selected={isSelected}
                       variant={isSelected ? "subtle" : "ghost"}
                       w={"full"}
                       minH={"40px"}

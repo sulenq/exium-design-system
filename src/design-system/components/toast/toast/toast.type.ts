@@ -1,4 +1,4 @@
-// src/design-system/components/toast/types/toast.type.ts
+// src/design-system/components/toast/toast/toast.type.ts
 
 import type { CenterProps } from "@/design-system/components/layout/center/center.type";
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
@@ -56,6 +56,11 @@ export type ToastStackProps<TItem> = {
   maxVisible: number;
   renderItem: (params: ToastRenderItemParams<TItem>) => ReactNode;
   isItemLeaving?: (item: TItem) => boolean;
+  /**
+   * Higher priority renders first (on top of the collapsed stack). Items with equal
+   * priority keep their original order. Used to surface errors and warnings first.
+   */
+  getPriority?: (item: TItem) => number;
   onCloseAll?: () => void;
   onClickOutside?: (event: MouseEvent | TouchEvent) => void;
 };
@@ -162,6 +167,11 @@ export type ToastPlacement =
 export type ToastEngineConfig = {
   /** Default auto-dismiss duration in ms. */
   defaultDuration: number | null;
+  /**
+   * Per-variant default duration in ms, used when a toast does not set `duration`.
+   * Errors and warnings stay longer so people have time to read and act on them.
+   */
+  variantDurations: Partial<Record<ToastVariant, number | null>>;
   /** Max toasts rendered "on top" per group before the rest collapse into the stack. */
   maxVisiblePerGroup: number;
   /** Newest toast rendered above or below older ones within a group. */

@@ -1,5 +1,4 @@
-// src/design-system/components/button/types/download-trigger.type.ts
+// src/design-system/components/button/download-trigger/download-trigger.type.ts
 
-import type { DownloadTriggerProps as ChakraDownloadTriggerProps } from "@chakra-ui/react";
-
-export type DownloadTriggerProps = ChakraDownloadTriggerProps;
+/** @deprecated Import from `utilities/download-trigger/download-trigger.type` instead. */
+export type { DownloadTriggerProps } from "@/design-system/components/utilities/download-trigger/download-trigger.type";
