@@ -128,11 +128,27 @@ import {
   Trash2Icon,
   UserIcon,
 } from "lucide-react";
+import { ACTIONS_DOCS } from "@/features/design-system-docs/config/registry/actions.registry";
+import { DISPLAY_DOCS } from "@/features/design-system-docs/config/registry/display.registry";
+import { FEEDBACK_DOCS } from "@/features/design-system-docs/config/registry/feedback.registry";
+import { INPUTS_DOCS } from "@/features/design-system-docs/config/registry/inputs.registry";
+import { LAYOUT_DOCS } from "@/features/design-system-docs/config/registry/layout.registry";
+import { MAP_DOCS } from "@/features/design-system-docs/config/registry/map.registry";
+import { NAVIGATION_DOCS } from "@/features/design-system-docs/config/registry/navigation.registry";
 import { useMemo, useState } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import { Sparkle as PhosphorSparkleIcon } from "@phosphor-icons/react";
 
 export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
+  // Specs split by category live in ./registry
+  ...LAYOUT_DOCS,
+  ...FEEDBACK_DOCS,
+  ...ACTIONS_DOCS,
+  ...INPUTS_DOCS,
+  ...NAVIGATION_DOCS,
+  ...DISPLAY_DOCS,
+  ...MAP_DOCS,
+
   logo: {
     key: "logo",
     title: "Logo",
@@ -207,7 +223,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   button: {
     key: "button",
     title: "Button",
-    category: "Buttons & Actions",
+    category: "Buttons",
     description:
       "Komponen interaktif utama untuk aksi pengguna dengan variasi saiz, gaya, dan status loading.",
     importPath:
@@ -335,7 +351,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   button_group: {
     key: "button_group",
     title: "ButtonGroup",
-    category: "Buttons & Actions",
+    category: "Buttons",
     description: "Membungkus sekumpulan Button agar menyatu secara visual.",
     importPath:
       'import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";\nimport { Button } from "@/design-system/components/button/button/button";',
@@ -383,7 +399,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   typography: {
     key: "typography",
     title: "P",
-    category: "Typography & Display",
+    category: "Typography",
     description:
       "Komponen teks standard dengan dukungan penyesuaian font size, weight, warna, serta integrasi pemotongan baris (lineClamp) dengan tooltip.",
     importPath:
@@ -473,7 +489,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   badge: {
     key: "badge",
     title: "Badge",
-    category: "Typography & Display",
+    category: "Typography",
     description: "Label ringkas untuk menunjukkan status, kategori, atau tag.",
     importPath:
       'import { Badge } from "@/design-system/components/typography/badge/badge";',
@@ -537,7 +553,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   heading: {
     key: "heading",
     title: "Heading",
-    category: "Typography & Display",
+    category: "Typography",
     description:
       "Elemen judul semantik dengan styling tegas, line-height teratur, serta dukungan lineClamp dan Tooltip.",
     importPath:
@@ -604,7 +620,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   count_badge: {
     key: "count_badge",
     title: "CountBadge",
-    category: "Typography & Display",
+    category: "Typography",
     description:
       "Badge penghitung angka dengan pemformatan otomatis batas maksimal (misal: 99+).",
     importPath:
@@ -654,7 +670,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   kbd: {
     key: "kbd",
     title: "Kbd",
-    category: "Typography & Display",
+    category: "Typography",
     description: "Elemen penunjuk tombol pintasan keyboard pengguna.",
     importPath:
       'import { Kbd } from "@/design-system/components/typography/kbd/kbd";',
@@ -676,7 +692,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   rich_text_editor: {
     key: "rich_text_editor",
     title: "RichTextEditor",
-    category: "Typography & Display",
+    category: "Typography",
     description:
       "Editor teks kaya (WYSIWYG) berbasis TipTap dengan toolbar pemformatan lengkap, heading, list, dan warna.",
     importPath:
@@ -694,7 +710,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   input: {
     key: "input",
     title: "Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input teks standar dengan validasi native maxLength dan integrasi toast peringatan.",
     importPath:
@@ -766,7 +782,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   unit_input: {
     key: "unit_input",
     title: "UnitInput",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Kontrol formulir terintegrasi untuk memasukkan besaran fisik (angka + satuan unit seperti kg, °C, ha) dengan konversi otomatis, borderless stepper, dan dukungan 15 kuantitas ISO 80000.",
     importPath:
@@ -860,7 +876,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   number_input: {
     key: "number_input",
     title: "NumberInput",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input angka terstruktur dengan tombol stepper stepper atas/bawah, min/max limiter, dan format angka.",
     importPath:
@@ -954,7 +970,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   password_input: {
     key: "password_input",
     title: "PasswordInput",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input kata sandi aman dengan tombol toggle visibilitas show/hide terintegrasi.",
     importPath:
@@ -1008,7 +1024,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   select: {
     key: "select",
     title: "Select Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Komponen dropdown pilihan tunggal dengan portalling, filter, dan dukungan startElement.",
     importPath:
@@ -1058,7 +1074,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   focus_select: {
     key: "focus_select",
     title: "Focus Select Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input pemilihan interaktif modal terfokus dengan search realtime dan dynamic custom option.",
     importPath:
@@ -1154,7 +1170,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   checkbox: {
     key: "checkbox",
     title: "Checkbox",
-    category: "Form Inputs",
+    category: "Inputs",
     description: "Elemen kotak pilihan tunggal atau ganda.",
     importPath:
       'import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";',
@@ -1202,7 +1218,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   switch: {
     key: "switch",
     title: "Switch",
-    category: "Form Inputs",
+    category: "Inputs",
     description: "Toggle switch dua status (On/Off).",
     importPath:
       'import { Switch } from "@/design-system/components/input/switch/switch";',
@@ -1261,7 +1277,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   textarea: {
     key: "textarea",
     title: "Textarea",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Bidang input teks multi-baris dengan perlindungan gradien floating label dan notifikasi batas karakter.",
     importPath:
@@ -1304,7 +1320,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   radio_input: {
     key: "radio_input",
     title: "Radio Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description: "Pilihan opsi tunggal eksklusif dengan radio group styling.",
     importPath:
       'import { RadioInput } from "@/design-system/components/input/radio-input/radio-input";',
@@ -1368,7 +1384,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   radio_card: {
     key: "radio_card",
     title: "Radio Card",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Pilihan opsi berbentuk kartu interaktif dengan border dan indikator terintegrasi.",
     importPath:
@@ -1459,7 +1475,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   segment_group: {
     key: "segment_group",
     title: "Segment Group",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Kontrol tersegmentasi horizontal bergaya tab switcher untuk pilihan cepat.",
     importPath:
@@ -1524,7 +1540,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   slider: {
     key: "slider",
     title: "Slider",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Kontrol penggeser numerik dengan thumb interaktif dan rentang nilai presisi.",
     importPath:
@@ -1577,7 +1593,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   pin_input: {
     key: "pin_input",
     title: "Pin Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input digit kode OTP / PIN keamanan dengan fokus otomatis per kotak digit.",
     importPath:
@@ -1616,7 +1632,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   search_input: {
     key: "search_input",
     title: "Search Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input pencarian terintegrasi dengan icon kaca pembesar dan tombol reset cepat.",
     importPath:
@@ -1664,7 +1680,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   field: {
     key: "field",
     title: "Field & Fieldset",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Wrapper form terintegrasi dengan label mengambang, helper text, error handling, dan tag optional.",
     importPath:
@@ -1722,7 +1738,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   file_input: {
     key: "file_input",
     title: "FileInput",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Komponen unggah berkas fleksibel dengan mode dropzone area seret-lepas atau tombol trigger.",
     importPath:
@@ -1787,7 +1803,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   date_input: {
     key: "date_input",
     title: "DateInput",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Bidang input tanggal terintegrasi modal kalender interaktif dengan pemilihan tahun, bulan, dan hari.",
     importPath:
@@ -1836,7 +1852,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   phone_input: {
     key: "phone_input",
     title: "Phone Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input nomor telepon dengan prefix kode negara yang terkunci. Nilai yang dihasilkan selalu berformat E.164 (+628123456789).",
     importPath:
@@ -1934,7 +1950,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   time_input: {
     key: "time_input",
     title: "Time Input",
-    category: "Form Inputs",
+    category: "Inputs",
     description:
       "Input waktu 24 jam. Trigger membuka modal berisi roda angka vertikal untuk jam, menit, dan detik; nilai baru tersimpan setelah dikonfirmasi.",
     importPath:
@@ -2035,7 +2051,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   progress: {
     key: "progress",
     title: "Progress",
-    category: "Feedback & Status",
+    category: "Feedback",
     description: "Bar kemajuan untuk indikator proses dan loading.",
     importPath:
       'import { Progress } from "@/design-system/components/feedback/progress/progress";',
@@ -2110,7 +2126,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   skeleton: {
     key: "skeleton",
     title: "Skeleton",
-    category: "Feedback & Status",
+    category: "Feedback",
     description:
       "Placeholder pemuatan konten visual saat data sedang di-fetch secara asinkron.",
     importPath:
@@ -2235,7 +2251,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   confirmation_trigger: {
     key: "confirmation_trigger",
     title: "Confirmation Trigger",
-    category: "Feedback & Status",
+    category: "Feedback",
     description:
       "Trigger dialog konfirmasi aksi destruktif atau penting yang otomatis sinkron dengan state overlay URL.",
     importPath:
@@ -2332,7 +2348,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   alert: {
     key: "alert",
     title: "Alert",
-    category: "Feedback & Status",
+    category: "Feedback",
     description:
       "Komponen pemberitahuan status penting (info, success, warning, error) dengan ikon indikator.",
     importPath:
@@ -2378,7 +2394,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   toast: {
     key: "toast",
     title: "Toast Notification",
-    category: "Feedback & Status",
+    category: "Feedback",
     description:
       "Notifikasi mengambang dengan timer otomatis, auto-collapse, riwayat toast, dan queue grouping.",
     importPath: 'import { toast } from "@/design-system/components/toast";',
@@ -2435,7 +2451,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   state_display: {
     key: "state_display",
     title: "State Feedback (No Data)",
-    category: "Feedback & Status",
+    category: "Feedback",
     description:
       "Komponen ilustratif untuk halaman data kosong atau kondisi belum ada data.",
     importPath:
@@ -2479,7 +2495,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   emoji: {
     key: "emoji",
     title: "Emoji",
-    category: "Emoji",
+    category: "Decorative",
     description:
       "Komponen Emoji berpotongan (sliced SVG) dengan penyesuaian dinamis colorPalette (solid, emphasized, muted, subtle).",
     importPath:
@@ -2554,7 +2570,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   focus_alert: {
     key: "focus_alert",
     title: "Focus Alert Modal",
-    category: "Focus Alert",
+    category: "Feedback",
     description:
       "Modal peringatan terpusat prioritas tinggi dengan animasi ikon besar dan aksi konfirmasi.",
     importPath:
@@ -2687,7 +2703,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   clipboard: {
     key: "clipboard",
     title: "Clipboard",
-    category: "Buttons & Actions",
+    category: "Buttons",
     description:
       "Komponen aksi salin teks satu klik ke papan klip dengan status umpan balik instan.",
     importPath:
@@ -3657,7 +3673,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   breadcrumb: {
     key: "breadcrumb",
     title: "Breadcrumb",
-    category: "Disclosure",
+    category: "Navigation",
     description:
       "Navigasi remah roti untuk menunjukkan hierarki rute halaman pengguna.",
     importPath:
@@ -3838,7 +3854,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   dialog: {
     key: "dialog",
     title: "Dialog Modal",
-    category: "Overlays & Modals",
+    category: "Overlay",
     description:
       "Komponen modal mengambang dengan transisi, backdrop, dan kontrol tombol tutup.",
     importPath:
@@ -3881,7 +3897,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   drawer: {
     key: "drawer",
     title: "Drawer",
-    category: "Overlays & Modals",
+    category: "Overlay",
     description:
       "Panel geser dari tepi layar untuk form samping, filter, atau menu sekunder.",
     importPath:
@@ -3915,7 +3931,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   popover: {
     key: "popover",
     title: "Popover",
-    category: "Overlays & Modals",
+    category: "Overlay",
     description: "Panel mengambang interaktif terikat pada elemen pemicu.",
     importPath:
       'import { Popover } from "@/design-system/components/overlay/popover/popover";',
@@ -3965,7 +3981,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   tooltip: {
     key: "tooltip",
     title: "Tooltip",
-    category: "Overlays & Modals",
+    category: "Overlay",
     description:
       "Pesan informasi singkat saat pengguna mengarahkan kursor (hover) di atas elemen.",
     importPath:
@@ -4026,7 +4042,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   menu: {
     key: "menu",
     title: "Menu",
-    category: "Overlays & Modals",
+    category: "Overlay",
     description:
       "Menu dropdown aksi pilihan dengan navigasi keyboard dan pemisahan kategori.",
     importPath:
@@ -4078,7 +4094,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   modal: {
     key: "modal",
     title: "Modal (Adaptive)",
-    category: "Overlays & Modals",
+    category: "Overlay",
     description:
       "Komponen overlay pintar adaptif: otomatis menjadi Dialog pada desktop dan Drawer bawah pada perangkat mobile.",
     importPath:
@@ -4108,7 +4124,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   box: {
     key: "box",
     title: "Box",
-    category: "Layout & Structure",
+    category: "Layout",
     description:
       "Komponen dasar kontainer layout serbaguna dengan dukungan token tema Chakra.",
     importPath:
@@ -4163,7 +4179,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   flex_box: {
     key: "flex_box",
     title: "HStack / VStack",
-    category: "Layout & Structure",
+    category: "Layout",
     description:
       "Kontainer susunan fleksibel vertikal (VStack) atau horizontal (HStack) dengan alignment presisi.",
     importPath:
@@ -4266,7 +4282,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   grid: {
     key: "grid",
     title: "SimpleGrid",
-    category: "Layout & Structure",
+    category: "Layout",
     description:
       "Grid responsif yang mudah digunakan untuk menyusun kartu dan elemen multi-kolom.",
     importPath:
@@ -4319,7 +4335,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   card: {
     key: "card",
     title: "Card",
-    category: "Layout & Structure",
+    category: "Layout",
     description:
       "Kartu presentasi informasi modular dengan container token styling.",
     importPath:
@@ -4372,7 +4388,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   container: {
     key: "container",
     title: "Container",
-    category: "Layout & Structure",
+    category: "Layout",
     description:
       "Kontainer pembungkus halaman dengan header terintegrasi dan responsivitas adaptif.",
     importPath:
@@ -4409,7 +4425,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   separator: {
     key: "separator",
     title: "Separator",
-    category: "Layout & Structure",
+    category: "Layout",
     description:
       "Garis pemisah visual horizontal atau vertikal antar bagian antarmuka.",
     importPath:
@@ -4698,7 +4714,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   qr_code: {
     key: "qr_code",
     title: "QR Code",
-    category: "Media & Icons",
+    category: "Media",
     description:
       "Kode QR dari teks atau URL. Selalu dirender gelap di atas putih agar tetap terbaca pemindai pada dark mode.",
     importPath:
@@ -4802,7 +4818,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   avatar: {
     key: "avatar",
     title: "Avatar",
-    category: "Media & Icons",
+    category: "Media",
     description:
       "Gambar profil pengguna dengan fallback inisial nama otomatis dan status pemuatan.",
     importPath:
@@ -4867,7 +4883,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   image: {
     key: "image",
     title: "Image",
-    category: "Media & Icons",
+    category: "Media",
     description:
       "Komponen gambar responsif dengan penanganan rasio aspek dan border rounded.",
     importPath:
@@ -4938,7 +4954,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   app_icon: {
     key: "app_icon",
     title: "App Icon",
-    category: "Media & Icons",
+    category: "Icons",
     description:
       "Komponen ikon serbaguna pembungkus Phosphor, Lucide, & Tabler Icons dengan token saiz dan weight seragam.",
     importPath:
@@ -5038,7 +5054,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   utilities: {
     key: "utilities",
     title: "Utilities & Downloads",
-    category: "Utilities & System",
+    category: "Utilities",
     description:
       "Utilitas pengunduh berkas otomatis (DownloadTrigger) dan helper ekosistem.",
     importPath:

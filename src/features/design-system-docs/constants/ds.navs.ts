@@ -55,6 +55,36 @@ import {
   WrenchIcon,
   LinkIcon,
   XCircleIcon,
+  CrosshairIcon,
+  FrameCornersIcon,
+  PushPinIcon,
+  HandPointingIcon,
+  ArrowsInIcon,
+  BrowserIcon,
+  ScrollIcon,
+  RowsIcon,
+  ColumnsIcon,
+  SpinnerIcon,
+  CircleIcon,
+  ListChecksIcon,
+  SealQuestionIcon,
+  WifiSlashIcon,
+  ArrowLeftIcon,
+  MoonIcon,
+  ListPlusIcon,
+  DotsThreeIcon,
+  AppWindowIcon,
+  LayoutIcon,
+  ListBulletsIcon,
+  ChartLineIcon,
+  MapTrifoldIcon,
+  PolygonIcon,
+  GpsIcon,
+  SelectionIcon,
+  ShapesIcon,
+  SidebarSimpleIcon,
+  GridFourIcon,
+  CursorTextIcon,
 } from "@phosphor-icons/react";
 
 export const DS_NAVS_MAP = {
@@ -70,19 +100,19 @@ export const DS_NAVS_MAP = {
   },
   cat_buttons: {
     icon: CursorClickIcon,
-    title: "Buttons & Actions",
+    title: "Buttons",
   },
   cat_typography: {
     icon: TextTIcon,
-    title: "Typography & Display",
+    title: "Typography",
   },
   cat_inputs: {
     icon: TextboxIcon,
-    title: "Form Inputs",
+    title: "Inputs",
   },
   cat_feedback: {
     icon: SlidersHorizontalIcon,
-    title: "Feedback & Status",
+    title: "Feedback",
   },
   cat_data_display: {
     icon: SquaresFourIcon,
@@ -94,11 +124,11 @@ export const DS_NAVS_MAP = {
   },
   cat_overlay: {
     icon: ArrowsOutIcon,
-    title: "Overlays & Modals",
+    title: "Overlay",
   },
   cat_layout: {
     icon: CubeIcon,
-    title: "Layout & Structure",
+    title: "Layout",
   },
   cat_navigation: {
     icon: NavigationArrowIcon,
@@ -106,11 +136,27 @@ export const DS_NAVS_MAP = {
   },
   cat_media: {
     icon: ImageIcon,
-    title: "Media & Icons",
+    title: "Media",
+  },
+  cat_shell: {
+    icon: SidebarSimpleIcon,
+    title: "Shell",
+  },
+  cat_map: {
+    icon: MapTrifoldIcon,
+    title: "Map",
+  },
+  cat_icons: {
+    icon: ShapesIcon,
+    title: "Icons",
+  },
+  cat_decorative: {
+    icon: SparkleIcon,
+    title: "Decorative",
   },
   cat_utilities: {
     icon: WrenchIcon,
-    title: "Utilities & System",
+    title: "Utilities",
   },
 
   // Components - Branding
@@ -317,6 +363,187 @@ export const DS_NAVS_MAP = {
     icon: LinkIcon,
     title: "Url",
   },
+  // QC follow-up pages
+  center: {
+    icon: CrosshairIcon,
+    title: "Center",
+  },
+  aspect_ratio: {
+    icon: FrameCornersIcon,
+    title: "AspectRatio",
+  },
+  float: {
+    icon: PushPinIcon,
+    title: "Float",
+  },
+  group: {
+    icon: GridFourIcon,
+    title: "Group",
+  },
+  clickable_container: {
+    icon: HandPointingIcon,
+    title: "ClickableContainer",
+  },
+  constrained_container: {
+    icon: ArrowsInIcon,
+    title: "ConstrainedContainer",
+  },
+  page_container: {
+    icon: BrowserIcon,
+    title: "PageContainer",
+  },
+  scroll_container: {
+    icon: ScrollIcon,
+    title: "ScrollContainer",
+  },
+  action_header_scroll_container: {
+    icon: RowsIcon,
+    title: "ActionHeaderScrollContainer",
+  },
+  masked_container: {
+    icon: SelectionIcon,
+    title: "MaskedContainer",
+  },
+  splitter: {
+    icon: ColumnsIcon,
+    title: "Splitter",
+  },
+  loader: {
+    icon: SpinnerIcon,
+    title: "Loader",
+  },
+  indicator: {
+    icon: CircleIcon,
+    title: "Indicator",
+  },
+  top_bar_loader: {
+    icon: SpinnerIcon,
+    title: "TopBarLoader",
+  },
+  feedback_state: {
+    icon: ListChecksIcon,
+    title: "FeedbackState",
+  },
+  not_found_page: {
+    icon: SealQuestionIcon,
+    title: "NotFoundPage",
+  },
+  offline_alert: {
+    icon: WifiSlashIcon,
+    title: "OfflineAlert",
+  },
+  back_button: {
+    icon: ArrowLeftIcon,
+    title: "BackButton",
+  },
+  color_mode: {
+    icon: MoonIcon,
+    title: "ColorMode",
+  },
+  download_trigger: {
+    icon: DownloadSimpleIcon,
+    title: "DownloadTrigger",
+  },
+  fieldset: {
+    icon: TextboxIcon,
+    title: "Fieldset",
+  },
+  string_array_input: {
+    icon: ListPlusIcon,
+    title: "StringArrayInput",
+  },
+  version_input: {
+    icon: GitCommitIcon,
+    title: "VersionInput",
+  },
+  focus_search: {
+    icon: MagnifyingGlassIcon,
+    title: "FocusSearch",
+  },
+  h_navs: {
+    icon: DotsThreeIcon,
+    title: "HNavs",
+  },
+  nav: {
+    icon: NavigationArrowIcon,
+    title: "NavButton",
+  },
+  common_app_shell: {
+    icon: AppWindowIcon,
+    title: "CommonAppShell",
+  },
+  gis_app_shell: {
+    icon: MapTrifoldIcon,
+    title: "GisAppShell",
+  },
+  app_nav_title: {
+    icon: TextHIcon,
+    title: "AppNavTitle",
+  },
+  header_container: {
+    icon: LayoutIcon,
+    title: "HeaderContainer",
+  },
+  list: {
+    icon: ListBulletsIcon,
+    title: "List",
+  },
+  chart_tooltip: {
+    icon: ChartLineIcon,
+    title: "ChartTooltip",
+  },
+  outline_contour_perspective: {
+    icon: ShapesIcon,
+    title: "OutlineContourPerspective",
+  },
+  action_bar: {
+    icon: SlidersHorizontalIcon,
+    title: "ActionBar",
+  },
+  cursor_tooltip: {
+    icon: CursorTextIcon,
+    title: "CursorTooltip",
+  },
+  map: {
+    icon: MapTrifoldIcon,
+    title: "Map",
+  },
+  map_basemap: {
+    icon: StackIcon,
+    title: "MapBasemap",
+  },
+  map_controls: {
+    icon: SlidersHorizontalIcon,
+    title: "MapControls",
+  },
+  map_layer_management: {
+    icon: StackIcon,
+    title: "MapLayerManagement",
+  },
+  map_draw_controls: {
+    icon: PolygonIcon,
+    title: "MapDrawControls",
+  },
+  map_feature_info_panel: {
+    icon: InfoIcon,
+    title: "MapFeatureInfoPanel",
+  },
+  map_search: {
+    icon: MagnifyingGlassIcon,
+    title: "MapSearch",
+  },
+  map_symbology_panel: {
+    icon: SwatchesIcon,
+    title: "MapSymbologyPanel",
+  },
+  map_coordinates: {
+    icon: GpsIcon,
+    title: "MapCoordinates",
+  },
+  map_overlay: {
+    icon: LayoutIcon,
+    title: "MapOverlay",
+  },
   format_number: {
     icon: HashIcon,
     title: "FormatNumber",
@@ -449,15 +676,15 @@ export const DS_NAVS_MAP = {
   // Foundation Categories
   cat_design_tokens: {
     icon: SwatchesIcon,
-    title: "Design Tokens & Styles",
+    title: "Design Tokens",
   },
   cat_spatial_layout: {
     icon: SquaresFourIcon,
-    title: "Layout & Spatial",
+    title: "Spatial",
   },
   cat_standards: {
     icon: CompassIcon,
-    title: "Standards & Behavior",
+    title: "Standards",
   },
 
   // Foundation - Items
@@ -510,15 +737,15 @@ export const DS_NAVS_MAP = {
   // Hooks Categories
   cat_state_disclosure_hooks: {
     icon: CodeIcon,
-    title: "State & Disclosure",
+    title: "State",
   },
   cat_viewport_dom_hooks: {
     icon: SquaresFourIcon,
-    title: "Viewport & DOM",
+    title: "DOM",
   },
   cat_inputs_search_hooks: {
     icon: TextboxIcon,
-    title: "Inputs & Navigation",
+    title: "Search",
   },
 
   // Hooks - Items
@@ -571,7 +798,7 @@ export const DS_NAVS_MAP = {
   // Utils Categories
   cat_core_utils: {
     icon: WrenchIcon,
-    title: "Formatting & System",
+    title: "Core",
   },
 
   // Utils - Items
