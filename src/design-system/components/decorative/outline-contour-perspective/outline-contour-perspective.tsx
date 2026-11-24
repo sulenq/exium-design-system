@@ -1,4 +1,4 @@
-// src/design-system/components/decorative/ui/outline-contour-perspective.tsx
+// src/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective.tsx
 
 import { resolveSemanticColor } from "@/design-system/chakra/utils/chakra-system-resolver";
 import type { OutlineContourPerspectiveProps } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective.type";

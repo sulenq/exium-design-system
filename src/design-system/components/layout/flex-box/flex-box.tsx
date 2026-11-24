@@ -1,4 +1,4 @@
-// src/design-system/components/layout/ui/flex-box.tsx
+// src/design-system/components/layout/flex-box/flex-box.tsx
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import {

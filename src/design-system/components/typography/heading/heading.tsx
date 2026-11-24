@@ -1,4 +1,4 @@
-// src/design-system/components/typography/ui/heading.tsx
+// src/design-system/components/typography/heading/heading.tsx
 
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import type { HeadingProps } from "@/design-system/components/typography/heading/heading.type";

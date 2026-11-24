@@ -1,4 +1,4 @@
-// src/design-system/components/layout/types/splitter.type.ts
+// src/design-system/components/layout/splitter/splitter.type.ts
 
 import type { HTMLChakraProps } from "@chakra-ui/react";
 import type {

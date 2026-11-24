@@ -1,4 +1,4 @@
-// src/design-system/components/focus-alert/types/focus-alert.type.ts
+// src/design-system/components/focus-alert/focus-alert/focus-alert.type.ts
 
 import type { ButtonProps } from "@/design-system/components/button/button/button.type";
 import type { EmojiVariant } from "@/design-system/components/emoji/emoji/emoji.type";

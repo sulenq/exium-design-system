@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/ui/file-item.tsx
+// src/design-system/components/data-display/file-item/file-item.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import type {

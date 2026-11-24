@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.layer-management-panel.tsx
+// src/design-system/components/map/map/map.controls/map.layer-management-panel.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { Loader } from "@/design-system/components/feedback/loader/loader";

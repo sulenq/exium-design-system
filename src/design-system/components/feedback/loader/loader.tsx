@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/ui/loader.tsx
+// src/design-system/components/feedback/loader/loader.tsx
 
 import type { LoaderProps } from "@/design-system/components/feedback/loader/loader.type";
 import { Spinner } from "@chakra-ui/react";

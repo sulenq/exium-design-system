@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/switch.tsx
+// src/design-system/components/input/switch/switch.tsx
 
 import type { SwitchProps } from "@/design-system/components/input/switch/switch.type";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";

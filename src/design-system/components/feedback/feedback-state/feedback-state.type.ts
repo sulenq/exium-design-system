@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/types/feedback-state.type.ts
+// src/design-system/components/feedback/feedback-state/feedback-state.type.ts
 
 import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";

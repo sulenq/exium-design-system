@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.tsx
+// src/design-system/components/map/map/map.tsx
 
 import { useMapDraw } from "@/design-system/components/map/hooks/use-map-draw";
 import { useMapFeatureInfo } from "@/design-system/components/map/hooks/use-map-feature-info";

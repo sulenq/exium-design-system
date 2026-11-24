@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/types/masked-text.type.ts
+// src/design-system/components/data-display/masked-text/masked-text.type.ts
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 

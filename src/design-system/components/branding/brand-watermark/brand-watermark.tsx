@@ -1,4 +1,4 @@
-// src/design-system/components/branding/ui/brand-watermark.tsx
+// src/design-system/components/branding/brand-watermark/brand-watermark.tsx
 
 import type { BrandWatermarkProps } from "@/design-system/components/branding/brand-watermark/brand-watermark.type";
 import { ExternalLink } from "@/design-system/components/navigation/link/link";

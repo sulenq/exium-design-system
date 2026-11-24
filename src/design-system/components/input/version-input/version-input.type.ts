@@ -1,4 +1,4 @@
-// src/design-system/components/input/types/version-input.type.ts
+// src/design-system/components/input/version-input/version-input.type.ts
 
 import type { ChangeEvent, FocusEvent, RefObject } from "react";
 

@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.scale.tsx
+// src/design-system/components/map/map/map.controls/map.scale.tsx
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";

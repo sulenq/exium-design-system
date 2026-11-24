@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/slider.tsx
+// src/design-system/components/input/slider/slider.tsx
 
 import type { SliderProps } from "@/design-system/components/input/slider/slider.type";
 import { useThemeStore } from "@/design-system/stores/theme-store";

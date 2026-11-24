@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/textarea.tsx
+// src/design-system/components/input/textarea/textarea.tsx
 
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
 import {

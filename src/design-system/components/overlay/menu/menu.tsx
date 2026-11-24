@@ -1,4 +1,4 @@
-// src/design-system/components/overlay/ui/menu.tsx
+// src/design-system/components/overlay/menu/menu.tsx
 
 import { Box } from "@/design-system/components/layout/box/box";
 import type {

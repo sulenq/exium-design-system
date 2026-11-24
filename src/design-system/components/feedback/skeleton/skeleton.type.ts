@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/types/skeleton.type.ts
+// src/design-system/components/feedback/skeleton/skeleton.type.ts
 
 import type { BoxProps } from "@/design-system/components/layout/box/box.type";
 import type {

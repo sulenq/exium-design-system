@@ -1,4 +1,4 @@
-// src/design-system/components/button/ui/close-button.tsx
+// src/design-system/components/button/close-button/close-button.tsx
 
 "use client";
 

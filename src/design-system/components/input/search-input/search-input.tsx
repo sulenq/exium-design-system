@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/search-input.tsx
+// src/design-system/components/input/search-input/search-input.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";

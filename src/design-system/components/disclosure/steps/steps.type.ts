@@ -1,4 +1,4 @@
-// src/design-system/components/disclosure/types/steps.type.ts
+// src/design-system/components/disclosure/steps/steps.type.ts
 
 import type {
   StepsRootProps as ChakraStepsRootProps,

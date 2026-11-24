@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/ui/indicator.tsx
+// src/design-system/components/feedback/indicator/indicator.tsx
 
 import type {
   CheckIndicatorProps,

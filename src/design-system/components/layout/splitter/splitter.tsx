@@ -1,4 +1,4 @@
-// src/design-system/components/layout/ui/splitter.tsx
+// src/design-system/components/layout/splitter/splitter.tsx
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type {

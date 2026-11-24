@@ -1,4 +1,4 @@
-// src/design-system/components/layout/ui/scroll-container.tsx
+// src/design-system/components/layout/scroll-container/scroll-container.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
