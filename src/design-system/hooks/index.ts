@@ -2,6 +2,7 @@
 
 export { useBreakpointValue, useDisclosure } from "@chakra-ui/react";
 export { useAlertAnimation } from "@/design-system/hooks/use-alert-animation";
+export { useBounceDrag } from "@/design-system/hooks/use-bounce-drag";
 export { useClickOutside } from "@/design-system/hooks/use-click-outside";
 export { useColorMode, useColorModeValue } from "@/design-system/hooks/use-color-mode";
 export { useDebouncedValue } from "@/design-system/hooks/use-debounced-value";

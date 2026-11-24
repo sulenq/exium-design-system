@@ -2,57 +2,40 @@
 
 import type { SliderProps } from "@/design-system/components/input/slider/slider.type";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { useBounceDrag } from "@/design-system/hooks/use-bounce-drag";
 import { useThemeStore } from "@/design-system/stores/theme-store";
+import { tintLight } from "@/shared/utils/style/color";
 import { Slider as ChakraSlider } from "@chakra-ui/react";
-import { forwardRef, useCallback, useEffect, useState } from "react";
-import type { PointerEvent } from "react";
+import { forwardRef } from "react";
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(
   function Slider(props, ref) {
     // Props
     const { label, showValue = false, marks, onHold, ...restProps } = props;
 
-    // States
-    const [isHolding, setIsHolding] = useState(false);
+    // Hooks
+    const {
+      ref: controlRef,
+      isHolding,
+      handlePointerDown,
+      handlePointerUp,
+    } = useBounceDrag<HTMLDivElement>({
+      directions: {
+        left: true,
+        right: true,
+        up: false,
+        down: false,
+      },
+      maxOffset: 4,
+      damping: 0.04,
+      onHold,
+    });
 
     // Stores
     const { theme } = useThemeStore();
 
     // Derived Values
     const hasMarks = marks && marks.length > 0;
-
-    // Handlers
-    const handlePointerDown = useCallback(
-      (e: PointerEvent<HTMLDivElement>) => {
-        if (e.button !== 0) return;
-        setIsHolding(true);
-        onHold?.(true);
-      },
-      [onHold],
-    );
-
-    const handlePointerUp = useCallback(() => {
-      setIsHolding(false);
-      onHold?.(false);
-    }, [onHold]);
-
-    // Effects
-    useEffect(() => {
-      if (!isHolding) return;
-
-      const handleGlobalPointerUp = () => {
-        setIsHolding(false);
-        onHold?.(false);
-      };
-
-      window.addEventListener("pointerup", handleGlobalPointerUp);
-      window.addEventListener("pointercancel", handleGlobalPointerUp);
-
-      return () => {
-        window.removeEventListener("pointerup", handleGlobalPointerUp);
-        window.removeEventListener("pointercancel", handleGlobalPointerUp);
-      };
-    }, [isHolding, onHold]);
 
     return (
       <ChakraSlider.Root
@@ -69,8 +52,15 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
         )}
 
         <ChakraSlider.Control
+          ref={controlRef}
           data-active={isHolding ? "" : undefined}
           cursor={"pointer"}
+          transform={"translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"}
+          transition={
+            isHolding
+              ? "transform 80ms ease-out"
+              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+          }
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
@@ -79,13 +69,18 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             outline={isHolding ? "4px solid" : ""}
             outlineColor={"bg.muted !important"}
             transition={"all 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-            h={isHolding ? "calc(var(--slider-track-size) + 2px)" : ""}
+            h={isHolding ? "calc(var(--slider-track-size) + 4px)" : ""}
             _vertical={{
-              w: isHolding ? "calc(var(--slider-track-size) + 2px)" : "",
+              w: isHolding ? "calc(var(--slider-track-size) + 4px)" : "",
               h: "100%",
             }}
           >
-            <ChakraSlider.Range />
+            <ChakraSlider.Range
+              bg={`linear-gradient(to right, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 35)})`}
+              _vertical={{
+                bg: `linear-gradient(to top, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 35)})`,
+              }}
+            />
           </ChakraSlider.Track>
 
           <ChakraSlider.Thumb
