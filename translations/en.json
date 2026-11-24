@@ -449,5 +449,28 @@
   },
   "currency_input": {
     "conversion": "≈ {amount} · rate {date}"
+  },
+  "qr_scanner": {
+    "label": "QR scanner",
+    "requesting": "Requesting camera permission...",
+    "scanning": "Point the camera at a QR code",
+    "no_detection_hint": "No QR read yet. Move closer, avoid blur, or turn on the flashlight.",
+    "accepted": "Read: {value}",
+    "done": "Scan complete",
+    "paused": "Scanning paused",
+    "scan_again": "Scan again",
+    "torch_on": "Turn on flashlight",
+    "torch_off": "Turn off flashlight",
+    "manual_entry": "Type manually",
+    "manual_submit": "Use",
+    "manual_cancel": "Cancel",
+    "manual_pattern_error": "Format does not match",
+    "permission_denied_title": "Camera permission denied",
+    "permission_denied_description": "Open your browser settings, allow camera access for this site, then try again.",
+    "unsupported_title": "Camera unavailable",
+    "unsupported_description": "This device or browser does not support the camera. Open it over HTTPS in a recent browser, or type the code manually.",
+    "error_title": "Camera could not start",
+    "error_description": "Another app may be using the camera. Close it and try again.",
+    "retry": "Try again"
   }
 }

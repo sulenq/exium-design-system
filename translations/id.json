@@ -448,5 +448,28 @@
   },
   "currency_input": {
     "conversion": "≈ {amount} · kurs {date}"
+  },
+  "qr_scanner": {
+    "label": "Pemindai QR",
+    "requesting": "Meminta izin kamera...",
+    "scanning": "Arahkan kamera ke kode QR",
+    "no_detection_hint": "QR belum terbaca. Dekatkan kamera, pastikan tidak buram, atau nyalakan senter.",
+    "accepted": "Terbaca: {value}",
+    "done": "Scan selesai",
+    "paused": "Pemindaian dijeda",
+    "scan_again": "Scan lagi",
+    "torch_on": "Nyalakan senter",
+    "torch_off": "Matikan senter",
+    "manual_entry": "Ketik manual",
+    "manual_submit": "Gunakan",
+    "manual_cancel": "Batal",
+    "manual_pattern_error": "Format tidak sesuai",
+    "permission_denied_title": "Izin kamera ditolak",
+    "permission_denied_description": "Buka pengaturan browser, izinkan akses kamera untuk situs ini, lalu coba lagi.",
+    "unsupported_title": "Kamera tidak tersedia",
+    "unsupported_description": "Perangkat atau browser ini tidak mendukung kamera. Buka lewat HTTPS di browser terbaru, atau ketik kode secara manual.",
+    "error_title": "Kamera tidak bisa dibuka",
+    "error_description": "Kamera mungkin sedang dipakai aplikasi lain. Tutup aplikasi itu lalu coba lagi.",
+    "retry": "Coba lagi"
   }
 }
