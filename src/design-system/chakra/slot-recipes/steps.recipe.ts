@@ -6,6 +6,8 @@ import { defineSlotRecipe } from "@chakra-ui/react";
 export const stepsRecipe = defineSlotRecipe({
   slots: stepsAnatomy.keys(),
 
+  base: {},
+
   variants: {
     orientation: {
       horizontal: {
@@ -23,8 +25,30 @@ export const stepsRecipe = defineSlotRecipe({
         },
         separator: {
           marginTop: "calc(var(--steps-size) / 2)",
+          minW: "4",
+        },
+      },
+      vertical: {
+        list: {
+          alignItems: "stretch",
+        },
+        item: {
+          minH: "16",
+          alignItems: "flex-start",
+        },
+        separator: {
+          position: "absolute",
+          width: "var(--steps-thickness)",
+          height: "auto",
+          maxHeight: "none",
+          minH: "4",
+          top: "calc(var(--steps-size) + var(--steps-gutter))",
+          bottom: "var(--steps-gutter)",
+          insetStart: "calc(var(--steps-size) / 2 - 1px)",
         },
       },
     },
   },
 });
+
+

@@ -88,7 +88,7 @@ export const DS_NAVS_MAP = {
   },
   cat_disclosure: {
     icon: StackIcon,
-    title: "Disclosure & Navigation",
+    title: "Disclosure",
   },
   cat_overlay: {
     icon: ArrowsOutIcon,
@@ -100,7 +100,7 @@ export const DS_NAVS_MAP = {
   },
   cat_navigation: {
     icon: NavigationArrowIcon,
-    title: "Navigation & Shell",
+    title: "Navigation",
   },
   cat_media: {
     icon: ImageIcon,

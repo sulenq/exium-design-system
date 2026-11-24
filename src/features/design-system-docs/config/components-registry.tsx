@@ -3016,7 +3016,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   accordion: {
     key: "accordion",
     title: "Accordion",
-    category: "Disclosure & Navigation",
+    category: "Disclosure",
     description:
       "Komponen panel lipat collapsible berlapis untuk menghemat ruang vertikal.",
     importPath:
@@ -3079,7 +3079,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   tabs: {
     key: "tabs",
     title: "Tabs",
-    category: "Disclosure & Navigation",
+    category: "Disclosure",
     description:
       "Navigasi tab switching dengan animasi underline indicator halus.",
     importPath:
@@ -3164,7 +3164,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   steps: {
     key: "steps",
     title: "Steps",
-    category: "Disclosure & Navigation",
+    category: "Disclosure",
     description: "Indikator alur proses bertahap bertingkat (wizard/stepper).",
     importPath:
       'import { Steps } from "@/design-system/components/disclosure/steps/steps";',
@@ -3276,7 +3276,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   collapsible: {
     key: "collapsible",
     title: "Collapsible",
-    category: "Disclosure & Navigation",
+    category: "Disclosure",
     description:
       "Elemen ekspansi buka/tutup sederhana dengan animasi transisi.",
     importPath:
@@ -3328,7 +3328,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   breadcrumb: {
     key: "breadcrumb",
     title: "Breadcrumb",
-    category: "Disclosure & Navigation",
+    category: "Disclosure",
     description:
       "Navigasi remah roti untuk menunjukkan hierarki rute halaman pengguna.",
     importPath:
@@ -3381,7 +3381,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   carousel: {
     key: "carousel",
     title: "Carousel",
-    category: "Disclosure & Navigation",
+    category: "Disclosure",
     description:
       "Slider tayangan bergambar atau konten kartu bergerak dengan navigasi tombol dan indikator titik.",
     importPath:
@@ -4160,7 +4160,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   sidebar: {
     key: "sidebar",
     title: "Sidebar",
-    category: "Navigation & Shell",
+    category: "Navigation",
     description:
       "Bilah navigasi samping vertikal dengan toggle perluasan (expand/collapse) dan penyimpanan state.",
     importPath:
@@ -4262,7 +4262,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   v_navs: {
     key: "v_navs",
     title: "VNavs",
-    category: "Navigation & Shell",
+    category: "Navigation",
     description:
       "Navigasi hierarkis vertikal berlapis dengan dukungan pengelompokan (groups), sub-nav collapsible bertingkat, dan mode collapsed/rail.",
     importPath:
@@ -4323,7 +4323,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
   link: {
     key: "link",
     title: "Link",
-    category: "Navigation & Shell",
+    category: "Navigation",
     description:
       "Tautan eksternal dengan target _blank dan styling underline saat di-hover.",
     importPath:
