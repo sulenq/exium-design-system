@@ -17,8 +17,8 @@ export const StringArrayInput = (props: StringArrayInputProps) => {
     value = [],
     onChange,
     placeholder = t["string_array_input.placeholder"](),
-    addButtonText = "Tambah Item",
-    emptyText = "Belum ada item ditambahkan.",
+    addButtonText = t["string_array_input.add_item"](),
+    emptyText = t["string_array_input.empty"](),
     itemPrefix,
     maxItems,
   } = props;

@@ -396,7 +396,16 @@
     "drag_to_reorder": "Tahan dan geser untuk mengubah urutan",
     "default_feature": "Fitur standar",
     "layer": "Layer",
-    "feature_info": "Informasi fitur"
+    "feature_info": "Informasi fitur",
+    "layer_management": "Manajemen layer",
+    "no_layers": "Tidak ada layer yang tersedia",
+    "loading_layers": "Memuat layer...",
+    "failed_loading_layers": "Gagal memuat layer",
+    "failed_loading_layers_description": "Terjadi kesalahan saat memuat data layer.",
+    "failed_loading_map_layer": "Gagal memuat layer peta",
+    "invalid_tile_format": "Format tile layer tidak valid atau layer tidak ditemukan.",
+    "zoom_to_feature_failed": "Gagal melakukan zoom ke fitur.",
+    "polygon_drawn": "Area berhasil digambar"
   },
   "data_view": {
     "row_actions": "Aksi baris",
@@ -408,7 +417,9 @@
     "custom_hint": "Ketik di atas untuk input kustom..."
   },
   "string_array_input": {
-    "placeholder": "Masukkan nilai..."
+    "placeholder": "Masukkan nilai...",
+    "add_item": "Tambah item",
+    "empty": "Belum ada item ditambahkan."
   },
   "url": {
     "copy_url": "Salin URL"
@@ -428,5 +439,11 @@
   },
   "snackbar": {
     "label": "Navigasi utama"
+  },
+  "masked_text": {
+    "copy": "Salin teks"
+  },
+  "welcome": {
+    "subtitle": "Semoga hari ini berjalan lancar"
   }
 }

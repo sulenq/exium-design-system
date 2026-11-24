@@ -99,7 +99,7 @@ export const MapFeatureInfoPanel = () => {
     try {
       zoomToFeatureSafe(map, geom, coord, isSmallViewport);
     } catch {
-      toast.error("Gagal melakukan zoom ke fitur.");
+      toast.error(t["map.zoom_to_feature_failed"]());
     }
   };
 

@@ -1,5 +1,6 @@
 // src/design-system/components/map/hooks/use-map-draw.ts
 
+import { t } from "@/shared/libs/i18n";
 import { useCallback, useEffect, useRef } from "react";
 import type maplibregl from "maplibre-gl";
 import { toast } from "@/design-system/components/toast";
@@ -106,7 +107,7 @@ export const useMapDraw = (
 
     onFinish?.(feature, pointsRef.current);
     finish();
-    toast.success("Area berhasil digambar");
+    toast.success(t["map.polygon_drawn"]());
   };
 
   useEffect(() => {

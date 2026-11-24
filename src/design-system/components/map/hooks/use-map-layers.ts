@@ -1,5 +1,6 @@
 // src/design-system/components/map/hooks/use-map-layers.ts
 
+import { t } from "@/shared/libs/i18n";
 import {
   MAP_CONFIG,
   MAP_EVENTS_MAP,
@@ -285,10 +286,9 @@ export const useMapLayers = (
         (errMessage.includes("not, or is no longer, usable") &&
           errMessage.includes("Could not load image"))
       ) {
-        toast.error("Gagal Memuat Layer Peta", {
+        toast.error(t["map.failed_loading_map_layer"](), {
           id: "map-layer-tile-load-error",
-          description:
-            "Format tile atau layer geoserver tidak valid atau tidak ditemukan.",
+          description: t["map.invalid_tile_format"](),
           duplicateStrategy: "ignore",
         });
       }

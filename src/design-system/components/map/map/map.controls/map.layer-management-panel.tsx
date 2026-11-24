@@ -1,5 +1,6 @@
 // src/design-system/components/map/map/map.controls/map.layer-management-panel.tsx
 
+import { t } from "@/shared/libs/i18n";
 import { IconButton } from "@/design-system/components/button/button/button";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
 import { StateRetry } from "@/design-system/components/feedback/state-retry/state.retry";
@@ -34,12 +35,12 @@ function MapLayerManagementPanelComponent<
   // Props
   const {
     title,
-    tooltipContent = "Manajemen Layer",
+    tooltipContent = t["map.layer_management"](),
     badgeLabel,
-    emptyLabel = "Tidak ada data layer yang tersedia",
-    loadingLabel = "Memuat layer...",
-    errorTitle = "Gagal Memuat Layer",
-    errorMessage = "Terjadi kesalahan saat memuat data layer.",
+    emptyLabel = t["map.no_layers"](),
+    loadingLabel = t["map.loading_layers"](),
+    errorTitle = t["map.failed_loading_layers"](),
+    errorMessage = t["map.failed_loading_layers_description"](),
     layers,
     isLoading,
     isError,

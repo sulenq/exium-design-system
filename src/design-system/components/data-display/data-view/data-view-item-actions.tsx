@@ -493,7 +493,7 @@ export const DataViewItemActionsMenuContent = <
             color={"fg.muted"}
             cursor={"default"}
           >
-            {t["action.no_actions"]?.() ?? "Tidak ada aksi"}
+            {t["action.no_actions"]()}
           </Menu.Item>
         )}
 

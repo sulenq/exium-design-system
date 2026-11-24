@@ -93,7 +93,7 @@ export const StateWelcome = (props: StateWelcomeProps) => {
   const isMitra = user?.role === "mitra";
 
   const resolvedTitle = title ?? t["common.welcome_intro"]();
-  const resolvedSubtitle = subtitle ?? "Semoga hari ini berjalan lancar";
+  const resolvedSubtitle = subtitle ?? t["welcome.subtitle"]();
   const displayNavItems = useMemo(
     () => getDisplayNavItems(isMitra, fallbackNavKeys),
     [isMitra, fallbackNavKeys],
