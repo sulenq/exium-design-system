@@ -174,3 +174,4 @@ Status per komponen per **24 November 2026**.
 | ModalPurger | ⏳ Pending | |
 | OfflineAlert | ⏳ Pending | |
 | Portal | ⏳ Pending | |
+
