@@ -1,7 +1,5 @@
 // src/design-system/components/shell/gis-app-shell/gis-app-shell.tsx
 
-// src/design-system/components/shell/ui/gis-app-shell.tsx
-
 import { Logo } from "@/design-system/components/branding/logo/logo";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
