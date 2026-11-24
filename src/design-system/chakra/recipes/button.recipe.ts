@@ -67,76 +67,52 @@ export const buttonRecipe = defineRecipe({
         position: "relative",
         isolation: "isolate",
         bg: {
-          _light: "rgba(255, 255, 255, 0.65)",
-          _dark: "rgba(24, 24, 27, 0.65)",
+          base: "#fafafabf",
+          _dark: "bg.bodyAlpha",
         },
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        border: "1px solid",
+        borderColor: "an0 !important",
+        backdropFilter: "blur(16px) saturate(180%)",
+        WebkitBackdropFilter: "blur(16px) saturate(180%)",
         color: "fg",
-        borderWidth: "1px",
-        borderStyle: "solid",
-        borderColor: {
-          _light: "rgba(255, 255, 255, 0.35)",
-          _dark: "rgba(255, 255, 255, 0.06)",
-        },
-        // Soft inner glow only, the sharp corner highlight is handled by ::before
-        boxShadow: {
-          _light:
-            "inset -2px 2px 8px 0px rgba(255, 255, 255, 0.35), inset 2px -2px 8px 0px rgba(255, 255, 255, 0.2), 0 2px 8px -2px rgba(0, 0, 0, 0.06)",
-          _dark:
-            "inset -2px 2px 8px 0px rgba(255, 255, 255, 0.1), inset 2px -2px 8px 0px rgba(255, 255, 255, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.35)",
-        },
         transition:
-          "background 150ms ease, border-color 150ms ease, box-shadow 150ms ease, transform 100ms ease",
+          "background 150ms ease, box-shadow 150ms ease, transform 100ms ease",
 
-        // Gradient rim: bright at top-right and bottom-left, fades toward the center
-        _before: {
+        // Top rim highlight
+        boxShadow: {
+          base: "inset 0 1px 0 0 rgba(255, 255, 255, 0.95)",
+          _dark: "inset 0 1px 0 0 rgba(255, 255, 255, 0.2)",
+        },
+        // Layer 1 (Top glare): ultra-thin & highly transparent linear sheen
+        backgroundImage: {
+          base: "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 30%)",
+          _dark:
+            "linear-gradient(180deg, rgba(255, 255, 255, 0.008) 0%, rgba(255, 255, 255, 0) 30%)",
+        },
+        // Layer 2 (Bottom glare): dedicated radial glare at the bottom edge
+        _after: {
           content: '""',
           position: "absolute",
           inset: "0",
-          padding: "1px",
           borderRadius: "inherit",
           pointerEvents: "none",
           background: {
-            _light:
-              "linear-gradient(45deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,1) 100%)",
+            base: "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(214, 214, 214, 0.28) 0%, rgba(161, 161, 170, 0) 70%)",
             _dark:
-              "linear-gradient(45deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.4) 100%)",
+              "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
           },
-          // Punch out the center so only the 1px ring remains
-          mask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          maskComposite: "exclude",
-          WebkitMask:
-            "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-          WebkitMaskComposite: "xor",
-          transition: "opacity 150ms ease",
         },
 
         _hover: {
           bg: {
-            _light: "rgba(255, 255, 255, 0.78)",
-            _dark: "rgba(39, 39, 42, 0.78)",
-          },
-          boxShadow: {
-            _light:
-              "inset -2px 2px 10px 0px rgba(255, 255, 255, 0.45), inset 2px -2px 10px 0px rgba(255, 255, 255, 0.3), 0 4px 12px -2px rgba(0, 0, 0, 0.08)",
-            _dark:
-              "inset -2px 2px 10px 0px rgba(255, 255, 255, 0.15), inset 2px -2px 10px 0px rgba(255, 255, 255, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.45)",
+            base: "rgba(243, 243, 243, 0.62)",
+            _dark: "rgba(42, 42, 48, 0.68)",
           },
         },
-
         _active: {
           bg: {
-            _light: "rgba(255, 255, 255, 0.88)",
+            base: "rgba(255, 255, 255, 0.88)",
             _dark: "rgba(39, 39, 42, 0.88)",
-          },
-          boxShadow: {
-            _light: "inset 0 1px 3px 0 rgba(0, 0, 0, 0.08)",
-            _dark: "inset 0 1px 3px 0 rgba(0, 0, 0, 0.3)",
-          },
-          // Dim the rim so the button feels pressed
-          _before: {
-            opacity: 0.5,
           },
         },
       },
