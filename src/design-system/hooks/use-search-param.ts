@@ -42,9 +42,12 @@ export function useSearchParam<ValueType extends string = string>(
     [queryKey, navigate],
   );
 
-  const clearQueryValue = useCallback(() => {
-    setQueryValue(undefined);
-  }, [setQueryValue]);
+  const clearQueryValue = useCallback(
+    (options?: { replace?: boolean }) => {
+      setQueryValue(undefined, options);
+    },
+    [setQueryValue],
+  );
 
   return { queryValue, setQueryValue, clearQueryValue };
 }

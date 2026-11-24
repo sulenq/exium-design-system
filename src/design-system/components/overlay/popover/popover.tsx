@@ -143,7 +143,7 @@ const PopoverHeader = forwardRef<HTMLDivElement, PopoverHeaderProps>(
     const { children, ...restProps } = props;
 
     return (
-      <ChakraPopover.Header ref={ref} px={3} pt={3} {...restProps}>
+      <ChakraPopover.Header ref={ref} {...restProps}>
         {children}
       </ChakraPopover.Header>
     );
@@ -155,7 +155,7 @@ const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
     const { children, ...restProps } = props;
 
     return (
-      <ChakraPopover.Body ref={ref} p={3} {...restProps}>
+      <ChakraPopover.Body ref={ref} {...restProps}>
         {children}
       </ChakraPopover.Body>
     );

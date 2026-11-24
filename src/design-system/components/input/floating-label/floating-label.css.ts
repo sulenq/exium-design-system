@@ -8,10 +8,15 @@ export function getFloatingPlaceholder(placeholder?: string): string {
   return placeholder ?? " ";
 }
 
-const FLOATED =
-  "&:has(:is(input, textarea):focus), " +
-  "&:has(:is(input, textarea):not(:placeholder-shown)), " +
-  "&:has(:is(input, textarea):-webkit-autofill)";
+const FLOATED_CONTAINERS = [
+  "&:focus-within",
+  "&:has(:is(input, textarea):focus)",
+  "&:has(:is(input, textarea):not(:placeholder-shown))",
+  "&:has(:is(input, textarea):-webkit-autofill)",
+];
+
+const floatedSelector = (childSelector: string) =>
+  FLOATED_CONTAINERS.map((parent) => `${parent} ${childSelector}`).join(", ");
 
 export const floatingLabelWrapperCss = {
   // Ensure relative positioning
@@ -22,7 +27,7 @@ export const floatingLabelWrapperCss = {
     opacity: 0,
     transition: "opacity 0.18s ease",
   },
-  [`${FLOATED} > [data-part='floating-textarea-gradient']`]: {
+  [floatedSelector("> [data-part='floating-textarea-gradient']")]: {
     opacity: 1,
   },
 
@@ -38,10 +43,10 @@ export const floatingLabelWrapperCss = {
   },
 
   // Floated state
-  [`${FLOATED} [data-part='floating-label']`]: {
+  [floatedSelector("[data-part='floating-label']")]: {
     transform: "translateY(0)",
   },
-  [`${FLOATED} [data-part='floating-label-text']`]: {
+  [floatedSelector("[data-part='floating-label-text']")]: {
     fontSize: "xs",
   },
 
@@ -53,4 +58,3 @@ export const floatingLabelWrapperCss = {
     color: "var(--chakra-colors-fg-subtle, inherit) !important",
   },
 };
-

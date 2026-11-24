@@ -1548,18 +1548,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     component: Slider,
     defaultProps: {
       defaultValue: [40],
-      min: 0,
       max: 100,
       step: 5,
     },
     propsSpec: [
-      {
-        name: "min",
-        type: "number",
-        defaultValue: 0,
-        description: "Nilai minimum slider.",
-        controlKind: "number",
-      },
       {
         name: "max",
         type: "number",
@@ -1569,19 +1561,16 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       },
     ],
     generateCode: (props) => {
-      const minProp =
-        props.min !== undefined && props.min !== 0 ? ` min={${props.min}}` : "";
       const maxProp =
         props.max !== undefined && props.max !== 100
           ? ` max={${props.max}}`
           : "";
-      return `<Slider\n  defaultValue={[40]}${minProp}${maxProp}\n  showValue={true}\n  label={"Volume / Ukuran"}\n/>`;
+      return `<Slider\n  defaultValue={[40]}${maxProp}\n  showValue={true}\n  label={"Volume / Ukuran"}\n/>`;
     },
     renderPlayground: (props) => (
       <Box w={"280px"}>
         <Slider
           defaultValue={[40]}
-          min={Number(props.min) || 0}
           max={Number(props.max) || 100}
           showValue={true}
           label={"Volume / Ukuran"}
@@ -3964,7 +3953,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         <Popover.Trigger asChild>
           <Button variant={"outline"}>Klik Popover</Button>
         </Popover.Trigger>
-        <Popover.Content p={4} maxW={"260px"}>
+        <Popover.Content maxW={"260px"}>
           <Popover.Header>
             <P fontWeight={"bold"}>Detail Info</P>
           </Popover.Header>

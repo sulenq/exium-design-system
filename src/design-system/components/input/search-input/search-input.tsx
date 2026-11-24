@@ -95,7 +95,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
       if (debounceMs <= 0) {
         if (isUrlMode) {
-          setQueryValue(next);
+          setQueryValue(next, { replace: true });
         }
         onValueChange?.(next);
         return;
@@ -103,7 +103,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
       debounceTimerRef.current = setTimeout(() => {
         if (isUrlMode) {
-          setQueryValue(next);
+          setQueryValue(next, { replace: true });
         }
         onValueChange?.(next);
       }, debounceMs);
@@ -122,7 +122,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       }
       setValue("");
       if (isUrlMode) {
-        clearQueryValue();
+        clearQueryValue({ replace: true });
       }
       onValueChange?.("");
       internalRef.current?.focus();
