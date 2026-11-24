@@ -7,4 +7,5 @@ export type SliderProps = ChakraSlider.RootProps & {
   label?: ReactNode;
   showValue?: boolean;
   marks?: Array<number | { value: number; label: ReactNode }>;
+  onHold?: (isActive: boolean) => void;
 };
