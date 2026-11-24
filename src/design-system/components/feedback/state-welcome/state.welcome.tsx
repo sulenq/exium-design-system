@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/ui/state.welcome.tsx
+// src/design-system/components/feedback/state-welcome/state.welcome.tsx
 
 import { Logo } from "@/design-system/components/branding/logo/logo";
 import { Button } from "@/design-system/components/button/button/button";

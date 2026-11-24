@@ -1,4 +1,4 @@
-// src/design-system/components/layout/types/action-header-scroll-container.type.ts
+// src/design-system/components/layout/action-header-scroll-container/action-header-scroll-container.type.ts
 
 import type { HScrollContainerProps } from "@/design-system/components/layout/scroll-container/scroll-container.type";
 

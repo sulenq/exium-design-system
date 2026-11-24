@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/types/confirmation-trigger.type.ts
+// src/design-system/components/feedback/confirmation-trigger/confirmation-trigger.type.ts
 
 import type { ButtonProps } from "@/design-system/components/button/button/button.type";
 import type { ComponentType, ReactNode } from "react";

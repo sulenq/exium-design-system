@@ -1,4 +1,4 @@
-// src/design-system/components/input/types/radio-indicator.type.ts
+// src/design-system/components/input/radio-indicator/radio-indicator.type.ts
 
 import type { CircleProps } from "@/design-system/components/layout/box/box.type";
 

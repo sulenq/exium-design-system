@@ -1,10 +1,10 @@
-// src/design-system/components/disclosure/ui/collapsible.tsx
+// src/design-system/components/disclosure/collapsible/collapsible.tsx
 
 import type {
   CollapsibleContentProps,
   CollapsibleIndicatorProps,
   CollapsibleRootProps,
-} from "@/design-system/components/disclosure/collapsible/collabsible.type";
+} from "@/design-system/components/disclosure/collapsible/collapsible.type";
 import {
   Collapsible as ChakraCollapsible,
   type CollapsibleTriggerProps,

@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/types/data-view.type.ts
+// src/design-system/components/data-display/data-view/data-view.type.ts
 
 import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
 import type { FormattedListItem } from "@/design-system/components/data-display/data-view/data-view-table.type";

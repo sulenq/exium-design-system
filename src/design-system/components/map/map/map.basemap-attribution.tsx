@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.basemap-attribution.tsx
+// src/design-system/components/map/map/map.basemap-attribution.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -10,6 +10,7 @@ import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { Span } from "@/design-system/components/typography/span/span";
 import { InfoIcon } from "lucide-react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapAttribution = () => {
   // Stores
@@ -27,10 +28,10 @@ export const MapAttribution = () => {
       <Popover.Trigger>
         <MapOverlayContainer>
           <Tooltip
-            content={"Atribusi Peta"}
+            content={t["map.attribution"]()}
             positioning={{ placement: "bottom" }}
           >
-            <IconButton aria-label={"Map attribution"} size={"sm"}>
+            <IconButton aria-label={t["map.attribution"]()} size={"sm"}>
               <AppIcon icon={InfoIcon} />
             </IconButton>
           </Tooltip>

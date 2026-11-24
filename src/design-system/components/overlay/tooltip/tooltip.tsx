@@ -1,9 +1,13 @@
-// src/design-system/components/overlay/ui/tooltip.tsx
+// src/design-system/components/overlay/tooltip/tooltip.tsx
 
 import type { TooltipProps } from "@/design-system/components/overlay/tooltip/tooltip.type";
 import { Tooltip as ChakraTooltip, Portal } from "@chakra-ui/react";
 import { forwardRef } from "react";
 
+/**
+ * Hover and focus only: Tooltip does not open on touch devices. For information
+ * people must be able to read on mobile, use `ToggleTip` instead.
+ */
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip(props, ref) {
     // Props

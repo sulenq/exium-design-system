@@ -1,4 +1,4 @@
-// src/design-system/components/toast/ui/toast.stack.tsx
+// src/design-system/components/toast/toast/toast.stack.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -6,6 +6,7 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { DEFAULT_TOAST_GROUP } from "@/design-system/components/toast/core/toast.config";
 import { toastTimerControls } from "@/design-system/components/toast/core/toast.manager";
 import type { ToastStackProps } from "@/design-system/components/toast/toast/toast.type";
+import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useFirstMountEffect } from "@/shared/hooks/use-first-mount-effect";
@@ -13,18 +14,28 @@ import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { Box } from "@chakra-ui/react";
 import { ChevronUpIcon, Trash2Icon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export function ToastStack<TItem>({
   groupLabel,
-  items,
+  items: itemsProp,
   getId,
   maxVisible,
   renderItem,
   isItemLeaving,
+  getPriority,
   onCloseAll,
   onClickOutside,
 }: ToastStackProps<TItem>) {
+  // Derived Values — stable sort so errors and warnings surface first
+  const items = useMemo(() => {
+    if (!getPriority) return itemsProp;
+    return itemsProp
+      .map((item, index) => ({ item, index, priority: getPriority(item) }))
+      .sort((a, b) => b.priority - a.priority || a.index - b.index)
+      .map(({ item }) => item);
+  }, [itemsProp, getPriority]);
+
   // Stores
   const { theme } = useThemeStore();
 
@@ -74,8 +85,9 @@ export function ToastStack<TItem>({
     };
   }, [expanded, onClickOutside]);
 
-  // Resolved Values
-  // const overflowCount = Math.max(items.length - maxVisible, 0);
+  // Resolved Values — "+N" badge shows how many toasts hide behind the top card
+  const activeCount = items.filter((item) => !isItemLeaving?.(item)).length;
+  const hiddenCount = activeCount - 1;
 
   return (
     <VStack
@@ -109,6 +121,7 @@ export function ToastStack<TItem>({
         <HStack align={"center"} gap={2}>
           {onCloseAll && (
             <IconButton
+              aria-label={t["action.clear_all"]()}
               size={"2xs"}
               variant={"blend"}
               rounded={"full"}
@@ -123,6 +136,7 @@ export function ToastStack<TItem>({
           )}
 
           <IconButton
+            aria-label={t["action.collapse"]()}
             size={"2xs"}
             variant={"blend"}
             rounded={"full"}
@@ -238,6 +252,22 @@ export function ToastStack<TItem>({
           });
         })()}
       </VStack>
+
+      {!expanded && hiddenCount > 0 && (
+        <Box pos={"relative"} h={0} w={"full"} pointerEvents={"none"}>
+          <Badge
+            variant={"solid"}
+            colorPalette={"gray"}
+            pos={"absolute"}
+            right={2}
+            bottom={"calc(100% - 10px)"}
+            zIndex={items.length + 1}
+            aria-label={t["toast.more_count"]({ count: String(hiddenCount) })}
+          >
+            {`+${hiddenCount}`}
+          </Badge>
+        </Box>
+      )}
 
       {/* Stack additional item count */}
       {/* {!expanded && overflowCount > 0 ? (

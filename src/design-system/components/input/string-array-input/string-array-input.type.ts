@@ -1,4 +1,4 @@
-// src/design-system/components/input/types/string-array-input.type.ts
+// src/design-system/components/input/string-array-input/string-array-input.type.ts
 
 export type StringArrayInputProps = {
   value?: string[];

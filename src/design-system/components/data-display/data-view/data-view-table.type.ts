@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/types/data-view-table.type.ts
+// src/design-system/components/data-display/data-view/data-view-table.type.ts
 
 import type {
   DataViewBatchActionsGenerator,
@@ -69,6 +69,15 @@ export type DataViewTableRootProps<
   rowContextMenu?: boolean;
   virtualized?: boolean;
   fixedItemHeight?: boolean;
+  /** First fetch without data: Body renders skeleton rows instead of items. */
+  isLoading?: boolean;
+  /** Request failed: Body renders StateRetry. */
+  isError?: boolean;
+  errorTitle?: string;
+  errorDescription?: string;
+  onRetry?: () => void;
+  /** Rendered when there are no items. Defaults to StateNoData. */
+  emptyState?: ReactNode;
   renderTdCell?: (
     column: FormattedTableColumn,
     item: FormattedListItem<T, N>,
@@ -120,6 +129,12 @@ export type FormattedTableColumn = {
 };
 
 export type DataViewTableContextValue<T = Record<string, unknown>> = {
+  isLoading?: boolean;
+  isError?: boolean;
+  errorTitle?: string;
+  errorDescription?: string;
+  onRetry?: () => void;
+  emptyState?: ReactNode;
   headers: FormattedTableHeader[];
   items: FormattedListItem<T>[];
   page?: number;

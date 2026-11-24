@@ -93,7 +93,17 @@
     "minutes": "Minutes",
     "seconds": "Seconds",
     "phone_number": "Phone number",
-    "qr_code": "QR code"
+    "qr_code": "QR code",
+    "more_info": "More information",
+    "go_to_today": "Go to today",
+    "open_date_picker": "Open date picker",
+    "show": "Show",
+    "hide": "Hide",
+    "increase": "Increase",
+    "decrease": "Decrease",
+    "offline_pending": "You are offline",
+    "locked": "Locked",
+    "more": "More"
   },
   "action": {
     "actions": "Actions",
@@ -208,14 +218,57 @@
     "auto_trimmed_warning": "Files restored. Latest uploads canceled to keep slot limit.",
     "max_files_exceeded": "Number of files exceeds the allowed limit.",
     "max_file_size_exceeded": "File size exceeds the maximum allowed limit.",
-    "invalid_file_type": "Invalid file format."
+    "invalid_file_type": "Invalid file format.",
+    "add_file": "Add file"
   },
   "rich_text_editor": {
-    "default_placeholder": "Start typing your content here"
+    "default_placeholder": "Start typing your content here",
+    "font_family": "Font family",
+    "font_size": "Font size",
+    "font_default": "Default",
+    "font_serif": "Serif",
+    "font_mono": "Monospace",
+    "font_cursive": "Cursive",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "code": "Code",
+    "subscript": "Subscript",
+    "superscript": "Superscript",
+    "heading_1": "Heading 1",
+    "heading_2": "Heading 2",
+    "heading_3": "Heading 3",
+    "heading_4": "Heading 4",
+    "bullet_list": "Bullet list",
+    "ordered_list": "Ordered list",
+    "blockquote": "Blockquote",
+    "horizontal_rule": "Horizontal rule",
+    "link": "Link",
+    "unlink": "Unlink",
+    "align_left": "Align left",
+    "align_center": "Align center",
+    "align_justify": "Justify",
+    "align_right": "Align right",
+    "undo": "Undo",
+    "redo": "Redo",
+    "text_color": "Text color",
+    "highlight": "Highlight",
+    "remove_color": "Remove color",
+    "color_default": "Default color",
+    "color_red": "Red",
+    "color_green": "Green",
+    "color_blue": "Blue",
+    "color_yellow": "Yellow",
+    "color_purple": "Purple",
+    "color_orange": "Orange",
+    "color_cyan": "Cyan",
+    "color_pink": "Pink"
   },
   "offline_alert": {
     "title": "No internet connection",
-    "description": "Hang tight — we'll reconnect you automatically once your network is back"
+    "description": "Hang tight — we'll reconnect you automatically once your network is back",
+    "back_online": "You're back online"
   },
   "error_page": {
     "not_found": {
@@ -320,6 +373,59 @@
   "map": {
     "search_attributes": "Search attributes...",
     "layer_symbology_management": "IGT Layer & Symbology Management",
-    "failed_loading_symbology": "Failed to Load Symbology"
+    "failed_loading_symbology": "Failed to Load Symbology",
+    "attribution": "Map attribution",
+    "zoom_in": "Zoom in",
+    "zoom_out": "Zoom out",
+    "reset_north": "Reset north",
+    "switch_to_2d": "Switch to 2D view",
+    "switch_to_3d": "Switch to 3D view",
+    "show_my_location": "Show my location",
+    "hide_my_location": "Turn off my location",
+    "draw_polygon": "Draw polygon",
+    "cancel_drawing": "Cancel drawing",
+    "zoom_to_feature": "Zoom to feature",
+    "zoom_to_layer": "Zoom to layer",
+    "reorder_layer": "Reorder layer",
+    "set_opacity": "Set opacity",
+    "symbology": "Symbology",
+    "symbology_and_legend": "Symbology & Legend",
+    "close_all_symbology": "Close all symbology",
+    "hide_symbology": "Hide symbology",
+    "properties": "Properties",
+    "basemap": "Basemap",
+    "search_location": "Search location",
+    "drag_to_reorder": "Hold and drag to reorder"
+  },
+  "data_view": {
+    "row_actions": "Row actions",
+    "row_context_menu": "Row context menu",
+    "batch_actions": "Actions for selected items"
+  },
+  "focus_select": {
+    "custom_option": "Custom option",
+    "custom_hint": "Type above to add a custom value..."
+  },
+  "string_array_input": {
+    "placeholder": "Enter a value..."
+  },
+  "url": {
+    "copy_url": "Copy URL"
+  },
+  "toast": {
+    "close": "Close notification",
+    "delete_from_history": "Delete from history",
+    "removed_from_history": "Removed from history",
+    "more_count": "+{count} more"
+  },
+  "countdown": {
+    "days_hours_minutes": "{days}d {hours}h {minutes}m",
+    "hours_minutes_seconds": "{hours}h {minutes}m {seconds}s",
+    "minutes_seconds": "{minutes}m {seconds}s",
+    "remaining": "{time} remaining",
+    "finished": "Time is up"
+  },
+  "snackbar": {
+    "label": "Main navigation"
   }
 }

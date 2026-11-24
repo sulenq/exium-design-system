@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/ui/masked-text.tsx
+// src/design-system/components/data-display/masked-text/masked-text.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import type { MaskedTextProps } from "@/design-system/components/data-display/masked-text/masked-text.type";
@@ -8,6 +8,7 @@ import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { memo, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const MaskedText = memo((props: MaskedTextProps) => {
   // Props
@@ -56,7 +57,7 @@ export const MaskedText = memo((props: MaskedTextProps) => {
           <IconButton
             variant={"plain"}
             size={"sm"}
-            aria-label={isVisible ? "Sembunyikan" : "Tampilkan"}
+            aria-label={isVisible ? t["common.hide"]() : t["common.show"]()}
             onClick={() => setIsVisible((prev) => !prev)}
           >
             <AppIcon icon={isVisible ? EyeOffIcon : EyeIcon} />

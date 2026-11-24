@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/ui/data-view-batch-actions.tsx
+// src/design-system/components/data-display/data-view/data-view-batch-actions.tsx
 
 import { Button } from "@/design-system/components/button/button/button";
 import { CloseButton } from "@/design-system/components/button/close-button/close-button";
@@ -176,7 +176,7 @@ export const DataViewBatchActionsTrigger = <
       positioning={{ offset: { mainAxis: 6 } }}
       {...restProps}
     >
-      <Menu.Trigger aria-label={"batch-actions"}>{children}</Menu.Trigger>
+      <Menu.Trigger aria-label={t["data_view.batch_actions"]()}>{children}</Menu.Trigger>
 
       <Menu.Content minW={"140px"}>
         <VStack px={2} py={1}>
@@ -191,7 +191,7 @@ export const DataViewBatchActionsTrigger = <
           closeOnSelect={false}
           onClick={() => selectAllItems(isAllItemsSelected)}
         >
-          <P>{"Select all"}</P>
+          <P>{t["common.select_all"]()}</P>
 
           <CheckIndicator checked={isAllItemsSelected} />
         </Menu.Item>
@@ -537,7 +537,7 @@ export const DataViewBatchActionBar = <
             )}
 
             <ActionBar.CloseTrigger>
-              <Tooltip content={"Cancel"}>
+              <Tooltip content={t["action.cancel"]()}>
                 <CloseButton onClick={clearSelectedItems} />
               </Tooltip>
             </ActionBar.CloseTrigger>

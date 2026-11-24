@@ -5,6 +5,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
+import { t } from "@/shared/libs/i18n";
 
 export const FloatingLabel = (props: FloatingLabelProps) => {
   // Props
@@ -37,7 +38,7 @@ export const FloatingLabel = (props: FloatingLabelProps) => {
             colorPalette={"gray"}
             color={"fg.subtle"}
           >
-            {"Optional"}
+            {t["common.optional"]()}
           </Badge>
         )}
       </HStack>

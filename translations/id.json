@@ -92,7 +92,17 @@
     "minutes": "Menit",
     "seconds": "Detik",
     "phone_number": "Nomor telepon",
-    "qr_code": "Kode QR"
+    "qr_code": "Kode QR",
+    "more_info": "Info lebih lanjut",
+    "go_to_today": "Ke hari ini",
+    "open_date_picker": "Buka pemilih tanggal",
+    "show": "Tampilkan",
+    "hide": "Sembunyikan",
+    "increase": "Tambah",
+    "decrease": "Kurangi",
+    "offline_pending": "Anda sedang offline",
+    "locked": "Terkunci",
+    "more": "Lainnya"
   },
   "action": {
     "actions": "Aksi",
@@ -207,14 +217,57 @@
     "auto_trimmed_warning": "Berkas dipulihkan. Unggahan terbaru dibatalkan untuk menjaga batas kapasitas.",
     "max_files_exceeded": "Jumlah berkas melebihi batas yang diperbolehkan.",
     "max_file_size_exceeded": "Ukuran berkas melebihi batas maksimum.",
-    "invalid_file_type": "Format berkas tidak sesuai."
+    "invalid_file_type": "Format berkas tidak sesuai.",
+    "add_file": "Tambah file"
   },
   "rich_text_editor": {
-    "default_placeholder": "Mulai mengetik konten Anda di sini"
+    "default_placeholder": "Mulai mengetik konten Anda di sini",
+    "font_family": "Jenis huruf",
+    "font_size": "Ukuran huruf",
+    "font_default": "Bawaan",
+    "font_serif": "Serif",
+    "font_mono": "Monospace",
+    "font_cursive": "Kursif",
+    "bold": "Tebal",
+    "italic": "Miring",
+    "underline": "Garis bawah",
+    "strikethrough": "Coret",
+    "code": "Kode",
+    "subscript": "Subskrip",
+    "superscript": "Superskrip",
+    "heading_1": "Judul 1",
+    "heading_2": "Judul 2",
+    "heading_3": "Judul 3",
+    "heading_4": "Judul 4",
+    "bullet_list": "Daftar poin",
+    "ordered_list": "Daftar bernomor",
+    "blockquote": "Kutipan",
+    "horizontal_rule": "Garis horizontal",
+    "link": "Tautan",
+    "unlink": "Hapus tautan",
+    "align_left": "Rata kiri",
+    "align_center": "Rata tengah",
+    "align_justify": "Rata kiri-kanan",
+    "align_right": "Rata kanan",
+    "undo": "Urungkan",
+    "redo": "Ulangi",
+    "text_color": "Warna teks",
+    "highlight": "Sorot",
+    "remove_color": "Hapus warna",
+    "color_default": "Warna bawaan",
+    "color_red": "Merah",
+    "color_green": "Hijau",
+    "color_blue": "Biru",
+    "color_yellow": "Kuning",
+    "color_purple": "Ungu",
+    "color_orange": "Oranye",
+    "color_cyan": "Sian",
+    "color_pink": "Merah muda"
   },
   "offline_alert": {
     "title": "Tidak Ada Koneksi Internet",
-    "description": "Tenang — kami akan otomatis terhubung kembali begitu jaringannya sudah pulih."
+    "description": "Tenang — kami akan otomatis terhubung kembali begitu jaringannya sudah pulih.",
+    "back_online": "Anda kembali online"
   },
   "error_page": {
     "not_found": {
@@ -319,6 +372,59 @@
   "map": {
     "search_attributes": "Cari atribut...",
     "layer_symbology_management": "Manajemen Layer & Simbologi IGT",
-    "failed_loading_symbology": "Gagal Memuat Simbologi"
+    "failed_loading_symbology": "Gagal Memuat Simbologi",
+    "attribution": "Atribusi peta",
+    "zoom_in": "Perbesar",
+    "zoom_out": "Perkecil",
+    "reset_north": "Arahkan ke utara",
+    "switch_to_2d": "Ganti ke tampilan 2D",
+    "switch_to_3d": "Ganti ke tampilan 3D",
+    "show_my_location": "Lokasi saya saat ini",
+    "hide_my_location": "Matikan lokasi saya",
+    "draw_polygon": "Gambar poligon",
+    "cancel_drawing": "Batal menggambar",
+    "zoom_to_feature": "Zoom ke fitur",
+    "zoom_to_layer": "Zoom ke layer",
+    "reorder_layer": "Ubah urutan layer",
+    "set_opacity": "Atur opasitas",
+    "symbology": "Simbologi",
+    "symbology_and_legend": "Simbologi & Legenda",
+    "close_all_symbology": "Tutup semua simbologi",
+    "hide_symbology": "Sembunyikan simbologi",
+    "properties": "Properti",
+    "basemap": "Peta dasar",
+    "search_location": "Cari lokasi",
+    "drag_to_reorder": "Tahan dan geser untuk mengubah urutan"
+  },
+  "data_view": {
+    "row_actions": "Aksi baris",
+    "row_context_menu": "Menu aksi baris",
+    "batch_actions": "Aksi untuk item terpilih"
+  },
+  "focus_select": {
+    "custom_option": "Opsi kustom",
+    "custom_hint": "Ketik di atas untuk input kustom..."
+  },
+  "string_array_input": {
+    "placeholder": "Masukkan nilai..."
+  },
+  "url": {
+    "copy_url": "Salin URL"
+  },
+  "toast": {
+    "close": "Tutup notifikasi",
+    "delete_from_history": "Hapus dari riwayat",
+    "removed_from_history": "Dihapus dari riwayat",
+    "more_count": "+{count} lainnya"
+  },
+  "countdown": {
+    "days_hours_minutes": "{days} hari {hours} jam {minutes} mnt",
+    "hours_minutes_seconds": "{hours} jam {minutes} mnt {seconds} dtk",
+    "minutes_seconds": "{minutes} mnt {seconds} dtk",
+    "remaining": "Sisa waktu {time}",
+    "finished": "Waktu habis"
+  },
+  "snackbar": {
+    "label": "Navigasi utama"
   }
 }

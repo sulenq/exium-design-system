@@ -1,4 +1,4 @@
-// src/design-system/components/map/types/map.symbology.type.ts
+// src/design-system/components/map/map/map.symbology.type.ts
 
 export type GeoServerSymbolizerPolygon = {
   fill?: string;

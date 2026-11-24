@@ -1,10 +1,12 @@
-// src/design-system/components/input/ui/date-picker.tsx
+// src/design-system/components/input/date-picker/date-picker.tsx
 
 import { CalendarDate } from "@internationalized/date";
 import {
   memo,
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
   useState,
   type KeyboardEvent,
 } from "react";
@@ -27,15 +29,16 @@ import {
   buildCalendarGrid,
   buildTimezoneLabel,
   buildYearPage,
+  formatDateLabel,
+  getMonthNames,
+  getSelectableBounds,
   getTodayDate,
+  getWeekdayNames,
   getYearPageStart,
-  MONTHS,
-  MONTHS_SHORT,
   parseISODate,
   resolveTimezone,
   toISODate,
   validateDate,
-  WEEKDAYS_HEADER,
   YEAR_PAGE_SIZE,
 } from "@/design-system/components/input/utils/date.utils";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
@@ -45,6 +48,7 @@ import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { ChevronLeftIcon, ChevronRightIcon, GlobeIcon } from "lucide-react";
+import { getLocale, t } from "@/shared/libs/i18n";
 
 // -------------------------------------------------------------------------------------
 // Hook: useDatePickerState
@@ -58,6 +62,7 @@ function useDatePickerState(props: DatePickerProps) {
     min,
     max,
     disabledDates,
+    availableDates,
     timezone,
   } = props;
 
@@ -66,8 +71,14 @@ function useDatePickerState(props: DatePickerProps) {
   const todayDate = useMemo(() => getTodayDate(tz), [tz]);
 
   // Uncontrolled fallback value
+  // A single whitelisted date is preselected when uncontrolled (e.g. "today only").
   const [internalValue, setInternalValue] = useState<CalendarDate | null>(() =>
-    parseISODate(defaultValue),
+    parseISODate(
+      defaultValue ??
+        (Array.isArray(availableDates) && availableDates.length === 1
+          ? availableDates[0]
+          : undefined),
+    ),
   );
 
   const selectedDate = useMemo<CalendarDate | null>(() => {
@@ -76,15 +87,23 @@ function useDatePickerState(props: DatePickerProps) {
   }, [controlled, internalValue, value]);
 
   // States
-  const [viewDate, setViewDate] = useState<CalendarDate>(
-    () => selectedDate ?? todayDate,
-  );
+  const [viewDate, setViewDate] = useState<CalendarDate>(() => {
+    if (selectedDate) return selectedDate;
+    const { start, end } = getSelectableBounds({ min, max, availableDates });
+    if (start && todayDate.compare(start) < 0) return start;
+    if (end && todayDate.compare(end) > 0) return end;
+    return todayDate;
+  });
   const [datePickerMode, setDatePickerMode] = useState<DatePickerMode>("day");
 
   // Validation constraints
   const validationOptions = useMemo(
-    () => ({ min, max, disabledDates }),
-    [min, max, disabledDates],
+    () => ({ min, max, disabledDates, availableDates }),
+    [min, max, disabledDates, availableDates],
+  );
+  const bounds = useMemo(
+    () => getSelectableBounds(validationOptions),
+    [validationOptions],
   );
 
   const isDateDisabled = useCallback(
@@ -109,6 +128,7 @@ function useDatePickerState(props: DatePickerProps) {
     datePickerMode,
     todayDate,
     tz,
+    bounds,
     isDateDisabled,
     selectDate,
     setViewDate,
@@ -126,10 +146,15 @@ const NavHeader = memo(function NavHeader({
   onNext,
   onLabelClick,
   labelClickable = false,
+  prevDisabled = false,
+  nextDisabled = false,
 }: NavHeaderProps) {
   return (
     <HStack justify={"space-between"} align={"center"} gap={1} py={1}>
-      <IconButton variant={"ghost"} aria-label={"Previous"} onClick={onPrev}>
+      <IconButton variant={"ghost"} aria-label={t["common.previous"]()}
+        disabled={prevDisabled}
+        onClick={onPrev}
+      >
         <AppIcon icon={ChevronLeftIcon} />
       </IconButton>
 
@@ -143,7 +168,10 @@ const NavHeader = memo(function NavHeader({
         {label}
       </Button>
 
-      <IconButton variant={"ghost"} aria-label={"Next"} onClick={onNext}>
+      <IconButton variant={"ghost"} aria-label={t["common.next"]()}
+        disabled={nextDisabled}
+        onClick={onNext}
+      >
         <AppIcon icon={ChevronRightIcon} />
       </IconButton>
     </HStack>
@@ -165,17 +193,86 @@ const DayView = memo(function DayView(props: DayViewProps) {
     onPrevMonth,
     onNextMonth,
     onGoToMonthView,
+    onFocusDate,
+    prevMonthDisabled,
+    nextMonthDisabled,
+    locale,
   } = props;
 
   // Stores
   const { theme } = useThemeStore();
+
+  // Refs
+  const gridRef = useRef<HTMLDivElement>(null);
+  const shouldMoveFocusRef = useRef(false);
 
   // Resolved Values
   const grid = useMemo(
     () => buildCalendarGrid(viewDate.year, viewDate.month),
     [viewDate.year, viewDate.month],
   );
-  const label = `${MONTHS[viewDate.month - 1]} ${viewDate.year}`;
+  const monthNames = useMemo(() => getMonthNames(locale), [locale]);
+  const weekdayNames = useMemo(() => getWeekdayNames(locale), [locale]);
+  const label = `${monthNames[viewDate.month - 1]} ${viewDate.year}`;
+
+  // Roving tabindex: one day in the grid is tabbable, arrows move between days.
+  const [focusedDate, setFocusedDate] = useState<CalendarDate>(() => {
+    if (selectedDate && selectedDate.month === viewDate.month) return selectedDate;
+    if (todayDate.month === viewDate.month && todayDate.year === viewDate.year)
+      return todayDate;
+    return viewDate.set({ day: 1 });
+  });
+  const focusedIso = toISODate(focusedDate);
+
+  // Keep the tabbable day inside the visible month when navigating with the header buttons
+  const [prevViewKey, setPrevViewKey] = useState(`${viewDate.year}-${viewDate.month}`);
+  const viewKey = `${viewDate.year}-${viewDate.month}`;
+  if (prevViewKey !== viewKey) {
+    setPrevViewKey(viewKey);
+    if (
+      focusedDate.month !== viewDate.month ||
+      focusedDate.year !== viewDate.year
+    ) {
+      setFocusedDate(viewDate.set({ day: 1 }));
+    }
+  }
+
+  useEffect(() => {
+    if (!shouldMoveFocusRef.current) return;
+    shouldMoveFocusRef.current = false;
+    gridRef.current
+      ?.querySelector<HTMLButtonElement>(`[data-iso="${focusedIso}"]`)
+      ?.focus();
+  }, [focusedIso, viewKey]);
+
+  function moveFocus(next: CalendarDate) {
+    shouldMoveFocusRef.current = true;
+    setFocusedDate(next);
+    onFocusDate(next);
+  }
+
+  function handleGridKeyDown(event: KeyboardEvent, date: CalendarDate, disabled: boolean) {
+    const moves: Record<string, () => CalendarDate> = {
+      ArrowLeft: () => date.subtract({ days: 1 }),
+      ArrowRight: () => date.add({ days: 1 }),
+      ArrowUp: () => date.subtract({ weeks: 1 }),
+      ArrowDown: () => date.add({ weeks: 1 }),
+      Home: () => date.subtract({ days: date.toDate("UTC").getUTCDay() }),
+      End: () => date.add({ days: 6 - date.toDate("UTC").getUTCDay() }),
+      PageUp: () => date.subtract({ months: 1 }),
+      PageDown: () => date.add({ months: 1 }),
+    };
+    const move = moves[event.key];
+    if (move) {
+      event.preventDefault();
+      moveFocus(move());
+      return;
+    }
+    if ((event.key === "Enter" || event.key === " ") && !disabled) {
+      event.preventDefault();
+      onSelectDay(date);
+    }
+  }
 
   return (
     <VStack gap={4}>
@@ -185,13 +282,15 @@ const DayView = memo(function DayView(props: DayViewProps) {
         onNext={onNextMonth}
         onLabelClick={onGoToMonthView}
         labelClickable
+        prevDisabled={prevMonthDisabled}
+        nextDisabled={nextMonthDisabled}
       />
 
       {/* Calendar grid */}
-      <VStack gap={2}>
+      <VStack ref={gridRef} gap={2} role={"group"} aria-label={label}>
         {/* Day-of-week header */}
-        <HStack justify={"space-between"}>
-          {WEEKDAYS_HEADER.map((d, index) => (
+        <HStack justify={"space-between"} aria-hidden={true}>
+          {weekdayNames.map((d, index) => (
             <P
               key={index}
               w={"40px"}
@@ -230,17 +329,20 @@ const DayView = memo(function DayView(props: DayViewProps) {
                         ? "fg.subtle"
                         : "fg"
                   }
-                  tabIndex={disabled ? -1 : 0}
-                  disabled={disabled}
+                  data-iso={iso}
+                  tabIndex={iso === focusedIso ? 0 : -1}
                   onClick={() => !disabled && onSelectDay(cell.date)}
-                  onKeyDown={(e: KeyboardEvent) => {
-                    if ((e.key === "Enter" || e.key === " ") && !disabled) {
-                      onSelectDay(cell.date);
-                    }
+                  onFocus={() => {
+                    if (iso !== focusedIso) setFocusedDate(cell.date);
                   }}
-                  aria-label={iso}
+                  onKeyDown={(e: KeyboardEvent) =>
+                    handleGridKeyDown(e, cell.date, disabled)
+                  }
+                  aria-label={formatDateLabel(cell.date, locale)}
                   aria-pressed={isSelected}
+                  aria-current={isToday ? "date" : undefined}
                   aria-disabled={disabled}
+                  cursor={disabled ? "not-allowed" : undefined}
                 >
                   <P
                     fontWeight={isToday || isSelected ? "semibold" : "normal"}
@@ -269,11 +371,20 @@ const DayView = memo(function DayView(props: DayViewProps) {
 
 const MonthView = memo(function MonthView(props: MonthViewProps) {
   // Props
-  const { viewDate, onSelectMonth, onPrevYear, onNextYear, onGoToYearView } =
-    props;
+  const {
+    viewDate,
+    onSelectMonth,
+    onPrevYear,
+    onNextYear,
+    onGoToYearView,
+    locale,
+  } = props;
 
   // Stores
   const { theme } = useThemeStore();
+
+  // Resolved Values
+  const monthNames = useMemo(() => getMonthNames(locale, "short"), [locale]);
 
   return (
     <VStack gap={2}>
@@ -286,7 +397,7 @@ const MonthView = memo(function MonthView(props: MonthViewProps) {
       />
 
       <Grid gridTemplateColumns={"repeat(3, 1fr)"} gap={1}>
-        {MONTHS_SHORT.map((name, i) => {
+        {monthNames.map((name, i) => {
           const monthNum = i + 1;
           const isActive = viewDate.month === monthNum;
 
@@ -364,12 +475,16 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
     min,
     max,
     disabledDates,
+    availableDates,
     timezone,
     disabled,
-    locale: _locale,
+    locale: localeProp,
     inputFormat: _inputFormat,
     ...restProps
   } = props;
+
+  // Derived Values
+  const locale = localeProp ?? getLocale();
 
   // Hooks
   const {
@@ -378,6 +493,7 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
     datePickerMode,
     todayDate,
     tz,
+    bounds,
     isDateDisabled,
     selectDate,
     setViewDate,
@@ -389,8 +505,21 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
     min,
     max,
     disabledDates,
+    availableDates,
     timezone,
   });
+
+  // Month navigation stops at the first and last month that still has a selectable date
+  const prevMonthDisabled = Boolean(
+    bounds.start &&
+      viewDate.year * 12 + viewDate.month <=
+        bounds.start.year * 12 + bounds.start.month,
+  );
+  const nextMonthDisabled = Boolean(
+    bounds.end &&
+      viewDate.year * 12 + viewDate.month >=
+        bounds.end.year * 12 + bounds.end.month,
+  );
 
   const [yearPageStart, setYearPageStart] = useState(() =>
     getYearPageStart(viewDate.year),
@@ -471,6 +600,14 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
             onPrevMonth={prevMonth}
             onNextMonth={nextMonth}
             onGoToMonthView={() => setDatePickerMode("month")}
+            onFocusDate={(date) => {
+              if (date.month !== viewDate.month || date.year !== viewDate.year) {
+                setViewDate(date.set({ day: 1 }));
+              }
+            }}
+            prevMonthDisabled={prevMonthDisabled}
+            nextMonthDisabled={nextMonthDisabled}
+            locale={locale}
           />
         )}
 
@@ -481,6 +618,7 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
             onPrevYear={prevYear}
             onNextYear={nextYear}
             onGoToYearView={() => setDatePickerMode("year")}
+            locale={locale}
           />
         )}
 
@@ -507,7 +645,7 @@ export const DatePicker = memo(function DatePicker(props: DatePickerProps) {
             userSelect={"none"}
             onClick={goToToday}
           >
-            <P>Go to today</P>
+            <P>{t["common.go_to_today"]()}</P>
           </Button> */}
         </HStack>
       </VStack>
@@ -532,6 +670,7 @@ export const DatePickerTrigger = memo(function DatePickerTrigger(
     min,
     max,
     disabledDates,
+    availableDates,
     timezone,
     locale,
     inputFormat,
@@ -557,7 +696,7 @@ export const DatePickerTrigger = memo(function DatePickerTrigger(
       <Modal.Content>
         <Modal.Header>
           <VStack gap={1} mx={"auto"}>
-            <Modal.Title fontWeight={"semibold"}>Select Date</Modal.Title>
+            <Modal.Title fontWeight={"semibold"}>{t["common.select_date"]()}</Modal.Title>
 
             {/* TODO: make the subtitle dynamic based on props */}
             {datePickerSubtitle && (
@@ -580,6 +719,7 @@ export const DatePickerTrigger = memo(function DatePickerTrigger(
             min={min}
             max={max}
             disabledDates={disabledDates}
+            availableDates={availableDates}
             timezone={timezone}
             locale={locale}
             inputFormat={inputFormat}

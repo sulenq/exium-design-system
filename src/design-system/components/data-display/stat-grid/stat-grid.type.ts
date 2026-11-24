@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/types/stat-grid.type.ts
+// src/design-system/components/data-display/stat-grid/stat-grid.type.ts
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import type { GridProps } from "@/design-system/components/layout/grid/grid.type";

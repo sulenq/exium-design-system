@@ -1,3 +1,5 @@
+// src/design-system/components/navigation/h-navs/h-navs.type.ts
+
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import type { NavItem, NavNode } from "@/shared/types/nav.type";
 

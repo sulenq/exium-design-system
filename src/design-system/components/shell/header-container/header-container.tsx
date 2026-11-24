@@ -1,4 +1,4 @@
-// src/design-system/components/shell/ui/header-container.tsx
+// src/design-system/components/shell/header-container/header-container.tsx
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";

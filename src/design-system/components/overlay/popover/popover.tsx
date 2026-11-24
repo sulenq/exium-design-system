@@ -1,4 +1,4 @@
-// src/design-system/components/overlay/ui/popover.tsx
+// src/design-system/components/overlay/popover/popover.tsx
 
 import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
 import { CloseButton } from "@/design-system/components/button/close-button/close-button";

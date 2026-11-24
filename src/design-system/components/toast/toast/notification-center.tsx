@@ -1,4 +1,4 @@
-// src/design-system/components/toast/ui/notification-center.tsx
+// src/design-system/components/toast/toast/notification-center.tsx
 
 import { X } from "lucide-react";
 import { useToastHistory } from "@/design-system/components/toast/hooks/use-toast-history";
@@ -10,6 +10,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { Button } from "@/design-system/components/button/button/button";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { isEmptyArray } from "@/shared/utils/data/array";
+import { t } from "@/shared/libs/i18n";
 
 function ToastHistoryItem({
   entry,
@@ -47,7 +48,7 @@ function ToastHistoryItem({
 
         <Box
           as={"button"}
-          aria-label={"Delete from history"}
+          aria-label={t["toast.delete_from_history"]()}
           onClick={(event: React.MouseEvent) => {
             event.stopPropagation();
             onDelete(entry.historyEntryId);

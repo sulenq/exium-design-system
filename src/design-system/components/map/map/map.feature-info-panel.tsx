@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.feature-info-panel.tsx
+// src/design-system/components/map/map/map.feature-info-panel.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { HeaderCloseButton } from "@/design-system/components/button/close-button/close-button";
@@ -24,6 +24,7 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { FocusIcon, Grid2X2Icon, Layers2Icon } from "lucide-react";
 import { useMemo, useState } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapFeatureInfoPanel = () => {
   // Stores
@@ -141,11 +142,11 @@ export const MapFeatureInfoPanel = () => {
       >
         {/* Header */}
         <HStack align={"center"} justify={"space-between"} p={4}>
-          <P fontWeight={"medium"}>{"Properties"}</P>
+          <P fontWeight={"medium"}>{t["map.properties"]()}</P>
 
-          <Tooltip content={"Tutup"}>
+          <Tooltip content={t["common.close"]()}>
             <HeaderCloseButton
-              aria-label={"Tutup"}
+              aria-label={t["common.close"]()}
               onClick={clearFeatureInfo}
             />
           </Tooltip>
@@ -190,10 +191,10 @@ export const MapFeatureInfoPanel = () => {
 
           <HStack align={"center"} gap={1} flexShrink={0}>
             {(selectedFeature?.geometry || displayFeature?.geometry) && (
-              <Tooltip content={"Zoom ke Fitur"}>
+              <Tooltip content={t["map.zoom_to_feature"]()}>
                 <IconButton
                   size={"sm"}
-                  aria-label={"Zoom ke Fitur"}
+                  aria-label={t["map.zoom_to_feature"]()}
                   onClick={handleZoomToFeature}
                 >
                   <AppIcon icon={FocusIcon} />
@@ -226,7 +227,7 @@ export const MapFeatureInfoPanel = () => {
               {allEntries.length > 5 && (
                 <Box p={3} w={"full"}>
                   <SearchInput
-                    placeholder={"Cari atribut..."}
+                    placeholder={t["map.search_attributes"]()}
                     value={searchQuery}
                     onValueChange={(val) => setSearchQuery(val)}
                     w={"full"}

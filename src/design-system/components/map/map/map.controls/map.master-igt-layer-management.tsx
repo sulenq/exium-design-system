@@ -1,3 +1,5 @@
+// src/design-system/components/map/map/map.controls/map.master-igt-layer-management.tsx
+
 import type { MapMasterIgtLayerManagementProps } from "@/design-system/components/map/map/map.layer-management.type";
 import type { IgtLayerItem } from "@/design-system/components/map/map/map.type";
 import { MapLayerManagementPanel } from "@/design-system/components/map/map/map.controls/map.layer-management-panel";
@@ -6,6 +8,7 @@ import { queryKeys } from "@/shared/libs/tanstack-query/query.keys";
 import { getUserSession } from "@/shared/utils/user/user-session.utils";
 import { useQuery } from "@tanstack/react-query";
 import { memo } from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapMasterIgtLayerManagement = memo((props: MapMasterIgtLayerManagementProps) => {
   // Props
@@ -33,7 +36,7 @@ export const MapMasterIgtLayerManagement = memo((props: MapMasterIgtLayerManagem
 
   return (
     <MapLayerManagementPanel<IgtLayerItem>
-      title={"Manajemen Layer & Simbologi IGT"}
+      title={t["map.layer_symbology_management"]()}
       tooltipContent={"Manajemen Layer IGT"}
       loadingLabel={"Memuat master layer..."}
       errorTitle={"Gagal Memuat Master Layer"}

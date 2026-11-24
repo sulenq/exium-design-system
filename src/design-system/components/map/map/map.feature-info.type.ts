@@ -1,4 +1,4 @@
-// src/design-system/components/map/types/map.feature-info.type.ts
+// src/design-system/components/map/map/map.feature-info.type.ts
 
 import type { Geometry } from "geojson";
 import type maplibregl from "maplibre-gl";

@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/focus-search.tsx
+// src/design-system/components/input/focus-search/focus-search.tsx
 
 import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
 import { StateNoResult } from "@/design-system/components/feedback/state-no-result/state.no-result";

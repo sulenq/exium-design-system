@@ -1,4 +1,4 @@
-// src/design-system/components/map/types/map.layer-management.type.ts
+// src/design-system/components/map/map/map.layer-management.type.ts
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import type React from "react";

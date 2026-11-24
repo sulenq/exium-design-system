@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/ui/skeleton.tsx
+// src/design-system/components/feedback/skeleton/skeleton.tsx
 
 "use client";
 

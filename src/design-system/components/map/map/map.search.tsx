@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.search.tsx
+// src/design-system/components/map/map/map.search.tsx
 
 import {
   Button,
@@ -224,7 +224,7 @@ export const MapSearch = () => {
     >
       {/* Search Input Container */}
       <Tooltip
-        content={"Cari Lokasi"}
+        content={t["map.search_location"]()}
         positioning={{ placement: "bottom" }}
         disabled={isOpened}
       >

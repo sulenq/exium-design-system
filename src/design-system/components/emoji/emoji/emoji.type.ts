@@ -1,4 +1,4 @@
-// src/design-system/components/emoji/types/emoji.type.ts
+// src/design-system/components/emoji/emoji/emoji.type.ts
 
 import type { CenterProps } from "@/design-system/components/layout/center/center.type";
 

@@ -1,4 +1,4 @@
-// src/design-system/components/input/types/search-input.type.ts
+// src/design-system/components/input/search-input/search-input.type.ts
 
 import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
 import type { InputGroupProps } from "@/design-system/components/input/input-group/input-group.type";

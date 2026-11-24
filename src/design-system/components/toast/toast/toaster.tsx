@@ -1,16 +1,25 @@
-// src/design-system/components/toast/ui/toaster.tsx
+// src/design-system/components/toast/toast/toaster.tsx
 
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { getToastConfig } from "@/design-system/components/toast/core/toast.config";
 import { toast } from "@/design-system/components/toast/core/toast.manager";
 import { usePageVisibility } from "@/design-system/components/toast/hooks/use-page-visibility";
 import { useToastVisibleStore } from "@/design-system/components/toast/stores/toast-visible.store";
-import type { ToastPlacement } from "@/design-system/components/toast/toast/toast.type";
+import type {
+  ToastPlacement,
+  ToastVariant,
+} from "@/design-system/components/toast/toast/toast.type";
 import { ToastItem } from "@/design-system/components/toast/toast/toast.item";
 import { ToastStack } from "@/design-system/components/toast/toast/toast.stack";
 import { Portal } from "@chakra-ui/react";
 
 const EDGE_OFFSET = 0;
+
+// Errors and warnings must not hide behind info toasts in a collapsed stack.
+const VARIANT_PRIORITY: Partial<Record<ToastVariant, number>> = {
+  error: 2,
+  warning: 1,
+};
 
 function getPlacementStyles(placement: ToastPlacement) {
   const isTop = placement.startsWith("top");
@@ -84,6 +93,7 @@ export function Toaster() {
               />
             )}
             isItemLeaving={(toastItem) => toastItem.status === "leaving"}
+            getPriority={(toastItem) => VARIANT_PRIORITY[toastItem.variant] ?? 0}
             onCloseAll={() =>
               visibleToasts.forEach((toastItem) => toast.close(toastItem.id))
             }

@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/date-input.tsx
+// src/design-system/components/input/date-input/date-input.tsx
 
 "use client";
 
@@ -45,6 +45,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useFieldContext } from "@chakra-ui/react";
 import { CalendarIcon } from "lucide-react";
+import { t } from "@/shared/libs/i18n";
 
 // -------------------------------------------------------------------------------------
 // Helpers
@@ -513,7 +514,7 @@ export const DateInput = memo(
                 size={"xs"}
                 variant={"ghost"}
                 aspectRatio={"square"}
-                aria-label={"Open date picker"}
+                aria-label={t["common.open_date_picker"]()}
               >
                 <AppIcon icon={CalendarIcon} />
               </IconButton>
@@ -562,7 +563,7 @@ export const DateInput = memo(
                     colorPalette={"gray"}
                     color={"fg.subtle"}
                   >
-                    Optional
+                    {t["common.optional"]()}
                   </Badge>
                 )}
               </HStack>

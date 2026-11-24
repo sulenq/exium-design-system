@@ -29,6 +29,16 @@ export const chakraConfig = defineConfig({
         fontSize: "md",
         fontWeight: "normal",
       },
+    // Respect OS-level "reduce motion". Durations are shortened instead of removed
+    // so `animationend` / `transitionend` still fire for Presence and overlay exit flows.
+    "*, *::before, *::after": {
+      "@media (prefers-reduced-motion: reduce)": {
+        animationDuration: "0.01ms !important",
+        animationIterationCount: "1 !important",
+        transitionDuration: "0.01ms !important",
+        scrollBehavior: "auto !important",
+      },
+    },
   },
 
   // Theme config ---------------------------------------------------
@@ -717,6 +727,27 @@ export const chakraConfig = defineConfig({
 
     semanticTokens: {
       colors: {
+        // Foreground text tokens tuned for WCAG 2.2 AA (>= 4.5:1 on bg.body and bg.canvas).
+        fg: {
+          muted: {
+            value: { base: "{colors.gray.600} !important", _dark: "{colors.gray.300} !important" },
+          },
+          subtle: {
+            value: { base: "{colors.neutral.600} !important", _dark: "{colors.neutral.400} !important" },
+          },
+          error: {
+            value: { base: "{colors.red.600} !important", _dark: "{colors.red.300} !important" },
+          },
+          warning: {
+            value: { base: "{colors.orange.700} !important", _dark: "{colors.orange.300} !important" },
+          },
+          success: {
+            value: { base: "{colors.green.800} !important", _dark: "{colors.green.300} !important" },
+          },
+          info: {
+            value: { base: "{colors.blue.600} !important", _dark: "{colors.blue.400} !important" },
+          },
+        },
         bg: {
           panel: {
             value: {
@@ -1180,7 +1211,7 @@ export const chakraConfig = defineConfig({
           },
           fg: {
             value: {
-              base: "{colors.red.500} !important",
+              base: "{colors.red.600} !important",
               _dark: "{colors.red.300} !important",
             },
           },
@@ -1204,8 +1235,8 @@ export const chakraConfig = defineConfig({
           },
           solid: {
             value: {
-              base: "{colors.red.500}  !important",
-              _dark: "{colors.red.500} !important",
+              base: "{colors.red.600}  !important",
+              _dark: "{colors.red.600} !important",
             },
           },
           focusRing: {
@@ -1327,13 +1358,13 @@ export const chakraConfig = defineConfig({
         orange: {
           contrast: {
             value: {
-              base: "{colors.orange.50} !important",
+              base: "{colors.orange.950} !important",
               _dark: "{colors.orange.100} !important",
             },
           },
           fg: {
             value: {
-              base: "{colors.orange.500} !important",
+              base: "{colors.orange.700} !important",
               _dark: "{colors.orange.400} !important",
             },
           },
@@ -1582,13 +1613,13 @@ export const chakraConfig = defineConfig({
         green: {
           contrast: {
             value: {
-              base: "{colors.green.50} !important",
+              base: "{colors.green.950} !important",
               _dark: "{colors.green.950} !important",
             },
           },
           fg: {
             value: {
-              base: "{colors.green.600} !important",
+              base: "{colors.green.800} !important",
               _dark: "{colors.green.300} !important",
             },
           },
@@ -1942,7 +1973,7 @@ export const chakraConfig = defineConfig({
           },
           fg: {
             value: {
-              base: "{colors.blue.500} !important",
+              base: "{colors.blue.600} !important",
               _dark: "{colors.blue.400} !important",
             },
           },
@@ -1966,7 +1997,7 @@ export const chakraConfig = defineConfig({
           },
           solid: {
             value: {
-              base: "{colors.blue.500} !important",
+              base: "{colors.blue.600} !important",
               _dark: "{colors.blue.600} !important",
             },
           },

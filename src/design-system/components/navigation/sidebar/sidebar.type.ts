@@ -1,4 +1,4 @@
-// src/design-system/components/navigation/types/sidebar.type.ts
+// src/design-system/components/navigation/sidebar/sidebar.type.ts
 
 import type { BoxProps } from "@/design-system/components/layout/box/box.type";
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";

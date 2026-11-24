@@ -53,6 +53,8 @@ import {
   WarningCircleIcon,
   WarningIcon,
   WrenchIcon,
+  LinkIcon,
+  XCircleIcon,
 } from "@phosphor-icons/react";
 
 export const DS_NAVS_MAP = {
@@ -298,6 +300,30 @@ export const DS_NAVS_MAP = {
   countdown: {
     icon: ClockIcon,
     title: "Countdown",
+  },
+  date_picker: {
+    icon: CalendarDotsIcon,
+    title: "DatePicker",
+  },
+  close_button: {
+    icon: XCircleIcon,
+    title: "CloseButton",
+  },
+  toggle_tip: {
+    icon: InfoIcon,
+    title: "ToggleTip",
+  },
+  url: {
+    icon: LinkIcon,
+    title: "Url",
+  },
+  format_number: {
+    icon: HashIcon,
+    title: "FormatNumber",
+  },
+  snackbar: {
+    icon: SquaresFourIcon,
+    title: "Snackbar",
   },
   clipboard: {
     icon: CopyIcon,

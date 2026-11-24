@@ -3,6 +3,7 @@
 import type {
   CalendarDay,
   DateFormat,
+  DateRange,
   DateValue,
   FieldOrder,
   ValidationOptions,
@@ -19,6 +20,7 @@ import {
 // Constants
 // -------------------------------------------------------------------------------------
 
+/** @deprecated English only. Use `getMonthNames(locale)`. */
 export const MONTHS = [
   "January",
   "February",
@@ -34,6 +36,7 @@ export const MONTHS = [
   "December",
 ] as const;
 
+/** @deprecated English only. Use `getMonthNames(locale, "short")`. */
 export const MONTHS_SHORT = [
   "Jan",
   "Feb",
@@ -49,6 +52,7 @@ export const MONTHS_SHORT = [
   "Dec",
 ] as const;
 
+/** @deprecated English only. Use `getWeekdayNames(locale)`. */
 export const WEEKDAYS_HEADER = ["S", "M", "T", "W", "T", "F", "S"] as const;
 
 export const YEAR_PAGE_SIZE = 16;
@@ -146,7 +150,7 @@ export function validateDate(
   date: CalendarDate,
   options: ValidationOptions = {},
 ): ValidationResult {
-  const { min, max, disabledDates } = options;
+  const { min, max, disabledDates, availableDates } = options;
 
   if (min) {
     const minDate = parseISODate(min);
@@ -169,7 +173,108 @@ export function validateDate(
     }
   }
 
+  if (availableDates && !isDateAvailable(date, availableDates)) {
+    return { valid: false, reason: "Date is not available" };
+  }
+
   return { valid: true };
+}
+
+/** Whether a date is inside an `availableDates` whitelist (range object or array of ISO dates). */
+export function isDateAvailable(
+  date: CalendarDate,
+  availableDates: DateRange | string[],
+): boolean {
+  if (Array.isArray(availableDates)) {
+    return availableDates.includes(toISODate(date));
+  }
+  const start = parseISODate(availableDates.start);
+  const end = parseISODate(availableDates.end);
+  if (start && date.compare(start) < 0) return false;
+  if (end && date.compare(end) > 0) return false;
+  return true;
+}
+
+/** Earliest and latest selectable dates implied by min, max and availableDates. */
+export function getSelectableBounds(options: ValidationOptions): {
+  start: CalendarDate | null;
+  end: CalendarDate | null;
+} {
+  const { min, max, availableDates } = options;
+  const candidatesStart: CalendarDate[] = [];
+  const candidatesEnd: CalendarDate[] = [];
+  const minDate = parseISODate(min);
+  const maxDate = parseISODate(max);
+  if (minDate) candidatesStart.push(minDate);
+  if (maxDate) candidatesEnd.push(maxDate);
+
+  if (Array.isArray(availableDates)) {
+    const sorted = availableDates
+      .map((iso) => parseISODate(iso))
+      .filter((date): date is CalendarDate => date !== null)
+      .sort((a, b) => a.compare(b));
+    if (sorted[0]) candidatesStart.push(sorted[0]);
+    if (sorted[sorted.length - 1]) candidatesEnd.push(sorted[sorted.length - 1]);
+  } else if (availableDates) {
+    const start = parseISODate(availableDates.start);
+    const end = parseISODate(availableDates.end);
+    if (start) candidatesStart.push(start);
+    if (end) candidatesEnd.push(end);
+  }
+
+  const start = candidatesStart.reduce<CalendarDate | null>(
+    (latest, date) => (!latest || date.compare(latest) > 0 ? date : latest),
+    null,
+  );
+  const end = candidatesEnd.reduce<CalendarDate | null>(
+    (earliest, date) => (!earliest || date.compare(earliest) < 0 ? date : earliest),
+    null,
+  );
+  return { start, end };
+}
+
+// -------------------------------------------------------------------------------------
+// Localized labels
+// -------------------------------------------------------------------------------------
+
+/** Month names for the active locale, e.g. "November" / "November" or "Nov" / "Nov". */
+export function getMonthNames(
+  locale: string,
+  width: "long" | "short" = "long",
+): string[] {
+  const formatter = new Intl.DateTimeFormat(locale, {
+    month: width,
+    timeZone: "UTC",
+  });
+  return Array.from({ length: 12 }, (_, index) =>
+    formatter.format(new Date(Date.UTC(2024, index, 1))),
+  );
+}
+
+/** Narrow weekday names starting on Sunday, matching `buildCalendarGrid`. */
+export function getWeekdayNames(
+  locale: string,
+  width: "narrow" | "short" = "narrow",
+): string[] {
+  const formatter = new Intl.DateTimeFormat(locale, {
+    weekday: width,
+    timeZone: "UTC",
+  });
+  // 2024-09-01 is a Sunday.
+  return Array.from({ length: 7 }, (_, index) =>
+    formatter.format(new Date(Date.UTC(2024, 8, 1 + index))),
+  );
+}
+
+/** Full spoken date for screen readers, e.g. "Selasa, 24 November 2026". */
+export function formatDateLabel(date: CalendarDate, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(date.year, date.month - 1, date.day)));
 }
 
 /**

@@ -1,4 +1,4 @@
-// src/design-system/components/disclosure/ui/presence.tsx
+// src/design-system/components/disclosure/presence/presence.tsx
 
 import type { PresenceProps } from "@/design-system/components/disclosure/presence/presence.type";
 import { Presence as ChakraPresence } from "@chakra-ui/react";

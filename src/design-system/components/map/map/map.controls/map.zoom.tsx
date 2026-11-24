@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.zoom.tsx
+// src/design-system/components/map/map/map.controls/map.zoom.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";
@@ -8,6 +8,7 @@ import { useMapInstanceStore } from "@/design-system/components/map/stores/map.i
 import { MapOverlayContainer } from "@/design-system/components/map/map/map.overlay";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapZoom = (props: StackProps) => {
   const map = useMapInstanceStore((state) => state.map);
@@ -24,11 +25,11 @@ export const MapZoom = (props: StackProps) => {
     <MapOverlayContainer {...props}>
       <ButtonGroup attached color={"white"}>
         <Tooltip
-          content={"Perkecil (Zoom Out)"}
+          content={t["map.zoom_out"]()}
           positioning={{ placement: "top" }}
         >
           <IconButton
-            aria-label={"Zoom out"}
+            aria-label={t["map.zoom_out"]()}
             size={"sm"}
             roundedRight={0}
             onClick={zoomOut}
@@ -38,11 +39,11 @@ export const MapZoom = (props: StackProps) => {
         </Tooltip>
 
         <Tooltip
-          content={"Perbesar (Zoom In)"}
+          content={t["map.zoom_in"]()}
           positioning={{ placement: "top" }}
         >
           <IconButton
-            aria-label={"Zoom in"}
+            aria-label={t["map.zoom_in"]()}
             size={"sm"}
             roundedLeft={0}
             onClick={zoomIn}

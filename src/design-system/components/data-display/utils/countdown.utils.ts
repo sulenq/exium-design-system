@@ -1,6 +1,7 @@
 // src/design-system/components/data-display/utils/countdown.utils.ts
 
 import type { CountdownParts } from "@/design-system/components/data-display/countdown/countdown.type";
+import { t } from "@/shared/libs/i18n";
 
 const SECOND_IN_MS = 1000;
 const MINUTE_IN_SECONDS = 60;
@@ -45,12 +46,23 @@ export const formatCountdownParts = (
   if (!format) {
     const pad = (n: number) => String(n).padStart(2, "0");
     if (parts.days > 0) {
-      return `${parts.days} hari ${pad(parts.hours)} jam ${pad(parts.minutes)} mnt`;
+      return t["countdown.days_hours_minutes"]({
+        days: String(parts.days),
+        hours: pad(parts.hours),
+        minutes: pad(parts.minutes),
+      });
     }
     if (parts.hours > 0) {
-      return `${pad(parts.hours)} jam ${pad(parts.minutes)} mnt ${pad(parts.seconds)} dtk`;
+      return t["countdown.hours_minutes_seconds"]({
+        hours: pad(parts.hours),
+        minutes: pad(parts.minutes),
+        seconds: pad(parts.seconds),
+      });
     }
-    return `${pad(parts.minutes)} mnt ${pad(parts.seconds)} dtk`;
+    return t["countdown.minutes_seconds"]({
+      minutes: pad(parts.minutes),
+      seconds: pad(parts.seconds),
+    });
   }
 
   const replacements: Record<string, string> = {

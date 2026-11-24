@@ -1,4 +1,4 @@
-// src/design-system/components/layout/ui/center.tsx
+// src/design-system/components/layout/center/center.tsx
 
 import type {
   AbsoluteCenterProps,

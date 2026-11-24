@@ -1,4 +1,4 @@
-// src/design-system/components/utilities/ui/click-delegate-container.tsx
+// src/design-system/components/utilities/click-delegate-container/click-delegate-container.tsx
 
 import type { ClickDelegateContainerProps } from "@/design-system/components/utilities/click-delegate-container/click-delegate-container.type";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";

@@ -26,7 +26,14 @@ function createEventBus() {
   }
 
   function emit<TEvent extends ToastEventName>(event: TEvent, payload: ToastEventMap[TEvent]): void {
-    listeners.get(event)?.forEach((listener) => listener(payload));
+    // A failing subscriber must never break the toast lifecycle (e.g. leave a toast stuck in "entering").
+    listeners.get(event)?.forEach((listener) => {
+      try {
+        listener(payload);
+      } catch (error) {
+        console.error(`[toast] "${event}" listener threw`, error);
+      }
+    });
   }
 
   return { on, emit };

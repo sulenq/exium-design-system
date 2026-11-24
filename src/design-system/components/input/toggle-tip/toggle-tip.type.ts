@@ -1,4 +1,4 @@
-// src/design-system/components/input/types/toggle-tip.type.ts
+// src/design-system/components/input/toggle-tip/toggle-tip.type.ts
 
 import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
 import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";

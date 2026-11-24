@@ -1,4 +1,4 @@
-// src/design-system/components/media/ui/image.tsx
+// src/design-system/components/media/image/image.tsx
 
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ const ImageImpl = (props: ImageProps) => {
     onError,
     objectFit,
     objectPosition,
-    loading,
+    loading = "lazy",
     crossOrigin,
     referrerPolicy,
     srcSet,

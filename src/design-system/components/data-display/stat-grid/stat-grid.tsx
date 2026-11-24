@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/ui/stat-grid.tsx
+// src/design-system/components/data-display/stat-grid/stat-grid.tsx
 
 import type {
   StatGridDescriptionProps,
@@ -14,7 +14,7 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { P } from "@/design-system/components/typography/p/p";
 import { Span } from "@/design-system/components/typography/span/span";
-import { FormatNumber } from "@/design-system/components/utilities/format-number/fornat-number";
+import { FormatNumber } from "@/design-system/components/utilities/format-number/format-number";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 
 const StatGridRoot = (props: StatGridRootProps) => {

@@ -1,4 +1,4 @@
-// src/design-system/components/branding/types/brand-watermark.type.ts
+// src/design-system/components/branding/brand-watermark/brand-watermark.type.ts
 
 import type { PProps } from "@/design-system/components/typography/p/p.type";
 

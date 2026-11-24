@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/toggle-tip.tsx
+// src/design-system/components/input/toggle-tip/toggle-tip.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
@@ -9,6 +9,7 @@ import type {
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { InfoIcon } from "lucide-react";
 import * as React from "react";
+import { t } from "@/shared/libs/i18n";
 
 export const ToggleTip = React.forwardRef<HTMLDivElement, ToggleTipProps>(
   function ToggleTip(props, ref) {
@@ -65,7 +66,7 @@ export const InfoTip = React.forwardRef<HTMLDivElement, InfoTipProps>(
         {variant === "iconButton" ? (
           <IconButton
             variant={"ghost"}
-            aria-label={"info"}
+            aria-label={t["common.more_info"]()}
             size={"2xs"}
             rounded={"full"}
             {...iconButtonProps}

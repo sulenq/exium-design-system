@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/pin-input.tsx
+// src/design-system/components/input/pin-input/pin-input.tsx
 
 import type { PinInputProps } from "@/design-system/components/input/pin-input/pin-input.type";
 import { useThemeStore } from "@/design-system/stores/theme-store";
@@ -12,6 +12,7 @@ export const PinInput = React.forwardRef<HTMLInputElement, PinInputProps>(
       count = 4,
       attached = false,
       mask = false,
+      otp = !mask,
       fluid = false,
       inputHeight,
       inputProps,
@@ -24,8 +25,10 @@ export const PinInput = React.forwardRef<HTMLInputElement, PinInputProps>(
     return (
       <ChakraPinInput.Root
         colorPalette={theme.colorPalette}
+        count={count}
         attached={attached}
         mask={mask}
+        otp={otp}
         w={fluid ? "full" : "fit"}
         justifyContent={"center"}
         {...restProps}

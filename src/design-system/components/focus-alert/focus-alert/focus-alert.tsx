@@ -1,4 +1,4 @@
-// src/design-system/components/focus-alert/ui/focus-alert.tsx
+// src/design-system/components/focus-alert/focus-alert/focus-alert.tsx
 
 import { Button } from "@/design-system/components/button/button/button";
 import { Emoji } from "@/design-system/components/emoji/emoji/emoji";

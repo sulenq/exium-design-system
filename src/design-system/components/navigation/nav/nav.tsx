@@ -1,4 +1,4 @@
-// src/design-system/components/navigation/ui/nav.tsx
+// src/design-system/components/navigation/nav/nav.tsx
 
 import { Button } from "@/design-system/components/button/button/button";
 import type { NavButtonProps } from "@/design-system/components/navigation/nav/nav.type";

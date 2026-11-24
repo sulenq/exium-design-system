@@ -1,4 +1,4 @@
-// src/design-system/components/navigation/ui/link.tsx
+// src/design-system/components/navigation/link/link.tsx
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";

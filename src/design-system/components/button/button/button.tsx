@@ -1,4 +1,4 @@
-// src/design-system/components/button/ui/button.tsx
+// src/design-system/components/button/button/button.tsx
 
 "use client";
 

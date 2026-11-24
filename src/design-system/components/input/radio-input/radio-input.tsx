@@ -1,4 +1,4 @@
-// src/design-system/components/input/ui/radio-input.tsx
+// src/design-system/components/input/radio-input/radio-input.tsx
 
 import type { RadioInputProps } from "@/design-system/components/input/radio-input/radio-input.type";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";

@@ -1,4 +1,4 @@
-// src/design-system/components/data-display/ui/data-view-table.tsx
+// src/design-system/components/data-display/data-view/data-view-table.tsx
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import {
@@ -42,6 +42,9 @@ import {
   VStack,
 } from "@/design-system/components/layout/flex-box/flex-box";
 import { Grid } from "@/design-system/components/layout/grid/grid";
+import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";
+import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
+import { StateRetry } from "@/design-system/components/feedback/state-retry/state.retry";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useDeviceCapability } from "@/shared/hooks/use-device-capability";
@@ -93,6 +96,12 @@ const DataListTableRootInternal = <
     renderTdCell,
     page,
     pageSize,
+    isLoading = false,
+    isError = false,
+    errorTitle,
+    errorDescription,
+    onRetry,
+    emptyState,
     ref,
     ...restProps
   } = props;
@@ -203,6 +212,12 @@ const DataListTableRootInternal = <
   // Resolved Values
   const contextValue = useMemo<DataViewTableContextValue<T>>(
     () => ({
+      isLoading,
+      isError,
+      errorTitle,
+      errorDescription,
+      onRetry,
+      emptyState,
       headers: headersList,
       items: itemsList as unknown as FormattedListItem<T>[],
       page,
@@ -254,6 +269,12 @@ const DataListTableRootInternal = <
       ) => React.ReactNode,
     }),
     [
+      isLoading,
+      isError,
+      errorTitle,
+      errorDescription,
+      onRetry,
+      emptyState,
       headersList,
       itemsList,
       page,
@@ -899,6 +920,8 @@ const DataListTableRow = memo(
   },
 );
 
+const SKELETON_ROW_COUNT = 5;
+
 const DataListTableBody = () => {
   // Hooks
   const {
@@ -912,6 +935,12 @@ const DataListTableBody = () => {
     fixedItemHeight = true,
     tableContainerRef,
     tableContainerEl,
+    isLoading,
+    isError,
+    errorTitle,
+    errorDescription,
+    onRetry,
+    emptyState,
   } = useDataViewTableContext();
 
   const rowHeight = useMemo(() => parseInt("56px", 10), []);
@@ -927,6 +956,37 @@ const DataListTableBody = () => {
   });
 
   const virtualItems = virtualizer.getVirtualItems();
+
+  // Built-in states, rendered across the full grid width
+  if (isLoading) {
+    return (
+      <VStack gridColumn={"1 / -1"} gap={2} p={2} aria-busy={true}>
+        {Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
+          <Skeleton key={`skeleton-row-${index + 1}`} h={"40px"} />
+        ))}
+      </VStack>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box gridColumn={"1 / -1"} py={8}>
+        <StateRetry
+          title={errorTitle}
+          description={errorDescription}
+          onRetry={onRetry}
+        />
+      </Box>
+    );
+  }
+
+  if (isEmptyArray(sortedItems)) {
+    return (
+      <Box gridColumn={"1 / -1"} py={8}>
+        {emptyState ?? <StateNoData />}
+      </Box>
+    );
+  }
 
   // Fallback to direct rendering if virtualized is false or if virtualizer returned no items despite items existing
   if (!virtualized || (isEmptyArray(virtualItems) && sortedItems.length > 0)) {

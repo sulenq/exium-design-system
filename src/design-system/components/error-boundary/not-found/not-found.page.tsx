@@ -1,4 +1,4 @@
-// src/design-system/components/error-boundary/ui/not-found.page.tsx
+// src/design-system/components/error-boundary/not-found/not-found.page.tsx
 
 import { Button } from "@/design-system/components/button/button/button";
 import { ButtonGroup } from "@/design-system/components/button/button-group/button-group";

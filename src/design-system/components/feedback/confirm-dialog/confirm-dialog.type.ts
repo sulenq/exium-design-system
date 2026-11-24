@@ -1,4 +1,4 @@
-// src/design-system/components/feedback/types/confirm-dialog.type.ts
+// src/design-system/components/feedback/confirm-dialog/confirm-dialog.type.ts
 
 import type { ButtonProps } from "@/design-system/components/button/button/button.type";
 import type { EmojiVariant } from "@/design-system/components/emoji/emoji/emoji.type";

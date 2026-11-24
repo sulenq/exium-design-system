@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.controls/map.basemap-select.tsx
+// src/design-system/components/map/map/map.controls/map.basemap-select.tsx
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Slider } from "@/design-system/components/input/slider/slider";
@@ -23,6 +23,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useColorMode } from "@/design-system/hooks/use-color-mode";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { MoonIcon, SunIcon } from "lucide-react";
+import { t } from "@/shared/libs/i18n";
 
 export const MapBasemapSelect = () => {
   // Stores
@@ -61,7 +62,7 @@ export const MapBasemapSelect = () => {
       <Popover.Trigger>
         <MapOverlayContainer p={"2px"}>
           <Tooltip
-            content={"Gaya Peta Base"}
+            content={t["map.basemap"]()}
             positioning={{ placement: "top" }}
           >
             <Center pos={"relative"} cursor={"pointer"}>
@@ -99,7 +100,7 @@ export const MapBasemapSelect = () => {
 
       <Popover.Content>
         <HeaderContainer>
-          <P fontWeight={"medium"}>{"Peta Dasar"}</P>
+          <P fontWeight={"medium"}>{t["map.basemap"]()}</P>
         </HeaderContainer>
 
         <Separator borderColor={"bg.canvas"} />

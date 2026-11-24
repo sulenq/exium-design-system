@@ -1,4 +1,4 @@
-// src/design-system/components/layout/types/nav.type.ts
+// src/design-system/components/navigation/nav/nav.type.ts
 
 import type { ButtonProps } from "@/design-system/components/button/button/button.type";
 

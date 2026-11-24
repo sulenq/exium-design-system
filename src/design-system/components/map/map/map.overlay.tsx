@@ -1,4 +1,4 @@
-// src/design-system/components/map/ui/map.overlay.tsx
+// src/design-system/components/map/map/map.overlay.tsx
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
 import { Box } from "@/design-system/components/layout/box/box";
