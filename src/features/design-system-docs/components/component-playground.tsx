@@ -2,6 +2,7 @@
 
 import { Button } from "@/design-system/components/button/button/button";
 import { Tabs } from "@/design-system/components/disclosure/tabs/tabs";
+import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Input } from "@/design-system/components/input/input/input";
 import { NumberInput } from "@/design-system/components/input/number-input/number-input";
@@ -21,6 +22,7 @@ import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { ComponentPlaygroundContainer } from "@/features/design-system-docs/components/component-playground-container";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { ColorPaletteSelect } from "@/features/design-system-docs/components/color-palette.select";
+import { isEmptyArray } from "@/shared/utils/data/array";
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -169,10 +171,23 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
         </Tabs.List>
 
         <Tabs.Content value={"controls"} pt={4}>
-          <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
-            {spec.propsSpec
-              .filter((prop) => prop.controlKind !== undefined)
-              .map((prop) => (
+          {isEmptyArray(
+            spec.propsSpec.filter((prop) => prop.controlKind !== undefined),
+          ) && (
+            <StateNoData
+              title={"Tidak ada kontrol playground"}
+              description={
+                "Komponen ini tidak memiliki properti interaktif di playground."
+              }
+            />
+          )}
+          {!isEmptyArray(
+            spec.propsSpec.filter((prop) => prop.controlKind !== undefined),
+          ) && (
+            <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={4}>
+              {spec.propsSpec
+                .filter((prop) => prop.controlKind !== undefined)
+                .map((prop) => (
                 <Box key={prop.name}>
                   <P
                     fontSize={"xs"}
@@ -247,7 +262,8 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                   ) : null}
                 </Box>
               ))}
-          </SimpleGrid>
+            </SimpleGrid>
+          )}
         </Tabs.Content>
 
         <Tabs.Content value={"props"} pt={4}>

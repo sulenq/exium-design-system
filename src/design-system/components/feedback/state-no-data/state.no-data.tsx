@@ -5,12 +5,12 @@
 import type { FeedbackStateProps } from "@/design-system/components/feedback/feedback-state/feedback-state.type";
 import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
 import { t } from "@/shared/libs/i18n";
-import { WindIcon } from "@phosphor-icons/react";
+import { TrayIcon } from "@phosphor-icons/react";
 
 export const StateNoData = (props: FeedbackStateProps) => {
   // Props
   const {
-    icon = WindIcon,
+    icon = TrayIcon,
     title = t["common.no_data"](),
     description,
     children,
