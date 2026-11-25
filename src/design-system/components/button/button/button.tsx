@@ -181,6 +181,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         minW={minW}
         maxW={maxW}
         overflow={"hidden"}
+        touchAction={bouncy ? "none" : undefined}
         transform={
           bouncy
             ? "translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"
@@ -285,6 +286,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         rounded={theme.radii.component}
         fontWeight={"normal"}
         userSelect={"none"}
+        touchAction={bouncy ? "none" : undefined}
         transform={
           bouncy
             ? "translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"
