@@ -48,7 +48,6 @@ export const MapOverlay = (props: MapOverlayProps) => {
         </Box>
 
         <HStack align={"center"} gap={2} pointerEvents={"none"} flexShrink={0}>
-          
           {layerManagement}
           <MapAttribution />
         </HStack>
@@ -89,11 +88,35 @@ export const MapOverlayContainer = (props: StackProps) => {
 
   return (
     <HStack
+      position={"relative"}
+      isolation={"isolate"}
       align={"center"}
-      // bg={"bg.body"}
-      layerStyle={"glassTopRight"}
+      bg={"bg.bodyAlpha"}
+      border={"1px solid"}
+      borderColor={"an0 !important"}
+      backdropFilter={"blur(16px) saturate(180%)"}
+      boxShadow={{
+        base: "inset 0 1px 0 0 rgba(255, 255, 255, 0.95)",
+        _dark: "inset 0 1px 0 0 rgba(255, 255, 255, 0.2)",
+      }}
+      backgroundImage={{
+        base: "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 30%)",
+        _dark:
+          "linear-gradient(180deg, rgba(255, 255, 255, 0.008) 0%, rgba(255, 255, 255, 0) 30%)",
+      }}
+      _after={{
+        content: '""',
+        position: "absolute",
+        inset: "0",
+        borderRadius: "inherit",
+        pointerEvents: "none",
+        background: {
+          base: "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(161, 161, 170, 0.28) 0%, rgba(161, 161, 170, 0) 70%)",
+          _dark:
+            "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
+        },
+      }}
       rounded={theme.radii.component}
-      shadow={"xs"}
       pointerEvents={"auto"}
       {...props}
     />
