@@ -54,7 +54,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         {...restProps}
         {...(isFloatingVariant && {
           placeholder: getFloatingPlaceholder(restProps.placeholder),
-          h: "60px",
+          h: "48px",
           pt: floatingLabel ? "28px" : "8px",
           pb: "md",
         })}

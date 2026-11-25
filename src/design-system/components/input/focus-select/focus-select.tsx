@@ -234,7 +234,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
         fontWeight={"normal"}
         data-has-value={currentValue ? "true" : "false"}
         {...(isFloatingField && {
-          h: "60px",
+          h: "48px",
           pt: floatingLabel ? "22px" : 0,
           pb: floatingLabel ? "2px" : 0,
         })}

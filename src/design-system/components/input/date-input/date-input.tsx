@@ -450,7 +450,7 @@ export const DateInput = memo(
         transition={"200ms"}
         px={2}
         cursor={"text"}
-        h={isFloatingVariant && floatingLabel ? "60px" : 10}
+        h={isFloatingVariant && floatingLabel ? "48px" : 10}
         w={restProps.w || "full"}
         onClick={handleContainerClick}
         onFocusCapture={() => setIsFocused(true)}
@@ -547,7 +547,8 @@ export const DateInput = memo(
               }
             >
               <HStack align={"center"} gap={2}>
-                <P lineClamp={1}
+                <P
+                  lineClamp={1}
                   fontSize={isLabelFloating ? "xs" : "md"}
                   fontWeight={"medium"}
                   color={"fg.subtle"}

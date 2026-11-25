@@ -187,7 +187,7 @@ export const NumberInput = (props: NumberInputProps) => {
               ? { pe: `${stepperConfig.peExtra}px` }
               : {})}
           {...(isFloatingVariant && {
-            h: "60px",
+            h: "48px",
             pt: floatingLabel ? "22px" : "0px",
             pb: floatingLabel ? "4px" : "0px",
           })}

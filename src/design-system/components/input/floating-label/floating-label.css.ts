@@ -33,7 +33,7 @@ export const floatingLabelWrapperCss = {
 
   // Resting state
   "& [data-part='floating-label']": {
-    transform: "translateY(12px)",
+    transform: "translateY(11px)",
     transition:
       "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease",
   },

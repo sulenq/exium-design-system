@@ -54,7 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       {...restProps}
       {...(isFloatingVariant && {
         placeholder: getFloatingPlaceholder(restProps.placeholder),
-        h: "60px",
+        h: "48px",
         pt: floatingLabel ? "22px" : "0px",
         pb: floatingLabel ? "4px" : "0px",
       })}

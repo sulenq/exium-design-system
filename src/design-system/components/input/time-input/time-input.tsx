@@ -177,7 +177,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const triggerText = hasValue ? committedValue : resolvedPlaceholder;
     const triggerTextColor = hasValue ? "fg" : "fg.subtle";
     const triggerBorderColor = isInvalid ? "border.error" : "border.muted";
-    const triggerHeight = hasFloatingLabel ? "60px" : 10;
+    const triggerHeight = hasFloatingLabel ? "48px" : 10;
     const triggerOpacity = disabled ? 0.5 : 1;
     const triggerCursor = disabled ? "not-allowed" : "pointer";
     // An empty floating field shows only its label, like the other inputs
