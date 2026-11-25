@@ -1,11 +1,6 @@
-// src/features/design-system-docs/config/registry/actions.registry.tsx
-
 import { BackButton } from "@/design-system/components/button/back-button/back-button";
 import { Button } from "@/design-system/components/button/button/button";
-import {
-  ColorModeToggleButton,
-  ColorModeToggleTrigger,
-} from "@/design-system/components/button/color-mode/color-mode";
+import { ColorModeToggleButton, ColorModeToggleTrigger } from "@/design-system/components/button/color-mode/color-mode";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { DownloadTrigger } from "@/design-system/components/utilities/download-trigger/download-trigger";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";

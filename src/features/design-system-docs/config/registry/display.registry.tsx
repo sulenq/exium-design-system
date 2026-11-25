@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/display.registry.tsx
-
 import { Button } from "@/design-system/components/button/button/button";
 import { CloseButton } from "@/design-system/components/button/close-button/close-button";
 import { OutlineContourPerspective } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective";

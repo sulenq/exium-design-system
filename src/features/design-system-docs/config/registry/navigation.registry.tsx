@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/navigation.registry.tsx
-
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box } from "@/design-system/components/layout/box/box";
@@ -14,15 +12,7 @@ import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import type { NavItem } from "@/shared/types/nav.type";
-import {
-  BellIcon,
-  HomeIcon,
-  PawPrintIcon,
-  ScanLineIcon,
-  SettingsIcon,
-  SyringeIcon,
-  WheatIcon,
-} from "lucide-react";
+import { BellIcon, HomeIcon, PawPrintIcon, ScanLineIcon, SettingsIcon, SyringeIcon, WheatIcon } from "lucide-react";
 import { useState } from "react";
 
 // -------------------------------------------------------------------------------------

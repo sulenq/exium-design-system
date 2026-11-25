@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/chart.registry.tsx
-
 import { AreaChart } from "@/design-system/components/chart/area-chart/area-chart";
 import { BarChart } from "@/design-system/components/chart/bar-chart/bar-chart";
 import { BarList } from "@/design-system/components/chart/bar-list/bar-list";
@@ -9,18 +7,10 @@ import { PieChart } from "@/design-system/components/chart/pie-chart/pie-chart";
 import { RadarChart } from "@/design-system/components/chart/radar-chart/radar-chart";
 import { ScatterChart } from "@/design-system/components/chart/scatter-chart/scatter-chart";
 import { Sparkline } from "@/design-system/components/chart/sparkline/sparkline";
-import {
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Box } from "@/design-system/components/layout/box/box";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import {
-  Bar,
-  BarChart as RechartsBarChart,
-  ResponsiveContainer,
-  XAxis,
-} from "recharts";
+import { Bar, BarChart as RechartsBarChart, ResponsiveContainer, XAxis } from "recharts";
 
 const DEMO_SERIES_DATA = [
   { month: "Jan", produksi: 120, target: 100 },

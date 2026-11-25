@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/map.registry.tsx
-
 import { Button } from "@/design-system/components/button/button/button";
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";

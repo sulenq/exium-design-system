@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/primitives.registry.tsx
-
 import { Button } from "@/design-system/components/button/button/button";
 import { TreeView } from "@/design-system/components/disclosure/tree-view/tree-view";
 import type { TreeNodeData } from "@/design-system/components/disclosure/tree-view/tree-view.type";
@@ -8,10 +6,7 @@ import { Field } from "@/design-system/components/input/field/field";
 import { Box } from "@/design-system/components/layout/box/box";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { CameraCapture } from "@/design-system/components/media/camera-capture/camera-capture";
-import type {
-  CameraFrameVariant,
-  CapturedMedia,
-} from "@/design-system/components/media/camera-capture/camera-capture.type";
+import type { CameraFrameVariant, CapturedMedia } from "@/design-system/components/media/camera-capture/camera-capture.type";
 import { QrScanner } from "@/design-system/components/media/qr-scanner/qr-scanner";
 import type { QrScanResult } from "@/design-system/components/media/qr-scanner/qr-scanner.type";
 import { QrCode } from "@/design-system/components/media/qr-code/qr-code";

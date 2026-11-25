@@ -1,13 +1,7 @@
-// src/features/design-system-docs/config/registry/feedback.registry.tsx
-
 import { Button } from "@/design-system/components/button/button/button";
 import { NotFoundPage } from "@/design-system/components/error-boundary/not-found/not-found.page";
 import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
-import {
-  CheckIndicator,
-  DotIndicator,
-  RadioIndicator,
-} from "@/design-system/components/feedback/indicator/indicator";
+import { CheckIndicator, DotIndicator, RadioIndicator } from "@/design-system/components/feedback/indicator/indicator";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
 import { TopBarLoader } from "@/design-system/components/feedback/top-bar-loader/top-bar-loader";
 import { Box } from "@/design-system/components/layout/box/box";

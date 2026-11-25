@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/layout.registry.tsx
-
 import { Button } from "@/design-system/components/button/button/button";
 import { ActionHeaderScrollContainer } from "@/design-system/components/layout/action-header-scroll-container/action-header-scroll-container";
 import { AspectRatio } from "@/design-system/components/layout/aspect-ratio/aspect-ratio";
@@ -10,15 +8,9 @@ import { ConstrainedContainer } from "@/design-system/components/layout/constrai
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Float } from "@/design-system/components/layout/float/float";
 import { Group } from "@/design-system/components/layout/group/group";
-import {
-  HMaskedContainer,
-  VMaskedContainer,
-} from "@/design-system/components/layout/masked-container/masked-container";
+import { HMaskedContainer, VMaskedContainer } from "@/design-system/components/layout/masked-container/masked-container";
 import { PageContainer } from "@/design-system/components/layout/page-container/page-container";
-import {
-  HScrollContainer,
-  VScrollContainer,
-} from "@/design-system/components/layout/scroll-container/scroll-container";
+import { HScrollContainer, VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 import { Splitter } from "@/design-system/components/layout/splitter/splitter";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { CountBadge } from "@/design-system/components/typography/count-badge/count-badge";

@@ -1,5 +1,3 @@
-// src/features/design-system-docs/config/registry/inputs.registry.tsx
-
 import { Button } from "@/design-system/components/button/button/button";
 import { Field } from "@/design-system/components/input/field/field";
 import { Fieldset } from "@/design-system/components/input/fieldset/fieldset";
