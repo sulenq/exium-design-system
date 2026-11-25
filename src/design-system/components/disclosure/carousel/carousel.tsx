@@ -30,7 +30,8 @@ const CarouselControl = forwardRef<HTMLDivElement, CarouselControlProps>(
       <ChakraCarousel.Control
         ref={ref}
         display={"flex"}
-        flexDir={"column"}
+        flexDir={"row"}
+        alignItems={"center"}
         {...props}
       />
     );

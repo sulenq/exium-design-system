@@ -991,7 +991,21 @@ const CarouselCard = () => {
   return (
     <DemoCard title={"Carousel"} icon={LayersIcon}>
       <Carousel.Root slideCount={images.length} w={"full"}>
-        <Carousel.Control>
+        <Carousel.ItemGroup>
+          {images.map((image, index) => (
+            <Carousel.Item key={index} index={index}>
+              <Image
+                src={image}
+                alt={`Slide ${index + 1}`}
+                aspectRatio={16 / 9}
+                rounded={"md"}
+                objectFit={"cover"}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel.ItemGroup>
+
+        <Carousel.Control justifyContent={"center"} gap={3} mt={2}>
           <Carousel.PrevTrigger asChild={true}>
             <IconButton size={"xs"}>
               <LuArrowLeft />
@@ -1010,20 +1024,6 @@ const CarouselCard = () => {
             </IconButton>
           </Carousel.NextTrigger>
         </Carousel.Control>
-
-        <Carousel.ItemGroup>
-          {images.map((image, index) => (
-            <Carousel.Item key={index} index={index}>
-              <Image
-                src={image}
-                alt={`Slide ${index + 1}`}
-                aspectRatio={16 / 9}
-                rounded={"md"}
-                objectFit={"cover"}
-              />
-            </Carousel.Item>
-          ))}
-        </Carousel.ItemGroup>
       </Carousel.Root>
     </DemoCard>
   );
