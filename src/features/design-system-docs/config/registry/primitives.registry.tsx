@@ -222,25 +222,39 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
     importPath:
       'import { CurrencyInput } from "@/design-system/components/input/currency-input/currency-input";\nimport { useExchangeRate } from "@/design-system/hooks/use-exchange-rate";',
     component: CurrencyInput,
-    defaultProps: { shorthand: true, withConversion: true, max: 0 },
+    defaultProps: { shorthand: true, max: 0 },
     propsSpec: [
       { name: "value / onValueChange", type: "number | null", description: "Nilai numerik tanpa format. Pakai `Controller` untuk react-hook-form." },
       { name: "currency", type: "string", defaultValue: "IDR", description: "Kode ISO 4217." },
       { name: "locale", type: "string", defaultValue: "id-ID", description: "Format tampilan." },
       { name: "fractionDigits", type: "number", description: "Default per mata uang: IDR 0, USD 2." },
-      { name: "min / max", type: "number", description: "Di-clamp saat blur. Demo: 0 berarti tanpa batas.", controlKind: "number" },
+      { name: "min", type: "number", description: "Di-clamp saat blur." },
+      { name: "max", type: "number", description: "Di-clamp saat blur. Demo: 0 berarti tanpa batas.", controlKind: "number" },
       { name: "shorthand", type: "boolean", defaultValue: true, description: "Terima rb, ribu, k, jt, juta, m (miliar).", controlKind: "boolean" },
       { name: "conversion", type: "{ to, rate, rateDate }", description: "Konversi display-only di bawah input." },
-      { name: "withConversion", type: "boolean", defaultValue: true, description: "Demo: ambil kurs IDR→USD dengan useExchangeRate.", controlKind: "boolean" },
     ],
     a11y: {
       notes:
         "`inputMode=\"decimal\"` membuka keypad angka di HP. Shorthand membutuhkan huruf, jadi set `inputMode=\"text\"` bila pengguna perlu mengetik \"jt\" di HP. Teks konversi terhubung lewat `aria-describedby`.",
     },
+    generateCode: (props) => {
+      const max = Number(props.max) > 0 ? `\n    max={${Number(props.max)}}` : "";
+      const shorthand = props.shorthand ? "" : "\n    shorthand={false}";
+      return `const [price, setPrice] = useState<number | null>(1500000);
+const { conversion } = useExchangeRate("IDR", "USD");
+
+<Field label={"Harga jual"}>
+  <CurrencyInput
+    value={price}
+    onValueChange={setPrice}${max}${shorthand}
+    conversion={conversion}
+  />
+</Field>`;
+    },
     renderPlayground: (props) => (
       <CurrencyInputDemo
         shorthand={Boolean(props.shorthand)}
-        withConversion={Boolean(props.withConversion)}
+        withConversion={true}
         max={Number(props.max) > 0 ? Number(props.max) : undefined}
       />
     ),
@@ -274,6 +288,15 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
       notes:
         "Hasil dibacakan lewat `role=\"status\"`. Tombol senter memakai `aria-pressed`. Saat izin ditolak, tampil langkah membuka izin dan input manual tetap bisa dipakai.",
     },
+    generateCode: (props) => `<QrScanner
+  mode={"${String(props.mode || "continuous")}"}
+  validate={(value) =>
+    isFarmEartag(value) ? { ok: true } : { ok: false, message: "Bukan eartag peternakan ini" }
+  }
+  manualEntry={{ label: "Nomor eartag", pattern: /^TQ-\\d+$/ }}
+  overlay={<Badge>{\`\${scanned.length} dari \${total} ternak\`}</Badge>}
+  onScan={(result) => addScan(result)}
+/>`,
     renderPlayground: (props) => (
       <QrScannerDemo mode={(props.mode as "single" | "continuous") || "continuous"} />
     ),
@@ -293,7 +316,8 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
       { name: "value / onChange", type: "CapturedMedia[]", description: "`{ id, file, type, capturedAt, previewUrl, location?, hash? }`." },
       { name: "frameVariant", type: "string", defaultValue: "none", description: "Panduan overlay, dengan rasio aslinya.", controlKind: "select", options: ["none", "ktp", "selfie", "selfie-ktp", "document", "livestock", "scale"] },
       { name: "accept", type: "\"image\" | \"video\" | \"both\"", defaultValue: "image", description: "Jenis media.", controlKind: "select", options: ["image", "video", "both"] },
-      { name: "multiple / maxFiles", type: "boolean / number", defaultValue: false, description: "Banyak item dalam satu sesi; single mengganti foto.", controlKind: "boolean" },
+      { name: "multiple", type: "boolean", defaultValue: false, description: "Banyak item dalam satu sesi; single mengganti foto.", controlKind: "boolean" },
+      { name: "maxFiles", type: "number", defaultValue: 10, description: "Batas item saat `multiple`." },
       { name: "maxVideoDurationSec", type: "number", defaultValue: 15, description: "Batas rekam, dengan timer." },
       { name: "facingMode / allowSwitchCamera", type: "\"environment\" | \"user\" / boolean", description: "Default dari frameVariant: selfie memakai kamera depan." },
       { name: "compress", type: "{ maxWidth, quality }", defaultValue: "{ 1600, 0.8 }", description: "Kompresi foto." },
@@ -304,6 +328,29 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
       role: "dialog",
       notes:
         "Kamera dibuka sebagai dialog modal; Escape menutup. Fokus pindah ke tombol shutter. Tiap item punya tombol Ulangi dan Hapus berlabel. Timer rekam memakai `role=\"timer\"`.",
+    },
+    generateCode: (props) => {
+      const variant = String(props.frameVariant || "livestock");
+      const accept = String(props.accept || "image");
+      const lines = [
+        `    frameVariant={"${variant}"}`,
+        accept !== "image" ? `    accept={"${accept}"}` : null,
+        props.multiple ? "    multiple={true}" : null,
+        "    withHash={true}",
+      ].filter(Boolean);
+      return `<Controller
+  control={control}
+  name={"photos"}
+  render={({ field, fieldState }) => (
+    <Field label={"Foto ternak"} invalid={fieldState.invalid} errorText={fieldState.error?.message}>
+      <CameraCapture
+        value={field.value}
+        onChange={field.onChange}
+${lines.map((line) => `    ${line}`).join("\n")}
+      />
+    </Field>
+  )}
+/>`;
     },
     renderPlayground: (props) => (
       <CameraCaptureDemo
@@ -332,6 +379,20 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
       { name: "preview", type: "boolean", defaultValue: false, description: "Tampilkan pratinjau kertas di layar." },
       { name: "usePrint({ onBeforePrint, onAfterPrint })", type: "{ print, isPrinting }", description: "`onBeforePrint` boleh async, misalnya menunggu gambar QR." },
     ],
+    generateCode: (props) => `const { print, isPrinting } = usePrint({
+  onBeforePrint: () => waitForQrImages(),
+});
+
+<Button onClick={() => void print()} loading={isPrinting}>Cetak QR</Button>
+
+<PrintLayout pageSize={"${String(props.pageSize || "A6")}"} columns={${Number(props.columns) || 1}}>
+  {eartags.map((eartag) => (
+    <VStack key={eartag} align={"center"}>
+      <QrCode value={eartag} size={"sm"} />
+      <P fontSize={"xs"}>{eartag}</P>
+    </VStack>
+  ))}
+</PrintLayout>`,
     renderPlayground: (props) => (
       <PrintLayoutDemo
         pageSize={(props.pageSize as PrintPageSize) || "A6"}
@@ -369,6 +430,33 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
         { key: "Enter / Space", action: "Pilih node." },
       ],
     },
+    generateCode: (props) =>
+      props.orientation === "vertical"
+        ? `<TreeView
+  label={"Kandang"}
+  data={[
+    { id: "blok-a", label: "Blok A", children: [{ id: "a1", label: "Kandang A1" }] },
+  ]}
+  defaultExpandedIds={["blok-a"]}
+  onSelect={(node) => openPen(node.id)}
+/>`
+        : `<TreeView
+  orientation={"horizontal"}
+  label={"Silsilah Melati"}
+  expandDepth={3}
+  data={[
+    {
+      id: "melati",
+      label: "Melati",
+      description: "Betina · 2023",
+      children: [
+        { id: "bima", label: "Bima", description: "Pejantan" },
+        { id: "sari-unknown", label: "", unknown: true },
+      ],
+    },
+  ]}
+  onSelect={(node) => openAnimal(node.id)}
+/>`,
     renderPlayground: (props) => (
       <TreeViewDemo orientation={(props.orientation as "horizontal") || "horizontal"} />
     ),

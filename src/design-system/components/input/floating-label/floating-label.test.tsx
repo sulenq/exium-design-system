@@ -1,6 +1,8 @@
 // src/design-system/components/input/floating-label/floating-label.test.tsx
 
 import { Field } from "@/design-system/components/input/field/field";
+import { FileInput } from "@/design-system/components/input/file-input/file-input";
+import { CameraCapture } from "@/design-system/components/media/camera-capture/camera-capture";
 import { Input } from "@/design-system/components/input/input/input";
 import { NumberInput } from "@/design-system/components/input/number-input/number-input";
 import { PasswordInput } from "@/design-system/components/input/password-input/password-input";
@@ -36,5 +38,31 @@ describe("floating label", () => {
     const input = container.querySelector("input[type=password]");
     expect(input).not.toBeNull();
     expect(screen.getByLabelText("Kata sandi")).toBe(input);
+  });
+});
+
+describe("floating Field with a non-text child", () => {
+  it("shows a static label for FileInput and CameraCapture", () => {
+    renderWithSystem(
+      <>
+        <Field label={"Dokumen SKKH"}>
+          <FileInput />
+        </Field>
+        <Field label={"Foto ternak"}>
+          <CameraCapture />
+        </Field>
+      </>,
+    );
+    expect(screen.getByText("Dokumen SKKH")).toBeInTheDocument();
+    expect(screen.getByText("Foto ternak")).toBeInTheDocument();
+  });
+
+  it("does not duplicate the label for a text input", () => {
+    renderWithSystem(
+      <Field label={"Berat badan"}>
+        <Input />
+      </Field>,
+    );
+    expect(screen.getAllByText("Berat badan")).toHaveLength(1);
   });
 });
