@@ -4,7 +4,10 @@
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box, Circle } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import type { OfflineAlertProps } from "@/design-system/components/utilities/offline-alert/offline-alert.type";
 import { t } from "@/shared/libs/i18n";
@@ -13,12 +16,11 @@ import { toast } from "@/design-system/components/toast";
 import { Portal } from "@/design-system/components/utilities/portal/portal";
 import { WifiSlashIcon as WifiOffIcon } from "@phosphor-icons/react";
 
-
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export const OfflineAlert = (props: OfflineAlertProps) => {
   // Props
-  const { persistent = true } = props;
+  const { persistent = false } = props;
 
   // States
   const [isVisible, setIsVisible] = useState(false);
