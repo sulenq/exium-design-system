@@ -5,7 +5,10 @@ import type {
   ChartTooltipProps,
 } from "@/design-system/components/charts/chart-tooltip/chart-tooltip.type";
 import { Circle } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { formatNumber } from "@/shared/utils/formatter/number.formatter";
@@ -30,13 +33,6 @@ export const ChartTooltipContent = (props: ChartTooltipContentProps) => {
   // Stores
   const { theme } = useThemeStore();
 
-  // const dataKey = payload?.[0]?.dataKey;
-  // const value = payload?.[0]?.value;
-  // const color = payload?.[0]?.color;
-  // const name = payload?.[0]?.name;
-  // const unit = payload?.[0]?.unit;
-  // const fullPayload = payload?.[0]?.payload;
-
   if (!active || !payload?.length) return null;
 
   return (
@@ -45,7 +41,7 @@ export const ChartTooltipContent = (props: ChartTooltipContentProps) => {
       gap={1}
       p={3}
       rounded={theme.radii.component}
-      bg={"bg.body"}
+      layerStyle={"frosted"}
       shadow={"md"}
       zIndex={2}
     >

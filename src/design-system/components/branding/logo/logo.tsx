@@ -19,7 +19,7 @@ export const Logo = (props: LogoProps) => {
   const resolvedBoxSize =
     typeof boxSize === "number" ? `${boxSize}px` : boxSize;
   const resolvedColor = useMemo(() => {
-    if (color) return color;
+    if (color) return resolveSemanticColor(color, colorMode) || color;
     if (theme.colorPalette === "gray") {
       return colorMode === "dark" ? "#fff" : "#1b1b1b";
     }

@@ -12,6 +12,8 @@ import type {
   ClipboardTriggerProps,
   ClipboardValueTextProps,
 } from "@/design-system/components/data-display/clipboard/clipboard.type";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
 import { Clipboard as ChakraClipboard } from "@chakra-ui/react";
 
 const ClipboardRoot = (props: ClipboardRootProps) => {
@@ -31,7 +33,17 @@ const ClipboardControl = (props: ClipboardControlProps) => {
 };
 
 const ClipboardIndicator = (props: ClipboardIndicatorProps) => {
-  return <ChakraClipboard.Indicator {...props} />;
+  const {
+    copied = <AppIcon icon={CheckIcon} weight={"bold"} />,
+    children = <AppIcon icon={CopyIcon} weight={"fill"} />,
+    ...restProps
+  } = props;
+
+  return (
+    <ChakraClipboard.Indicator copied={copied} {...restProps}>
+      {children}
+    </ChakraClipboard.Indicator>
+  );
 };
 
 const ClipboardInput = (props: ClipboardInputProps) => {

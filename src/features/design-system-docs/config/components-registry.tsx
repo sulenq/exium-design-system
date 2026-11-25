@@ -13,12 +13,8 @@ import { BUTTONS_DOCS } from "@/features/design-system-docs/config/registry/butt
 import { DATA_DISPLAY_DOCS } from "@/features/design-system-docs/config/registry/data-display.registry";
 import { DECORATIVE_DOCS } from "@/features/design-system-docs/config/registry/decorative.registry";
 import { DISCLOSURE_DOCS } from "@/features/design-system-docs/config/registry/disclosure.registry";
-import { FEEDBACK_CORE_DOCS } from "@/features/design-system-docs/config/registry/feedback-core.registry";
 import { ICONS_DOCS } from "@/features/design-system-docs/config/registry/icons.registry";
-import { INPUTS_CORE_DOCS } from "@/features/design-system-docs/config/registry/inputs-core.registry";
-import { LAYOUT_CORE_DOCS } from "@/features/design-system-docs/config/registry/layout-core.registry";
 import { MEDIA_DOCS } from "@/features/design-system-docs/config/registry/media.registry";
-import { NAVIGATION_CORE_DOCS } from "@/features/design-system-docs/config/registry/navigation-core.registry";
 import { OVERLAY_DOCS } from "@/features/design-system-docs/config/registry/overlay.registry";
 import { TYPOGRAPHY_DOCS } from "@/features/design-system-docs/config/registry/typography.registry";
 import { UTILITIES_DOCS } from "@/features/design-system-docs/config/registry/utilities.registry";
@@ -28,15 +24,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   ...BRANDING_DOCS,
   ...BUTTONS_DOCS,
   ...TYPOGRAPHY_DOCS,
-  ...INPUTS_CORE_DOCS,
-  ...FEEDBACK_CORE_DOCS,
   ...DECORATIVE_DOCS,
   ...DATA_DISPLAY_DOCS,
   ...OVERLAY_DOCS,
   ...UTILITIES_DOCS,
-  ...NAVIGATION_CORE_DOCS,
   ...DISCLOSURE_DOCS,
-  ...LAYOUT_CORE_DOCS,
   ...MEDIA_DOCS,
   ...ICONS_DOCS,
   ...LAYOUT_DOCS,

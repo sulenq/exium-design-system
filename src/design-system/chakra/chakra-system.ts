@@ -2521,19 +2521,36 @@ export const chakraConfig = defineConfig({
     layerStyles: {
       glass: {
         value: {
-          bg: "bg.bodyAlpha",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          border: "1px solid",
-          borderColor: {
-            _light: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.08)",
+          position: "relative",
+          isolation: "isolate",
+          bg: {
+            base: "rgba(250, 250, 250, 0.35)",
+            _dark: "rgba(24, 24, 27, 0.35)",
           },
+          border: "1px solid",
+          borderColor: "an0 !important",
+          backdropFilter: "blur(6px) saturate(140%)",
+          WebkitBackdropFilter: "blur(6px) saturate(140%)",
           boxShadow: {
-            _light:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 1px 0 1px 0 rgba(255, 255, 255, 0.35), inset -1px -1px 1px 0 rgba(0, 0, 0, 0.02), inset 0 0 6px 0 rgba(255, 255, 255, 0.12), 0 4px 16px 0 rgba(0, 0, 0, 0.05)",
+            base: "inset 0 1px 0 0 rgba(255, 255, 255, 0.95)",
+            _dark: "inset 0 1px 0 0 rgba(255, 255, 255, 0.2)",
+          },
+          backgroundImage: {
+            base: "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 30%)",
             _dark:
-              "inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 1px 0 1px 0 rgba(255, 255, 255, 0.08), inset -1px -1px 1px 0 rgba(0, 0, 0, 0.15), inset 0 0 6px 0 rgba(255, 255, 255, 0.02), 0 4px 16px 0 rgba(0, 0, 0, 0.2)",
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.008) 0%, rgba(255, 255, 255, 0) 30%)",
+          },
+          _after: {
+            content: '""',
+            position: "absolute",
+            inset: "0",
+            borderRadius: "inherit",
+            pointerEvents: "none",
+            background: {
+              base: "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(214, 214, 214, 0.28) 0%, rgba(161, 161, 170, 0) 70%)",
+              _dark:
+                "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
+            },
           },
         },
       },

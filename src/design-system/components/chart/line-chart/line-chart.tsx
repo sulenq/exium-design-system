@@ -1,6 +1,7 @@
 // src/design-system/components/chart/line-chart/line-chart.tsx
 
 import type { CartesianChartProps } from "@/design-system/components/chart/chart.type";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   CartesianGrid,
@@ -8,7 +9,6 @@ import {
   Line,
   LineChart as RechartsLineChart,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -42,7 +42,7 @@ export const LineChart = (props: CartesianChartProps) => {
           />
           <YAxis axisLine={false} tickLine={false} />
           {showTooltip && (
-            <Tooltip cursor={false} content={<Chart.Tooltip />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           )}
           {showLegend && <Legend content={<Chart.Legend />} />}
           {chart.series.map((item) => (

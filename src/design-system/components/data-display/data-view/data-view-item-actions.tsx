@@ -15,7 +15,10 @@ import type { FormattedListItem } from "@/design-system/components/data-display/
 import { DataViewTableContext } from "@/design-system/components/data-display/contexts/data-view-table.context";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { updateClickOrigin } from "@/design-system/components/overlay/stores/dialog-animation-store";
 import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
@@ -151,7 +154,7 @@ export function resolveHref<T>(
 export function renderIcon(icon: ActionIconType | undefined) {
   if (!icon) return null;
   if (isValidElement(icon)) return icon;
-  return <AppIcon icon={icon as ComponentType} />;
+  return <AppIcon icon={icon as ComponentType} weight={"fill"} />;
 }
 
 export function resolveTriggerElement<T>(
@@ -198,7 +201,11 @@ const renderActionButton = <T,>(
     return (
       <IconButton
         asChild
-        variant={action.variant ?? "ghost"}
+        variant={action.variant ?? "plain"}
+        color={`${resolvedColorPalette}.muted`}
+        _hover={{
+          color: `${resolvedColorPalette}.fg`,
+        }}
         colorPalette={resolvedColorPalette}
         disabled={isDisabled}
         loading={isLoading}
@@ -255,6 +262,12 @@ const renderActionButton = <T,>(
     return (
       <IconButton
         variant={action.variant ?? "ghost"}
+        color={
+          action.colorPalette ? `${action.colorPalette}.fg/80` : "fg.muted"
+        }
+        _hover={{
+          color: action.colorPalette ? `${action.colorPalette}.fg` : "fg",
+        }}
         colorPalette={resolvedColorPalette}
         disabled={isDisabled}
         loading={isLoading}
@@ -501,11 +514,7 @@ export const DataViewItemActionsMenuContent = <
           visibleActions.map((action, index) => {
             if (isDeclarativeAction(action)) {
               const key = action.key ?? `menu-action-${index}`;
-              const isLoading = resolveLoading(
-                action.loading,
-                item.data,
-                item,
-              );
+              const isLoading = resolveLoading(action.loading, item.data, item);
               const isDisabled =
                 isLoading || resolveBoolean(action.disabled, item.data, item);
               const disabledMessage = resolveDisabledMessage(
@@ -526,14 +535,23 @@ export const DataViewItemActionsMenuContent = <
               );
               const resolvedHref = resolveHref(action.href, item.data, item);
               const iconNode = renderIcon(resolvedIcon);
-              const triggerElement = resolveTriggerElement(
-                action.modal,
-                item,
-              );
+              const triggerElement = resolveTriggerElement(action.modal, item);
 
               const menuItemContent = (
                 <>
-                  {isLoading ? <Loader /> : iconNode}
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    iconNode && (
+                      <Box
+                        as={"span"}
+                        display={"inline-flex"}
+                        color={action.colorPalette ? undefined : "fg.muted"}
+                      >
+                        {iconNode}
+                      </Box>
+                    )
+                  )}
 
                   {resolvedLabel}
                 </>
@@ -607,8 +625,13 @@ export const DataViewItemActionsMenuContent = <
                             if (targetKey) {
                               if (tableContext?.setModalHost) {
                                 tableContext.setModalHost({
-                                  item: item as unknown as FormattedListItem<Record<string, unknown>>,
-                                  action: action as unknown as import("@/design-system/components/data-display/data-view/data-view.type").DataViewDeclarativeItemAction<Record<string, unknown>>,
+                                  item: item as unknown as FormattedListItem<
+                                    Record<string, unknown>
+                                  >,
+                                  action:
+                                    action as unknown as import("@/design-system/components/data-display/data-view/data-view.type").DataViewDeclarativeItemAction<
+                                      Record<string, unknown>
+                                    >,
                                   modalKey: targetKey,
                                 });
                               }
@@ -726,7 +749,9 @@ export const DataListItemActionsTrigger = <
       )}
 
       {!contextedTrigger && (
-        <Menu.Trigger aria-label={t["data_view.row_actions"]()}>{children}</Menu.Trigger>
+        <Menu.Trigger aria-label={t["data_view.row_actions"]()}>
+          {children}
+        </Menu.Trigger>
       )}
 
       <DataViewItemActionsMenuContent item={item} itemActions={itemActions} />

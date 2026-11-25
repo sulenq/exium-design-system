@@ -1,6 +1,7 @@
 // src/design-system/components/chart/radar-chart/radar-chart.tsx
 
 import type { RadarChartProps } from "@/design-system/components/chart/chart.type";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   Legend,
@@ -10,7 +11,6 @@ import {
   Radar,
   RadarChart as RechartsRadarChart,
   ResponsiveContainer,
-  Tooltip,
 } from "recharts";
 
 export const RadarChart = (props: RadarChartProps) => {
@@ -34,7 +34,7 @@ export const RadarChart = (props: RadarChartProps) => {
           <PolarGrid stroke={chart.color("border")} />
           <PolarAngleAxis dataKey={chart.key(angleKey)} />
           <PolarRadiusAxis />
-          {showTooltip && <Tooltip content={<Chart.Tooltip />} />}
+          {showTooltip && <ChartTooltip content={<ChartTooltipContent />} />}
           {showLegend && <Legend content={<Chart.Legend />} />}
           {chart.series.map((item) => (
             <Radar

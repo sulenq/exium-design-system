@@ -1,8 +1,9 @@
 // src/design-system/components/chart/donut-chart/donut-chart.tsx
 
 import type { PieChartProps } from "@/design-system/components/chart/chart.type";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Chart, useChart } from "@chakra-ui/charts";
-import { Cell, Legend, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, Legend, Pie, PieChart as RechartsPieChart, ResponsiveContainer } from "recharts";
 
 export const DonutChart = (props: PieChartProps) => {
   // Props
@@ -23,7 +24,7 @@ export const DonutChart = (props: PieChartProps) => {
       <ResponsiveContainer width={"100%"} height={"100%"}>
         <RechartsPieChart>
           {showTooltip && (
-            <Tooltip cursor={false} content={<Chart.Tooltip hideLabel />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           )}
           {showLegend && <Legend content={<Chart.Legend />} />}
           <Pie

@@ -1,6 +1,7 @@
 // src/design-system/components/chart/area-chart/area-chart.tsx
 
 import type { CartesianChartProps } from "@/design-system/components/chart/chart.type";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   Area,
@@ -8,7 +9,6 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -45,7 +45,7 @@ export const AreaChart = (props: CartesianChartProps) => {
           />
           <YAxis axisLine={false} tickLine={false} />
           {showTooltip && (
-            <Tooltip cursor={false} content={<Chart.Tooltip />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           )}
           {showLegend && <Legend content={<Chart.Legend />} />}
           {chart.series.map((item) => (

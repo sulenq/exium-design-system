@@ -482,7 +482,12 @@ const DataListTableHeader = (props: DataViewTableHeaderProps) => {
             selectAllItems={selectAllItems}
             triggerActionBarMode={true}
           >
-            <IconButton variant={"ghost"} size={"xs"}>
+            <IconButton
+              variant={"plain"}
+              color={"fg.muted"}
+              _hover={{ color: "fg" }}
+              size={"xs"}
+            >
               <AppIcon icon={IconListCheck} />
             </IconButton>
           </DataViewBatchActionsTrigger>
@@ -896,14 +901,16 @@ const DataListTableRow = memo(
                             item={item}
                           >
                             <IconButton
-                              variant={"ghost"}
+                              variant={"plain"}
+                              color={"fg.muted"}
+                              _hover={{ color: "fg" }}
                               opacity={isStickyMenuOpen ? 1 : 0}
                               _groupHover={{ opacity: 1 }}
                               _groupActive={{ opacity: 1 }}
                               _focusVisible={{ opacity: 1 }}
                               transition={"opacity 0.15s ease"}
                             >
-                              <AppIcon icon={EllipsisIcon} />
+                              <AppIcon icon={EllipsisIcon} weight={"bold"} />
                             </IconButton>
                           </DataListItemActionsTrigger>
                         )}

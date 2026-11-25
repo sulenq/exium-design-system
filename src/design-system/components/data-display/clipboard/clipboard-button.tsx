@@ -16,7 +16,12 @@ export const ClipboardButton = (props: ClipboardButtonProps) => {
       {isIconButton && (
         <Clipboard.Root value={value}>
           <Clipboard.Trigger asChild>
-            <IconButton {...restProps}>
+            <IconButton
+              variant={"plain"}
+              color={"fg.muted"}
+              _hover={{ color: "fg" }}
+              {...restProps}
+            >
               <Clipboard.Indicator />
             </IconButton>
           </Clipboard.Trigger>

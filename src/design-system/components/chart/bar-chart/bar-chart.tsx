@@ -1,6 +1,7 @@
 // src/design-system/components/chart/bar-chart/bar-chart.tsx
 
 import type { CartesianChartProps } from "@/design-system/components/chart/chart.type";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   Bar,
@@ -8,7 +9,6 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -42,7 +42,7 @@ export const BarChart = (props: CartesianChartProps) => {
           />
           <YAxis axisLine={false} tickLine={false} />
           {showTooltip && (
-            <Tooltip cursor={{ fill: chart.color("bg.muted") }} content={<Chart.Tooltip />} />
+            <ChartTooltip cursor={{ fill: chart.color("bg.muted") }} content={<ChartTooltipContent />} />
           )}
           {showLegend && <Legend content={<Chart.Legend />} />}
           {chart.series.map((item) => (

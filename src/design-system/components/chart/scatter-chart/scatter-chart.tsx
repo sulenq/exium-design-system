@@ -1,13 +1,13 @@
 // src/design-system/components/chart/scatter-chart/scatter-chart.tsx
 
 import type { ScatterChartProps } from "@/design-system/components/chart/chart.type";
+import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { Chart, useChart } from "@chakra-ui/charts";
 import {
   CartesianGrid,
   Scatter,
   ScatterChart as RechartsScatterChart,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -49,7 +49,7 @@ export const ScatterChart = (props: ScatterChartProps) => {
             tickLine={false}
           />
           {showTooltip && (
-            <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Chart.Tooltip />} />
+            <ChartTooltip cursor={{ strokeDasharray: "3 3" }} content={<ChartTooltipContent />} />
           )}
           <Scatter
             isAnimationActive={false}

@@ -56,11 +56,13 @@ export const MaskedText = memo((props: MaskedTextProps) => {
         {withToggle && (
           <IconButton
             variant={"plain"}
+            color={"fg.muted"}
+            _hover={{ color: "fg" }}
             size={"sm"}
             aria-label={isVisible ? t["common.hide"]() : t["common.show"]()}
             onClick={() => setIsVisible((prev) => !prev)}
           >
-            <AppIcon icon={isVisible ? EyeOffIcon : EyeIcon} />
+            <AppIcon icon={isVisible ? EyeOffIcon : EyeIcon} weight={"fill"} />
           </IconButton>
         )}
 
@@ -68,6 +70,8 @@ export const MaskedText = memo((props: MaskedTextProps) => {
           <ClipboardButton
             value={value}
             variant={"plain"}
+            color={"fg.muted"}
+            _hover={{ color: "fg" }}
             size={"sm"}
             aria-label={copyLabel}
           />

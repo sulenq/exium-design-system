@@ -48,7 +48,6 @@ export const Url = memo((props: UrlProps) => {
 
       <ClipboardButton
         value={url}
-        variant={"ghost"}
         aria-label={label}
         flexShrink={0}
       />

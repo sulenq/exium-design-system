@@ -1,14 +1,15 @@
-import { DrawerPlaygroundDemo, DialogPlaygroundDemo, ModalPlaygroundDemo } from "@/features/design-system-docs/config/registry/core.demos";
 import { Button } from "@/design-system/components/button/button/button";
-import { InfoTip, ToggleTip } from "@/design-system/components/input/toggle-tip/toggle-tip";
-import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
-import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
+import { P } from "@/design-system/components/typography/p/p";
+import { InfoTip, ToggleTip } from "@/design-system/components/input/toggle-tip/toggle-tip";
+import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { P } from "@/design-system/components/typography/p/p";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { ChevronDownIcon } from "lucide-react";
 
@@ -343,3 +344,260 @@ export const OVERLAY_DOCS: Record<string, ComponentDocSpec> = {
   },
 
 };
+
+
+const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
+  const placement =
+    (props?.placement as "start" | "end" | "top" | "bottom") || "end";
+  const size =
+    (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs";
+
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "docs-drawer",
+  });
+  return (
+    <Drawer.Root
+      modalKey={modalKey}
+      opened={isOpen}
+      open={open}
+      close={close}
+      placement={placement}
+      size={size}
+    >
+      <Drawer.Trigger asChild>
+        <Button variant={"outline"}>Buka Drawer Samping</Button>
+      </Drawer.Trigger>
+      <Drawer.Content>
+        <Drawer.Header>
+          <P fontWeight={"bold"} fontSize={"lg"}>
+            Drawer Exium
+          </P>
+        </Drawer.Header>
+        <Drawer.Body>
+          <VStack gap={4}>
+            <P color={"fg.muted"}>
+              Panel geser samping untuk form, filter detail, atau konfigurasi
+              sekunder aplikasi.
+            </P>
+            <P color={"fg.muted"}>
+              Desain sistem Exium menyediakan drawer dengan adaptasi responsif,
+              gesture swipe to dismiss pada mobile, dan integrasi riwayat URL.
+            </P>
+            <P color={"fg.muted"}>
+              Konten panjang ini disiapkan untuk mendemonstrasikan scroll
+              container di dalam body drawer, menjaga header dan footer tetap
+              terpasang rapi (fixed).
+            </P>
+            <P color={"fg.muted"}>
+              Baris tambahan 1: Navigasi URL otomatis menyinkronkan query param
+              overlay sehingga tombol back pada peramban berfungsi secara
+              native.
+            </P>
+            <P color={"fg.muted"}>
+              Baris tambahan 2: Ukuran default menggunakan token xs yang kompak,
+              elegan, dan proporsional untuk formulir data entri.
+            </P>
+            <P color={"fg.muted"}>
+              Baris tambahan 3: Tombol aksi pada footer diatur full-width agar
+              mudah dijangkau oleh pengguna baik di desktop maupun layar sentuh.
+            </P>
+          </VStack>
+        </Drawer.Body>
+        <Drawer.Footer>
+          <Button w={"full"} variant={"outline"} onClick={close}>
+            Tutup Drawer
+          </Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  );
+};
+
+
+const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
+  const size =
+    (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs";
+  const placement = (props?.placement as "center" | "top") || "center";
+  const scrollBehavior =
+    (props?.scrollBehavior as "inside" | "outside") || "inside";
+
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "docs-dialog",
+  });
+
+  return (
+    <Dialog.Root
+      modalKey={modalKey}
+      opened={isOpen}
+      open={open}
+      close={close}
+      size={size}
+      placement={placement}
+      scrollBehavior={scrollBehavior}
+    >
+      <Dialog.Trigger asChild>
+        <Button variant={"outline"}>Buka Dialog Preview</Button>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header>
+          <P fontSize={"lg"} fontWeight={"bold"} textAlign={"center"}>
+            Exium Dialog Title
+          </P>
+        </Dialog.Header>
+        <Dialog.Body>
+          <VStack gap={4}>
+            <P color={"fg.muted"}>
+              Ini adalah contoh dialog modal terpusat dari Exium Design System
+              dengan animasi origin klik halus dan backdrop blur.
+            </P>
+            <P color={"fg.muted"}>
+              Dengan opsi scrollBehavior={scrollBehavior}, jika konten di dalam
+              body melebihi batas ketinggian viewport, scroll container internal
+              akan aktif secara otomatis tanpa merusak tata letak dialog.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 1: Exium Design System mengutamakan
+              konsistensi UX pada overlay dengan menyinkronkan state ke query
+              param URL ?overlay=.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 2: Setiap modal anak yang bersarang (nested)
+              mewarisi prefix induk dengan notasi titik (.childKey) agar tidak
+              memicu unmount pada dialog induk.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 3: Ukuran modal standar kini menggunakan
+              default xs untuk tampilan yang ringkas, bersih, dan fokus pada
+              konten esensial.
+            </P>
+            <P color={"fg.muted"}>
+              Scroll test paragraf 4: Tombol aksi utama maupun pembatalan di
+              area footer menggunakan lebar penuh (full width) untuk ergonomi
+              klik maksimal.
+            </P>
+          </VStack>
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Button w={"full"} variant={"outline"} onClick={close}>
+            Tutup Dialog
+          </Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
+  );
+};
+
+
+const ModalPlaygroundDemo = ({
+  size = "xs",
+}: {
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "full";
+}) => {
+  const { modalKey, isOpen, open, close } = usePopModal({
+    modalKey: "docs-modal",
+  });
+
+  const childModal = usePopModal({
+    modalKey: `${modalKey}.child`,
+  });
+
+  return (
+    <>
+      <Modal.Root
+        modalKey={modalKey}
+        opened={isOpen}
+        open={open}
+        close={close}
+        size={size}
+      >
+        <Modal.Trigger asChild>
+          <Button variant={"outline"}>Buka Modal Adaptif</Button>
+        </Modal.Trigger>
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title
+              textAlign={"center"}
+              fontWeight={"bold"}
+              fontSize={"lg"}
+            >
+              Exium Adaptive Modal (Parent)
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <VStack gap={4}>
+              <P color={"fg.muted"}>
+                Modal adaptif Exium secara cerdas merender komponen Dialog
+                mengambang pada layar desktop, dan otomatis bertransformasi
+                menjadi Drawer geser bawah pada layar ponsel.
+              </P>
+              <P color={"fg.muted"}>
+                Coba buka child modal bersarang (nested) di bawah ini untuk
+                menguji urutan z-index, stack backdrop, dan ketahanan saat
+                browser di-refresh.
+              </P>
+              <Button
+                variant={"solid"}
+                primary
+                onClick={() => childModal.open()}
+              >
+                Buka Nested Child Modal
+              </Button>
+            </VStack>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button w={"full"} variant={"outline"} onClick={close}>
+              Tutup Modal Parent
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+
+      {/* Nested Child Modal */}
+      <Modal.Root
+        modalKey={childModal.modalKey}
+        opened={childModal.isOpen}
+        open={childModal.open}
+        close={childModal.close}
+        size={"xs"}
+      >
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title
+              textAlign={"center"}
+              fontWeight={"bold"}
+              fontSize={"lg"}
+            >
+              Nested Child Modal
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <VStack gap={3} textAlign={"center"}>
+              <P color={"fg.muted"}>
+                Ini adalah modal anak bersarang dengan key:
+              </P>
+              <P fontWeight={"semibold"} color={"fg.default"}>
+                {childModal.modalKey}
+              </P>
+              <P fontSize={"sm"} color={"fg.subtle"}>
+                Backdrop dan dialog anak selalu berada di atas modal induk, baik
+                saat dibuka interaktif maupun saat di-refresh pada URL langsung
+                (?overlay=docs-modal.child).
+              </P>
+            </VStack>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              w={"full"}
+              variant={"solid"}
+              primary
+              onClick={childModal.close}
+            >
+              Tutup Child Modal
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+    </>
+  );
+};
+
