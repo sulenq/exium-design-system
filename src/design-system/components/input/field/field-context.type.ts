@@ -11,4 +11,10 @@ export type FieldContextValue = {
   label?: ReactNode;
   optional?: boolean;
   labelProps?: ChakraField.LabelProps;
+  /**
+   * Called by FloatingLabel while mounted. When nothing claims the label (FileInput,
+   * Checkbox, CameraCapture…), the floating Field renders a static label instead, so
+   * the label never disappears. Returns the release function.
+   */
+  claimFloatingLabel?: () => () => void;
 };

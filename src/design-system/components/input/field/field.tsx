@@ -12,7 +12,9 @@ import {
   Children,
   forwardRef,
   isValidElement,
+  useCallback,
   useMemo,
+  useState,
   type ReactNode,
 } from "react";
 import { t } from "@/shared/libs/i18n";
@@ -65,10 +67,33 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
       return found;
     }, [children]);
 
+    // States
+    // How many FloatingLabels are rendering this field's label
+    const [floatingClaims, setFloatingClaims] = useState(0);
+
+    // Handlers
+    const claimFloatingLabel = useCallback(() => {
+      setFloatingClaims((count) => count + 1);
+      return () => setFloatingClaims((count) => count - 1);
+    }, []);
+
     const resolvedHasValue =
       hasValueProp !== undefined ? hasValueProp : childHasValue;
     const isFloating =
       isFloatingProp !== undefined ? isFloatingProp : resolvedHasValue;
+    const staticLabel = label && (
+      <ChakraField.Label fontSize={"md"} {...labelProps}>
+        <P fontSize={"xs"} fontWeight={"medium"} color={"fg.subtle"}>
+          {label}
+        </P>
+
+        {optional && (
+          <Badge fontSize={"2xs"} colorPalette={"gray"} color={"fg.subtle"}>
+            {t["common.optional"]()}
+          </Badge>
+        )}
+      </ChakraField.Label>
+    );
     const lockedNotice = locked && (
       <HStack gap={1} color={"fg.muted"}>
         <AppIcon icon={LockIcon} boxSize={3.5} />
@@ -93,8 +118,11 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
               label,
               optional,
               labelProps,
+              claimFloatingLabel,
             }}
           >
+            {/* Children that do not float the label (FileInput, Checkbox…) still get one */}
+            {floatingClaims === 0 && staticLabel}
             {children}
           </FieldContext.Provider>
 
@@ -125,19 +153,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
           data-locked={locked || undefined}
           {...restProps}
         >
-        {label && (
-          <ChakraField.Label fontSize={"md"} {...labelProps}>
-            <P fontSize={"xs"} fontWeight={"medium"} color={"fg.subtle"}>
-              {label}
-            </P>
-
-            {optional && (
-              <Badge fontSize={"2xs"} colorPalette={"gray"} color={"fg.subtle"}>
-                {t["common.optional"]()}
-              </Badge>
-            )}
-          </ChakraField.Label>
-        )}
+        {staticLabel}
 
         <FieldContext.Provider
           value={{

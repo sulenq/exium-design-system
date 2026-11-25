@@ -5,11 +5,21 @@ import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { Field as ChakraField } from "@chakra-ui/react";
+import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
 import { t } from "@/shared/libs/i18n";
+import { useLayoutEffect } from "react";
 
 export const FloatingLabel = (props: FloatingLabelProps) => {
   // Props
   const { label, optional, left = "12px", right = "12px" } = props;
+
+  // Contexts
+  const fieldContext = useFieldContextValue();
+  const claimFloatingLabel = fieldContext?.claimFloatingLabel;
+
+  // Effects
+  // Tell the Field this label is shown here, before paint, so it skips its static label
+  useLayoutEffect(() => claimFloatingLabel?.(), [claimFloatingLabel]);
 
   return (
     <Box
