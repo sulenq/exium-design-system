@@ -27,7 +27,12 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { CaretUpDownIcon, CheckIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react";
+import {
+  CaretUpDownIcon,
+  CheckIcon,
+  PlusIcon,
+  XCircleIcon,
+} from "@phosphor-icons/react";
 import type React from "react";
 import {
   isValidElement,
@@ -320,7 +325,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
             <AppIcon
               icon={XCircleIcon}
               weight={"fill"}
-              size={iconSize}
+              size={"md"}
               cursor={"pointer"}
               color={"fg.muted"}
               mr={"-2px"}

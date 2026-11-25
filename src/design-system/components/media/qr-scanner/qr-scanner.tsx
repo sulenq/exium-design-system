@@ -226,18 +226,24 @@ export const QrScanner = (props: QrScannerProps) => {
 
   return (
     <Box
-      pos={"relative"}
+      display={"flex"}
+      flexDir={"column"}
       w={"full"}
-      aspectRatio={1}
-      overflow={"hidden"}
-      rounded={"lg"}
-      bg={"black"}
-      color={"white"}
+      gap={3}
       role={"region"}
       aria-label={t["qr_scanner.label"]()}
       data-status={isBlocked ? cameraStatus : (result?.kind ?? (isDone ? "done" : cameraStatus))}
       {...restProps}
     >
+      <Box
+        pos={"relative"}
+        w={"full"}
+        aspectRatio={1}
+        overflow={"hidden"}
+        rounded={"lg"}
+        bg={"black"}
+        color={"white"}
+      >
       <video
         ref={videoRef}
         muted
@@ -349,9 +355,11 @@ export const QrScanner = (props: QrScannerProps) => {
         </VStack>
       )}
 
+      </Box>
+
       {/* Status and controls */}
       {!isBlocked && !isManualOpen && (
-        <VStack pos={"absolute"} left={3} right={3} bottom={3} gap={2} zIndex={2}>
+        <VStack gap={2} align={"center"}>
           <HStack
             role={"status"}
             aria-live={"polite"}
@@ -364,8 +372,9 @@ export const QrScanner = (props: QrScannerProps) => {
                 ? "green.600"
                 : result?.kind === "rejected"
                   ? "red.600"
-                  : "blackAlpha.700"
+                  : "bg.subtle"
             }
+            color={result ? "white" : "fg"}
             maxW={"full"}
           >
             {result && (

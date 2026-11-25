@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as DemoRouteImport } from './routes/demo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DesignSystemUiRouteImport } from './routes/design-system/ui'
 import { Route as AuthCallbackKeycloakRouteImport } from './routes/auth.callback.keycloak'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoRoute = DemoRouteImport.update({
   id: '/demo',
   path: '/demo',
@@ -38,12 +44,14 @@ const AuthCallbackKeycloakRoute = AuthCallbackKeycloakRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/login': typeof LoginRoute
   '/design-system/ui': typeof DesignSystemUiRoute
   '/auth/callback/keycloak': typeof AuthCallbackKeycloakRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/login': typeof LoginRoute
   '/design-system/ui': typeof DesignSystemUiRoute
   '/auth/callback/keycloak': typeof AuthCallbackKeycloakRoute
 }
@@ -51,18 +59,25 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/demo': typeof DemoRoute
+  '/login': typeof LoginRoute
   '/design-system/ui': typeof DesignSystemUiRoute
   '/auth/callback/keycloak': typeof AuthCallbackKeycloakRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo' | '/design-system/ui' | '/auth/callback/keycloak'
+  fullPaths:
+    | '/'
+    | '/demo'
+    | '/login'
+    | '/design-system/ui'
+    | '/auth/callback/keycloak'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo' | '/design-system/ui' | '/auth/callback/keycloak'
+  to: '/' | '/demo' | '/login' | '/design-system/ui' | '/auth/callback/keycloak'
   id:
     | '__root__'
     | '/'
     | '/demo'
+    | '/login'
     | '/design-system/ui'
     | '/auth/callback/keycloak'
   fileRoutesById: FileRoutesById
@@ -70,12 +85,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoRoute: typeof DemoRoute
+  LoginRoute: typeof LoginRoute
   DesignSystemUiRoute: typeof DesignSystemUiRoute
   AuthCallbackKeycloakRoute: typeof AuthCallbackKeycloakRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo': {
       id: '/demo'
       path: '/demo'
@@ -110,6 +133,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoRoute: DemoRoute,
+  LoginRoute: LoginRoute,
   DesignSystemUiRoute: DesignSystemUiRoute,
   AuthCallbackKeycloakRoute: AuthCallbackKeycloakRoute,
 }

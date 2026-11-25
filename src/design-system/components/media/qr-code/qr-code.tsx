@@ -49,17 +49,21 @@ export const QrCode = (props: QrCodeProps) => {
           aria-label={resolvedLabel}
           position={"relative"}
           p={3}
-          bg={"white"}
           rounded={theme.radii.component}
           border={"1px solid"}
           borderColor={"border.muted"}
         >
           <ChakraQrCode.Frame>
-            <ChakraQrCode.Pattern fill={"black"} />
+            <ChakraQrCode.Pattern />
           </ChakraQrCode.Frame>
 
           {hasOverlay && (
-            <ChakraQrCode.Overlay bg={"white"} p={1}>
+            <ChakraQrCode.Overlay
+              p={"2px"}
+              w={"fit"}
+              h={"fit"}
+              rounded={theme.radii.component}
+            >
               {overlay}
             </ChakraQrCode.Overlay>
           )}

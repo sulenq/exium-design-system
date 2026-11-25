@@ -122,7 +122,9 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     const endElementNode = (
       <VisibilityTrigger
         disabled={restProps.disabled}
+        variant={"plain"}
         color={"fg.muted"}
+        _hover={{ color: "fg" }}
         onPointerDown={(e) => {
           if (restProps.disabled) return;
           if (e.button !== 0) return;

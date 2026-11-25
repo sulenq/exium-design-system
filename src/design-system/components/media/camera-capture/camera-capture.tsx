@@ -410,7 +410,7 @@ const CameraCaptureSession = (props: CameraCaptureSessionProps) => {
           bg={"linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)"}
         >
           <IconButton
-            variant={"ghost"}
+            variant={"whiteAlphaGhost"}
             color={"white"}
             aria-label={t["camera_capture.close"]()}
             onClick={handleClose}
@@ -426,7 +426,7 @@ const CameraCaptureSession = (props: CameraCaptureSessionProps) => {
 
           {allowSwitchCamera && (
             <IconButton
-              variant={"ghost"}
+              variant={"whiteAlphaGhost"}
               color={"white"}
               disabled={isRecording}
               aria-label={t["camera_capture.switch_camera"]()}
@@ -581,8 +581,16 @@ const CameraCaptureSession = (props: CameraCaptureSessionProps) => {
             </P>
           )}
 
-          <HStack w={"full"} maxW={"420px"} justify={"space-between"} align={"center"}>
-            <Box w={"96px"}>
+          <HStack
+            position={"relative"}
+            w={"full"}
+            maxW={"420px"}
+            mx={"auto"}
+            minH={"72px"}
+            justify={"space-between"}
+            align={"center"}
+          >
+            <Box flex={1}>
               {isFull && (
                 <P fontSize={"xs"} color={"whiteAlpha.800"}>
                   {t["camera_capture.max_reached"]({ max: String(maxItems) })}
@@ -590,35 +598,42 @@ const CameraCaptureSession = (props: CameraCaptureSessionProps) => {
               )}
             </Box>
 
-            {/* Shutter */}
+            {/* Shutter — always centered */}
             <Box
-              asChild
-              w={"72px"}
-              h={"72px"}
-              rounded={"full"}
-              border={"4px solid white"}
-              bg={mode === "video" ? "red.500" : "whiteAlpha.300"}
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              cursor={"pointer"}
-              _disabled={{ opacity: 0.4, cursor: "not-allowed" }}
-              _focusVisible={{ outline: "3px solid", outlineColor: "yellow.400", outlineOffset: "3px" }}
+              position={"absolute"}
+              left={"50%"}
+              transform={"translateX(-50%)"}
             >
-              <button
-                ref={shutterRef}
-                type={"button"}
-                disabled={status !== "active" || isBusy || (isFull && !isRecording)}
-                aria-label={shutterLabel}
-                onClick={handleShutter}
+              <Box
+                asChild
+                w={"72px"}
+                h={"72px"}
+                rounded={"full"}
+                border={"4px solid white"}
+                bg={mode === "video" ? "red.500" : "whiteAlpha.300"}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                cursor={"pointer"}
+                _disabled={{ opacity: 0.4, cursor: "not-allowed" }}
+                _focusVisible={{ outline: "3px solid", outlineColor: "yellow.400", outlineOffset: "3px" }}
               >
-                {isRecording && <Box w={"24px"} h={"24px"} rounded={"sm"} bg={"white"} />}
-                {retakeId && !isRecording && <AppIcon icon={RefreshCwIcon} boxSize={7} />}
-              </button>
+                <button
+                  ref={shutterRef}
+                  type={"button"}
+                  disabled={status !== "active" || isBusy || (isFull && !isRecording)}
+                  aria-label={shutterLabel}
+                  onClick={handleShutter}
+                >
+                  {isRecording && <Box w={"24px"} h={"24px"} rounded={"sm"} bg={"white"} />}
+                  {retakeId && !isRecording && <AppIcon icon={RefreshCwIcon} boxSize={7} />}
+                </button>
+              </Box>
             </Box>
 
-            <Box w={"96px"} display={"flex"} justifyContent={"end"}>
+            <Box flex={1} display={"flex"} justifyContent={"end"}>
               <Button
+                primary={true}
                 disabled={items.length === 0 || isRecording}
                 onClick={() => onDone(items)}
               >

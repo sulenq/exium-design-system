@@ -146,12 +146,14 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         endElement={
           value ? (
             <IconButton
+              variant={"plain"}
               color={"fg.muted"}
+              _hover={{ color: "fg" }}
               size={"xs"}
               onClick={handleClear}
               me={-2}
             >
-              <AppIcon icon={XCircleIcon} weight={"fill"} />
+              <AppIcon icon={XCircleIcon} weight={"fill"} size={"md"} />
             </IconButton>
           ) : undefined
         }

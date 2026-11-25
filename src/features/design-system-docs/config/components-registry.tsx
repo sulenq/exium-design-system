@@ -177,7 +177,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
-    generateCode: (props) => `<Logo boxSize={${Number(props.boxSize) || 32}} />`,
+    generateCode: (props) =>
+      `<Logo boxSize={${Number(props.boxSize) || 32}} />`,
     renderPlayground: (props) => <Logo boxSize={Number(props.boxSize) || 32} />,
   },
 
@@ -676,7 +677,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["xs", "sm", "md"],
       },
     ],
-    generateCode: (props) => `<CountBadge max={${Number(props.max) || 99}} size={"${String(props.size || "xs")}"}>
+    generateCode: (
+      props,
+    ) => `<CountBadge max={${Number(props.max) || 99}} size={"${String(props.size || "xs")}"}>
   {${Number(props.children) || 0}}
 </CountBadge>`,
     renderPlayground: (props) => (
@@ -1949,7 +1952,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     generateCode: (props) => {
       const country = String(props.defaultCountry || "ID");
       const lockedProp = props.countryLocked ? "\n  countryLocked={true}" : "";
-      const stripProp = props.stripLeadingZero ? "\n  stripLeadingZero={true}" : "";
+      const stripProp = props.stripLeadingZero
+        ? "\n  stripLeadingZero={true}"
+        : "";
       return `<PhoneInput
   modalKey={"docs-phone-input"}
   defaultCountry={"${country}"}${lockedProp}${stripProp}
@@ -3007,7 +3012,8 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         description: "Label untuk screen reader; default dari i18n.",
       },
     ],
-    generateCode: (props) => `<CloseButton size={"${String(props.size || "md")}"} />`,
+    generateCode: (props) =>
+      `<CloseButton size={"${String(props.size || "md")}"} />`,
     renderPlayground: (props) => (
       <CloseButton size={(props.size as "md") || "md"} />
     ),
@@ -3133,7 +3139,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     ],
     generateCode: (props) => {
       const style = String(props.style || "currency");
-      const currencyProp = style === "currency" ? '\n  currency={"IDR"}\n  maximumFractionDigits={0}' : "";
+      const currencyProp =
+        style === "currency"
+          ? '\n  currency={"IDR"}\n  maximumFractionDigits={0}'
+          : "";
       return `<FormatNumber
   value={${Number(props.value) || 0}}
   style={"${style}"}${currencyProp}
@@ -3243,7 +3252,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: [1, 2, 3, 4],
       },
     ],
-    generateCode: (props) => `<StatGrid.Root columns={${Number(props.columns) || 2}}>
+    generateCode: (
+      props,
+    ) => `<StatGrid.Root columns={${Number(props.columns) || 2}}>
   <StatGrid.Item index={0} columns={${Number(props.columns) || 2}}>
     <StatGrid.Header>
       <StatGrid.Label>{"Total Pengguna Aktif"}</StatGrid.Label>
@@ -3301,7 +3312,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["sm", "md", "lg"],
       },
     ],
-    generateCode: (props) => `<Timeline.Root size={"${String(props.size || "md")}"}>
+    generateCode: (
+      props,
+    ) => `<Timeline.Root size={"${String(props.size || "md")}"}>
   <Timeline.Item>
     <Timeline.Connector>
       <Timeline.Separator />
@@ -4060,7 +4073,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["xs", "sm", "md", "lg", "xl", "full"],
       },
     ],
-    generateCode: (props) => `<Drawer.Root modalKey={"docs-drawer"} placement={"${String(props.placement || "end")}"}>
+    generateCode: (
+      props,
+    ) => `<Drawer.Root modalKey={"docs-drawer"} placement={"${String(props.placement || "end")}"}>
   <Drawer.Trigger asChild>
     <Button variant={"outline"}>{"Buka Drawer"}</Button>
   </Drawer.Trigger>
@@ -4871,6 +4886,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       size: "md",
       errorCorrection: "M",
       withLogo: false,
+      colorPalette: "blue",
       downloadable: false,
     },
     propsSpec: [
@@ -4913,6 +4929,14 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         description: "Elemen kecil di tengah kode, misalnya logo.",
       },
       {
+        name: "colorPalette",
+        type: "string",
+        defaultValue: "blue",
+        description: "Skema warna kode QR dan logo.",
+        controlKind: "select",
+        options: COLOR_PALETTE_OPTIONS,
+      },
+      {
         name: "downloadable",
         type: "boolean",
         defaultValue: false,
@@ -4933,10 +4957,11 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
       const sz =
         props.size && props.size !== "md" ? ` size={"${props.size}"}` : "";
       const dl = props.downloadable ? ` downloadable={true}` : "";
+      const clr = `${String(props.colorPalette || "blue")}.solid`;
       if (props.withLogo) {
-        return `<QrCode${val}${sz}${dl}\n  overlay={\n    <Image src={"/assets/images/logo.png"} alt={"Exium Logo"} w={"full"} h={"full"} objectFit={"contain"} />\n  }\n/>`;
+        return `<QrCode${val}${sz}${dl}\n  color={"${clr}"}\n  overlay={<Logo boxSize={7} color={"${clr}"} />}\n/>`;
       }
-      return `<QrCode${val}${sz}${dl} />`;
+      return `<QrCode${val}${sz}${dl} color={"${clr}"} />`;
     },
     renderPlayground: (props) => (
       <QrCode
@@ -4945,14 +4970,12 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         errorCorrection={
           (props.errorCorrection as QrCodeErrorCorrection) || "M"
         }
+        color={`${String(props.colorPalette || "blue")}.solid`}
         overlay={
           props.withLogo ? (
-            <Image
-              src={"/assets/images/logo.png"}
-              alt={"Exium Logo"}
-              w={"full"}
-              h={"full"}
-              objectFit={"contain"}
+            <Logo
+              boxSize={7}
+              color={`${String(props.colorPalette || "blue")}.solid`}
             />
           ) : undefined
         }

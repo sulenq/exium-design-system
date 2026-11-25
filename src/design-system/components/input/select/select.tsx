@@ -230,7 +230,7 @@ export default function SelectInput(props: SelectProps) {
             <AppIcon
               icon={XCircleIcon}
               weight={"fill"}
-              size={iconSize}
+              size={"md"}
               cursor={"pointer"}
               color={props?.color ?? "fg.muted"}
               mr={"-2px"}
