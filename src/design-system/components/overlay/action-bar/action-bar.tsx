@@ -12,11 +12,17 @@ import { ActionBar as ChakraActioBar } from "@chakra-ui/react";
 import { forwardRef } from "react";
 
 const ActionBarRoot = (props: ActionBarRootProps) => {
-  return <ChakraActioBar.Root {...props} />;
+  return <ChakraActioBar.Root modal={false} {...props} />;
 };
 
 const ActionBarPositioner = (props: ActionBarPositionerProps) => {
-  return <ChakraActioBar.Positioner {...props} />;
+  return (
+    <ChakraActioBar.Positioner
+      pointerEvents={"none"}
+      zIndex={"popover"}
+      {...props}
+    />
+  );
 };
 
 const ActionBarContent = forwardRef<HTMLDivElement, ActionBarContentProps>(
@@ -27,10 +33,12 @@ const ActionBarContent = forwardRef<HTMLDivElement, ActionBarContentProps>(
     return (
       <ChakraActioBar.Content
         ref={ref}
+        pointerEvents={"auto"}
         gap={1}
         p={1}
-        pl={3}
         bg={"bg.body"}
+        border={"1px solid"}
+        borderColor={"border.subtle"}
         rounded={theme.radii.container}
         shadow={"md"}
         _open={{

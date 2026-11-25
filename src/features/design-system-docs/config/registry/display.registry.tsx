@@ -26,10 +26,16 @@ const ActionBarPlaygroundDemo = () => {
       <Button variant={"outline"} onClick={() => setOpen((prev) => !prev)}>
         {open ? "Tutup ActionBar" : "Buka ActionBar (3 dipilih)"}
       </Button>
-      <ActionBar.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+      <ActionBar.Root
+        open={open}
+        onOpenChange={(e) => setOpen(e.open)}
+        closeOnInteractOutside={false}
+      >
         <ActionBar.Positioner>
           <ActionBar.Content>
-            <P fontSize={"sm"}>{"3 ternak dipilih"}</P>
+            <P fontSize={"sm"} px={2}>
+              {"3 ternak dipilih"}
+            </P>
             <ActionBar.Separator />
             <Button size={"sm"}>{"Jadwalkan vaksin"}</Button>
             <ActionBar.CloseTrigger asChild>
@@ -141,14 +147,12 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
     importPath:
       'import { ActionBar } from "@/design-system/components/overlay/action-bar/action-bar";',
     component: ActionBar.Root,
-    defaultProps: { open: true },
+    defaultProps: {},
     propsSpec: [
       {
         name: "open",
         type: "boolean",
-        defaultValue: true,
         description: "Tampilkan bar.",
-        controlKind: "boolean",
       },
       {
         name: "onOpenChange",
@@ -162,7 +166,7 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
     generateCode: () => `<ActionBar.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
   <ActionBar.Positioner>
     <ActionBar.Content>
-      <P fontSize={"sm"}>{"3 ternak dipilih"}</P>
+      <P fontSize={"sm"} px={2}>{"3 ternak dipilih"}</P>
       <ActionBar.Separator />
       <Button size={"sm"}>{"Jadwalkan vaksin"}</Button>
       <ActionBar.CloseTrigger asChild>
