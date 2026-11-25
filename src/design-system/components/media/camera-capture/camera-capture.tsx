@@ -32,17 +32,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { Portal } from "@/design-system/components/utilities/portal/portal";
 import { t } from "@/shared/libs/i18n";
 import { useFieldContext } from "@chakra-ui/react";
-import {
-  CameraIcon,
-  CameraOffIcon,
-  CheckIcon,
-  RefreshCwIcon,
-  RotateCcwIcon,
-  SwitchCameraIcon,
-  Trash2Icon,
-  VideoIcon,
-  XIcon,
-} from "lucide-react";
+import { CameraIcon, CameraSlashIcon as CameraOffIcon, CheckIcon, ArrowsClockwiseIcon as RefreshCwIcon, ArrowCounterClockwiseIcon as RotateCcwIcon, CameraRotateIcon as SwitchCameraIcon, TrashIcon as Trash2Icon, VideoCameraIcon as VideoIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 
 // -------------------------------------------------------------------------------------

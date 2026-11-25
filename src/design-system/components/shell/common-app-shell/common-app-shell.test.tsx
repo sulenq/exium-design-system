@@ -3,7 +3,7 @@
 import { CommonAppShell } from "@/design-system/components/shell/common-app-shell/common-app-shell";
 import { renderWithSystem } from "@/test/render";
 import { fireEvent, screen } from "@testing-library/react";
-import { HomeIcon, ListIcon, ScanLineIcon } from "lucide-react";
+import { HouseIcon as HomeIcon, ListIcon, ScanIcon as ScanLineIcon } from "@phosphor-icons/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const NAV_ITEMS = [

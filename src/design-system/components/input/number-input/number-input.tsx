@@ -19,7 +19,7 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 import { dispatchNativeInputEvent } from "@/shared/utils/dom/dispatch-native-input-event";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
-import { ChevronDown, ChevronUp, MinusIcon, PlusIcon } from "lucide-react";
+import { CaretDownIcon as ChevronDown, CaretUpIcon as ChevronUp, MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import { useCallback, useRef, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

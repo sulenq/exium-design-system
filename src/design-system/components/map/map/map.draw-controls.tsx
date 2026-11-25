@@ -4,7 +4,7 @@ import { IconButton } from "@/design-system/components/button/button/button";
 import { useMapDrawStore } from "@/design-system/components/map/stores/map.draw.store";
 import { MapOverlayContainer } from "@/design-system/components/map/map/map.overlay";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { PencilIcon, XIcon } from "lucide-react";
+import { PencilSimpleIcon as PencilIcon, XIcon } from "@phosphor-icons/react";
 import { t } from "@/shared/libs/i18n";
 
 export const MapDrawControls = () => {

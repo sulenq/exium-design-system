@@ -12,7 +12,7 @@ import { Switch } from "@/design-system/components/input/switch/switch";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { useColorMode } from "@/design-system/hooks/use-color-mode";
-import { CodeIcon } from "lucide-react";
+import { CodeIcon } from "@phosphor-icons/react";
 
 export const DebugMenu = () => {
   // Hooks

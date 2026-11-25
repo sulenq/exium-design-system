@@ -7,7 +7,7 @@ import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { Field as ChakraField } from "@chakra-ui/react";
-import { LockIcon } from "lucide-react";
+import { LockIcon } from "@phosphor-icons/react";
 import {
   Children,
   forwardRef,

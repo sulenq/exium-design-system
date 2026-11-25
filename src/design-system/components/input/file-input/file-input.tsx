@@ -36,14 +36,7 @@ import {
   useFieldContext,
   useFileUploadContext,
 } from "@chakra-ui/react";
-import {
-  ArrowDownIcon,
-  DotIcon,
-  ImageOffIcon,
-  UndoIcon,
-  UploadIcon,
-  XIcon,
-} from "lucide-react";
+import { ArrowDownIcon, DotIcon, ImageBrokenIcon as ImageOffIcon, ArrowUUpLeftIcon as UndoIcon, UploadSimpleIcon as UploadIcon, XIcon } from "@phosphor-icons/react";
 import {
   cloneElement,
   forwardRef,

@@ -21,14 +21,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { isValidElement, type ComponentType } from "react";
-import {
-  CheckIcon,
-  HeartIcon,
-  SparklesIcon,
-  TriangleAlertIcon,
-  XIcon,
-  ZapIcon,
-} from "lucide-react";
+import { CheckIcon, HeartIcon, SparkleIcon as SparklesIcon, WarningIcon as TriangleAlertIcon, XIcon, LightningIcon as ZapIcon } from "@phosphor-icons/react";
 import { AbsoluteCenter } from "@/design-system/components/layout/center/center";
 
 export const FocusAlertItem = (props: FocusAlertItemProps) => {

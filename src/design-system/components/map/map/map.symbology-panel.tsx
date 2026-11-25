@@ -26,7 +26,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import type { GenericMapLayer } from "@/design-system/components/map/map/map.layer-management.type";
 import { useQuery } from "@tanstack/react-query";
-import { EyeOffIcon, Layers2Icon, XIcon } from "lucide-react";
+import { EyeSlashIcon as EyeOffIcon, StackSimpleIcon as Layers2Icon, XIcon } from "@phosphor-icons/react";
 import { memo, useMemo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

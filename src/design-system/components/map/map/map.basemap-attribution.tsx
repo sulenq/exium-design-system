@@ -9,7 +9,7 @@ import { MapOverlayContainer } from "@/design-system/components/map/map/map.over
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { Span } from "@/design-system/components/typography/span/span";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon } from "@phosphor-icons/react";
 import { t } from "@/shared/libs/i18n";
 
 export const MapAttribution = () => {

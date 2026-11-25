@@ -22,15 +22,7 @@ import {
 } from "@/design-system/components/media/qr-scanner/qr-scanner.utils";
 import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
-import {
-  CameraOffIcon,
-  CircleCheckIcon,
-  CircleXIcon,
-  FlashlightIcon,
-  FlashlightOffIcon,
-  KeyboardIcon,
-  ScanLineIcon,
-} from "lucide-react";
+import { CameraSlashIcon as CameraOffIcon, CheckCircleIcon as CircleCheckIcon, XCircleIcon as CircleXIcon, FlashlightIcon, FlashlightIcon as FlashlightOffIcon, KeyboardIcon, ScanIcon as ScanLineIcon } from "@phosphor-icons/react";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 
 const DEFAULT_FORMATS = ["qr_code"];

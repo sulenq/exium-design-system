@@ -8,7 +8,7 @@ import { useMapInstanceStore } from "@/design-system/components/map/stores/map.i
 import { MapOverlayContainer } from "@/design-system/components/map/map/map.overlay";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { P, TNum } from "@/design-system/components/typography/p/p";
-import { Navigation2Icon } from "lucide-react";
+import { NavigationArrowIcon as Navigation2Icon } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

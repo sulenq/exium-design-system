@@ -11,7 +11,7 @@ import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
-import { AlertTriangleIcon } from "lucide-react";
+import { WarningIcon as AlertTriangleIcon } from "@phosphor-icons/react";
 
 export const ConfirmDialogModal = (props: {
   modalKey: string;

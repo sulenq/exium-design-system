@@ -27,7 +27,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { useFieldContext } from "@chakra-ui/react";
-import { ClockIcon } from "lucide-react";
+import { ClockIcon } from "@phosphor-icons/react";
 import { forwardRef, useState, type ChangeEvent } from "react";
 
 // -------------------------------------------------------------------------------------

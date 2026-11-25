@@ -31,7 +31,7 @@ import {
 import type { PhoneCountry } from "@/design-system/constants/types/phone-countries.type";
 import { getLocale, t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { ChevronDownIcon } from "lucide-react";
+import { CaretDownIcon as ChevronDownIcon } from "@phosphor-icons/react";
 import {
   forwardRef,
   useCallback,

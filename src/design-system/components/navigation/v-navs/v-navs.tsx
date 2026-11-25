@@ -20,7 +20,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
-import { ChevronDownIcon } from "lucide-react";
+import { CaretDownIcon as ChevronDownIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const VNavs = <TNavKey extends string>(props: VNavsProps<TNavKey>) => {
@@ -507,6 +507,13 @@ const NavIcon = (props: VNavIconProps) => {
   const { nav, ...restProps } = props;
 
   return (
-    nav.icon && <AppIcon icon={nav.icon} color={"fg.muted"} {...restProps} />
+    nav.icon && (
+      <AppIcon
+        icon={nav.icon}
+        weight={"fill"}
+        color={"fg.muted"}
+        {...restProps}
+      />
+    )
   );
 };

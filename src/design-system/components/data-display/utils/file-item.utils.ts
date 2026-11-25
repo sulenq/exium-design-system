@@ -22,7 +22,7 @@ import {
   IconPresentation,
   IconVideo,
 } from "@tabler/icons-react";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon } from "@phosphor-icons/react";
 
 export function getFileIcon(mimeType?: string) {
   switch (mimeType) {

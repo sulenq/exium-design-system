@@ -32,13 +32,7 @@ import { isEmptyArray } from "@/shared/utils/data/array";
 import { formatRelativeTime } from "@/shared/utils/formatter/date.formatter";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
 import { tintDark } from "@/shared/utils/style/color";
-import {
-  AlertCircleIcon,
-  CheckCircleIcon,
-  ChevronDownIcon,
-  InfoIcon,
-  XCircleIcon,
-} from "lucide-react";
+import { WarningCircleIcon as AlertCircleIcon, CheckCircleIcon, CaretDownIcon as ChevronDownIcon, InfoIcon, XCircleIcon } from "@phosphor-icons/react";
 import { memo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

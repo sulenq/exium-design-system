@@ -14,7 +14,7 @@ import type {
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { t } from "@/shared/libs/i18n";
 import { Box, chakra } from "@chakra-ui/react";
-import { GripHorizontal, GripVertical } from "lucide-react";
+import { DotsSixIcon as GripHorizontal, DotsSixVerticalIcon as GripVertical } from "@phosphor-icons/react";
 import {
   createContext,
   forwardRef,

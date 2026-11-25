@@ -8,7 +8,7 @@ import { Input } from "@/design-system/components/input/input/input";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { PlusIcon, XIcon } from "lucide-react";
+import { PlusIcon, XIcon } from "@phosphor-icons/react";
 import { t } from "@/shared/libs/i18n";
 
 export const StringArrayInput = (props: StringArrayInputProps) => {

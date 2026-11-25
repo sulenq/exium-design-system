@@ -6,7 +6,7 @@ import { ClipboardButton } from "@/design-system/components/data-display/clipboa
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeSlashIcon as EyeOffIcon } from "@phosphor-icons/react";
 import { memo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

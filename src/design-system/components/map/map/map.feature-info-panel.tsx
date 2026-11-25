@@ -22,7 +22,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { FocusIcon, Layers2Icon } from "lucide-react";
+import { CrosshairIcon as FocusIcon, StackSimpleIcon as Layers2Icon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

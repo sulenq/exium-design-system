@@ -19,7 +19,7 @@ import type { RecentNavItem } from "@/shared/types/recent-nav.type";
 import { getRecentNavs } from "@/shared/utils/navigation/recent-nav.utils";
 import { getUserSession } from "@/shared/utils/user/user-session.utils";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowUpRightIcon } from "lucide-react";
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 
 const NO_FALLBACK_NAV_KEYS: string[] = [];

@@ -52,7 +52,7 @@ import { getUserSession } from "@/shared/utils/user/user-session.utils";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { recordRecentNav } from "@/shared/utils/navigation/recent-nav.utils";
-import { UserIcon } from "lucide-react";
+import { UserIcon } from "@phosphor-icons/react";
 import { useEffect, useMemo, useRef } from "react";
 
 // -------------------------------------------------------------------------------------

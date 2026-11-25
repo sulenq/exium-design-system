@@ -8,7 +8,7 @@ import type { QrCodeProps } from "@/design-system/components/media/qr-code/qr-co
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { QrCode as ChakraQrCode } from "@chakra-ui/react";
-import { DownloadIcon } from "lucide-react";
+import { DownloadSimpleIcon as DownloadIcon } from "@phosphor-icons/react";
 
 export const QrCode = (props: QrCodeProps) => {
   // Props

@@ -14,7 +14,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { isImageFile } from "@/shared/utils/data/file";
-import { ImageOffIcon, XIcon } from "lucide-react";
+import { ImageBrokenIcon as ImageOffIcon, XIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 
 export const FileItem = (props: FileItemProps) => {

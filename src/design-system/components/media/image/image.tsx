@@ -9,7 +9,7 @@ import { Center } from "@/design-system/components/layout/center/center";
 import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";
 import type { ImageProps } from "@/design-system/components/media/image/image.type";
 import { Box, Image as ChakraImage } from "@chakra-ui/react";
-import { ImageOffIcon } from "lucide-react";
+import { ImageBrokenIcon as ImageOffIcon } from "@phosphor-icons/react";
 
 export const Image = (props: ImageProps) => {
   return <ImageImpl key={props.src} {...props} />;

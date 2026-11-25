@@ -26,7 +26,7 @@ import { CountBadge } from "@/design-system/components/typography/count-badge/co
 import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { LayersIcon } from "lucide-react";
+import { StackIcon as LayersIcon } from "@phosphor-icons/react";
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 
 function MapLayerManagementPanelComponent<

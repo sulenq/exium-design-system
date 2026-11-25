@@ -15,7 +15,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useVirtualKeyboardOpen } from "@/design-system/hooks/use-virtual-keyboard-open";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
-import { EllipsisIcon } from "lucide-react";
+import { DotsThreeIcon as EllipsisIcon } from "@phosphor-icons/react";
 
 const MAX_INLINE_ITEMS = 5;
 

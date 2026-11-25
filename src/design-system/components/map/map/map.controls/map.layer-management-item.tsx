@@ -28,12 +28,7 @@ import {
   draggable,
   dropTargetForElements,
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import {
-  FocusIcon,
-  GripVerticalIcon,
-  SquareDashedIcon,
-  SwatchBookIcon,
-} from "lucide-react";
+import { CrosshairIcon as FocusIcon, DotsSixVerticalIcon as GripVerticalIcon, SelectionIcon as SquareDashedIcon, SwatchesIcon as SwatchBookIcon } from "@phosphor-icons/react";
 import React, { memo, useEffect, useRef, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

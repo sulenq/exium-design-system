@@ -5,7 +5,7 @@
 import type { FeedbackStateProps } from "@/design-system/components/feedback/feedback-state/feedback-state.type";
 import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
 import { t } from "@/shared/libs/i18n";
-import { WindIcon } from "lucide-react";
+import { WindIcon } from "@phosphor-icons/react";
 
 export const StateNoData = (props: FeedbackStateProps) => {
   // Props

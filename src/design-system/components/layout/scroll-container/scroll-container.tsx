@@ -9,12 +9,7 @@ import type {
 } from "@/design-system/components/layout/scroll-container/scroll-container.type";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Box } from "@chakra-ui/react";
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-} from "lucide-react";
+import { CaretDownIcon as ChevronDown, CaretLeftIcon as ChevronLeft, CaretRightIcon as ChevronRight, CaretUpIcon as ChevronUp } from "@phosphor-icons/react";
 import {
   forwardRef,
   useCallback,

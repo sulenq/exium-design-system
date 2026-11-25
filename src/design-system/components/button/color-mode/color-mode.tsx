@@ -6,7 +6,7 @@ import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type { BoxProps } from "@/design-system/components/layout/box/box.type";
 import { Box } from "@/design-system/components/layout/box/box";
 import { useColorMode } from "@/design-system/hooks/use-color-mode";
-import { EclipseIcon, SunIcon } from "lucide-react";
+import { CircleHalfIcon as EclipseIcon, SunIcon } from "@phosphor-icons/react";
 
 export const ColorModeToggleButton = (props: ColorModeToggleButtonProps) => {
   // Hooks

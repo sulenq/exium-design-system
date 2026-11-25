@@ -20,7 +20,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { TreeView as ChakraTreeView, createTreeCollection } from "@chakra-ui/react";
-import { ChevronRightIcon, CircleHelpIcon, MinusIcon, PlusIcon } from "lucide-react";
+import { CaretRightIcon as ChevronRightIcon, QuestionIcon as CircleHelpIcon, MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import { useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 
 const ROOT_ID = "__exium_tree_root__";

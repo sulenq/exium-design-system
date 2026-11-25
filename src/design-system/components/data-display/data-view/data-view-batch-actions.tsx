@@ -33,7 +33,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
-import { ListIcon } from "lucide-react";
+import { ListIcon } from "@phosphor-icons/react";
 
 // Helpers
 

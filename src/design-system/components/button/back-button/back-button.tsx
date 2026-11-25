@@ -10,7 +10,7 @@ import {
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { t } from "@/shared/libs/i18n";
-import { ArrowLeftIcon } from "lucide-react";
+import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { forwardRef } from "react";
 
 export const BackButton = forwardRef<HTMLButtonElement, BackButtonProps>(

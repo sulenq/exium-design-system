@@ -5,7 +5,7 @@
 import type { IconButtonProps } from "@/design-system/components/button/button/button.type";
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
-import { XIcon } from "lucide-react";
+import { XIcon } from "@phosphor-icons/react";
 import { forwardRef } from "react";
 
 export const CloseButton = forwardRef<HTMLButtonElement, IconButtonProps>(

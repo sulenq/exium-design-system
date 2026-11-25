@@ -7,7 +7,7 @@ import type {
   ToggleTipProps,
 } from "@/design-system/components/input/toggle-tip/toggle-tip.type";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon } from "@phosphor-icons/react";
 import * as React from "react";
 import { t } from "@/shared/libs/i18n";
 

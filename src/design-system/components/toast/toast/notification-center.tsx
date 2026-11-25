@@ -1,6 +1,6 @@
 // src/design-system/components/toast/toast/notification-center.tsx
 
-import { X } from "lucide-react";
+import { XIcon as X } from "@phosphor-icons/react";
 import { useToastHistory } from "@/design-system/components/toast/hooks/use-toast-history";
 import type { HistoryEntry } from "@/design-system/components/toast/toast/toast.type";
 import { ToastStack } from "@/design-system/components/toast/toast/toast.stack";

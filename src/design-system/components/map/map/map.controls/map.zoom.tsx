@@ -7,7 +7,7 @@ import type { StackProps } from "@/design-system/components/layout/flex-box/flex
 import { useMapInstanceStore } from "@/design-system/components/map/stores/map.instance.store";
 import { MapOverlayContainer } from "@/design-system/components/map/map/map.overlay";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
-import { MinusIcon, PlusIcon } from "lucide-react";
+import { MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import { t } from "@/shared/libs/i18n";
 
 export const MapZoom = (props: StackProps) => {

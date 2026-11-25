@@ -55,7 +55,7 @@ import { Box, Center } from "@chakra-ui/react";
 import { IconListCheck } from "@tabler/icons-react";
 import { useSearch } from "@tanstack/react-router";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { ChevronDownIcon, ChevronUpIcon, EllipsisIcon } from "lucide-react";
+import { CaretDownIcon as ChevronDownIcon, CaretUpIcon as ChevronUpIcon, DotsThreeIcon as EllipsisIcon } from "@phosphor-icons/react";
 import {
   memo,
   useCallback,

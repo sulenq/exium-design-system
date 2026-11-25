@@ -20,34 +20,7 @@ import "@tiptap/extension-text-align";
 import "@tiptap/extension-text-style";
 import "@tiptap/extension-underline";
 import "@tiptap/starter-kit";
-import {
-  BoldIcon,
-  CodeIcon,
-  EraserIcon,
-  Heading1Icon,
-  Heading2Icon,
-  Heading3Icon,
-  Heading4Icon,
-  HighlighterIcon,
-  ItalicIcon,
-  Link2Icon,
-  Link2OffIcon,
-  ListIcon,
-  ListOrderedIcon,
-  MinusIcon,
-  QuoteIcon,
-  RedoIcon,
-  StrikethroughIcon,
-  SubscriptIcon,
-  SuperscriptIcon,
-  TextAlignCenterIcon,
-  TextAlignEndIcon,
-  TextAlignJustifyIcon,
-  TextAlignStartIcon,
-  TypeIcon,
-  UnderlineIcon,
-  UndoIcon,
-} from "lucide-react";
+import { TextBIcon as BoldIcon, CodeIcon, EraserIcon, TextHOneIcon as Heading1Icon, TextHTwoIcon as Heading2Icon, TextHThreeIcon as Heading3Icon, TextHFourIcon as Heading4Icon, HighlighterIcon, TextItalicIcon as ItalicIcon, LinkIcon as Link2Icon, LinkBreakIcon as Link2OffIcon, ListIcon, ListNumbersIcon as ListOrderedIcon, MinusIcon, QuotesIcon as QuoteIcon, ArrowUUpRightIcon as RedoIcon, TextStrikethroughIcon as StrikethroughIcon, TextSubscriptIcon as SubscriptIcon, TextSuperscriptIcon as SuperscriptIcon, TextAlignCenterIcon, TextAlignRightIcon as TextAlignEndIcon, TextAlignJustifyIcon, TextAlignLeftIcon as TextAlignStartIcon, TextTIcon as TypeIcon, TextUnderlineIcon as UnderlineIcon, ArrowUUpLeftIcon as UndoIcon } from "@phosphor-icons/react";
 import { forwardRef, useId, useState } from "react";
 import type {
   BooleanControlConfig,

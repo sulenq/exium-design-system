@@ -8,7 +8,7 @@ import FeedbackState from "@/design-system/components/feedback/feedback-state/fe
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
-import { AlertTriangleIcon } from "lucide-react";
+import { WarningIcon as AlertTriangleIcon } from "@phosphor-icons/react";
 
 export const StateRetry = (props: StateRetryProps) => {
   // Props

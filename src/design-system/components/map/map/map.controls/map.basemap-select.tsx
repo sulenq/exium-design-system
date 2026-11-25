@@ -22,7 +22,7 @@ import { HeaderContainer } from "@/design-system/components/shell/header-contain
 import { P } from "@/design-system/components/typography/p/p";
 import { useColorMode } from "@/design-system/hooks/use-color-mode";
 import { useThemeStore } from "@/design-system/stores/theme-store";
-import { MoonIcon, SunIcon } from "lucide-react";
+import { MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { t } from "@/shared/libs/i18n";
 
 export const MapBasemapSelect = () => {

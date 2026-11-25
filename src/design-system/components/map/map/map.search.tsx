@@ -21,7 +21,7 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { Box, Presence } from "@chakra-ui/react";
-import { Clock, MapPin, X } from "lucide-react";
+import { ClockIcon as Clock, MapPinIcon as MapPin, XIcon as X } from "@phosphor-icons/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const SEARCH_QUERY_KEY = "map-search";

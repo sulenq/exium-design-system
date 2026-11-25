@@ -7,7 +7,7 @@ import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P, TNum } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
 import { formatNumber } from "@/shared/utils/formatter/number.formatter";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { CaretLeftIcon as ChevronLeftIcon, CaretRightIcon as ChevronRightIcon } from "@phosphor-icons/react";
 
 export const DataViewPagination = (props: DataViewPaginationProps) => {
   // Props

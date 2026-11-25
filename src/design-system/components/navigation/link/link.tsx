@@ -10,7 +10,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as TanstackLink } from "@tanstack/react-router";
-import { Link2OffIcon } from "lucide-react";
+import { LinkBreakIcon as Link2OffIcon } from "@phosphor-icons/react";
 
 export const NavLink = (props: NavLinkProps) => {
   return <TanstackLink {...props} />;

@@ -47,7 +47,7 @@ import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-mo
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
-import { ChevronLeftIcon, ChevronRightIcon, GlobeIcon } from "lucide-react";
+import { CaretLeftIcon as ChevronLeftIcon, CaretRightIcon as ChevronRightIcon, GlobeIcon } from "@phosphor-icons/react";
 import { getLocale, t } from "@/shared/libs/i18n";
 
 // -------------------------------------------------------------------------------------

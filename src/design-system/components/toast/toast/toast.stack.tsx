@@ -13,7 +13,7 @@ import { useFirstMountEffect } from "@/shared/hooks/use-first-mount-effect";
 import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { Box } from "@chakra-ui/react";
-import { ChevronUpIcon, Trash2Icon } from "lucide-react";
+import { CaretUpIcon as ChevronUpIcon, TrashIcon as Trash2Icon } from "@phosphor-icons/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export function ToastStack<TItem>({

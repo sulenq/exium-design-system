@@ -8,7 +8,7 @@ import type {
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Circle } from "@/design-system/components/layout/box/box";
 import { useThemeStore } from "@/design-system/stores/theme-store";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon } from "@phosphor-icons/react";
 
 export const DotIndicator = (props: DotIndicatorProps) => {
   // Props

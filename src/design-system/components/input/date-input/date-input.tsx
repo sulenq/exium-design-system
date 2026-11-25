@@ -44,7 +44,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useFieldContext } from "@chakra-ui/react";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "@phosphor-icons/react";
 import { t } from "@/shared/libs/i18n";
 
 // -------------------------------------------------------------------------------------

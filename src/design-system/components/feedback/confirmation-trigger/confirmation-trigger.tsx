@@ -12,7 +12,7 @@ import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
-import { AlertTriangleIcon } from "lucide-react";
+import { WarningIcon as AlertTriangleIcon } from "@phosphor-icons/react";
 import { isValidElement, type ComponentType } from "react";
 
 export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {

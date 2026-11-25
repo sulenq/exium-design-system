@@ -6,14 +6,7 @@ import type {
   BadgeStatus,
 } from "@/design-system/components/typography/badge/badge.type";
 import { Badge as ChakraBadge } from "@chakra-ui/react";
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleXIcon,
-  InfoIcon,
-  LockIcon,
-  type LucideIcon,
-} from "lucide-react";
+import { WarningCircleIcon as CircleAlertIcon, CheckCircleIcon as CircleCheckIcon, XCircleIcon as CircleXIcon, InfoIcon, LockIcon, type Icon as LucideIcon } from "@phosphor-icons/react";
 
 const STATUS_PALETTE: Record<BadgeStatus, string> = {
   success: "green",

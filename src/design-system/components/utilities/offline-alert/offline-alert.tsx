@@ -11,7 +11,7 @@ import { t } from "@/shared/libs/i18n";
 import { toast } from "@/design-system/components/toast";
 
 import { Portal } from "@/design-system/components/utilities/portal/portal";
-import { WifiOffIcon } from "lucide-react";
+import { WifiSlashIcon as WifiOffIcon } from "@phosphor-icons/react";
 
 
 import { useCallback, useEffect, useRef, useState } from "react";
