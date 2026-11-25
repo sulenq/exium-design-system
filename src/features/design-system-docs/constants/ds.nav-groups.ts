@@ -69,9 +69,23 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         ],
       },
       {
+        key: "cat_chart",
+        children: [
+          { key: "area_chart" },
+          { key: "bar_chart" },
+          { key: "bar_list" },
+          { key: "chart_tooltip" },
+          { key: "donut_chart" },
+          { key: "line_chart" },
+          { key: "pie_chart" },
+          { key: "radar_chart" },
+          { key: "scatter_chart" },
+          { key: "sparkline" },
+        ],
+      },
+      {
         key: "cat_data_display",
         children: [
-          { key: "chart_tooltip" },
           { key: "countdown" },
           { key: "data_table" },
           { key: "file_item" },

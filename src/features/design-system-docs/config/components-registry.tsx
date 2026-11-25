@@ -132,6 +132,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { ACTIONS_DOCS } from "@/features/design-system-docs/config/registry/actions.registry";
+import { CHART_DOCS } from "@/features/design-system-docs/config/registry/chart.registry";
 import { DISPLAY_DOCS } from "@/features/design-system-docs/config/registry/display.registry";
 import { FEEDBACK_DOCS } from "@/features/design-system-docs/config/registry/feedback.registry";
 import { INPUTS_DOCS } from "@/features/design-system-docs/config/registry/inputs.registry";
@@ -149,6 +150,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   ...ACTIONS_DOCS,
   ...INPUTS_DOCS,
   ...NAVIGATION_DOCS,
+  ...CHART_DOCS,
   ...DISPLAY_DOCS,
   ...MAP_DOCS,
 

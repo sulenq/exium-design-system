@@ -2,10 +2,6 @@
 
 import { Button } from "@/design-system/components/button/button/button";
 import { CloseButton } from "@/design-system/components/button/close-button/close-button";
-import {
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/design-system/components/charts/chart-tooltip/chart-tooltip";
 import { OutlineContourPerspective } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Center } from "@/design-system/components/layout/center/center";
@@ -15,19 +11,10 @@ import { CursorTooltip } from "@/design-system/components/overlay/cursor-tooltip
 import { List } from "@/design-system/components/typography/list/list";
 import { P } from "@/design-system/components/typography/p/p";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import { Bar, BarChart, ResponsiveContainer, XAxis } from "recharts";
 
 // -------------------------------------------------------------------------------------
 // Demo data
 // -------------------------------------------------------------------------------------
-
-const DEMO_WEIGHT_DATA = [
-  { month: "Jul", berat: 380 },
-  { month: "Agu", berat: 392 },
-  { month: "Sep", berat: 401 },
-  { month: "Okt", berat: 412 },
-  { month: "Nov", berat: 420 },
-];
 
 const DEMO_LIST_ITEMS = [
   "Pastikan eartag terpasang sebelum vaksinasi.",
@@ -70,41 +57,6 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
           <List.Item key={item}>{item}</List.Item>
         ))}
       </List.Root>
-    ),
-  },
-
-  chart_tooltip: {
-    key: "chart_tooltip",
-    title: "ChartTooltip",
-    category: "Data Display",
-    description:
-      "Tooltip Recharts dengan gaya Exium. Pasang `ChartTooltip` di dalam chart dan `ChartTooltipContent` sebagai `content`. Arahkan kursor ke batang untuk melihatnya.",
-    importPath:
-      'import { ChartTooltip, ChartTooltipContent } from "@/design-system/components/charts/chart-tooltip/chart-tooltip";',
-    component: ChartTooltip,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "content",
-        type: "ReactElement",
-        description: "Isi tooltip; pakai `<ChartTooltipContent />`.",
-      },
-      {
-        name: "...TooltipProps",
-        type: "Recharts TooltipProps",
-        description: "Semua props Tooltip Recharts.",
-      },
-    ],
-    renderPlayground: () => (
-      <Box w={"full"} maxW={"420px"} h={"200px"}>
-        <ResponsiveContainer width={"100%"} height={"100%"}>
-          <BarChart data={DEMO_WEIGHT_DATA}>
-            <XAxis dataKey={"month"} tickLine={false} axisLine={false} />
-            <ChartTooltip content={<ChartTooltipContent />} cursor={{ fillOpacity: 0.1 }} />
-            <Bar dataKey={"berat"} name={"Berat (kg)"} fill={"var(--chakra-colors-green-600)"} radius={4} />
-          </BarChart>
-        </ResponsiveContainer>
-      </Box>
     ),
   },
 

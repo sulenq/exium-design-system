@@ -102,6 +102,10 @@ export const DS_NAVS_MAP = {
     icon: CursorClickIcon,
     title: "Buttons",
   },
+  cat_chart: {
+    icon: ChartBarIcon,
+    title: "Chart",
+  },
   cat_typography: {
     icon: TextTIcon,
     title: "Typography",
@@ -488,9 +492,45 @@ export const DS_NAVS_MAP = {
     icon: ListBulletsIcon,
     title: "List",
   },
+  area_chart: {
+    icon: ChartLineIcon,
+    title: "Area Chart",
+  },
+  bar_chart: {
+    icon: ChartBarIcon,
+    title: "Bar Chart",
+  },
+  bar_list: {
+    icon: ListBulletsIcon,
+    title: "Bar List",
+  },
   chart_tooltip: {
     icon: ChartLineIcon,
     title: "ChartTooltip",
+  },
+  donut_chart: {
+    icon: CircleIcon,
+    title: "Donut Chart",
+  },
+  line_chart: {
+    icon: ChartLineIcon,
+    title: "Line Chart",
+  },
+  pie_chart: {
+    icon: CircleIcon,
+    title: "Pie Chart",
+  },
+  radar_chart: {
+    icon: PolygonIcon,
+    title: "Radar Chart",
+  },
+  scatter_chart: {
+    icon: DotsThreeIcon,
+    title: "Scatter Chart",
+  },
+  sparkline: {
+    icon: ChartLineIcon,
+    title: "Sparkline",
   },
   outline_contour_perspective: {
     icon: ShapesIcon,

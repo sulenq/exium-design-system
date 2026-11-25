@@ -189,8 +189,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         transition={
           bouncy
             ? isHolding
-              ? "transform 80ms ease-out"
-              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+              ? "transform 80ms ease-out, scale 120ms cubic-bezier(0.22, 1, 0.36, 1)"
+              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 120ms cubic-bezier(0.22, 1, 0.36, 1)"
             : clicky
               ? CLICKY_STYLE_PROPS.transition
               : undefined
@@ -293,8 +293,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         transition={
           bouncy
             ? isHolding
-              ? "transform 80ms ease-out"
-              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+              ? "transform 80ms ease-out, scale 120ms cubic-bezier(0.22, 1, 0.36, 1)"
+              : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), scale 120ms cubic-bezier(0.22, 1, 0.36, 1)"
             : clicky
               ? CLICKY_STYLE_PROPS.transition
               : undefined

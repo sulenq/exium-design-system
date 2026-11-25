@@ -1,6 +1,7 @@
 // src/features/design-system-docs/config/registry/registry.smoke.test.tsx
 
 import { ACTIONS_DOCS } from "@/features/design-system-docs/config/registry/actions.registry";
+import { CHART_DOCS } from "@/features/design-system-docs/config/registry/chart.registry";
 import { DISPLAY_DOCS } from "@/features/design-system-docs/config/registry/display.registry";
 import { FEEDBACK_DOCS } from "@/features/design-system-docs/config/registry/feedback.registry";
 import { INPUTS_DOCS } from "@/features/design-system-docs/config/registry/inputs.registry";
@@ -26,9 +27,21 @@ const RENDERABLE = {
   ...ACTIONS_DOCS,
   ...INPUTS_DOCS,
   ...NAVIGATION_DOCS,
+  ...CHART_DOCS,
   ...DISPLAY_DOCS,
 };
-const SKIP_IN_JSDOM = new Set(["gis_app_shell", "chart_tooltip"]);
+const SKIP_IN_JSDOM = new Set([
+  "gis_app_shell",
+  "area_chart",
+  "bar_chart",
+  "chart_tooltip",
+  "donut_chart",
+  "line_chart",
+  "pie_chart",
+  "radar_chart",
+  "scatter_chart",
+  "sparkline",
+]);
 
 async function renderInRouter(node: React.ReactNode) {
   const rootRoute = createRootRoute({ component: () => <>{node}</> });
