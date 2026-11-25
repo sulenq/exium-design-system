@@ -103,6 +103,7 @@ export const OfflineAlert = (props: OfflineAlertProps) => {
           role={"status"}
           aria-live={"polite"}
           pos={"fixed"}
+          align={"center"}
           top={"calc(env(safe-area-inset-top) + 8px)"}
           left={"50%"}
           transform={"translateX(-50%)"}
