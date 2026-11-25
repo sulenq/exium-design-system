@@ -2,6 +2,7 @@
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { ColorModeToggleButton } from "@/design-system/components/button/color-mode/color-mode";
+import { NotFoundPage } from "@/design-system/components/error-boundary/not-found/not-found.page";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import SelectInput from "@/design-system/components/input/select/select";
 import type { SelectOption } from "@/design-system/components/input/select/select.type";
@@ -214,7 +215,7 @@ export const DesignSystemDocsPage = () => {
             !isHook &&
             !isUtil &&
             activeNavKey !== "overview" &&
-            !currentSpec && <DemoPage />}
+            !currentSpec && <NotFoundPage />}
         </VScrollContainer>
       </VStack>
     </HStack>
