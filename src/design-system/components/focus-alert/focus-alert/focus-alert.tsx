@@ -21,7 +21,14 @@ import { P } from "@/design-system/components/typography/p/p";
 import { t } from "@/shared/libs/i18n";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { isValidElement, type ComponentType } from "react";
-import { CheckIcon, HeartIcon, SparkleIcon as SparklesIcon, WarningIcon as TriangleAlertIcon, XIcon, LightningIcon as ZapIcon } from "@phosphor-icons/react";
+import {
+  CheckIcon,
+  HeartIcon,
+  SparkleIcon as SparklesIcon,
+  WarningIcon as TriangleAlertIcon,
+  XIcon,
+  LightningIcon as ZapIcon,
+} from "@phosphor-icons/react";
 import { AbsoluteCenter } from "@/design-system/components/layout/center/center";
 
 export const FocusAlertItem = (props: FocusAlertItemProps) => {
@@ -276,13 +283,7 @@ export const FocusAlertView = (props: FocusAlertViewProps) => {
   const resolvedColorPalette = colorPalette ?? resolved.colorPalette;
 
   return (
-    <VStack
-      align={"center"}
-      gap={4}
-      textAlign={"center"}
-      my={3}
-      {...restProps}
-    >
+    <VStack align={"center"} gap={4} textAlign={"center"} my={3} {...restProps}>
       <Box
         pos={"relative"}
         display={"inline-flex"}
@@ -395,12 +396,24 @@ const FocusAlertContent = (props: FocusAlertContentProps) => {
 
   return (
     <Modal.Content
+      position={"relative"}
+      overflow={"hidden"}
       _open={{
         animation: "scale-up-overshoot",
         animationDuration: "slower",
       }}
     >
-      <Modal.Body pt={6} pb={4}>
+      <Box
+        position={"absolute"}
+        top={0}
+        insetX={0}
+        h={"110px"}
+        pointerEvents={"none"}
+        zIndex={0}
+        backgroundImage={`radial-gradient(ellipse 85% 80% at 50% 60%, transparent 42%, color-mix(in srgb, var(--chakra-colors-${resolvedColorPalette}-solid) 14%, transparent) 100%)`}
+        maskImage={"linear-gradient(to bottom, black 25%, transparent 90%)"}
+      />
+      <Modal.Body pt={6} pb={4} position={"relative"} zIndex={1}>
         <FocusAlertView
           variant={variant}
           colorPalette={resolvedColorPalette}

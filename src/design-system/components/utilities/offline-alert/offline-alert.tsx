@@ -44,11 +44,9 @@ export const OfflineAlert = (props: OfflineAlertProps) => {
   }, []);
 
   const handleOffline = useCallback(() => {
-    if (typeof navigator !== "undefined" && !navigator.onLine) {
-      isOfflineRef.current = true;
-      setIsOffline(true);
-      triggerAlert();
-    }
+    isOfflineRef.current = true;
+    setIsOffline(true);
+    triggerAlert();
   }, [triggerAlert]);
 
   const handleOnline = useCallback(() => {

@@ -1,5 +1,4 @@
 import { Button } from "@/design-system/components/button/button/button";
-import { NotFoundPage } from "@/design-system/components/error-boundary/not-found/not-found.page";
 import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
 import { CheckIndicator, DotIndicator, RadioIndicator } from "@/design-system/components/feedback/indicator/indicator";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
@@ -214,25 +213,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       >
         {Boolean(props.withAction) && <Button variant={"outline"}>{"Coba lagi"}</Button>}
       </FeedbackState>
-    ),
-  },
-
-  not_found_page: {
-    key: "not_found_page",
-    title: "NotFoundPage",
-    category: "Feedback",
-    description:
-      "Halaman 404 siap pakai untuk route yang tidak ditemukan, dengan aksi kembali dan ke halaman utama. Pasang sebagai `notFoundComponent` di router.",
-    importPath:
-      'import { NotFoundPage } from "@/design-system/components/error-boundary/not-found/not-found.page";',
-    component: NotFoundPage,
-    defaultProps: {},
-    propsSpec: [],
-    generateCode: () => `<NotFoundPage />`,
-    renderPlayground: () => (
-      <Box w={"full"} h={"360px"} overflow={"hidden"} border={"1px solid"} borderColor={"border.subtle"} rounded={"md"}>
-        <NotFoundPage />
-      </Box>
     ),
   },
 

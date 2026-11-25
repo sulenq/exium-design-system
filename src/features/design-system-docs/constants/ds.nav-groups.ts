@@ -121,7 +121,6 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "focus_alert" },
           { key: "indicator" },
           { key: "loader" },
-          { key: "not_found_page" },
           { key: "offline_alert" },
           { key: "progress" },
           { key: "skeleton" },

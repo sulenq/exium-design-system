@@ -67,7 +67,6 @@ import {
   SpinnerIcon,
   CircleIcon,
   ListChecksIcon,
-  SealQuestionIcon,
   WifiSlashIcon,
   ArrowLeftIcon,
   MoonIcon,
@@ -432,10 +431,6 @@ export const DS_NAVS_MAP = {
   feedback_state: {
     icon: ListChecksIcon,
     title: "FeedbackState",
-  },
-  not_found_page: {
-    icon: SealQuestionIcon,
-    title: "NotFoundPage",
   },
   offline_alert: {
     icon: WifiSlashIcon,
