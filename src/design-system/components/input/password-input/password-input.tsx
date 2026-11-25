@@ -25,7 +25,7 @@ import {
   type ButtonProps,
 } from "@chakra-ui/react";
 import { passwordStrength, type Options } from "check-password-strength";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react";
 import {
   forwardRef,
   useCallback,
@@ -50,8 +50,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       visible: visibleProp,
       onVisibleChange,
       visibilityIcon = {
-        on: <AppIcon icon={EyeIcon} />,
-        off: <AppIcon icon={EyeOffIcon} />,
+        on: <AppIcon icon={EyeIcon} weight={"fill"} />,
+        off: <AppIcon icon={EyeSlashIcon} weight={"fill"} />,
       },
       withPasswordStrength = false,
       strengthOptions = DEFAULT_STRENGTH_OPTIONS,
@@ -122,7 +122,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     const endElementNode = (
       <VisibilityTrigger
         disabled={restProps.disabled}
-        variant={"plain"}
+        color={"fg.muted"}
         onPointerDown={(e) => {
           if (restProps.disabled) return;
           if (e.button !== 0) return;

@@ -6,7 +6,7 @@ import type { SearchInputProps } from "@/design-system/components/input/search-i
 import { Input } from "@/design-system/components/input/input/input";
 import { useSearchParam } from "@/design-system/hooks/use-search-param";
 import { InputGroup } from "@chakra-ui/react";
-import { DeleteIcon, SearchIcon } from "lucide-react";
+import { MagnifyingGlassIcon, XCircleIcon } from "@phosphor-icons/react";
 import {
   forwardRef,
   useEffect,
@@ -135,7 +135,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       <InputGroup
         startElement={
           <AppIcon
-            icon={SearchIcon}
+            icon={MagnifyingGlassIcon}
             ml={ml[restProps.size as keyof typeof ml]}
             color={"fg"}
             cursor={"pointer"}
@@ -146,12 +146,12 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         endElement={
           value ? (
             <IconButton
-              variant={"plain"}
+              color={"fg.muted"}
               size={"xs"}
               onClick={handleClear}
               me={-2}
             >
-              <AppIcon icon={DeleteIcon} />
+              <AppIcon icon={XCircleIcon} weight={"fill"} />
             </IconButton>
           ) : undefined
         }

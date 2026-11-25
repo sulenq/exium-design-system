@@ -25,7 +25,7 @@ import {
   createListCollection,
   Portal,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, XIcon } from "lucide-react";
+import { CaretDownIcon, XCircleIcon } from "@phosphor-icons/react";
 import type React from "react";
 import { isValidElement, useMemo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
@@ -228,10 +228,11 @@ export default function SelectInput(props: SelectProps) {
         >
           {clearable && hasValue && !disabled ? (
             <AppIcon
-              icon={XIcon}
+              icon={XCircleIcon}
+              weight={"fill"}
               size={iconSize}
               cursor={"pointer"}
-              color={props?.color ?? "fg"}
+              color={props?.color ?? "fg.muted"}
               mr={"-2px"}
               _hover={{ color: "fg" }}
               onPointerDown={(e) => {
@@ -242,7 +243,7 @@ export default function SelectInput(props: SelectProps) {
             />
           ) : (
             <AppIcon
-              icon={ChevronDownIcon}
+              icon={CaretDownIcon}
               size={iconSize}
               color={props?.color ?? "fg"}
               mr={"-2px"}

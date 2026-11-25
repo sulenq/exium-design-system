@@ -2,12 +2,12 @@
 
 import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
 import { Icon } from "@/design-system/components/icon/icon/icon";
-import { CircleQuestionMarkIcon } from "lucide-react";
+import { QuestionIcon } from "@phosphor-icons/react";
 
 export const AppIcon = (props: AppIconProps) => {
   // Props
   const {
-    icon = CircleQuestionMarkIcon,
+    icon = QuestionIcon,
     size = "md",
     boxSize,
     weight,
