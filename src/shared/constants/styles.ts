@@ -6,4 +6,3 @@ export const CLICKY_STYLE_PROPS = {
     transform: "scale(0.95)",
   },
 } as const;
-

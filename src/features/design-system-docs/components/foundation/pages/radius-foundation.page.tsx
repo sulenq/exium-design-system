@@ -5,7 +5,7 @@ import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
-import { ROUNDED_PRESETS_LIST } from "@/design-system/constants/presets";
+import { ROUNDED_PRESETS_LIST } from "@/design-system/constants/rounded-presets";
 import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
 
 export const RadiusFoundationPage = () => {

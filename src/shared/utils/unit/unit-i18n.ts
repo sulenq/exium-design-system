@@ -162,4 +162,3 @@ export function getLocalizedUnitName(
 
   return defaultEnglishName;
 }
-

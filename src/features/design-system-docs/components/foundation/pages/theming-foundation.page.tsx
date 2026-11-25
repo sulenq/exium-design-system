@@ -2,7 +2,7 @@
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { COLOR_PALETTES_LIST } from "@/design-system/constants/colors";
-import { ROUNDED_PRESETS_LIST } from "@/design-system/constants/presets";
+import { ROUNDED_PRESETS_LIST } from "@/design-system/constants/rounded-presets";
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Badge } from "@/design-system/components/typography/badge/badge";
