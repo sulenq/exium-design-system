@@ -9,6 +9,7 @@ import type {
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { useBounceDrag } from "@/design-system/hooks/use-bounce-drag";
 import { useMergedRefs } from "@/design-system/hooks/use-merge-refs";
+import { CLICKY_STYLE_PROPS } from "@/shared/constants/styles";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isTextTruncated } from "@/shared/utils/dom/text-truncation.utils";
 import { tintLight } from "@/shared/utils/style/color";
@@ -49,7 +50,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const {
       primary,
       variant,
-      // clicky = true,
+      clicky = true,
       bouncy = true,
       colorPalette,
       lineClamp,
@@ -190,11 +191,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             ? isHolding
               ? "transform 80ms ease-out"
               : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
-            : undefined
+            : clicky
+              ? CLICKY_STYLE_PROPS.transition
+              : undefined
         }
-        _active={{
-          transform: "scale(0.95)",
-        }}
+        _active={clicky ? CLICKY_STYLE_PROPS._active : undefined}
         onPointerDown={(e) => {
           if (bouncy) onBouncePointerDown(e);
           onPointerDown?.(e);
@@ -237,6 +238,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const {
       primary,
       variant,
+      clicky = true,
       bouncy = true,
       colorPalette,
       tooltip,
@@ -293,11 +295,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
             ? isHolding
               ? "transform 80ms ease-out"
               : "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"
-            : undefined
+            : clicky
+              ? CLICKY_STYLE_PROPS.transition
+              : undefined
         }
-        _active={{
-          transform: "scale(0.95)",
-        }}
+        _active={clicky ? CLICKY_STYLE_PROPS._active : undefined}
         onPointerDown={(e) => {
           if (bouncy) onBouncePointerDown(e);
           onPointerDown?.(e);
