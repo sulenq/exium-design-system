@@ -4,10 +4,10 @@ Status per komponen per **24 November 2026**.
 
 **Ringkasan:**
 
-- ✅ **Done:** 97
+- ✅ **Done:** 103
 - 🛠️ **Need Fixing:** 0
-- ⏳ **Pending:** 59
-- **Total Komponen:** 156
+- ⏳ **Pending:** 58
+- **Total Komponen:** 161
 
 ---
 
@@ -29,11 +29,13 @@ Semua item **Need Fixing** (Toast engine, ToastStack, ToastItem) sudah selesai. 
 
 **Follow-up QC (PR berikutnya):** contrast dark mode diuji di 88 pasangan warna (semua lolos), Tooltip long-press di touch device, CommonAppShell layout mobile, error typecheck `Modal size="5xl"` (penyebabnya type Chakra yang basi; `typecheck` kini menjalankan `chakra typegen`), decouple Map dari app GIS lama (component dedicated IGT dihapus), sapuan i18n kedua, dan 45 docs page baru dengan sidebar yang dikelompokkan ulang (satu kategori per group, tanpa "&").
 
+**Primitive baru (Wave 1–3 roadmap TernaQin):** CurrencyInput, QrScanner, CameraCapture, PrintLayout, dan TreeView, plus hook `useExchangeRate`, `usePrint`, dan `useCameraStream`. DocumentViewer tidak dibuat; PDF dibuka di viewer bawaan browser.
+
 **Masih open:** touch target tetap hit area 48 px tanpa mengubah ukuran visual (keputusan desain); label dan deskripsi pilihan basemap belum di-i18n; test di device sungguhan (HP, screen reader) belum dilakukan.
 
 ---
 
-## 2. Tabel Status Seluruh Komponen (156 Baris)
+## 2. Tabel Status Seluruh Komponen (161 Baris)
 
 | Komponen                                                          |   Status   | Catatan / Changelog                                                                                                                                                                                                                                                                                            |
 | :---------------------------------------------------------------- | :--------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -145,7 +147,7 @@ Semua item **Need Fixing** (Toast engine, ToastStack, ToastItem) sudah selesai. 
 | **MapCoordinates**                                                |  ✅ Done   | Follow-up: Docs page ditambahkan.                                                                                                                                                                                                                                                                              |
 | **MapOverlay**                                                    |  ✅ Done   | Follow-up: Slot `layerManagement` menggantikan `showMasterIgtLayerSelect`; docs page ditambahkan.                                                                                                                                                                                                              |
 | Avatar                                                            | ⏳ Pending |                                                                                                                                                                                                                                                                                                                |
-| **Image**                                                         |  ✅ Done   | QC: `loading="lazy"` jadi default.                                                                                                                                                                                                                                                                             |
+| **Image**                                                         |  ✅ Done   | QC: sempat diubah ke `loading="lazy"`; `main` mengembalikan default ke `eager` (keputusan pemilik repo). Pakai `loading="lazy"` untuk gambar di bawah lipatan.                                                                                                                                                 |
 | **HNavs**                                                         |  ✅ Done   | QC: Hit area 48 px di touch device via `::after` di button recipe. Follow-up: Docs page ditambahkan.                                                                                                                                                                                                           |
 | Link                                                              | ⏳ Pending |                                                                                                                                                                                                                                                                                                                |
 | **NavButton (Nav)**                                               |  ✅ Done   | Follow-up: Docs page ditambahkan.                                                                                                                                                                                                                                                                              |
@@ -190,6 +192,11 @@ Semua item **Need Fixing** (Toast engine, ToastStack, ToastItem) sudah selesai. 
 | QrCode                                                            | ⏳ Pending | Baru tercatat. QC: Pass.                                                                                                                                                                                                                                                                                       |
 | PhoneInput                                                        | ⏳ Pending | Baru tercatat. QC: Pass.                                                                                                                                                                                                                                                                                       |
 | TimeInput                                                         | ⏳ Pending | Baru tercatat. QC: Pass.                                                                                                                                                                                                                                                                                       |
-| FloatingLabel                                                     | ⏳ Pending | Baru tercatat. QC: Pass.                                                                                                                                                                                                                                                                                       |
+| **FloatingLabel**                                                 |  ✅ Done   | QC: label floating kini `<label>` (Field.Label) yang terhubung ke input; sebelumnya `<p>` tanpa asosiasi sehingga input bervarian floating tidak punya nama aksesibel. Tampilan tidak berubah; diuji axe untuk Input, Textarea, NumberInput, PasswordInput.                                                    |
 | **CursorTooltip**                                                 |  ✅ Done   | Baru tercatat. Follow-up: Docs page ditambahkan.                                                                                                                                                                                                                                                               |
 | **Snackbar**                                                      |  ✅ Done   | Baru (QC). Closed component bottom nav mobile: `items`, `activeKey`, `onSelect`, `centerAction`, `endSlot`; > 5 item masuk menu "Lainnya"; safe area; sembunyi saat virtual keyboard terbuka; docs page.                                                                                                       |
+| **CurrencyInput**                                                 |  ✅ Done   | Baru. IDR 0 desimal, grouping saat mengetik, shorthand rb/jt/m, clamp min/max saat blur, konversi display-only + hook `useExchangeRate` (Frankfurter, fallback currency-api, cache 24 jam).                                                                                                                    |
+| **QrScanner**                                                     |  ✅ Done   | Baru. Mode single/continuous, `validate`, cooldown, getar dan nada, senter, input manual, state izin ditolak/tidak didukung/hint 5 detik; BarcodeDetector native, fallback ZXing WASM lazy-load (bundled).                                                                                                     |
+| **CameraCapture**                                                 |  ✅ Done   | Baru. Kamera fullscreen tanpa galeri, foto dan video, ulangi/hapus per item, konfirmasi sebelum membuang, `frameVariant` (ktp, selfie, selfie-ktp, document, livestock, scale), kompresi, GPS, SHA-256.                                                                                                        |
+| **PrintLayout**                                                   |  ✅ Done   | Baru. @page untuk A4, A6, label 50×30, struk 58/80 mm; root cetak terpisah; grid `columns`; pratinjau; hook `usePrint` dengan `onBeforePrint` async.                                                                                                                                                           |
+| **TreeView**                                                      |  ✅ Done   | Baru. Vertical (Chakra TreeView) dan horizontal untuk silsilah: kolom per generasi, collapse per node, node "Tidak diketahui", navigasi keyboard.                                                                                                                                                              |

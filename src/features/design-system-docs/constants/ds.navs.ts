@@ -85,6 +85,11 @@ import {
   SidebarSimpleIcon,
   GridFourIcon,
   CursorTextIcon,
+  ScanIcon,
+  CameraIcon,
+  CurrencyCircleDollarIcon,
+  PrinterIcon,
+  TreeStructureIcon,
 } from "@phosphor-icons/react";
 
 export const DS_NAVS_MAP = {
@@ -583,6 +588,27 @@ export const DS_NAVS_MAP = {
   map_overlay: {
     icon: LayoutIcon,
     title: "MapOverlay",
+  },
+  // New primitives
+  currency_input: {
+    icon: CurrencyCircleDollarIcon,
+    title: "CurrencyInput",
+  },
+  qr_scanner: {
+    icon: ScanIcon,
+    title: "QrScanner",
+  },
+  camera_capture: {
+    icon: CameraIcon,
+    title: "CameraCapture",
+  },
+  print_layout: {
+    icon: PrinterIcon,
+    title: "PrintLayout",
+  },
+  tree_view: {
+    icon: TreeStructureIcon,
+    title: "TreeView",
   },
   format_number: {
     icon: HashIcon,

@@ -139,6 +139,7 @@ import { INPUTS_DOCS } from "@/features/design-system-docs/config/registry/input
 import { LAYOUT_DOCS } from "@/features/design-system-docs/config/registry/layout.registry";
 import { MAP_DOCS } from "@/features/design-system-docs/config/registry/map.registry";
 import { NAVIGATION_DOCS } from "@/features/design-system-docs/config/registry/navigation.registry";
+import { PRIMITIVES_DOCS } from "@/features/design-system-docs/config/registry/primitives.registry";
 import { useMemo, useState } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
 import { Sparkle as PhosphorSparkleIcon } from "@phosphor-icons/react";
@@ -153,6 +154,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   ...CHART_DOCS,
   ...DISPLAY_DOCS,
   ...MAP_DOCS,
+  ...PRIMITIVES_DOCS,
 
   logo: {
     key: "logo",

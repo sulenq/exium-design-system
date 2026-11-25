@@ -109,6 +109,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "collapsible" },
           { key: "steps" },
           { key: "tabs" },
+          { key: "tree_view" },
         ],
       },
       {
@@ -139,6 +140,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_inputs",
         children: [
           { key: "checkbox" },
+          { key: "currency_input" },
           { key: "date_input" },
           { key: "date_picker" },
           { key: "field" },
@@ -199,8 +201,10 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_media",
         children: [
           { key: "avatar" },
+          { key: "camera_capture" },
           { key: "image" },
           { key: "qr_code" },
+          { key: "qr_scanner" },
         ],
       },
       {
@@ -257,6 +261,7 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
           { key: "utilities" },
           { key: "download_trigger" },
           { key: "format_number" },
+          { key: "print_layout" },
         ],
       },
     ],

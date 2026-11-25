@@ -7,6 +7,7 @@ import { FEEDBACK_DOCS } from "@/features/design-system-docs/config/registry/fee
 import { INPUTS_DOCS } from "@/features/design-system-docs/config/registry/inputs.registry";
 import { LAYOUT_DOCS } from "@/features/design-system-docs/config/registry/layout.registry";
 import { NAVIGATION_DOCS } from "@/features/design-system-docs/config/registry/navigation.registry";
+import { PRIMITIVES_DOCS } from "@/features/design-system-docs/config/registry/primitives.registry";
 import { COMPONENTS_REGISTRY } from "@/features/design-system-docs/config/components-registry";
 import { DS_NAV_GROUPS_LIST } from "@/features/design-system-docs/constants/ds.nav-groups";
 import { DS_NAVS_MAP } from "@/features/design-system-docs/constants/ds.navs";
@@ -17,7 +18,8 @@ import {
   createRouter,
   RouterProvider,
 } from "@tanstack/react-router";
-import { describe, expect, it } from "vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 // Map pages need WebGL (MapLibre), which jsdom does not provide; they are covered by
 // typecheck and the production build instead.
@@ -29,6 +31,7 @@ const RENDERABLE = {
   ...NAVIGATION_DOCS,
   ...CHART_DOCS,
   ...DISPLAY_DOCS,
+  ...PRIMITIVES_DOCS,
 };
 const SKIP_IN_JSDOM = new Set([
   "gis_app_shell",
@@ -50,8 +53,22 @@ async function renderInRouter(node: React.ReactNode) {
     history: createMemoryHistory({ initialEntries: ["/design-system/ui"] }),
   });
   await router.load();
-  return renderWithSystem(<RouterProvider router={router} />);
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return renderWithSystem(
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>,
+  );
 }
+
+// Playgrounds must not reach the network (e.g. the exchange-rate demo)
+beforeAll(() => {
+  vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("offline in tests"));
+});
+
+afterAll(() => {
+  vi.restoreAllMocks();
+});
 
 describe("docs registry", () => {
   it("has a nav entry and a group for every component page", () => {

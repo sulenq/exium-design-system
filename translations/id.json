@@ -445,5 +445,69 @@
   },
   "welcome": {
     "subtitle": "Semoga hari ini berjalan lancar"
+  },
+  "currency_input": {
+    "conversion": "≈ {amount} · kurs {date}"
+  },
+  "qr_scanner": {
+    "label": "Pemindai QR",
+    "requesting": "Meminta izin kamera...",
+    "scanning": "Arahkan kamera ke kode QR",
+    "no_detection_hint": "QR belum terbaca. Dekatkan kamera, pastikan tidak buram, atau nyalakan senter.",
+    "accepted": "Terbaca: {value}",
+    "done": "Scan selesai",
+    "paused": "Pemindaian dijeda",
+    "scan_again": "Scan lagi",
+    "torch_on": "Nyalakan senter",
+    "torch_off": "Matikan senter",
+    "manual_entry": "Ketik manual",
+    "manual_submit": "Gunakan",
+    "manual_cancel": "Batal",
+    "manual_pattern_error": "Format tidak sesuai",
+    "permission_denied_title": "Izin kamera ditolak",
+    "permission_denied_description": "Buka pengaturan browser, izinkan akses kamera untuk situs ini, lalu coba lagi.",
+    "unsupported_title": "Kamera tidak tersedia",
+    "unsupported_description": "Perangkat atau browser ini tidak mendukung kamera. Buka lewat HTTPS di browser terbaru, atau ketik kode secara manual.",
+    "error_title": "Kamera tidak bisa dibuka",
+    "error_description": "Kamera mungkin sedang dipakai aplikasi lain. Tutup aplikasi itu lalu coba lagi.",
+    "retry": "Coba lagi"
+  },
+  "camera_capture": {
+    "take_photo": "Ambil foto",
+    "record_video": "Rekam video",
+    "take_photo_or_video": "Ambil foto atau video",
+    "retake_photo": "Ambil ulang foto",
+    "start_recording": "Mulai rekam",
+    "stop_recording": "Berhenti rekam",
+    "dialog_label": "Kamera",
+    "close": "Tutup kamera",
+    "switch_camera": "Ganti kamera depan atau belakang",
+    "mode": "Mode kamera",
+    "mode_photo": "Foto",
+    "mode_video": "Video",
+    "done": "Selesai ({count})",
+    "max_reached": "Maks {max}",
+    "remove_item": "Hapus item {index}",
+    "retake_item": "Ulangi item {index}",
+    "photo_n": "Foto {index}",
+    "video_n": "Video {index}",
+    "discard_title": "Buang {count} item baru?",
+    "discard": "Buang",
+    "keep": "Simpan",
+    "unsupported_description": "Perangkat atau browser ini tidak mendukung kamera. Buka lewat HTTPS di browser terbaru.",
+    "hint_ktp": "Pastikan semua sudut KTP terlihat dan tidak silau",
+    "hint_selfie": "Lepas kacamata dan masker",
+    "hint_selfie_ktp": "Pegang KTP di bawah dagu",
+    "hint_document": "Letakkan dokumen di permukaan rata",
+    "hint_livestock": "Ambil dari samping, seluruh badan terlihat",
+    "hint_scale": "Angka timbangan harus terbaca jelas"
+  },
+  "print_layout": {
+    "preview_label": "Pratinjau cetak {size}"
+  },
+  "tree_view": {
+    "unknown": "Tidak diketahui",
+    "expand": "Tampilkan induk",
+    "collapse": "Sembunyikan induk"
   }
 }

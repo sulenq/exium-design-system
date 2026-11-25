@@ -58,6 +58,7 @@
     "@tiptap/react": "^3.27.3",
     "@tiptap/starter-kit": "^3.27.3",
     "@turf/turf": "^7.4.0",
+    "barcode-detector": "3.2.4",
     "check-password-strength": "^3.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -75,7 +76,8 @@
     "recharts": "^3.10.1",
     "shpjs": "^6.2.0",
     "zod": "^4.4.3",
-    "zustand": "^5.0.14"
+    "zustand": "^5.0.14",
+    "zxing-wasm": "3.1.7"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^3.36.0",
