@@ -23,6 +23,7 @@ import { HookDocs } from "@/features/design-system-docs/components/foundation/ho
 import { UtilDocs } from "@/features/design-system-docs/components/foundation/util-docs";
 import { COMPONENTS_REGISTRY } from "@/features/design-system-docs/config/components-registry";
 import type { DsNavKey } from "@/features/design-system-docs/types/ds-docs-navs.type";
+import { resolveDsNavKey } from "@/features/design-system-docs/utils/resolve-ds-nav-key";
 import type { Locale } from "@/paraglide/runtime";
 import { locales } from "@/paraglide/runtime";
 import { getLocaleLabel } from "@/shared/libs/i18n";
@@ -40,7 +41,9 @@ export const DesignSystemDocsPage = () => {
   const { locale, setLocale } = useLocale();
 
   // Derived Values
-  const activeNavKey: DsNavKey = (search.component as DsNavKey) || "overview";
+  const resolvedNavKey = resolveDsNavKey(search.component);
+  const isUnknownKey = resolvedNavKey === null;
+  const activeNavKey: DsNavKey = resolvedNavKey ?? "overview";
   const currentSpec = COMPONENTS_REGISTRY[activeNavKey];
 
   const localeOptions: SelectOption[] = useMemo(() => {
@@ -200,7 +203,8 @@ export const DesignSystemDocsPage = () => {
 
         {/* Content Body Scroll Area */}
         <VScrollContainer flex={1} minW={0} minH={0} p={4}>
-          {activeNavKey === "overview" && <DemoPage />}
+          {isUnknownKey && <NotFoundPage />}
+          {!isUnknownKey && activeNavKey === "overview" && <DemoPage />}
           {isFoundation && <FoundationDocs navKey={activeNavKey} />}
           {isHook && <HookDocs navKey={activeNavKey} />}
           {isUtil && <UtilDocs navKey={activeNavKey} />}

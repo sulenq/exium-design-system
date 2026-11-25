@@ -30,6 +30,7 @@ export const VNavs = <TNavKey extends string>(props: VNavsProps<TNavKey>) => {
     navs,
     activeKey,
     expanded = true,
+    openAll = false,
     onNavClick,
     navNodeProps,
     ...restProps
@@ -107,6 +108,7 @@ export const VNavs = <TNavKey extends string>(props: VNavsProps<TNavKey>) => {
                     activeKey={activeKey}
                     activePathKeys={activePathKeys}
                     expanded={expanded}
+                    openAll={openAll}
                     onNavClick={onNavClick}
                     navNodeProps={navNodeProps}
                   />
@@ -128,6 +130,7 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
     activeKey,
     activePathKeys,
     expanded,
+    openAll = false,
     onNavClick,
     depth = 0,
     isLastChild: _isLastChild = false,
@@ -163,7 +166,8 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
   const [isOpen, setIsOpen] = useState(isAncestorActive);
   const [prevIsAncestorActive, setPrevIsAncestorActive] =
     useState(isAncestorActive);
-  const opened = isOpen;
+  // openAll (misalnya saat filter aktif) memaksa semua cabang terbuka agar hasil terlihat.
+  const opened = openAll || isOpen;
 
   // Auto-open when newly became an active ancestor from outside
   if (!prevIsAncestorActive && isAncestorActive) {
@@ -489,6 +493,7 @@ const VNavNode = <TNavKey extends string>(props: VNavNodeProps<TNavKey>) => {
                 activeKey={activeKey}
                 activePathKeys={activePathKeys}
                 expanded={expanded}
+                openAll={openAll}
                 onNavClick={onNavClick}
                 depth={depth + 1}
                 isLastChild={index === node.children!.length - 1}

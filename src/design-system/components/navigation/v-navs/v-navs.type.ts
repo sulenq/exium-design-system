@@ -10,6 +10,8 @@ export type VNavsProps<TNavKey extends string = string> = StackProps & {
   navs: Record<TNavKey, NavItem>;
   activeKey?: TNavKey;
   expanded?: boolean;
+  /** Paksa semua cabang terbuka, misalnya saat daftar sedang difilter. */
+  openAll?: boolean;
   onNavClick?: (key: TNavKey) => void;
   navNodeProps?:
     | NavButtonProps
@@ -22,6 +24,7 @@ export type VNavNodeProps<TNavKey extends string> = {
   activeKey?: TNavKey;
   activePathKeys: Set<TNavKey>;
   expanded: boolean;
+  openAll?: boolean;
   onNavClick?: (key: TNavKey) => void;
   depth?: number;
   isLastChild?: boolean;

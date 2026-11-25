@@ -108,6 +108,7 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
               navs={DS_NAVS_MAP as unknown as Record<DsNavKey, NavItem>}
               activeKey={activeNavKey}
               expanded={expanded}
+              openAll={searchQuery.trim().length > 0}
               onNavClick={onSelectNav}
               p={3}
             />
