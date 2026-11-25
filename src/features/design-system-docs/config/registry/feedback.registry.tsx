@@ -47,6 +47,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       notes:
         "Saat Loader menggantikan konten, beri teks `srOnly` atau `aria-busy` pada container supaya screen reader tahu ada proses.",
     },
+    generateCode: (props) => `<Loader size={"${String(props.size || "sm")}"} />`,
     renderPlayground: (props) => (
       <Loader size={(props.size as "sm") || "sm"} />
     ),
@@ -80,6 +81,13 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     a11y: {
       notes:
         "Indicator hanya visual. Status terpilih tetap harus disampaikan lewat elemen interaktifnya, misalnya `aria-checked` atau `aria-selected`.",
+    },
+    generateCode: (props) => {
+      const checked = Boolean(props.checked);
+      return `<HStack gap={6} align={"center"}>
+  <DotIndicator checked={${checked}} />
+  <CheckIndicator checked={${checked}} />
+</HStack>`;
     },
     renderPlayground: (props) => (
       <HStack gap={6} align={"center"}>
@@ -124,6 +132,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => `<TopBarLoader isFetching={${Boolean(props.isFetching)}} />`,
     renderPlayground: (props) => (
       <VStack gap={2} align={"center"}>
         <TopBarLoader isFetching={Boolean(props.isFetching)} />
@@ -176,6 +185,24 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
         description: "Ikon di atas judul.",
       },
     ],
+    generateCode: (props) => {
+      const title = String(props.title ?? "");
+      const desc = String(props.description ?? "");
+      if (props.withAction) {
+        return `<FeedbackState
+  icon={WifiOffIcon}
+  title={"${title}"}
+  description={"${desc}"}
+>
+  <Button variant={"outline"}>{"Coba lagi"}</Button>
+</FeedbackState>`;
+      }
+      return `<FeedbackState
+  icon={WifiOffIcon}
+  title={"${title}"}
+  description={"${desc}"}
+/>`;
+    },
     renderPlayground: (props) => (
       <FeedbackState
         icon={WifiOffIcon}
@@ -198,6 +225,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     component: NotFoundPage,
     defaultProps: {},
     propsSpec: [],
+    generateCode: () => `<NotFoundPage />`,
     renderPlayground: () => (
       <Box w={"full"} h={"360px"} overflow={"hidden"} border={"1px solid"} borderColor={"border.subtle"} rounded={"md"}>
         <NotFoundPage />
@@ -227,6 +255,10 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     a11y: {
       role: "status",
       notes: "Pill memakai `role=\"status\"` sehingga perubahan koneksi dibacakan screen reader.",
+    },
+    generateCode: (props) => {
+      const persistentProp = props.persistent ? " persistent={true}" : "";
+      return `<OfflineAlert${persistentProp} />`;
     },
     renderPlayground: (props) => (
       <VStack gap={3} align={"center"}>

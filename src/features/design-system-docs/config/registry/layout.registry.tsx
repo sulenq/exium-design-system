@@ -107,6 +107,16 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         options: ["Center", "AbsoluteCenter"],
       },
     ],
+    generateCode: (props) =>
+      props.variant === "AbsoluteCenter"
+        ? `<Box pos={"relative"} w={"full"} h={"160px"} bg={"bg.subtle"} rounded={"md"}>
+  <AbsoluteCenter>
+    <Badge>{"Di tengah parent"}</Badge>
+  </AbsoluteCenter>
+</Box>`
+        : `<Center w={"full"} h={"160px"} bg={"bg.subtle"} rounded={"md"}>
+  <Badge>{"Di tengah kotak"}</Badge>
+</Center>`,
     renderPlayground: (props) =>
       props.variant === "AbsoluteCenter" ? (
         <Box pos={"relative"} w={"full"} h={"160px"} bg={"bg.subtle"} rounded={"md"}>
@@ -141,6 +151,16 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         options: [1, 4 / 3, 16 / 9, 21 / 9],
       },
     ],
+    generateCode: (props) => {
+      const ratio = Number(props.ratio) || 16 / 9;
+      return `<Box w={"full"} maxW={"360px"}>
+  <AspectRatio ratio={${Number(ratio.toFixed(2))}}>
+    <Center bg={"bg.subtle"} rounded={"md"}>
+      <P fontSize={"sm"}>{"Rasio ${ratio.toFixed(2)}"}</P>
+    </Center>
+  </AspectRatio>
+</Box>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"360px"}>
         <AspectRatio ratio={Number(props.ratio) || 16 / 9}>
@@ -181,6 +201,11 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         ],
       },
     ],
+    generateCode: (props) => `<Box pos={"relative"} w={"96px"} h={"96px"} bg={"bg.subtle"} rounded={"md"}>
+  <Float placement={"${String(props.placement || "top-end")}"}>
+    <CountBadge>{3}</CountBadge>
+  </Float>
+</Box>`,
     renderPlayground: (props) => (
       <Box pos={"relative"} w={"96px"} h={"96px"} bg={"bg.subtle"} rounded={"md"}>
         <Float placement={(props.placement as "top-end") || "top-end"}>
@@ -216,6 +241,15 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const attachedProp = props.attached ? " attached={true}" : "";
+      const growProp = props.grow ? " grow={true}" : "";
+      return `<Group${attachedProp}${growProp} w={"full"} maxW={"360px"}>
+  <Button variant={"outline"}>{"Harian"}</Button>
+  <Button variant={"outline"}>{"Mingguan"}</Button>
+  <Button variant={"outline"}>{"Bulanan"}</Button>
+</Group>`;
+    },
     renderPlayground: (props) => (
       <Group attached={Boolean(props.attached)} grow={Boolean(props.grow)} w={"full"} maxW={"360px"}>
         <Button variant={"outline"}>{"Harian"}</Button>
@@ -249,6 +283,20 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         description: "Input yang dipicu saat container diklik, jika tidak memakai `asLabel`.",
       },
     ],
+    generateCode: (props) => {
+      const asLabelProp = props.asLabel ? "\n  asLabel={true}" : "";
+      return `<ClickableContainer${asLabelProp}
+  p={4}
+  gap={3}
+  flexDir={"row"}
+  align={"center"}
+  border={"1px solid"}
+  borderColor={"border.subtle"}
+  onClick={() => {}}
+>
+  <P fontSize={"sm"}>{"Klik kartu ini"}</P>
+</ClickableContainer>`;
+    },
     renderPlayground: (props) => (
       <ClickableContainer
         asLabel={Boolean(props.asLabel)}
@@ -300,6 +348,9 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         description: "Pakai lebar dari layout store saat `maxW` tidak diisi.",
       },
     ],
+    generateCode: (props) => `<ConstrainedContainer maxW={"${String(props.maxW || "480px")}"} bg={"bg.body"} p={4} rounded={"md"}>
+  <P fontSize={"sm"}>{"Konten dibatasi lebarnya dan selalu berada di tengah."}</P>
+</ConstrainedContainer>`,
     renderPlayground: (props) => (
       <Box w={"full"} bg={"bg.subtle"} py={4} rounded={"md"}>
         <ConstrainedContainer maxW={String(props.maxW || "480px")} bg={"bg.body"} p={4} rounded={"md"}>
@@ -328,6 +379,12 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         description: "Semua props VStack, misalnya `flexDir`, `gap`, `p`.",
       },
     ],
+    generateCode: () => `<PageContainer minH={"full"} h={"full"} p={4} gap={2}>
+  <P fontWeight={"semibold"}>{"Daftar Ternak"}</P>
+  <P fontSize={"sm"} color={"fg.muted"}>
+    {"Isi halaman ditempatkan di dalam PageContainer."}
+  </P>
+</PageContainer>`,
     renderPlayground: () => (
       <Box w={"full"} h={"200px"} overflow={"hidden"} rounded={"md"} border={"1px solid"} borderColor={"border.subtle"}>
         <PageContainer minH={"full"} h={"full"} p={4} gap={2}>
@@ -373,6 +430,18 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         description: "Matikan untuk mengunci scroll.",
       },
     ],
+    generateCode: (props) =>
+      props.direction === "horizontal"
+        ? `<HScrollContainer w={"full"} maxW={"420px"} gap={2} pb={2}>
+  {DEMO_CHIPS.map((label) => (
+    <Button key={label} size={"sm"} variant={"outline"} flexShrink={0}>
+      {label}
+    </Button>
+  ))}
+</HScrollContainer>`
+        : `<VScrollContainer w={"full"} maxW={"360px"} h={"180px"} gap={2}>
+  <DemoRows count={12} />
+</VScrollContainer>`,
     renderPlayground: (props) =>
       props.direction === "horizontal" ? (
         <HScrollContainer
@@ -421,6 +490,13 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         description: "Semua props HScrollContainer.",
       },
     ],
+    generateCode: () => `<ActionHeaderScrollContainer w={"full"} maxW={"420px"} gap={2}>
+  {DEMO_CHIPS.map((label) => (
+    <Button key={label} size={"sm"} variant={"outline"} flexShrink={0}>
+      {label}
+    </Button>
+  ))}
+</ActionHeaderScrollContainer>`,
     renderPlayground: () => (
       <ActionHeaderScrollContainer w={"full"} maxW={"420px"} gap={2}>
         {DEMO_CHIPS.map((label) => (
@@ -462,6 +538,20 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         description: "Tinggi area pudar di atas dan bawah (VMaskedContainer).",
       },
     ],
+    generateCode: (props) =>
+      props.direction === "vertical"
+        ? `<VMaskedContainer w={"full"} maxW={"360px"} h={"180px"} overflowY={"auto"} maskingTop={"24px"} maskingBottom={"24px"}>
+  <DemoRows count={12} />
+</VMaskedContainer>`
+        : `<HMaskedContainer w={"full"} maxW={"420px"} overflowX={"auto"} maskingLeft={"24px"} maskingRight={"24px"}>
+  <HStack gap={2} pb={2}>
+    {DEMO_CHIPS.map((label) => (
+      <Button key={label} size={"sm"} variant={"outline"} flexShrink={0}>
+        {label}
+      </Button>
+    ))}
+  </HStack>
+</HMaskedContainer>`,
     renderPlayground: (props) =>
       props.direction === "vertical" ? (
         <VMaskedContainer w={"full"} maxW={"360px"} h={"180px"} overflowY={"auto"} maskingTop={"24px"} maskingBottom={"24px"}>
@@ -520,6 +610,15 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         { key: "Arrow keys", action: "Geser pemisah saat fokus berada di pemisah." },
       ],
     },
+    generateCode: (props) => `<Splitter.Root
+  orientation={"${String(props.orientation || "horizontal")}"}
+  mode={"${String(props.mode || "free")}"}
+  defaultSize={[50, 50]}
+>
+  <Splitter.Panel id={"a"}>{"Panel A"}</Splitter.Panel>
+  <Splitter.ResizeTrigger id={"a:b"} />
+  <Splitter.Panel id={"b"}>{"Panel B"}</Splitter.Panel>
+</Splitter.Root>`,
     renderPlayground: (props) => (
       <Box w={"full"} h={"240px"} border={"1px solid"} borderColor={"border.subtle"} rounded={"md"} overflow={"hidden"}>
         <Splitter.Root

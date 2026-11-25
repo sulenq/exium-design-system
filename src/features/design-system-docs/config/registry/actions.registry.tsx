@@ -45,6 +45,14 @@ export const ACTIONS_DOCS: Record<string, ComponentDocSpec> = {
         description: "Ganti ikon panah default.",
       },
     ],
+    generateCode: (props) => {
+      const iconProp =
+        props.isIconButton === false ? " isIconButton={false}" : "";
+      const preventProp = props.preventNativeBack
+        ? " preventNativeBack={true}"
+        : "";
+      return `<BackButton${iconProp}${preventProp} />`;
+    },
     renderPlayground: (props) => (
       <BackButton
         isIconButton={Boolean(props.isIconButton)}
@@ -70,6 +78,12 @@ export const ACTIONS_DOCS: Record<string, ComponentDocSpec> = {
         description: "ColorModeToggleButton menerima semua props IconButton.",
       },
     ],
+    generateCode: () => `<HStack gap={3}>
+  <ColorModeToggleButton />
+  <ColorModeToggleTrigger>
+    <Button variant={"outline"}>{"Ganti tema"}</Button>
+  </ColorModeToggleTrigger>
+</HStack>`,
     renderPlayground: () => (
       <HStack gap={3}>
         <ColorModeToggleButton />
@@ -112,6 +126,13 @@ export const ACTIONS_DOCS: Record<string, ComponentDocSpec> = {
         description: "MIME type file, misalnya `text/csv`.",
       },
     ],
+    generateCode: (props) => `<DownloadTrigger
+  data={DEMO_CSV}
+  fileName={"${String(props.fileName || "data-ternak.csv")}"}
+  mimeType={"text/csv"}
+>
+  <Button variant={"outline"}>{"Unduh CSV"}</Button>
+</DownloadTrigger>`,
     renderPlayground: (props) => (
       <DownloadTrigger
         data={DEMO_CSV}

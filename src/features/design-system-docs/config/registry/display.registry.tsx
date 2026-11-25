@@ -11,10 +11,36 @@ import { CursorTooltip } from "@/design-system/components/overlay/cursor-tooltip
 import { List } from "@/design-system/components/typography/list/list";
 import { P } from "@/design-system/components/typography/p/p";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
+import { useState } from "react";
 
 // -------------------------------------------------------------------------------------
 // Demo data
 // -------------------------------------------------------------------------------------
+
+const ActionBarPlaygroundDemo = () => {
+  // States
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant={"outline"} onClick={() => setOpen((prev) => !prev)}>
+        {open ? "Tutup ActionBar" : "Buka ActionBar (3 dipilih)"}
+      </Button>
+      <ActionBar.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <ActionBar.Positioner>
+          <ActionBar.Content>
+            <P fontSize={"sm"}>{"3 ternak dipilih"}</P>
+            <ActionBar.Separator />
+            <Button size={"sm"}>{"Jadwalkan vaksin"}</Button>
+            <ActionBar.CloseTrigger asChild>
+              <CloseButton size={"sm"} />
+            </ActionBar.CloseTrigger>
+          </ActionBar.Content>
+        </ActionBar.Positioner>
+      </ActionBar.Root>
+    </>
+  );
+};
 
 const DEMO_LIST_ITEMS = [
   "Pastikan eartag terpasang sebelum vaksinasi.",
@@ -51,6 +77,11 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
         description: "Jarak antar item.",
       },
     ],
+    generateCode: (props) => `<List.Root as={"${props.ordered ? "ol" : "ul"}"} gap={2} ps={5} maxW={"420px"}>
+  {DEMO_LIST_ITEMS.map((item) => (
+    <List.Item key={item}>{item}</List.Item>
+  ))}
+</List.Root>`,
     renderPlayground: (props) => (
       <List.Root as={props.ordered ? "ol" : "ul"} gap={2} ps={5} maxW={"420px"}>
         {DEMO_LIST_ITEMS.map((item) => (
@@ -80,6 +111,15 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
     ],
     a11y: {
       notes: "Dekoratif saja; jangan taruh informasi penting di dalamnya.",
+    },
+    generateCode: (props) => {
+      const colorProp = props.color ? `\n    color={"${String(props.color)}"}` : "";
+      return `<Box pos={"relative"} w={"full"} h={"220px"} overflow={"hidden"} rounded={"md"} bg={"bg.subtle"}>
+  <OutlineContourPerspective${colorProp}
+    pos={"absolute"}
+    inset={0}
+  />
+</Box>`;
     },
     renderPlayground: (props) => (
       <Box pos={"relative"} w={"full"} h={"220px"} overflow={"hidden"} rounded={"md"} bg={"bg.subtle"}>
@@ -119,22 +159,19 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
     a11y: {
       keyboardNav: [{ key: "Escape", action: "Tutup bar." }],
     },
-    renderPlayground: (props) => (
-      <ActionBar.Root open={Boolean(props.open)}>
-        <ActionBar.Positioner>
-          <ActionBar.Content>
-            <P fontSize={"sm"}>{"3 ternak dipilih"}</P>
-            <ActionBar.Separator />
-            <Button size={"sm"} variant={"outline"}>
-              {"Jadwalkan vaksin"}
-            </Button>
-            <ActionBar.CloseTrigger asChild>
-              <CloseButton size={"sm"} />
-            </ActionBar.CloseTrigger>
-          </ActionBar.Content>
-        </ActionBar.Positioner>
-      </ActionBar.Root>
-    ),
+    generateCode: () => `<ActionBar.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+  <ActionBar.Positioner>
+    <ActionBar.Content>
+      <P fontSize={"sm"}>{"3 ternak dipilih"}</P>
+      <ActionBar.Separator />
+      <Button size={"sm"}>{"Jadwalkan vaksin"}</Button>
+      <ActionBar.CloseTrigger asChild>
+        <CloseButton size={"sm"} />
+      </ActionBar.CloseTrigger>
+    </ActionBar.Content>
+  </ActionBar.Positioner>
+</ActionBar.Root>`,
+    renderPlayground: () => <ActionBarPlaygroundDemo />,
   },
 
   cursor_tooltip: {
@@ -173,6 +210,17 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
         description: "Matikan tooltip.",
       },
     ],
+    generateCode: (props) => {
+      const delay = Number(props.openDelay) || 0;
+      const delayProp = delay !== 0 ? ` openDelay={${delay}}` : "";
+      return `<CursorTooltip content={"${String(props.content ?? "")}"}${delayProp}>
+  <Center w={"full"} maxW={"420px"} h={"180px"} bg={"bg.subtle"} rounded={"md"} cursor={"crosshair"}>
+    <VStack gap={1}>
+      <P fontSize={"sm"}>{"Arahkan kursor ke area ini"}</P>
+    </VStack>
+  </Center>
+</CursorTooltip>`;
+    },
     renderPlayground: (props) => (
       <CursorTooltip content={String(props.content ?? "")} openDelay={Number(props.openDelay) || 0}>
         <Center w={"full"} maxW={"420px"} h={"180px"} bg={"bg.subtle"} rounded={"md"} cursor={"crosshair"}>

@@ -166,6 +166,12 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
         description: "Dipanggil saat item dipilih.",
       },
     ],
+    generateCode: () => `<HNavs
+  navGroups={DEMO_NAV_GROUPS}
+  navsMap={DEMO_NAVS_MAP}
+  activePath={active}
+  onNavClick={(nav) => setActive(nav.pathname)}
+/>`,
     renderPlayground: () => <HNavsDemo />,
   },
 
@@ -199,6 +205,13 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
         { attribute: "aria-current=\"page\"", description: "Wajib pada item yang sedang aktif." },
       ],
     },
+    generateCode: (props) => `<NavButton
+  icon={HomeIcon}
+  label={"Beranda"}
+  active={active === "home"}
+  variant={"${String(props.variant || "subtle")}"}
+  onClick={() => setActive("home")}
+/>`,
     renderPlayground: (props) => <NavButtonDemo variant={String(props.variant || "subtle")} />,
   },
 
@@ -254,6 +267,16 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
         description: "Isi halaman. Default `Outlet` dari router.",
       },
     ],
+    generateCode: () => `<CommonAppShell
+  navGroups={DEMO_NAV_GROUPS}
+  navsMap={DEMO_NAVS_MAP}
+  activePath={active}
+  onNavClick={(nav) => setActive(nav.pathname)}
+>
+  <P fontSize={"sm"} color={"fg.muted"}>
+    {"Konten halaman di dalam CommonAppShell."}
+  </P>
+</CommonAppShell>`,
     renderPlayground: () => <CommonAppShellDemo />,
   },
 
@@ -285,8 +308,18 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
         description: "Diteruskan ke container halaman.",
       },
     ],
+    generateCode: () => `<GisAppShell h={"full"} minH={0} />`,
     renderPlayground: () => (
-      <Box w={"full"} h={"520px"} overflow={"hidden"} border={"1px solid"} borderColor={"border.subtle"} rounded={"md"}>
+      <Box
+        pos={"relative"}
+        transform={"translateZ(0)"}
+        w={"full"}
+        h={"520px"}
+        overflow={"hidden"}
+        border={"1px solid"}
+        borderColor={"border.subtle"}
+        rounded={"md"}
+      >
         <GisAppShell h={"full"} minH={0} />
       </Box>
     ),
@@ -314,6 +347,12 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
         description: "Diteruskan ke HeaderContainer.",
       },
     ],
+    generateCode: () => `<AppNavTitle
+  navsMap={{
+    docs: { pathname: "/design-system/ui", titleKey: "app.navs.profile" },
+  }}
+  endAdornment={<Button size={"sm"} variant={"outline"}>{"Tambah"}</Button>}
+/>`,
     renderPlayground: () => (
       <Box w={"full"} border={"1px solid"} borderColor={"border.subtle"} rounded={"md"}>
         <AppNavTitle
@@ -342,6 +381,12 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
         description: "Semua props HStack.",
       },
     ],
+    generateCode: () => `<HeaderContainer>
+  <Heading size={"md"}>{"Daftar Ternak"}</Heading>
+  <IconButton variant={"ghost"} aria-label={"Notifikasi"}>
+    <AppIcon icon={BellIcon} />
+  </IconButton>
+</HeaderContainer>`,
     renderPlayground: () => (
       <Box w={"full"} border={"1px solid"} borderColor={"border.subtle"} rounded={"md"}>
         <HeaderContainer>

@@ -29,6 +29,7 @@ const ActionBarContent = forwardRef<HTMLDivElement, ActionBarContentProps>(
         ref={ref}
         gap={1}
         p={1}
+        pl={3}
         bg={"bg.body"}
         rounded={theme.radii.container}
         shadow={"md"}

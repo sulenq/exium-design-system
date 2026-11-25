@@ -33,7 +33,10 @@ export const AreaChart = (props: CartesianChartProps) => {
       <ResponsiveContainer width={"100%"} height={"100%"}>
         <RechartsAreaChart data={chart.data}>
           {showGrid && (
-            <CartesianGrid stroke={chart.color("border.muted")} vertical={false} />
+            <CartesianGrid
+              stroke={chart.color("border.muted")}
+              vertical={false}
+            />
           )}
           <XAxis
             axisLine={false}
@@ -63,4 +66,3 @@ export const AreaChart = (props: CartesianChartProps) => {
     </Chart.Root>
   );
 };
-

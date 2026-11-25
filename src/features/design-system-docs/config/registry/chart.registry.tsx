@@ -114,6 +114,18 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const gridProp = props.showGrid === false ? "\n  showGrid={false}" : "";
+      const legendProp = props.showLegend ? "\n  showLegend={true}" : "";
+      return `<AreaChart
+  data={DEMO_SERIES_DATA}
+  xAxisKey={"month"}
+  series={[
+    { name: "produksi", color: "blue.solid" },
+    { name: "target", color: "teal.solid" },
+  ]}${gridProp}${legendProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"560px"}>
         <AreaChart
@@ -174,6 +186,18 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const gridProp = props.showGrid === false ? "\n  showGrid={false}" : "";
+      const legendProp = props.showLegend ? "\n  showLegend={true}" : "";
+      return `<BarChart
+  data={DEMO_SERIES_DATA}
+  xAxisKey={"month"}
+  series={[
+    { name: "produksi", color: "blue.solid" },
+    { name: "target", color: "teal.solid" },
+  ]}${gridProp}${legendProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"560px"}>
         <BarChart
@@ -217,6 +241,15 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         options: ["blue", "teal", "green", "orange", "purple"],
       },
     ],
+    generateCode: (props) => {
+      const colorProp =
+        props.colorPalette && props.colorPalette !== "blue"
+          ? `\n  colorPalette={"${props.colorPalette}"}`
+          : "";
+      return `<BarList
+  data={DEMO_BAR_LIST_DATA}${colorProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"460px"}>
         <BarList
@@ -249,6 +282,23 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         description: "Semua props Tooltip Recharts.",
       },
     ],
+    generateCode: () => `<Box w={"full"} maxW={"420px"} h={"200px"}>
+  <ResponsiveContainer width={"100%"} height={"100%"}>
+    <BarChart data={DEMO_WEIGHT_DATA}>
+      <XAxis dataKey={"month"} tickLine={false} axisLine={false} />
+      <ChartTooltip
+        content={<ChartTooltipContent />}
+        cursor={{ fillOpacity: 0.1 }}
+      />
+      <Bar
+        dataKey={"berat"}
+        name={"Berat (kg)"}
+        fill={"var(--chakra-colors-green-600)"}
+        radius={4}
+      />
+    </BarChart>
+  </ResponsiveContainer>
+</Box>`,
     renderPlayground: () => (
       <Box w={"full"} maxW={"420px"} h={"200px"}>
         <ResponsiveContainer width={"100%"} height={"100%"}>
@@ -296,6 +346,12 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const legendProp = props.showLegend === false ? "\n  showLegend={false}" : "";
+      return `<DonutChart
+  data={DEMO_PIE_DATA}${legendProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
         <DonutChart
@@ -350,6 +406,18 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const gridProp = props.showGrid === false ? "\n  showGrid={false}" : "";
+      const legendProp = props.showLegend ? "\n  showLegend={true}" : "";
+      return `<LineChart
+  data={DEMO_SERIES_DATA}
+  xAxisKey={"month"}
+  series={[
+    { name: "produksi", color: "blue.solid" },
+    { name: "target", color: "teal.solid" },
+  ]}${gridProp}${legendProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"560px"}>
         <LineChart
@@ -392,6 +460,12 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const legendProp = props.showLegend === false ? "\n  showLegend={false}" : "";
+      return `<PieChart
+  data={DEMO_PIE_DATA}${legendProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
         <PieChart data={DEMO_PIE_DATA} showLegend={Boolean(props.showLegend)} />
@@ -435,6 +509,14 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const legendProp = props.showLegend ? "\n  showLegend={true}" : "";
+      return `<RadarChart
+  data={DEMO_RADAR_DATA}
+  angleKey={"metric"}
+  series={[{ name: "skor", color: "teal.solid", label: "Skor" }]}${legendProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
         <RadarChart
@@ -483,6 +565,15 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const gridProp = props.showGrid === false ? "\n  showGrid={false}" : "";
+      return `<ScatterChart
+  data={DEMO_SCATTER_DATA}
+  xKey={"umur"}
+  yKey={"berat"}
+  name={"Pertumbuhan"}${gridProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"520px"}>
         <ScatterChart
@@ -524,6 +615,7 @@ export const CHART_DOCS: Record<string, ComponentDocSpec> = {
         description: "Token warna garis dan area.",
       },
     ],
+    generateCode: () => `<Sparkline data={DEMO_SERIES_DATA} dataKey={"produksi"} />`,
     renderPlayground: () => (
       <Sparkline data={DEMO_SERIES_DATA} dataKey={"produksi"} />
     ),

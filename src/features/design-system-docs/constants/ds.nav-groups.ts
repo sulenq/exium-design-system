@@ -191,15 +191,8 @@ export const DS_NAV_GROUPS_LIST: NavGroup<DsNavKey>[] = [
         key: "cat_map",
         children: [
           { key: "map" },
-          { key: "map_basemap" },
-          { key: "map_controls" },
-          { key: "map_coordinates" },
           { key: "map_draw_controls" },
           { key: "map_feature_info_panel" },
-          { key: "map_layer_management" },
-          { key: "map_overlay" },
-          { key: "map_search" },
-          { key: "map_symbology_panel" },
         ],
       },
       {

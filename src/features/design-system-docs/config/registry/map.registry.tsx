@@ -2,21 +2,14 @@
 
 import { Button } from "@/design-system/components/button/button/button";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { BaseMap, Map } from "@/design-system/components/map/map/map";
-import { MapAttribution } from "@/design-system/components/map/map/map.basemap-attribution";
-import { MapControls } from "@/design-system/components/map/map/map.controls";
-import { MapBasemapSelect } from "@/design-system/components/map/map/map.controls/map.basemap-select";
 import { MapLayerManagementPanel } from "@/design-system/components/map/map/map.controls/map.layer-management-panel";
-import { MapCoordinates } from "@/design-system/components/map/map/map.coordinates";
 import { MapDrawControls } from "@/design-system/components/map/map/map.draw-controls";
 import { MapFeatureInfoPanel } from "@/design-system/components/map/map/map.feature-info-panel";
 import type { GenericMapLayer } from "@/design-system/components/map/map/map.layer-management.type";
-import { MapOverlay } from "@/design-system/components/map/map/map.overlay";
-import { MapSearch } from "@/design-system/components/map/map/map.search";
-import { MapSymbologyPanel } from "@/design-system/components/map/map/map.symbology-panel";
 import { useMapFeatureInfoStore } from "@/design-system/components/map/stores/map.feature-info.store";
-import { useMapLayerStore } from "@/design-system/components/map/stores/map.layer.store";
+import { useMapDrawStore } from "@/design-system/components/map/stores/map.draw.store";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { Grid2X2Icon, Layers2Icon } from "lucide-react";
 import type { ReactNode } from "react";
@@ -132,34 +125,37 @@ const FeatureInfoDemo = () => {
   );
 };
 
-const SymbologyDemo = () => {
-  // Stores
-  const setSymbologyLayerEnabled = useMapLayerStore((s) => s.setSymbologyLayerEnabled);
-
-  return (
-    <MapFrame>
-      <BaseMap>
-        <MapSlot top={4} left={4}>
-          <Button
-            size={"sm"}
-            onClick={() => setSymbologyLayerEnabled(DEMO_LAYERS[0].id, true)}
-          >
-            {"Tampilkan legenda"}
-          </Button>
-        </MapSlot>
-        <MapSlot top={"60px"} right={4}>
-          <MapSymbologyPanel layers={DEMO_LAYERS} />
-        </MapSlot>
-      </BaseMap>
-    </MapFrame>
-  );
-};
 
 // -------------------------------------------------------------------------------------
 // Specs
 // -------------------------------------------------------------------------------------
 
 const MAP_IMPORT_ROOT = "@/design-system/components/map/map";
+
+const MapDrawDemo = () => {
+  // Stores
+  const { isDrawing, start, cancel } = useMapDrawStore();
+
+  return (
+    <VStack w={"full"} gap={2} align={"stretch"}>
+      <HStack gap={2}>
+        <Button
+          size={"sm"}
+          colorPalette={isDrawing ? "red" : "blue"}
+          onClick={() => (isDrawing ? cancel() : start("polygon"))}
+        >
+          {isDrawing ? "Batal Draw" : "Mulai Draw Polygon"}
+        </Button>
+        <Button size={"sm"} variant={"outline"} onClick={() => cancel()}>
+          {"Reset Polygon"}
+        </Button>
+      </HStack>
+      <MapFrame h={"420px"}>
+        <Map layers={[]} />
+      </MapFrame>
+    </VStack>
+  );
+};
 
 export const MAP_DOCS: Record<string, ComponentDocSpec> = {
   map: {
@@ -194,6 +190,7 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
         description: "Ganti style basemap.",
       },
     ],
+    generateCode: () => `<Map layers={[]} layerManagement={<DemoLayerManagement />} />`,
     renderPlayground: () => (
       <MapFrame h={"480px"}>
         <Map layers={[]} layerManagement={<DemoLayerManagement />} />
@@ -201,119 +198,8 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-  map_basemap: {
-    key: "map_basemap",
-    title: "MapBasemap",
-    category: "Map",
-    description:
-      "BaseMap adalah engine peta (MapLibre) tanpa overlay. MapBasemapSelect mengganti gaya basemap; MapAttribution menampilkan atribusi sumber peta yang wajib dicantumkan.",
-    importPath: `import { BaseMap } from "${MAP_IMPORT_ROOT}/map";\nimport { MapBasemapSelect } from "${MAP_IMPORT_ROOT}/map.controls/map.basemap-select";\nimport { MapAttribution } from "${MAP_IMPORT_ROOT}/map.basemap-attribution";`,
-    component: BaseMap,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "styleUrl",
-        type: "string",
-        description: "Style MapLibre. Default mengikuti pilihan di MapBasemapSelect.",
-      },
-      {
-        name: "children",
-        type: "ReactNode",
-        description: "Overlay yang membaca instance peta dari store.",
-      },
-    ],
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapSlot top={4} right={4}>
-            <HStack gap={2}>
-              <MapBasemapSelect />
-              <MapAttribution />
-            </HStack>
-          </MapSlot>
-        </BaseMap>
-      </MapFrame>
-    ),
-  },
 
-  map_controls: {
-    key: "map_controls",
-    title: "MapControls",
-    category: "Map",
-    description:
-      "Kontrol bawah peta: zoom, kompas (reset ke utara), lokasi saya, skala, dan tampilan 3D. Tiap kontrol juga diekspor terpisah (MapZoom, MapCompass, MapLocate, MapScale, Map3DToggle).",
-    importPath: `import { MapControls } from "${MAP_IMPORT_ROOT}/map.controls";`,
-    component: MapControls,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "...StackProps",
-        type: "StackProps",
-        description: "Diteruskan ke container kontrol, misalnya `px` dan `pb`.",
-      },
-    ],
-    a11y: {
-      notes: "Setiap tombol punya `aria-label` terlokalisasi dan hit area 48 px di perangkat sentuh.",
-    },
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapSlot bottom={0} left={0} right={0}>
-            <MapControls px={4} pb={4} />
-          </MapSlot>
-        </BaseMap>
-      </MapFrame>
-    ),
-  },
 
-  map_layer_management: {
-    key: "map_layer_management",
-    title: "MapLayerManagement",
-    category: "Map",
-    description:
-      "Panel daftar layer: nyala-mati, opasitas, urutan (drag), zoom ke layer, dan legenda. Generik terhadap tipe layer; warna, ikon, dan label kategori diambil dari `layer.appearance`.",
-    importPath: `import { MapLayerManagementPanel } from "${MAP_IMPORT_ROOT}/map.controls/map.layer-management-panel";`,
-    component: MapLayerManagementPanel,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "layers",
-        type: "T[] (T extends GenericMapLayer)",
-        required: true,
-        description: "Daftar layer yang dikelola.",
-      },
-      {
-        name: "title",
-        type: "string",
-        required: true,
-        description: "Judul panel.",
-      },
-      {
-        name: "isLoading / isError / onRetry",
-        type: "boolean / boolean / () => void",
-        description: "State saat daftar layer sedang dimuat atau gagal dimuat.",
-      },
-      {
-        name: "showSymbology",
-        type: "boolean",
-        description: "Tampilkan tombol legenda per layer.",
-      },
-      {
-        name: "onToggleLayer / onFlyToLayer",
-        type: "(layer: T, ...) => void",
-        description: "Callback tambahan saat layer dinyalakan atau di-zoom.",
-      },
-    ],
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapSlot top={4} right={4}>
-            <DemoLayerManagement />
-          </MapSlot>
-        </BaseMap>
-      </MapFrame>
-    ),
-  },
 
   map_draw_controls: {
     key: "map_draw_controls",
@@ -325,15 +211,8 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
     component: MapDrawControls,
     defaultProps: {},
     propsSpec: [],
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapSlot top={4} left={4}>
-            <MapDrawControls />
-          </MapSlot>
-        </BaseMap>
-      </MapFrame>
-    ),
+    generateCode: () => `<MapDrawControls />`,
+    renderPlayground: () => <MapDrawDemo />,
   },
 
   map_feature_info_panel: {
@@ -346,91 +225,14 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
     component: MapFeatureInfoPanel,
     defaultProps: {},
     propsSpec: [],
+    generateCode: () => `<MapFeatureInfoPanel
+  feature={DEMO_FEATURE}
+  onClose={() => {}}
+/>`,
     renderPlayground: () => <FeatureInfoDemo />,
   },
 
-  map_search: {
-    key: "map_search",
-    title: "MapSearch",
-    category: "Map",
-    description:
-      "Pencarian lokasi (geocoding) yang memindahkan kamera peta ke hasil yang dipilih.",
-    importPath: `import { MapSearch } from "${MAP_IMPORT_ROOT}/map.search";`,
-    component: MapSearch,
-    defaultProps: {},
-    propsSpec: [],
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapSlot top={4} left={4}>
-            <MapSearch />
-          </MapSlot>
-        </BaseMap>
-      </MapFrame>
-    ),
-  },
 
-  map_symbology_panel: {
-    key: "map_symbology_panel",
-    title: "MapSymbologyPanel",
-    category: "Map",
-    description:
-      "Legenda layer dari WMS GetLegendGraphic. Datanya masuk lewat `layers`; panel hanya menampilkan layer yang legendanya dinyalakan di layer store. Di demo ini layer tidak punya WMS, jadi panel menampilkan state gagal dan tombol coba lagi.",
-    importPath: `import { MapSymbologyPanel } from "${MAP_IMPORT_ROOT}/map.symbology-panel";`,
-    component: MapSymbologyPanel,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "layers",
-        type: "GenericMapLayer[]",
-        required: true,
-        description: "Layer yang legendanya bisa ditampilkan.",
-      },
-    ],
-    renderPlayground: () => <SymbologyDemo />,
-  },
 
-  map_coordinates: {
-    key: "map_coordinates",
-    title: "MapCoordinates",
-    category: "Map",
-    description:
-      "Indikator koordinat titik tengah peta. Geser peta untuk melihat koordinat berubah.",
-    importPath: `import { MapCoordinates } from "${MAP_IMPORT_ROOT}/map.coordinates";`,
-    component: MapCoordinates,
-    defaultProps: {},
-    propsSpec: [],
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapCoordinates />
-        </BaseMap>
-      </MapFrame>
-    ),
-  },
 
-  map_overlay: {
-    key: "map_overlay",
-    title: "MapOverlay",
-    category: "Map",
-    description:
-      "Tata letak overlay standar di atas BaseMap: pencarian di kiri atas, slot `layerManagement` dan atribusi di kanan atas, info fitur, koordinat, dan kontrol di bawah. Dipakai oleh Map.",
-    importPath: `import { MapOverlay } from "${MAP_IMPORT_ROOT}/map.overlay";`,
-    component: MapOverlay,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "layerManagement",
-        type: "ReactNode",
-        description: "Kontrol layer di kanan atas.",
-      },
-    ],
-    renderPlayground: () => (
-      <MapFrame>
-        <BaseMap>
-          <MapOverlay layerManagement={<DemoLayerManagement />} />
-        </BaseMap>
-      </MapFrame>
-    ),
-  },
 };

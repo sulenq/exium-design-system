@@ -130,6 +130,19 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       role: "group",
       notes: "`<fieldset>` dan `<legend>` membuat screen reader membacakan judul kelompok saat fokus masuk ke field pertama.",
     },
+    generateCode: (props) => {
+      const containeredProp = props.containeredContent
+        ? "\n  containeredContent={true}"
+        : "";
+      const disabledProp = props.disabled ? "\n  disabled={true}" : "";
+      return `<Fieldset
+  legend={"${String(props.legend ?? "")}"}${containeredProp}${disabledProp}
+>
+  <Field label={"Nama"} required={true}>
+    <Input placeholder={"Sapi Perah #01"} />
+  </Field>
+</Fieldset>`;
+    },
     renderPlayground: (props) => (
       <VStack w={"full"} maxW={"420px"}>
         <Fieldset
@@ -184,6 +197,15 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
         description: "Teks yang tampil; default dari i18n.",
       },
     ],
+    generateCode: (props) => {
+      const maxProp = Number(props.maxItems)
+        ? `\n  maxItems={${Number(props.maxItems)}}`
+        : "";
+      return `<StringArrayInput
+  value={value}
+  onChange={setValue}${maxProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <StringArrayInputDemo maxItems={Number(props.maxItems) || undefined} />
     ),
@@ -237,6 +259,15 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
         { key: "Backspace", action: "Kembali ke segmen sebelumnya saat segmen kosong." },
       ],
     },
+    generateCode: (props) => {
+      const prefixProp = props.withPrefix === false ? "\n  withPrefix={false}" : "";
+      const disabledProp = props.disabled ? "\n  disabled={true}" : "";
+      return `<VersionInput
+  label={"Versi aplikasi"}
+  value={value}
+  onValueChange={setValue}${prefixProp}${disabledProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <VersionInputDemo withPrefix={Boolean(props.withPrefix)} disabled={Boolean(props.disabled)} />
     ),
@@ -284,6 +315,14 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
         { key: "Escape", action: "Tutup modal." },
       ],
     },
+    generateCode: () => `<FocusSearchTrigger
+  modalKey={"ds-docs-focus-search-demo"}
+  queryKey={"ds_docs_focus_search_q"}
+  searchIndex={FOCUS_SEARCH_DEMO_INDEX}
+  onResultSelect={(result) => setSelected(result.title)}
+>
+  <Button variant={"outline"}>{"Cari navigasi & komponen"}</Button>
+</FocusSearchTrigger>`,
     renderPlayground: () => <FocusSearchDemo />,
   },
 };

@@ -175,6 +175,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
+    generateCode: (props) => `<Logo boxSize={${Number(props.boxSize) || 32}} />`,
     renderPlayground: (props) => <Logo boxSize={Number(props.boxSize) || 32} />,
   },
 
@@ -217,6 +218,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         ],
       },
     ],
+    generateCode: (props) => {
+      const align = String(props.textAlign || "center");
+      const color = String(props.color || "fg.muted");
+      return `<BrandWatermark textAlign={"${align}"} color={"${color}"} />`;
+    },
     renderPlayground: (props) => (
       <BrandWatermark
         textAlign={(props.textAlign as "left" | "center" | "right") || "center"}
@@ -668,6 +674,9 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["xs", "sm", "md"],
       },
     ],
+    generateCode: (props) => `<CountBadge max={${Number(props.max) || 99}} size={"${String(props.size || "xs")}"}>
+  {${Number(props.children) || 0}}
+</CountBadge>`,
     renderPlayground: (props) => (
       <CountBadge
         max={Number(props.max) || 99}
@@ -711,6 +720,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
     component: Box,
     defaultProps: {},
     propsSpec: [],
+    generateCode: () => `<RichTextEditorPresetEssential />`,
     renderPlayground: () => (
       <Box w={"full"} maxW={"680px"}>
         <RichTextEditorPresetEssential />
@@ -1934,6 +1944,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       notes:
         "Prefix kode negara bukan bagian dari teks yang bisa diedit, sehingga tidak bisa terhapus. Menempel nomor internasional lengkap (+62...) otomatis memisahkan kode negaranya.",
     },
+    generateCode: (props) => {
+      const country = String(props.defaultCountry || "ID");
+      const lockedProp = props.countryLocked ? "\n  countryLocked={true}" : "";
+      const stripProp = props.stripLeadingZero ? "\n  stripLeadingZero={true}" : "";
+      return `<PhoneInput
+  modalKey={"docs-phone-input"}
+  defaultCountry={"${country}"}${lockedProp}${stripProp}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"320px"}>
         <PhoneInput
@@ -2035,6 +2054,18 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       ],
       notes:
         "Menutup modal tanpa konfirmasi (Batal, Esc, klik luar) membuang perubahan.",
+    },
+    generateCode: (props) => {
+      const secProp = props.withSeconds ? "\n  withSeconds={true}" : "";
+      const minStep = Number(props.minuteStep) || 1;
+      const secStep = Number(props.secondStep) || 1;
+      const minProp = minStep !== 1 ? `\n  minuteStep={${minStep}}` : "";
+      const secStepProp = secStep !== 1 ? `\n  secondStep={${secStep}}` : "";
+      const disProp = props.disabled ? "\n  disabled={true}" : "";
+      return `<TimeInput
+  modalKey={"docs-time-input"}
+  defaultValue={"09:30:00"}${secProp}${minProp}${secStepProp}${disProp}
+/>`;
     },
     renderPlayground: (props) => (
       <Box w={"280px"}>
@@ -2555,6 +2586,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
+    generateCode: (props) => `<Emoji
+  variant={"${String(props.variant || "poker")}"}
+  boxSize={${Number(props.boxSize) || 24}}
+  colorPalette={"${String(props.colorPalette || "neutral")}"}
+/>`,
     renderPlayground: (props) => {
       const colorPalette = (props.colorPalette as string) || "neutral";
       const boxSize = (props.boxSize as number) || 24;
@@ -2592,6 +2628,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["neutral", "info", "warning", "error", "success"],
       },
     ],
+    generateCode: (props) => `<FocusAlert
+  modalKey={"docs-focus-alert"}
+  title={"${String(props.title || "Konfirmasi")}"}
+  description={"${String(props.description || "Apakah Anda yakin?")}"}
+/>`,
     renderPlayground: (props) => <FocusAlertPlaygroundDemo {...props} />,
   },
 
@@ -2698,6 +2739,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: [10, 20, 50, 100],
       },
     ],
+    generateCode: () => `<DataListTable.Root
+  headers={dataList.headers}
+  items={dataList.items}
+  batchActions={dataList.batchActions}
+  itemActions={dataList.itemActions}
+>
+  <DataListTable.Header />
+  <DataListTable.Body />
+</DataListTable.Root>`,
     renderPlayground: (props, onPropChange) => (
       <DataTablePlaygroundDemo props={props} onPropChange={onPropChange} />
     ),
@@ -2829,6 +2879,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
           "Dipanggil setiap kali level berubah, misalnya untuk memunculkan reminder.",
       },
     ],
+    generateCode: (props) => `<Countdown
+  finishedAt={targetIsoDate}
+  warningThresholdDays={${Number(props.warningThresholdDays) || 3}}
+  warningThresholdHours={${Number(props.warningThresholdHours) || 24}}
+/>`,
     renderPlayground: (props) => {
       const tomorrow = new Date(Date.now() + 86400000 * 2).toISOString();
       return (
@@ -2902,6 +2957,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
       notes:
         "Hanya satu tanggal yang ada di tab order (roving tabindex). Tanggal di luar whitelist tetap bisa difokus dengan aria-disabled.",
     },
+    generateCode: () => `<DatePicker
+  value={date}
+  onChange={setDate}
+/>`,
     renderPlayground: (props) => {
       const today = new Date();
       const iso = (offset: number) =>
@@ -2946,6 +3005,7 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         description: "Label untuk screen reader; default dari i18n.",
       },
     ],
+    generateCode: (props) => `<CloseButton size={"${String(props.size || "md")}"} />`,
     renderPlayground: (props) => (
       <CloseButton size={(props.size as "md") || "md"} />
     ),
@@ -2978,6 +3038,10 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => `<InfoTip
+  content={"${String(props.content || "")}"}
+  showArrow={${Boolean(props.showArrow)}}
+/>`,
     renderPlayground: (props) => (
       <InfoTip
         content={String(props.content || "")}
@@ -3024,6 +3088,11 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "number",
       },
     ],
+    generateCode: (props) => `<Url
+  url={"${String(props.url || "")}"}
+  isExternalLink={${props.isExternalLink !== false}}
+  lineClamp={${Number(props.lineClamp) || 1}}
+/>`,
     renderPlayground: (props) => (
       <Url
         url={String(props.url || "")}
@@ -3060,6 +3129,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["decimal", "currency", "percent", "unit"],
       },
     ],
+    generateCode: (props) => {
+      const style = String(props.style || "currency");
+      const currencyProp = style === "currency" ? '\n  currency={"IDR"}\n  maximumFractionDigits={0}' : "";
+      return `<FormatNumber
+  value={${Number(props.value) || 0}}
+  style={"${style}"}${currencyProp}
+/>`;
+    },
     renderPlayground: (props) => {
       const style = String(props.style || "currency");
       return (
@@ -3129,6 +3206,16 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => `<Button
+  onClick={() =>
+    snackbar.create({
+      title: "${String(props.title || "Notifikasi")}",
+      type: "${String(props.type || "info")}",
+    })
+  }
+>
+  {"Tampilkan Snackbar"}
+</Button>`,
     renderPlayground: (props) => <SnackbarPlaygroundDemo {...props} />,
   },
 
@@ -3154,6 +3241,14 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: [1, 2, 3, 4],
       },
     ],
+    generateCode: (props) => `<StatGrid.Root columns={${Number(props.columns) || 2}}>
+  <StatGrid.Item index={0} columns={${Number(props.columns) || 2}}>
+    <StatGrid.Header>
+      <StatGrid.Label>{"Total Pengguna Aktif"}</StatGrid.Label>
+    </StatGrid.Header>
+    <StatGrid.Value>{"1,248"}</StatGrid.Value>
+  </StatGrid.Item>
+</StatGrid.Root>`,
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"600px"}>
         <StatGrid.Root columns={Number(props.columns) || 2}>
@@ -3204,6 +3299,18 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["sm", "md", "lg"],
       },
     ],
+    generateCode: (props) => `<Timeline.Root size={"${String(props.size || "md")}"}>
+  <Timeline.Item>
+    <Timeline.Connector>
+      <Timeline.Separator />
+      <Timeline.Indicator />
+    </Timeline.Connector>
+    <Timeline.Content>
+      <Timeline.Title>{"Data Dibuat"}</Timeline.Title>
+      <Timeline.Description>{"10 menit lalu"}</Timeline.Description>
+    </Timeline.Content>
+  </Timeline.Item>
+</Timeline.Root>`,
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"400px"}>
         <Timeline.Root size={(props.size as "sm" | "md" | "lg") || "md"}>
@@ -3289,6 +3396,15 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => {
+      const disProp = props.disabled ? "\n  disabled={true}" : "";
+      return `<FileItem
+  name={"${String(props.name || "dokumen.pdf")}"}
+  sizeLabel={"${String(props.sizeLabel || "1.2 MB")}"}
+  mimeType={"${String(props.mimeType || "application/pdf")}"}${disProp}
+  onDelete={() => {}}
+/>`;
+    },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"380px"}>
         <FileItem
@@ -3355,6 +3471,13 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         controlKind: "boolean",
       },
     ],
+    generateCode: (props) => `<MaskedText
+  value={"${String(props.value || "3271041908990001")}"}
+  maskLength={${Number(props.maskLength) || 16}}
+  defaultVisible={${Boolean(props.defaultVisible)}}
+  withCopy={${Boolean(props.withCopy)}}
+  withToggle={${Boolean(props.withToggle)}}
+/>`,
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"320px"}>
         <MaskedText
@@ -3935,6 +4058,17 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
         options: ["xs", "sm", "md", "lg", "xl", "full"],
       },
     ],
+    generateCode: (props) => `<Drawer.Root modalKey={"docs-drawer"} placement={"${String(props.placement || "end")}"}>
+  <Drawer.Trigger asChild>
+    <Button variant={"outline"}>{"Buka Drawer"}</Button>
+  </Drawer.Trigger>
+  <Drawer.Content>
+    <Drawer.Header>
+      <Drawer.Title>{"Judul Drawer"}</Drawer.Title>
+    </Drawer.Header>
+    <Drawer.Body>{"Isi drawer."}</Drawer.Body>
+  </Drawer.Content>
+</Drawer.Root>`,
     renderPlayground: (props) => <DrawerPlaygroundDemo {...props} />,
   },
 
