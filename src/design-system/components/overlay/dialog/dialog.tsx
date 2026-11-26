@@ -14,7 +14,6 @@ import {
   clearDialogOffset,
   getDialogOffset,
   updateClickOrigin,
-  updateDialogOffset,
 } from "@/design-system/components/overlay/stores/dialog-animation-store";
 import type {
   DialogCloseButtonProps,
@@ -37,7 +36,6 @@ import {
   createContext,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -239,11 +237,10 @@ const DialogContent = (props: DialogContentProps) => {
   const nestingLevel = modalKey.split(".").length;
   const zIndex = 1400 + nestingLevel * 10;
 
-  // Pre-calculate dialog offset synchronously before browser paint
-  updateDialogOffset(modalKey);
+  // Read pre-calculated dialog offset (computed on pointerdown/click/resize)
   const { x, y } = getDialogOffset(modalKey);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let currentAnimation: Animation | null = null;
 
     registerFullscreenAnimator(modalKey, (next) => {

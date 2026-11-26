@@ -5,7 +5,7 @@ import type {
   UsePopDisclosureReturn,
 } from "@/design-system/components/overlay/modal/modal.type";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { startTransition, useCallback, useEffect, useMemo, useRef } from "react";
 
 export const OVERLAY_SEARCH_PARAM_KEY = "overlay";
 /**
@@ -99,14 +99,16 @@ export function usePopDisclosure(
 
       openedByApp.add(targetKey);
 
-      navigate({
-        to: ".",
-        resetScroll: false,
-        search: (old) => {
-          const next = { ...old, [OVERLAY_SEARCH_PARAM_KEY]: targetKey };
-          delete (next as Record<string, unknown>).activeModalKey;
-          return next;
-        },
+      startTransition(() => {
+        navigate({
+          to: ".",
+          resetScroll: false,
+          search: (old) => {
+            const next = { ...old, [OVERLAY_SEARCH_PARAM_KEY]: targetKey };
+            delete (next as Record<string, unknown>).activeModalKey;
+            return next;
+          },
+        });
       });
     },
     [navigate],

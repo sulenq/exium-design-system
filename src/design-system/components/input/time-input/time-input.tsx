@@ -1,9 +1,6 @@
 // src/design-system/components/input/time-input/time-input.tsx
 
-import {
-  Button,
-  IconButton,
-} from "@/design-system/components/button/button/button";
+import { Button } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
 import type {
@@ -265,14 +262,21 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           )}
         </Box>
 
-        <IconButton
-          size={"xs"}
-          variant={"filledIcon"}
-          aria-label={t["common.open_date_picker"]()}
+        <Box
+          as={"span"}
+          display={"inline-flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          boxSize={6}
+          rounded={theme.radii.component}
+          bg={"bg.subtle"}
+          color={"fg.muted"}
           mr={"-1"}
+          aria-hidden={true}
+          pointerEvents={"none"}
         >
           <AppIcon icon={ClockIcon} weight={"fill"} />
-        </IconButton>
+        </Box>
       </HStack>
     );
 
