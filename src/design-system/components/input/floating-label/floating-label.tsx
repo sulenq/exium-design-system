@@ -17,7 +17,7 @@ export const FloatingLabel = (props: FloatingLabelProps) => {
       position={"absolute"}
       left={left}
       right={right}
-      top={"3px"}
+      top={"5px"}
       zIndex={1}
       pointerEvents={"none"}
     >
@@ -31,7 +31,6 @@ export const FloatingLabel = (props: FloatingLabelProps) => {
           overflow={"hidden"}
           textOverflow={"ellipsis"}
           whiteSpace={"nowrap"}
-          fontWeight={"medium"}
           color={"fg.subtle"}
         >
           {label}
@@ -51,4 +50,3 @@ export const FloatingLabel = (props: FloatingLabelProps) => {
     </Box>
   );
 };
-

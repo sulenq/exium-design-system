@@ -566,10 +566,10 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
               <P fontSize={"xs"} fontWeight={"bold"} mb={1}>
                 {"ACCESSIBILITY BEST PRACTICE"}
               </P>
-              <P fontSize={"sm"} color={"fg.muted"}>
+              <Box fontSize={"sm"} color={"fg.muted"}>
                 {spec.a11y?.notes ??
                   "Komponen ini mematuhi standar aksesibilitas Chakra UI v3. Pastikan tombol tanpa teks selalu memiliki prop aria-label, rasio kontras teks minimum 4.5:1 terhadap latar belakang, dan outline fokus tidak dimatikan pada navigation mode keyboard."}
-              </P>
+              </Box>
             </Box>
           </VStack>
         </Tabs.Content>

@@ -56,7 +56,10 @@ const StringArrayInputDemo = (props: { maxItems?: number }) => {
   );
 };
 
-const VersionInputDemo = (props: { withPrefix: boolean; disabled: boolean }) => {
+const VersionInputDemo = (props: {
+  withPrefix: boolean;
+  disabled: boolean;
+}) => {
   // Props
   const { withPrefix, disabled } = props;
 
@@ -123,7 +126,11 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     importPath:
       'import { Fieldset } from "@/design-system/components/input/fieldset/fieldset";',
     component: Fieldset,
-    defaultProps: { legend: "Identitas pemilik", containeredContent: true, disabled: false },
+    defaultProps: {
+      legend: "Identitas pemilik",
+      containeredContent: true,
+      disabled: false,
+    },
     propsSpec: [
       {
         name: "legend",
@@ -149,7 +156,8 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ],
     a11y: {
       role: "group",
-      notes: "`<fieldset>` dan `<legend>` membuat screen reader membacakan judul kelompok saat fokus masuk ke field pertama.",
+      notes:
+        "`<fieldset>` dan `<legend>` membuat screen reader membacakan judul kelompok saat fokus masuk ke field pertama.",
     },
     generateCode: (props) => {
       const containeredProp = props.containeredContent
@@ -175,8 +183,14 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
             <Field label={"Nama lengkap"}>
               <Input />
             </Field>
-            <Field label={"Nomor HP"}>
-              <Input inputMode={"tel"} />
+            <Field label={"Catatan"}>
+              <Textarea />
+            </Field>
+            <Field label={"Lampiran dokumen"} variant={"default"}>
+              <FileInput />
+            </Field>
+            <Field label={"Notifikasi"} variant={"default"}>
+              <Switch label={"Aktifkan notifikasi"} />
             </Field>
           </VStack>
         </Fieldset>
@@ -275,13 +289,23 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ],
     a11y: {
       keyboardNav: [
-        { key: "ArrowLeft / ArrowRight", action: "Pindah ke segmen sebelumnya atau berikutnya." },
-        { key: "ArrowUp / ArrowDown", action: "Naikkan atau turunkan angka segmen." },
-        { key: "Backspace", action: "Kembali ke segmen sebelumnya saat segmen kosong." },
+        {
+          key: "ArrowLeft / ArrowRight",
+          action: "Pindah ke segmen sebelumnya atau berikutnya.",
+        },
+        {
+          key: "ArrowUp / ArrowDown",
+          action: "Naikkan atau turunkan angka segmen.",
+        },
+        {
+          key: "Backspace",
+          action: "Kembali ke segmen sebelumnya saat segmen kosong.",
+        },
       ],
     },
     generateCode: (props) => {
-      const prefixProp = props.withPrefix === false ? "\n  withPrefix={false}" : "";
+      const prefixProp =
+        props.withPrefix === false ? "\n  withPrefix={false}" : "";
       const disabledProp = props.disabled ? "\n  disabled={true}" : "";
       return `<VersionInput
   label={"Versi aplikasi"}
@@ -290,7 +314,10 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
 />`;
     },
     renderPlayground: (props) => (
-      <VersionInputDemo withPrefix={Boolean(props.withPrefix)} disabled={Boolean(props.disabled)} />
+      <VersionInputDemo
+        withPrefix={Boolean(props.withPrefix)}
+        disabled={Boolean(props.disabled)}
+      />
     ),
   },
 
@@ -309,7 +336,8 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
         name: "searchIndex",
         type: "SearchIndex<T>",
         required: true,
-        description: "Daftar item yang bisa dicari: `id`, `title`, `description`, `keywords`.",
+        description:
+          "Daftar item yang bisa dicari: `id`, `title`, `description`, `keywords`.",
       },
       {
         name: "modalKey",
@@ -346,7 +374,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
 </FocusSearchTrigger>`,
     renderPlayground: () => <FocusSearchDemo />,
   },
-
 
   input: {
     key: "input",
@@ -419,7 +446,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       </Box>
     ),
   },
-
 
   unit_input: {
     key: "unit_input",
@@ -515,7 +541,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   number_input: {
     key: "number_input",
     title: "NumberInput",
@@ -610,7 +635,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   password_input: {
     key: "password_input",
     title: "PasswordInput",
@@ -665,7 +689,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   select: {
     key: "select",
     title: "Select Input",
@@ -715,7 +738,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     },
     renderPlayground: (props) => <SelectPlaygroundDemo {...props} />,
   },
-
 
   focus_select: {
     key: "focus_select",
@@ -813,7 +835,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     renderPlayground: (props) => <FocusSelectPlaygroundDemo {...props} />,
   },
 
-
   checkbox: {
     key: "checkbox",
     title: "Checkbox",
@@ -862,7 +883,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     },
     renderPlayground: (props) => <Checkbox {...props} />,
   },
-
 
   switch: {
     key: "switch",
@@ -924,7 +944,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     },
   },
 
-
   textarea: {
     key: "textarea",
     title: "Textarea",
@@ -967,7 +986,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       </Box>
     ),
   },
-
 
   radio_input: {
     key: "radio_input",
@@ -1032,7 +1050,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       />
     ),
   },
-
 
   radio_card: {
     key: "radio_card",
@@ -1125,7 +1142,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   segment_group: {
     key: "segment_group",
     title: "Segment Group",
@@ -1191,7 +1207,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   slider: {
     key: "slider",
     title: "Slider",
@@ -1234,7 +1249,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   pin_input: {
     key: "pin_input",
     title: "Pin Input",
@@ -1273,7 +1287,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       <PinInput count={Number(props.count) || 4} mask={Boolean(props.mask)} />
     ),
   },
-
 
   search_input: {
     key: "search_input",
@@ -1323,10 +1336,9 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   field: {
     key: "field",
-    title: "Field & Fieldset",
+    title: "Field",
     category: "Inputs",
     description:
       "Wrapper form terintegrasi dengan label mengambang, helper text, error handling, dan tag optional.",
@@ -1382,7 +1394,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   file_input: {
     key: "file_input",
     title: "FileInput",
@@ -1436,18 +1447,19 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     },
     renderPlayground: (props) => (
       <Box w={"full"} maxW={"420px"}>
-        <FileInput
-          variant={
-            (props.variant as "dropzone" | "button" | "auto") || "dropzone"
-          }
-          maxFiles={Number(props.maxFiles) || 3}
-          disabled={Boolean(props.disabled)}
-          accept={[".jpeg", ".jpg", ".png", ".pdf"]}
-        />
+        <Field label={"Lampiran dokumen"} variant={"default"}>
+          <FileInput
+            variant={
+              (props.variant as "dropzone" | "button" | "auto") || "dropzone"
+            }
+            maxFiles={Number(props.maxFiles) || 3}
+            disabled={Boolean(props.disabled)}
+            accept={[".jpeg", ".jpg", ".png", ".pdf"]}
+          />
+        </Field>
       </Box>
     ),
   },
-
 
   date_input: {
     key: "date_input",
@@ -1499,7 +1511,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       </Box>
     ),
   },
-
 
   phone_input: {
     key: "phone_input",
@@ -1609,7 +1620,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       </Box>
     ),
   },
-
 
   time_input: {
     key: "time_input",
@@ -1724,7 +1734,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   date_picker: {
     key: "date_picker",
     title: "DatePicker",
@@ -1807,7 +1816,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
       );
     },
   },
-
 };
 
 const SelectPlaygroundDemo = (props: Record<string, unknown>) => {
@@ -1826,7 +1834,6 @@ const SelectPlaygroundDemo = (props: Record<string, unknown>) => {
     </Box>
   );
 };
-
 
 const FocusSelectPlaygroundDemo = (props: Record<string, unknown>) => {
   return (

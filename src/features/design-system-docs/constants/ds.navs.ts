@@ -276,7 +276,7 @@ export const DS_NAVS_MAP = {
   },
   field: {
     icon: FileTextIcon,
-    title: "Field & Fieldset",
+    title: "Field",
   },
   file_input: {
     icon: FileArrowUpIcon,

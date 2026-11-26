@@ -12,13 +12,16 @@ Located in `@/design-system/components/input/ui/`.
 ## 1. NumberInput (`number-input.tsx`)
 
 ### 🔴 Critical Rule: DILARANG menggunakan `<Input type="number" />`!
+
 Selalu gunakan `NumberInput` dari `@/design-system/components/input/ui/number-input`.
 
 ### Components:
+
 - `NumberInput`: Standar input angka dengan tombol increment/decrement dan format pemisah ribuan.
 - `SteppedNumberInput`: Input angka horizontal kompak dengan kontrol `-` dan `+`.
 
 ### Key Props:
+
 - `value: string | number`
 - `min?: number`, `max?: number`, `step?: number`
 - `onValueChange?: (details: { value: number; formattedValue: string }) => void`
@@ -26,6 +29,7 @@ Selalu gunakan `NumberInput` dari `@/design-system/components/input/ui/number-in
 - `allowNegative?: boolean`
 
 ### Example:
+
 ```tsx
 import { NumberInput } from "@/design-system/components/input/ui/number-input";
 
@@ -36,7 +40,7 @@ import { NumberInput } from "@/design-system/components/input/ui/number-input";
   step={1}
   value={field.value}
   onValueChange={(e) => field.onChange(e.value)}
-/>
+/>;
 ```
 
 ---
@@ -58,7 +62,7 @@ import { SearchIcon } from "lucide-react";
   value={searchQuery}
   onChange={(e) => setSearchQuery(e.target.value)}
   onClear={() => setSearchQuery("")}
-/>
+/>;
 ```
 
 ---
@@ -74,7 +78,7 @@ import { PasswordInput } from "@/design-system/components/input/ui/password-inpu
   placeholder={"Masukkan kata sandi..."}
   value={password}
   onChange={(e) => setPassword(e.target.value)}
-/>
+/>;
 ```
 
 ---
@@ -94,7 +98,7 @@ import { FocusSelect } from "@/design-system/components/input/ui/focus-select";
   items={districtOptions}
   value={selectedDistrict}
   onValueChange={(val) => setSelectedDistrict(val)}
-/>
+/>;
 ```
 
 ---
@@ -111,7 +115,7 @@ import { FileInput } from "@/design-system/components/input/ui/file-input";
   maxFileSizeMb={50}
   value={files}
   onFilesChange={(newFiles) => setFiles(newFiles)}
-/>
+/>;
 ```
 
 ---
@@ -127,7 +131,7 @@ import { DateInput } from "@/design-system/components/input/ui/date-input";
   value={selectedDate}
   onValueChange={(d) => setSelectedDate(d)}
   placeholder={"Pilih tanggal batas..."}
-/>
+/>;
 ```
 
 ---
@@ -168,7 +172,11 @@ import { Checkbox } from "@/design-system/components/input/ui/checkbox";
 import { RadioCardInput } from "@/design-system/components/input/ui/radio-card-input";
 import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
 
-<RadioCardInput.Root value={basis} onValueChange={(e) => setBasis(e.value)} colorPalette={"blue"}>
+<RadioCardInput.Root
+  value={basis}
+  onValueChange={(e) => setBasis(e.value)}
+  colorPalette={"blue"}
+>
   <SimpleGrid columns={2} gap={2}>
     <RadioCardInput.Item value={"bidang"}>
       <RadioCardInput.ItemControl>
@@ -183,7 +191,7 @@ import { SimpleGrid } from "@/design-system/components/layout/ui/grid";
       </RadioCardInput.ItemControl>
     </RadioCardInput.Item>
   </SimpleGrid>
-</RadioCardInput.Root>
+</RadioCardInput.Root>;
 ```
 
 ---
@@ -200,12 +208,12 @@ import { Textarea } from "@/design-system/components/input/ui/textarea";
   autoresize
   value={notes}
   onChange={(e) => setNotes(e.target.value)}
-/>
+/>;
 ```
 
 ---
 
-## 10. Field & Fieldset (`field.tsx`, `fieldset.tsx`)
+## 10. Field (`field.tsx`, `fieldset.tsx`)
 
 Container form label, helper text, dan error message terintegrasi dengan RHF.
 
@@ -219,7 +227,7 @@ import { Field } from "@/design-system/components/input/ui/field";
   helperText={"Sesuai kartu identitas"}
 >
   <Input {...register("fullName")} />
-</Field>
+</Field>;
 ```
 
 ---
@@ -238,6 +246,7 @@ import { Field } from "@/design-system/components/input/ui/field";
 Input durasi 2-segmen (input nilai numerik + select unit waktu). Menyimpan nilai hakiki dalam bentuk **milidetik (`ms`)**, terintegrasi dengan RHF, dan mendukung **floating label** saat dibungkus `<Field variant={"floating"}>`.
 
 ### Key Props:
+
 - `value?: number` (dalam milidetik / ms)
 - `defaultValue?: number` (dalam milidetik / ms)
 - `onValueChange?: (ms: number, details: DurationValue) => void`
@@ -248,12 +257,14 @@ Input durasi 2-segmen (input nilai numerik + select unit waktu). Menyimpan nilai
 - `disabled?: boolean`, `readOnly?: boolean`
 
 ### Utility Helpers (`@/shared/utils/date/duration.utils`):
+
 - `durationToMs(value, unit)`: Mengubah nilai & unit menjadi total milidetik.
 - `msToBestDuration(ms, options)`: Mengonversi milidetik ke unit terbesar yang sesuai (misal 2000 ms -> 2 detik).
 - `formatDurationMs(ms, options)`: Format string siap render unit terbesar (misal `2000` -> `"2 Detik"`).
 - `getDurationUnitLabel(unit)`: Mendapatkan label unit terlokalisasi via Paraglide JS.
 
 ### Example:
+
 ```tsx
 import { DurationInput } from "@/design-system/components/input/ui/duration-input";
 import { Field } from "@/design-system/components/input/ui/field";
@@ -266,5 +277,5 @@ import { Field } from "@/design-system/components/input/ui/field";
       console.log("Unit details:", details); // { value: 2, unit: "second" }
     }}
   />
-</Field>
+</Field>;
 ```
