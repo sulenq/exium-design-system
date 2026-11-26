@@ -1,19 +1,170 @@
 // src/design-system/components/feedback/confirmation-trigger/confirmation-trigger.tsx
 
-import { Button } from "@/design-system/components/button/button/button";
-import type { ConfirmationTriggerProps } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger.type";
+import type {
+  ConfirmationTriggerProps,
+  SlideToConfirmProps,
+} from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger.type";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
-import { Circle } from "@/design-system/components/layout/box/box";
+import { Box, Circle } from "@/design-system/components/layout/box/box";
 import { AbsoluteCenter } from "@/design-system/components/layout/center/center";
-import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
-import { WarningIcon as AlertTriangleIcon } from "@phosphor-icons/react";
-import { isValidElement, type ComponentType } from "react";
+import { tintLight } from "@/shared/utils/style/color";
+import {
+  WarningIcon as AlertTriangleIcon,
+  ArrowRightIcon,
+} from "@phosphor-icons/react";
+import {
+  isValidElement,
+  useRef,
+  useState,
+  type ComponentType,
+  type PointerEvent,
+} from "react";
+
+const SlideToConfirm = (props: SlideToConfirmProps) => {
+  // Props
+  const { label, colorPalette, onConfirm } = props;
+
+  // Stores
+  const { theme } = useThemeStore();
+
+  // Refs
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const startXRef = useRef<number>(0);
+  const maxOffsetRef = useRef<number>(0);
+
+  // States
+  const [offsetX, setOffsetX] = useState<number>(0);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isThresholdReached, setIsThresholdReached] = useState<boolean>(false);
+
+  // Handlers
+  const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const thumbSize = 36;
+    const padding = 4;
+    maxOffsetRef.current = Math.max(
+      0,
+      track.clientWidth - thumbSize - padding * 2,
+    );
+    startXRef.current = e.clientX - offsetX;
+    setIsDragging(true);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    const next = Math.min(
+      Math.max(0, e.clientX - startXRef.current),
+      maxOffsetRef.current,
+    );
+    setOffsetX(next);
+    setIsThresholdReached(
+      maxOffsetRef.current > 0 && next >= maxOffsetRef.current * 0.85,
+    );
+  };
+
+  const handlePointerEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    const threshold = maxOffsetRef.current * 0.85;
+    if (maxOffsetRef.current > 0 && offsetX >= threshold) {
+      setOffsetX(maxOffsetRef.current);
+      setIsThresholdReached(true);
+      onConfirm();
+      return;
+    }
+    setOffsetX(0);
+    setIsThresholdReached(false);
+  };
+
+  return (
+    <HStack
+      ref={trackRef}
+      position={"relative"}
+      w={"full"}
+      h={"fit"}
+      p={1}
+      rounded={theme.radii.component}
+      bg={"bg.subtle"}
+      overflow={"hidden"}
+      userSelect={"none"}
+      touchAction={"none"}
+    >
+      <AbsoluteCenter w={"full"} px={10} pointerEvents={"none"}>
+        <P
+          fontSize={"sm"}
+          fontWeight={"medium"}
+          color={"fg.muted"}
+          lineClamp={1}
+        >
+          {label}
+        </P>
+      </AbsoluteCenter>
+
+      <Box
+        position={"relative"}
+        display={"flex"}
+        alignItems={"center"}
+        justifyContent={"flex-end"}
+        w={`${offsetX + 40}px`}
+        h={"fit"}
+        // p={1}
+        rounded={theme.radii.component}
+        bg={`linear-gradient(to right, {colors.${colorPalette}.solid}, ${tintLight(`${colorPalette}.solid`, 20)})`}
+        transition={
+          isDragging ? "none" : "width 220ms cubic-bezier(0.22, 1, 0.36, 1)"
+        }
+      >
+        {isThresholdReached && (
+          <AbsoluteCenter w={"full"} px={12} pointerEvents={"none"}>
+            <P
+              fontSize={"sm"}
+              fontWeight={"semibold"}
+              color={"white"}
+              lineClamp={1}
+            >
+              {"Konfirmasi"}
+            </P>
+          </AbsoluteCenter>
+        )}
+
+        <Box
+          position={"relative"}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          aspectRatio={1}
+          w={"40px"}
+          h={"40px"}
+          rounded={theme.radii.component}
+          bg={"bg.body"}
+          border={"1px solid"}
+          borderColor={"bg.body"}
+          shadow={"md"}
+          color={`${colorPalette}.fg`}
+          cursor={isDragging ? "grabbing" : "grab"}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerCancel={handlePointerEnd}
+        >
+          <AppIcon icon={ArrowRightIcon} />
+        </Box>
+      </Box>
+    </HStack>
+  );
+};
 
 export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
   // Props
@@ -23,11 +174,9 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
     desc,
     description,
     confirmLabel,
-    cancelLabel,
     colorPalette,
     icon,
     modalKey,
-    confirmButtonProps,
     onConfirm,
     onCancel,
   } = props;
@@ -48,10 +197,6 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
     desc ??
     t["confirm.default_description"]?.() ??
     "Tindakan ini akan diproses pada sistem.";
-  const resolvedConfirmLabel =
-    confirmLabel ?? t["action.confirm"]?.() ?? "Konfirmasi";
-  const resolvedCancelLabel =
-    cancelLabel ?? t["action.cancel"]?.() ?? "Batal";
 
   // Handlers
   const handleCancel = () => {
@@ -121,22 +266,15 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <VStack gap={2} w={"full"}>
-              <Button
-                primary={true}
-                bouncy={true}
-                variant={"solid"}
-                colorPalette={resolvedColorPalette}
-                onClick={handleConfirm}
-                {...confirmButtonProps}
-              >
-                {resolvedConfirmLabel}
-              </Button>
-
-              <Button bouncy={true} onClick={handleCancel}>
-                {resolvedCancelLabel}
-              </Button>
-            </VStack>
+            <SlideToConfirm
+              label={
+                confirmLabel
+                  ? `Geser untuk ${confirmLabel}`
+                  : "Geser untuk konfirmasi"
+              }
+              colorPalette={resolvedColorPalette}
+              onConfirm={handleConfirm}
+            />
           </Modal.Footer>
         </Modal.Content>
       </Modal.Root>

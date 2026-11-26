@@ -21,7 +21,7 @@ export const SignoutTrigger = (props: SignoutTriggerProps) => {
       description={
         "Sesi Anda akan diakhiri dan Anda perlu masuk kembali untuk mengakses akun."
       }
-      confirmLabel={"Keluar"}
+      confirmLabel={"keluar"}
       cancelLabel={"Batal"}
       confirmButtonProps={{
         loading: signoutMutation.isPending,

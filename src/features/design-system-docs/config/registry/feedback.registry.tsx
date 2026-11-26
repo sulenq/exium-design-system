@@ -1,10 +1,17 @@
 import { Button } from "@/design-system/components/button/button/button";
 import FeedbackState from "@/design-system/components/feedback/feedback-state/feedback-state";
-import { CheckIndicator, DotIndicator, RadioIndicator } from "@/design-system/components/feedback/indicator/indicator";
+import {
+  CheckIndicator,
+  DotIndicator,
+  RadioIndicator,
+} from "@/design-system/components/feedback/indicator/indicator";
 import { Loader } from "@/design-system/components/feedback/loader/loader";
 import { TopBarLoader } from "@/design-system/components/feedback/top-bar-loader/top-bar-loader";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { OfflineAlert } from "@/design-system/components/utilities/offline-alert/offline-alert";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
@@ -14,7 +21,10 @@ import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-ale
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
 import { toast } from "@/design-system/components/toast";
 import { Alert } from "@/design-system/components/feedback/alert/alert";
-import { Progress, ProgressRoot } from "@/design-system/components/feedback/progress/progress";
+import {
+  Progress,
+  ProgressRoot,
+} from "@/design-system/components/feedback/progress/progress";
 import { Skeleton } from "@/design-system/components/feedback/skeleton/skeleton";
 import { StateNoData } from "@/design-system/components/feedback/state-no-data/state.no-data";
 import { COLOR_PALETTE_OPTIONS } from "@/design-system/constants/colors";
@@ -49,10 +59,9 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       notes:
         "Saat Loader menggantikan konten, beri teks `srOnly` atau `aria-busy` pada container supaya screen reader tahu ada proses.",
     },
-    generateCode: (props) => `<Loader size={"${String(props.size || "sm")}"} />`,
-    renderPlayground: (props) => (
-      <Loader size={(props.size as "sm") || "sm"} />
-    ),
+    generateCode: (props) =>
+      `<Loader size={"${String(props.size || "sm")}"} />`,
+    renderPlayground: (props) => <Loader size={(props.size as "sm") || "sm"} />,
   },
 
   indicator: {
@@ -130,11 +139,13 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
         name: "isFetching",
         type: "boolean",
         defaultValue: false,
-        description: "Nyalakan untuk menampilkan bar. Lihat bagian paling atas layar.",
+        description:
+          "Nyalakan untuk menampilkan bar. Lihat bagian paling atas layar.",
         controlKind: "boolean",
       },
     ],
-    generateCode: (props) => `<TopBarLoader isFetching={${Boolean(props.isFetching)}} />`,
+    generateCode: (props) =>
+      `<TopBarLoader isFetching={${Boolean(props.isFetching)}} />`,
     renderPlayground: (props) => (
       <VStack gap={2} align={"center"}>
         <TopBarLoader isFetching={Boolean(props.isFetching)} />
@@ -171,7 +182,8 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
         name: "description",
         type: "string",
         defaultValue: "Data akan dikirim otomatis saat koneksi kembali.",
-        description: "Penjelasan singkat apa yang terjadi dan langkah berikutnya.",
+        description:
+          "Penjelasan singkat apa yang terjadi dan langkah berikutnya.",
         controlKind: "text",
       },
       {
@@ -211,7 +223,9 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
         title={String(props.title ?? "")}
         description={String(props.description ?? "")}
       >
-        {Boolean(props.withAction) && <Button variant={"outline"}>{"Coba lagi"}</Button>}
+        {Boolean(props.withAction) && (
+          <Button variant={"outline"}>{"Coba lagi"}</Button>
+        )}
       </FeedbackState>
     ),
   },
@@ -237,7 +251,8 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     ],
     a11y: {
       role: "status",
-      notes: "Pill memakai `role=\"status\"` sehingga perubahan koneksi dibacakan screen reader.",
+      notes:
+        'Pill memakai `role="status"` sehingga perubahan koneksi dibacakan screen reader.',
     },
     generateCode: (props) => {
       const persistentProp = props.persistent ? " persistent={true}" : "";
@@ -249,7 +264,9 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
         <HStack gap={2}>
           <Button
             variant={"outline"}
-            onClick={() => window.dispatchEvent(new Event("app:network-offline"))}
+            onClick={() =>
+              window.dispatchEvent(new Event("app:network-offline"))
+            }
           >
             {"Simulasikan offline"}
           </Button>
@@ -263,7 +280,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       </VStack>
     ),
   },
-
 
   progress: {
     key: "progress",
@@ -339,7 +355,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       </Box>
     ),
   },
-
 
   skeleton: {
     key: "skeleton",
@@ -466,7 +481,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     },
   },
 
-
   confirmation_trigger: {
     key: "confirmation_trigger",
     title: "Confirmation Trigger",
@@ -481,7 +495,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       title: "Hapus Data?",
       description:
         "Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin melanjutkan?",
-      confirmLabel: "Ya, Lanjutkan",
+      confirmLabel: "hapus data",
       cancelLabel: "Batal",
       colorPalette: "red",
     },
@@ -534,7 +548,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       const modalKey = (props.modalKey as string) || "demo-confirmation";
       const title = (props.title as string) || "Konfirmasi Tindakan";
       const desc = (props.description as string) || "Apakah Anda yakin?";
-      const confirmLabel = (props.confirmLabel as string) || "Konfirmasi";
+      const confirmLabel = (props.confirmLabel as string) || "konfirmasi";
       const cancelLabel = (props.cancelLabel as string) || "Batal";
       const colorPalette = (props.colorPalette as string) || "red";
 
@@ -548,7 +562,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
           (props.description as string) ||
           "Tindakan ini tidak dapat dibatalkan. Apakah Anda yakin ingin melanjutkan?"
         }
-        confirmLabel={(props.confirmLabel as string) || "Ya, Lanjutkan"}
+        confirmLabel={(props.confirmLabel as string) || "konfirmasi"}
         cancelLabel={(props.cancelLabel as string) || "Batal"}
         colorPalette={(props.colorPalette as string) || "red"}
         onConfirm={() => {
@@ -564,7 +578,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       </ConfirmationTrigger>
     ),
   },
-
 
   alert: {
     key: "alert",
@@ -611,7 +624,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       </Box>
     ),
   },
-
 
   toast: {
     key: "toast",
@@ -670,7 +682,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   state_display: {
     key: "state_display",
     title: "State Feedback (No Data)",
@@ -715,7 +726,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
     ),
   },
 
-
   focus_alert: {
     key: "focus_alert",
     title: "Focus Alert Modal",
@@ -745,7 +755,6 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
 />`,
     renderPlayground: (props) => <FocusAlertPlaygroundDemo {...props} />,
   },
-
 };
 
 const FocusAlertPlaygroundDemo = (props: Record<string, unknown>) => {

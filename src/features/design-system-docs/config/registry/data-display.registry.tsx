@@ -1198,7 +1198,7 @@ const DataTablePlaygroundDemo = ({
                 modalKey={`docs-table-delete-${item.name}`}
                 title={"Hapus Data"}
                 description={`Data ${item.name} akan dihapus secara permanen dan tidak dapat dibatalkan.`}
-                confirmLabel={"Hapus"}
+                confirmLabel={"hapus"}
                 colorPalette={"red"}
                 onConfirm={() => {
                   toast.success(`Data ${item.name} berhasil dihapus.`);

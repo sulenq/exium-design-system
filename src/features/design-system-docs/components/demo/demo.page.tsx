@@ -92,7 +92,29 @@ import {
   IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
-import { BellIcon, CheckCircleIcon, GearIcon, CompassIcon, EyeIcon, FolderIcon, StackIcon, SquaresFourIcon, ChatTextIcon, CursorClickIcon, PaletteIcon, SparkleIcon, TableIcon, CursorTextIcon, PencilSimpleIcon, TrashIcon, ArrowUUpLeftIcon, TextTIcon, UploadSimpleIcon, UserIcon, WrenchIcon } from "@phosphor-icons/react";
+import {
+  BellIcon,
+  CheckCircleIcon,
+  GearIcon,
+  CompassIcon,
+  EyeIcon,
+  FolderIcon,
+  StackIcon,
+  SquaresFourIcon,
+  ChatTextIcon,
+  CursorClickIcon,
+  PaletteIcon,
+  SparkleIcon,
+  TableIcon,
+  CursorTextIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+  ArrowUUpLeftIcon,
+  TextTIcon,
+  UploadSimpleIcon,
+  UserIcon,
+  WrenchIcon,
+} from "@phosphor-icons/react";
 import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
@@ -1367,7 +1389,7 @@ export const DataDisplay = () => {
               modalKey={`demo-delete-${(item as Record<string, unknown>).id || "item"}`}
               title={"Hapus Item"}
               description={`Data ${(item as Record<string, unknown>).name || item.id} akan dihapus secara permanen.`}
-              confirmLabel={"Hapus"}
+              confirmLabel={"hapus"}
               colorPalette={"red"}
               onConfirm={() => {
                 console.log("Delete confirmed:", item);

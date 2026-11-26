@@ -74,7 +74,7 @@ export const NotificationToastHistoryDataView = memo(
             modalKey={"clear-all-notification-toast-history"}
             title={"Hapus Semua Riwayat Notifikasi"}
             description={"Seluruh riwayat toast notification akan dibersihkan."}
-            confirmLabel={"Hapus Semua"}
+            confirmLabel={"hapus semua"}
             colorPalette={"red"}
             onConfirm={onClearAllHistory}
           >

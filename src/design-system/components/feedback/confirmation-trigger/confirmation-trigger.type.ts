@@ -20,3 +20,9 @@ export type ConfirmationTriggerProps = {
   onConfirm?: () => void | Promise<void>;
   onCancel?: () => void | Promise<void>;
 };
+
+export type SlideToConfirmProps = {
+  label: string;
+  colorPalette: string;
+  onConfirm: () => void;
+};

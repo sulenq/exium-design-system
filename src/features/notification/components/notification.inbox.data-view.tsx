@@ -115,7 +115,7 @@ export const NotificationInboxDataView = memo(() => {
             description={
               "Seluruh pesan inbox akan dihapus dan tidak dapat dikembalikan."
             }
-            confirmLabel={"Hapus Semua"}
+            confirmLabel={"hapus semua"}
             colorPalette={"red"}
             onConfirm={() => clearAllInboxMutation.mutate()}
           >
@@ -251,7 +251,7 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
               modalKey={`delete-inbox-item-${item.id}`}
               title={"Hapus Pesan"}
               description={"Pesan ini akan dihapus dari inbox Anda."}
-              confirmLabel={"Hapus"}
+              confirmLabel={"hapus"}
               colorPalette={"red"}
               onConfirm={() => onDelete(item.id)}
             >
