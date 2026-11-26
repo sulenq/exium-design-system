@@ -40,8 +40,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     return (
       <ChakraSlider.Root
         ref={ref}
+        thumbAlignment={"contain"}
         colorPalette={theme.colorPalette}
-        css={{ "--slider-thumb-size": "12px" }}
+        css={{ "--slider-thumb-size": isHolding ? "16px" : "12px" }}
         {...restProps}
       >
         {(label || showValue) && (
@@ -74,28 +75,44 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             transition={"all 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
             h={
               isHolding
-                ? "calc(var(--slider-track-size) + 4px)"
-                : "calc(var(--slider-track-size) + 2px)"
+                ? "calc(var(--slider-track-size) + 8px)"
+                : "calc(var(--slider-track-size) + 4px)"
             }
             _vertical={{
               w: isHolding
-                ? "calc(var(--slider-track-size) + 4px)"
-                : "calc(var(--slider-track-size) + 2px)",
+                ? "calc(var(--slider-track-size) + 8px)"
+                : "calc(var(--slider-track-size) + 4px)",
               h: "100%",
             }}
           >
-            <ChakraSlider.Range
-              bg={`linear-gradient(to right, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`}
-              _vertical={{
-                bg: `linear-gradient(to top, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`,
+            <ChakraSlider.Context>
+              {(slider) => {
+                const value = slider.getThumbPercent(0);
+                const percent = value * 100;
+                const thumbOffset = (0.5 - value) * 12;
+                const rangeSize = `calc(${percent}% + ${thumbOffset}px + 4px) !important`;
+
+                return (
+                  <ChakraSlider.Range
+                    w={rangeSize}
+                    bg={`linear-gradient(to right, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`}
+                    _vertical={{
+                      w: undefined,
+                      h: rangeSize,
+                      bg: `linear-gradient(to top, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`,
+                    }}
+                    rounded={theme.radii.component}
+                  />
+                );
               }}
-              rounded={theme.radii.component}
-            />
+            </ChakraSlider.Context>
           </ChakraSlider.Track>
 
           <ChakraSlider.Thumb
             index={0}
-            ml={"-2px"}
+            transition={
+              "width 0.18s cubic-bezier(0.4, 0, 0.2, 1), height 0.18s cubic-bezier(0.4, 0, 0.2, 1)"
+            }
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}

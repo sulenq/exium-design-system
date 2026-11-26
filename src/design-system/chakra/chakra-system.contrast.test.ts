@@ -10,8 +10,12 @@ import { describe, expect, it } from "vitest";
 function rawValue(name: string, condition: "base" | "_dark"): string {
   const token = chakraSystem.tokens.getByName(name);
   if (!token) throw new Error(`missing token ${name}`);
-  const conditions = token.extensions.conditions as Record<string, string> | undefined;
-  const picked = conditions ? conditions[condition] : (token.originalValue as string);
+  const conditions = token.extensions.conditions as
+    | Record<string, string>
+    | undefined;
+  const picked = conditions
+    ? conditions[condition]
+    : (token.originalValue as string);
   return picked.replace("!important", "").trim();
 }
 
@@ -66,20 +70,25 @@ const SOLID_PAIRS: Array<[string, string]> = [
 ];
 
 describe("light-mode contrast (WCAG AA, 4.5:1)", () => {
-  const lightSurfaces = ["colors.bg.body", "colors.bg.panel", "colors.bg.subtle"];
+  const lightSurfaces = [
+    "colors.bg.body",
+    "colors.bg.panel",
+    "colors.bg.subtle",
+  ];
 
   it.each(TEXT_ON_WHITE)("%s on white", (name) => {
-    expect(contrast(resolveHex(name, "base"), "#ffffff")).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrast(resolveHex(name, "base"), "#ffffff"),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
-  it.each(TEXT_ON_WHITE.flatMap((name) => lightSurfaces.map((bg) => [name, bg])))(
-    "%s on %s",
-    (fg, bg) => {
-      expect(
-        contrast(resolveHex(fg, "base"), resolveHex(bg, "base")),
-      ).toBeGreaterThanOrEqual(4.5);
-    },
-  );
+  it.each(
+    TEXT_ON_WHITE.flatMap((name) => lightSurfaces.map((bg) => [name, bg])),
+  )("%s on %s", (fg, bg) => {
+    expect(
+      contrast(resolveHex(fg, "base"), resolveHex(bg, "base")),
+    ).toBeGreaterThanOrEqual(4.5);
+  });
 
   it.each(SOLID_PAIRS)("%s on %s", (fg, bg) => {
     expect(
@@ -89,16 +98,19 @@ describe("light-mode contrast (WCAG AA, 4.5:1)", () => {
 });
 
 describe("dark-mode contrast (WCAG AA, 4.5:1)", () => {
-  const darkSurfaces = ["colors.bg.body", "colors.bg.panel", "colors.bg.subtle"];
+  const darkSurfaces = [
+    "colors.bg.body",
+    "colors.bg.panel",
+    "colors.bg.subtle",
+  ];
 
-  it.each(TEXT_ON_WHITE.flatMap((name) => darkSurfaces.map((bg) => [name, bg])))(
-    "%s on %s",
-    (fg, bg) => {
-      expect(
-        contrast(resolveHex(fg, "_dark"), resolveHex(bg, "_dark")),
-      ).toBeGreaterThanOrEqual(4.5);
-    },
-  );
+  it.each(
+    TEXT_ON_WHITE.flatMap((name) => darkSurfaces.map((bg) => [name, bg])),
+  )("%s on %s", (fg, bg) => {
+    expect(
+      contrast(resolveHex(fg, "_dark"), resolveHex(bg, "_dark")),
+    ).toBeGreaterThanOrEqual(4.5);
+  });
 
   it.each(SOLID_PAIRS)("%s on %s", (fg, bg) => {
     expect(
