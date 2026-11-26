@@ -71,7 +71,8 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             ml={0}
             w={isHolding ? "60%" : "50%"}
             h={"full"}
-            bg={`${theme.colorPalette}.subtle`}
+            // bg={`{colors.colorPalette.contrast}`}
+            bg={"fg.inverted"}
             css={{
               "[data-state=checked] &": {
                 ml: isHolding ? "40%" : "50%",
