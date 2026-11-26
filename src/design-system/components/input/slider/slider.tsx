@@ -66,12 +66,14 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
           onPointerCancel={handlePointerUp}
         >
           <ChakraSlider.Track
+            bg={"bg.muted"}
+            shadow={"none"}
             outline={isHolding ? "4px solid" : ""}
             outlineColor={"bg.muted !important"}
             transition={"all 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-            h={isHolding ? "calc(var(--slider-track-size) + 4px)" : ""}
+            h={isHolding ? "calc(var(--slider-track-size) + 2px)" : ""}
             _vertical={{
-              w: isHolding ? "calc(var(--slider-track-size) + 4px)" : "",
+              w: isHolding ? "calc(var(--slider-track-size) + 2px)" : "",
               h: "100%",
             }}
           >

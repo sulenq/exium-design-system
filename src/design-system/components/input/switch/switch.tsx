@@ -1,6 +1,7 @@
 // src/design-system/components/input/switch/switch.tsx
 
 import type { SwitchProps } from "@/design-system/components/input/switch/switch.type";
+import { Circle } from "@/design-system/components/layout/box/box";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { Switch as ChakraSwitch } from "@chakra-ui/react";
@@ -55,15 +56,37 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         {...restProps}
       >
         <ChakraSwitch.HiddenInput ref={ref} />
-        <ChakraSwitch.Control cursor={"pointer"} {...controlProps}>
-          <ChakraSwitch.Thumb
+        <ChakraSwitch.Control
+          cursor={"pointer"}
+          display={"flex"}
+          justifyContent={"flex-start"}
+          w={"36px"}
+          p={"2px"}
+          {...controlProps}
+        >
+          <Circle
             transition={
-              "width 260ms cubic-bezier(0.34, 1.56, 0.64, 1), margin-left 260ms cubic-bezier(0.34, 1.56, 0.64, 1)"
+              "margin-left 180ms cubic-bezier(0.22, 1, 0.36, 1), width 180ms cubic-bezier(0.22, 1, 0.36, 1)"
             }
-            w={isHolding ? "60%" : undefined}
-            _checked={isHolding ? { ml: "-10%" } : undefined}
+            ml={0}
+            w={isHolding ? "60%" : "50%"}
+            h={"full"}
+            bg={`${theme.colorPalette}.subtle`}
+            css={{
+              "[data-state=checked] &": {
+                ml: isHolding ? "40%" : "50%",
+              },
+            }}
             {...thumbProps}
           />
+          {/* <ChakraSwitch.Thumb
+            w={isHolding ? "60%" : undefined}
+            transform={undefined}
+            // transition={"translate 250ms ease, width 140ms"}
+            rounded={theme.radii.container}
+            _checked={isHolding ? { ml: "-10%" } : undefined}
+            {...thumbProps}
+          /> */}
         </ChakraSwitch.Control>
         {children && <ChakraSwitch.Label>{children}</ChakraSwitch.Label>}
       </ChakraSwitch.Root>
