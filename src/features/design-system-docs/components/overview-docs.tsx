@@ -12,12 +12,7 @@ import { Badge } from "@/design-system/components/typography/badge/badge";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { Link } from "@tanstack/react-router";
-import {
-  ExternalLink,
-  LayersIcon,
-  LayoutGridIcon,
-  SparklesIcon,
-} from "lucide-react";
+import { ArrowSquareOutIcon, StackIcon, SquaresFourIcon, SparkleIcon } from "@phosphor-icons/react";
 
 export const OverviewDocs = ({
   onSelectComponent,
@@ -51,7 +46,7 @@ export const OverviewDocs = ({
       >
         <VStack align={"start"} gap={3}>
           <HStack gap={2}>
-            <AppIcon icon={SparklesIcon} />
+            <AppIcon icon={SparkleIcon} />
             <P fontWeight={"bold"}>Demo Gallery (/demo)</P>
           </HStack>
 
@@ -63,7 +58,7 @@ export const OverviewDocs = ({
 
         <Button asChild variant={"outline"}>
           <Link to={"/demo"}>
-            View /demo Gallery <AppIcon icon={ExternalLink} size={"sm"} />
+            View /demo Gallery <AppIcon icon={ArrowSquareOutIcon} size={"sm"} />
           </Link>
         </Button>
       </HStack>
@@ -84,7 +79,7 @@ export const OverviewDocs = ({
           onClick={() => onSelectComponent("button")}
         >
           <HStack gap={3} mb={2}>
-            <AppIcon icon={LayersIcon} color={"colorPalette.fg"} />
+            <AppIcon icon={StackIcon} color={"colorPalette.fg"} />
             <P fontWeight={"bold"}>Buttons & Actions</P>
           </HStack>
           <P fontSize={"xs"} color={"fg.muted"}>
@@ -104,7 +99,7 @@ export const OverviewDocs = ({
           onClick={() => onSelectComponent("input")}
         >
           <HStack gap={3} mb={2}>
-            <AppIcon icon={LayoutGridIcon} color={"colorPalette.fg"} />
+            <AppIcon icon={SquaresFourIcon} color={"colorPalette.fg"} />
             <P fontWeight={"bold"}>Form Inputs</P>
           </HStack>
           <P fontSize={"xs"} color={"fg.muted"}>
@@ -124,7 +119,7 @@ export const OverviewDocs = ({
           onClick={() => onSelectComponent("progress")}
         >
           <HStack gap={3} mb={2}>
-            <AppIcon icon={SparklesIcon} color={"colorPalette.fg"} />
+            <AppIcon icon={SparkleIcon} color={"colorPalette.fg"} />
             <P fontWeight={"bold"}>Feedback & Status</P>
           </HStack>
           <P fontSize={"xs"} color={"fg.muted"}>

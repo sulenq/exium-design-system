@@ -6,7 +6,7 @@ import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { COLOR_PALETTE_OPTIONS } from "@/design-system/constants/colors";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import { SparklesIcon } from "lucide-react";
+import { SparkleIcon } from "@phosphor-icons/react";
 
 export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
 
@@ -25,6 +25,7 @@ export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
       colorPalette: "blue",
       loading: false,
       disabled: false,
+      bouncy: false,
     },
     propsSpec: [
       {
@@ -65,6 +66,14 @@ export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
         description: "Menonaktifkan interaksi button.",
         controlKind: "boolean",
       },
+      {
+        name: "bouncy",
+        type: "boolean",
+        defaultValue: false,
+        description:
+          "Mengaktifkan efek bounce drag saat tombol ditekan dan digeser.",
+        controlKind: "boolean",
+      },
     ],
     generateCode: (props) => {
       const sizeProp =
@@ -75,15 +84,16 @@ export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
           : "";
       const loadingProp = props.loading ? " loading={true}" : "";
       const disabledProp = props.disabled ? " disabled={true}" : "";
+      const bouncyProp = props.bouncy ? " bouncy={true}" : "";
       const iconPlacement = (props.iconPlacement as string) || "none";
 
       if (iconPlacement === "start") {
-        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  <AppIcon icon={SparklesIcon} />\n  {"Button"}\n</Button>`;
+        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}${bouncyProp}>\n  <AppIcon icon={SparkleIcon} />\n  {"Button"}\n</Button>`;
       }
       if (iconPlacement === "end") {
-        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"Button"}\n  <AppIcon icon={SparklesIcon} />\n</Button>`;
+        return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}${bouncyProp}>\n  {"Button"}\n  <AppIcon icon={SparkleIcon} />\n</Button>`;
       }
-      return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}>\n  {"Button"}\n</Button>`;
+      return `<Button variant={"solid"}${sizeProp}${colorProp}${loadingProp}${disabledProp}${bouncyProp}>\n  {"Button"}\n</Button>`;
     },
     renderPlayground: (props) => {
       const variants = [
@@ -101,7 +111,7 @@ export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
         if (iconPlacement === "start") {
           return (
             <>
-              <AppIcon icon={SparklesIcon} />
+              <AppIcon icon={SparkleIcon} />
               {variantLabel}
             </>
           );
@@ -110,7 +120,7 @@ export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
           return (
             <>
               {variantLabel}
-              <AppIcon icon={SparklesIcon} />
+              <AppIcon icon={SparkleIcon} />
             </>
           );
         }
@@ -127,6 +137,7 @@ export const BUTTONS_DOCS: Record<string, ComponentDocSpec> = {
               colorPalette={String(props.colorPalette || "blue")}
               loading={Boolean(props.loading)}
               disabled={Boolean(props.disabled)}
+              bouncy={Boolean(props.bouncy)}
             >
               {renderChildren(variant)}
             </Button>

@@ -11,15 +11,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useInternalTotpConfirmMutation } from "@/features/auth/hooks/use-internal-auth.mutation";
 import type { TotpSetupStepProps } from "@/features/auth/types/totp.type";
 import { ApiError } from "@/shared/libs/api-client/api-error";
-import {
-  AlertTriangleIcon,
-  ArrowLeftIcon,
-  CheckCircle2Icon,
-  CopyCheckIcon,
-  CopyIcon,
-  QrCodeIcon,
-  ShieldAlertIcon,
-} from "lucide-react";
+import { WarningIcon, ArrowLeftIcon, CheckCircleIcon, CheckIcon, CopyIcon, QrCodeIcon, ShieldWarningIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const TotpSetupStep = (props: TotpSetupStepProps) => {
@@ -144,7 +136,7 @@ export const TotpSetupStep = (props: TotpSetupStepProps) => {
           gap={2.5}
           align={"start"}
         >
-          <AppIcon icon={AlertTriangleIcon} color={"fg.error"} size={"sm"} />
+          <AppIcon icon={WarningIcon} color={"fg.error"} size={"sm"} />
 
           <P fontSize={"xs"} color={"fg.error"}>
             {customError}
@@ -179,7 +171,7 @@ export const TotpSetupStep = (props: TotpSetupStepProps) => {
             gap={2}
             align={"center"}
           >
-            <AppIcon icon={ShieldAlertIcon} color={"fg.muted"} />
+            <AppIcon icon={ShieldWarningIcon} color={"fg.muted"} />
             <P fontSize={"xs"} color={"fg.muted"}>
               {"Memuat QR Code Authenticator..."}
             </P>
@@ -218,7 +210,7 @@ export const TotpSetupStep = (props: TotpSetupStepProps) => {
                 onClick={handleCopyKey}
               >
                 <AppIcon
-                  icon={isCopied ? CopyCheckIcon : CopyIcon}
+                  icon={isCopied ? CheckIcon : CopyIcon}
                   size={"xs"}
                   color={isCopied ? "fg.success" : "fg.subtle"}
                 />
@@ -254,7 +246,7 @@ export const TotpSetupStep = (props: TotpSetupStepProps) => {
           loading={confirmMutation.isPending}
           disabled={totpCode.length !== 6}
         >
-          <AppIcon icon={CheckCircle2Icon} />
+          <AppIcon icon={CheckCircleIcon} />
           {"Konfirmasi & Masuk"}
         </Button>
 

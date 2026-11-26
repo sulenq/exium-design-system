@@ -1,6 +1,9 @@
 // src/design-system/components/input/time-input/time-input.tsx
 
-import { Button } from "@/design-system/components/button/button/button";
+import {
+  Button,
+  IconButton,
+} from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
 import type {
@@ -20,7 +23,10 @@ import {
   SECONDS_COUNT,
 } from "@/design-system/components/input/utils/time.utils";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { P } from "@/design-system/components/typography/p/p";
@@ -104,11 +110,11 @@ const TimePickerPanel = (props: TimePickerPanelProps) => {
 
       <Modal.Footer>
         <VStack gap={2} w={"full"}>
-          <Button primary={true} onClick={handleConfirm}>
+          <Button primary={true} bouncy={true} onClick={handleConfirm}>
             {t["action.confirm"]()}
           </Button>
 
-          <Button onClick={onCancel}>
+          <Button bouncy={true} onClick={onCancel}>
             {t["action.cancel"]()}
           </Button>
         </VStack>
@@ -259,7 +265,14 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           )}
         </Box>
 
-        <AppIcon icon={ClockIcon} color={"fg.subtle"} />
+        <IconButton
+          size={"xs"}
+          variant={"filledIcon"}
+          aria-label={t["common.open_date_picker"]()}
+          mr={"-1"}
+        >
+          <AppIcon icon={ClockIcon} weight={"fill"} />
+        </IconButton>
       </HStack>
     );
 

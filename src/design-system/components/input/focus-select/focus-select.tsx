@@ -581,6 +581,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
           <Modal.Footer>
             <Button
               variant={"ghost"}
+              bouncy={true}
               w={"full"}
               disabled={!currentValue}
               onClick={handleResetSelection}

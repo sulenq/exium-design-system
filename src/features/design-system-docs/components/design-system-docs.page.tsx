@@ -28,7 +28,7 @@ import { locales } from "@/paraglide/runtime";
 import { getLocaleLabel } from "@/shared/libs/i18n";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { MenuIcon } from "lucide-react";
+import { ListIcon } from "@phosphor-icons/react";
 import { useCallback, useMemo } from "react";
 
 export const DesignSystemDocsPage = () => {
@@ -172,7 +172,7 @@ export const DesignSystemDocsPage = () => {
                 aria-label={"Open Navigation Menu"}
                 onClick={() => mobileDrawer.open()}
               >
-                <AppIcon icon={MenuIcon} size={"sm"} />
+                <AppIcon icon={ListIcon} size={"sm"} />
               </IconButton>
             )}
 

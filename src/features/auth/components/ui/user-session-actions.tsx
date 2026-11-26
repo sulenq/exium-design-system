@@ -7,7 +7,7 @@ import { SignoutTrigger } from "@/features/auth/components/ui/signout-modal";
 import { useSignoutMutation } from "@/features/auth/hooks/use-signout.mutation";
 import type { UserSessionActionsProps } from "@/features/auth/types/user-session-card.type";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowRightIcon, LogOutIcon } from "lucide-react";
+import { ArrowRightIcon, SignOutIcon } from "@phosphor-icons/react";
 
 export const UserSessionActions = (props: UserSessionActionsProps) => {
   // Props
@@ -41,7 +41,7 @@ export const UserSessionActions = (props: UserSessionActionsProps) => {
           size={"lg"}
           loading={signoutMutation.isPending}
         >
-          <AppIcon icon={LogOutIcon} />
+          <AppIcon icon={SignOutIcon} />
           {"Ganti Akun / Keluar"}
         </Button>
       </SignoutTrigger>

@@ -11,12 +11,7 @@ import { useSsoCallbackMutation } from "@/features/auth/hooks/use-sso-callback.m
 import { useSsoSigninMutation } from "@/features/auth/hooks/use-sso-signin.mutation";
 import type { SsoCallbackSearch } from "@/features/auth/types/sso.type";
 import { Link, useSearch } from "@tanstack/react-router";
-import {
-  AlertTriangleIcon,
-  ArrowLeftIcon,
-  RefreshCwIcon,
-  ShieldCheckIcon,
-} from "lucide-react";
+import { WarningIcon, ArrowLeftIcon, ArrowsClockwiseIcon, ShieldCheckIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 
 export const SsoCallbackPage = () => {
@@ -117,7 +112,7 @@ export const SsoCallbackPage = () => {
               textAlign={"left"}
             >
               <AppIcon
-                icon={AlertTriangleIcon}
+                icon={WarningIcon}
                 color={"fg.error"}
                 size={"md"}
               />
@@ -141,7 +136,7 @@ export const SsoCallbackPage = () => {
                   ssoCallbackMutation.isPending || ssoSigninMutation.isPending
                 }
               >
-                <AppIcon icon={RefreshCwIcon} />
+                <AppIcon icon={ArrowsClockwiseIcon} />
                 {"Coba Lagi"}
               </Button>
 

@@ -52,6 +52,13 @@ export const buttonRecipe = defineRecipe({
         },
       },
 
+      filledIcon: {
+        color: "fg.muted",
+        _hover: {
+          color: "fg",
+        },
+      },
+
       frosted: {
         bg: "bg.bodyAlpha",
         backdropFilter: `blur(10px)`,

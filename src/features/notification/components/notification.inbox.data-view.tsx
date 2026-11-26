@@ -28,7 +28,7 @@ import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { formatRelativeTime } from "@/shared/utils/formatter/date.formatter";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowRightIcon, CheckCheckIcon, InboxIcon, XIcon } from "lucide-react";
+import { ArrowRightIcon, ChecksIcon, TrayIcon, XIcon } from "@phosphor-icons/react";
 import { memo, useCallback, useMemo } from "react";
 
 export const NotificationInboxDataView = memo(() => {
@@ -73,7 +73,7 @@ export const NotificationInboxDataView = memo(() => {
   if (isEmptyArray(items)) {
     return (
       <StateNoData
-        icon={InboxIcon}
+        icon={TrayIcon}
         title={"Inbox Kosong"}
         description={"Belum ada pesan atau pengumuman baru untuk Anda."}
       />
@@ -104,7 +104,7 @@ export const NotificationInboxDataView = memo(() => {
               loading={markAllAsReadMutation.isPending}
               onClick={() => markAllAsReadMutation.mutate()}
             >
-              {/* <AppIcon icon={CheckCheckIcon} /> */}
+              {/* <AppIcon icon={ChecksIcon} /> */}
               {"Tandai Semua Dibaca"}
             </Button>
           )}
@@ -320,7 +320,7 @@ const InboxCardItem = memo((props: InboxCardItemProps) => {
               color={"fg.muted"}
             >
               {"Tandai dibaca"}
-              <AppIcon icon={CheckCheckIcon} />
+              <AppIcon icon={ChecksIcon} />
             </Button>
           )}
         </HStack>

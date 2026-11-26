@@ -4,7 +4,7 @@ import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import type { UserRoleBadgeProps } from "@/features/shared/types/badge.type";
 import type { UserRole } from "@/shared/types/common-response.type";
-import { ShieldCheckIcon, UserIcon } from "lucide-react";
+import { ShieldCheckIcon, UserIcon } from "@phosphor-icons/react";
 
 export const USER_ROLE_MAP = {
   internal: {

@@ -17,7 +17,7 @@ import type { SettingsActivePageContextValue } from "@/features/settings/types/s
 import { t } from "@/shared/libs/i18n";
 import { back } from "@/shared/utils/client/navigation";
 import { useSearch } from "@tanstack/react-router";
-import { ChevronLeftIcon } from "lucide-react";
+import { CaretLeftIcon } from "@phosphor-icons/react";
 import {
   createContext,
   useContext,
@@ -97,7 +97,7 @@ export const SettingsActivePageHeader = (props: StackProps) => {
       <HStack w={"modalControlsW"}>
         {isSmallViewport && (
           <IconButton onClick={back}>
-            <AppIcon icon={ChevronLeftIcon} />
+            <AppIcon icon={CaretLeftIcon} />
           </IconButton>
         )}
       </HStack>

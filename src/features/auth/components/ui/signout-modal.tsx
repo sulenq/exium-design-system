@@ -3,7 +3,7 @@
 import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
 import { useSignoutMutation } from "@/features/auth/hooks/use-signout.mutation";
 import type { SignoutTriggerProps } from "@/features/auth/types/signout-modal.type";
-import { LogOutIcon } from "lucide-react";
+import { SignOutIcon } from "@phosphor-icons/react";
 
 export const SignoutTrigger = (props: SignoutTriggerProps) => {
   // Props
@@ -15,7 +15,7 @@ export const SignoutTrigger = (props: SignoutTriggerProps) => {
   return (
     <ConfirmationTrigger
       modalKey={modalKey}
-      icon={LogOutIcon}
+      icon={SignOutIcon}
       colorPalette={"red"}
       title={"Keluar dari Aplikasi"}
       description={

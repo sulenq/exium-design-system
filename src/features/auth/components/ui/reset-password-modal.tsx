@@ -49,18 +49,7 @@ import type {
 } from "@/features/auth/types/reset-password.type";
 
 import { t } from "@/shared/libs/i18n";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  CheckCircleIcon,
-  InfoIcon,
-  KeyRoundIcon,
-  LockIcon,
-  MailIcon,
-  RotateCcwIcon,
-  ShieldCheckIcon,
-  SmartphoneIcon,
-} from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, CheckCircleIcon, InfoIcon, KeyIcon, LockIcon, EnvelopeIcon, ArrowCounterClockwiseIcon, ShieldCheckIcon, DeviceMobileIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -255,7 +244,7 @@ const ResetPasswordMethodSelector = ({
                 onSelect={() => field.onChange("email")}
                 title={"OTP via Email"}
                 description={"Kirim 6-digit kode verifikasi ke email"}
-                icon={MailIcon}
+                icon={EnvelopeIcon}
               />
 
               <ResetMethodRadioItem
@@ -265,7 +254,7 @@ const ResetPasswordMethodSelector = ({
                 title={"Google Authenticator (TOTP)"}
                 description={"Gunakan kode 6 digit dari aplikasi authenticator"}
                 badge={"Instan"}
-                icon={SmartphoneIcon}
+                icon={DeviceMobileIcon}
               />
             </VStack>
           )}
@@ -498,7 +487,7 @@ const EmailResetPasswordFlow = ({
           >
             <Input
               autoFocus={!isUserLoggedIn}
-              startElement={<AppIcon icon={MailIcon} color={"fg.subtle"} />}
+              startElement={<AppIcon icon={EnvelopeIcon} color={"fg.subtle"} />}
               placeholder={"contoh@email.com"}
               readOnly={isUserLoggedIn}
               bg={isUserLoggedIn ? "bg.subtle" : undefined}
@@ -516,7 +505,7 @@ const EmailResetPasswordFlow = ({
             w={"full"}
             loading={requestMutation.isPending}
           >
-            <AppIcon icon={KeyRoundIcon} />
+            <AppIcon icon={KeyIcon} />
             {"Kirim Kode OTP"}
           </Button>
 
@@ -591,7 +580,7 @@ const EmailResetPasswordFlow = ({
             onClick={handleResendOtp}
             loading={requestMutation.isPending}
           >
-            <AppIcon icon={RotateCcwIcon} />
+            <AppIcon icon={ArrowCounterClockwiseIcon} />
             {"Kirim Ulang OTP"}
           </Button>
         </HStack>
@@ -775,7 +764,7 @@ const TotpResetPasswordFlow = ({
         align={"stretch"}
       >
         <Alert.Root status={"info"} colorPalette={"blue"} variant={"subtle"}>
-          <AppIcon icon={SmartphoneIcon} />
+          <AppIcon icon={DeviceMobileIcon} />
           <Alert.Description fontSize={"xs"}>
             {
               "Buka aplikasi Google Authenticator Anda dan masukkan 6 digit kode yang tertera untuk akun ini."
@@ -801,7 +790,7 @@ const TotpResetPasswordFlow = ({
           >
             <Input
               autoFocus={!isUserLoggedIn}
-              startElement={<AppIcon icon={MailIcon} color={"fg.subtle"} />}
+              startElement={<AppIcon icon={EnvelopeIcon} color={"fg.subtle"} />}
               placeholder={"pegawai@atrbpn.go.id"}
               readOnly={isUserLoggedIn}
               bg={isUserLoggedIn ? "bg.subtle" : undefined}

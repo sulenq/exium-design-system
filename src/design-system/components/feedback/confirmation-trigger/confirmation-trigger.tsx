@@ -123,7 +123,8 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
           <Modal.Footer>
             <VStack gap={2} w={"full"}>
               <Button
-                primary
+                primary={true}
+                bouncy={true}
                 variant={"solid"}
                 colorPalette={resolvedColorPalette}
                 onClick={handleConfirm}
@@ -132,7 +133,9 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
                 {resolvedConfirmLabel}
               </Button>
 
-              <Button onClick={handleCancel}>{resolvedCancelLabel}</Button>
+              <Button bouncy={true} onClick={handleCancel}>
+                {resolvedCancelLabel}
+              </Button>
             </VStack>
           </Modal.Footer>
         </Modal.Content>

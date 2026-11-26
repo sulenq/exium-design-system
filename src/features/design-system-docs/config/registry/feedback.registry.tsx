@@ -8,7 +8,7 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { P } from "@/design-system/components/typography/p/p";
 import { OfflineAlert } from "@/design-system/components/utilities/offline-alert/offline-alert";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import { WifiOffIcon } from "lucide-react";
+import { WifiSlashIcon } from "@phosphor-icons/react";
 import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
 import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-alert/focus-alert";
 import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
@@ -192,7 +192,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
       const desc = String(props.description ?? "");
       if (props.withAction) {
         return `<FeedbackState
-  icon={WifiOffIcon}
+  icon={WifiSlashIcon}
   title={"${title}"}
   description={"${desc}"}
 >
@@ -200,14 +200,14 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
 </FeedbackState>`;
       }
       return `<FeedbackState
-  icon={WifiOffIcon}
+  icon={WifiSlashIcon}
   title={"${title}"}
   description={"${desc}"}
 />`;
     },
     renderPlayground: (props) => (
       <FeedbackState
-        icon={WifiOffIcon}
+        icon={WifiSlashIcon}
         title={String(props.title ?? "")}
         description={String(props.description ?? "")}
       >

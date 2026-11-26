@@ -13,6 +13,7 @@ export type ButtonProps = Omit<ChakraButtonProps, "variant"> & {
     | "frosted"
     | "glass"
     | "blend"
+    | "filledIcon"
     | (string & {});
   lineClamp?: ChakraButtonProps["lineClamp"];
   clicky?: boolean;

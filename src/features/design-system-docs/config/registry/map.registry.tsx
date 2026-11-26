@@ -9,7 +9,7 @@ import type { GenericMapLayer } from "@/design-system/components/map/map/map.lay
 import { useMapFeatureInfoStore } from "@/design-system/components/map/stores/map.feature-info.store";
 import { useMapDrawStore } from "@/design-system/components/map/stores/map.draw.store";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import { Grid2X2Icon, Layers2Icon } from "lucide-react";
+import { SquaresFourIcon, StackIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 
 // -------------------------------------------------------------------------------------
@@ -25,14 +25,14 @@ const DEMO_LAYERS: GenericMapLayer[] = [
     title: "Padang penggembalaan",
     bbox: DEMO_BBOX,
     zIndex: 2,
-    appearance: { colorPalette: "green", icon: Grid2X2Icon, categoryLabel: "Area" },
+    appearance: { colorPalette: "green", icon: SquaresFourIcon, categoryLabel: "Area" },
   },
   {
     id: "demo:kandang",
     title: "Lokasi kandang",
     bbox: DEMO_BBOX,
     zIndex: 1,
-    appearance: { colorPalette: "blue", icon: Layers2Icon, categoryLabel: "Titik" },
+    appearance: { colorPalette: "blue", icon: StackIcon, categoryLabel: "Titik" },
   },
 ];
 

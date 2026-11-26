@@ -12,7 +12,15 @@ import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import type { NavItem } from "@/shared/types/nav.type";
-import { BellIcon, HomeIcon, PawPrintIcon, ScanLineIcon, SettingsIcon, SyringeIcon, WheatIcon } from "lucide-react";
+import {
+  BellIcon,
+  HouseIcon,
+  PawPrintIcon,
+  ScanIcon,
+  GearIcon,
+  SyringeIcon,
+  GrainsIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { Logo } from "@/design-system/components/branding/logo/logo";
 import { Snackbar } from "@/design-system/components/navigation/snackbar/snackbar";
@@ -22,7 +30,12 @@ import { VNavs } from "@/design-system/components/navigation/v-navs/v-navs";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { Badge } from "@/design-system/components/typography/badge/badge";
-import { BellRingIcon, CircleUserIcon, ClipboardCheckIcon, HouseIcon, Settings2Icon } from "lucide-react";
+import {
+  BellRingingIcon,
+  UserCircleIcon,
+  ClipboardTextIcon,
+  SlidersHorizontalIcon,
+} from "@phosphor-icons/react";
 import { Breadcrumb } from "@/design-system/components/disclosure/breadcrumb/breadcrumb";
 import { ExternalLink } from "@/design-system/components/navigation/link/link";
 
@@ -33,17 +46,17 @@ import { ExternalLink } from "@/design-system/components/navigation/link/link";
 const DEMO_NAV_KEYS = ["home", "livestock", "health", "feed"] as const;
 
 const DEMO_NAVS: Record<(typeof DEMO_NAV_KEYS)[number], NavItem> = {
-  home: { icon: HomeIcon, title: "Beranda" },
+  home: { icon: HouseIcon, title: "Beranda" },
   livestock: { icon: PawPrintIcon, title: "Ternak" },
   health: { icon: SyringeIcon, title: "Kesehatan" },
-  feed: { icon: WheatIcon, title: "Pakan" },
+  feed: { icon: GrainsIcon, title: "Pakan" },
 };
 
 const DEMO_SHELL_ITEMS = [
-  { key: "home", label: "Beranda", icon: HomeIcon },
+  { key: "home", label: "Beranda", icon: HouseIcon },
   { key: "livestock", label: "Ternak", icon: PawPrintIcon, badge: 2 },
   { key: "health", label: "Kesehatan", icon: SyringeIcon },
-  { key: "feed", label: "Pakan", icon: WheatIcon },
+  { key: "feed", label: "Pakan", icon: GrainsIcon },
 ];
 
 // -------------------------------------------------------------------------------------
@@ -123,12 +136,12 @@ const CommonAppShellDemo = () => {
         }
         sidebarFooter={
           <NavButton variant={"ghost"} w={"full"}>
-            <AppIcon icon={SettingsIcon} />
+            <AppIcon icon={GearIcon} />
             {"Pengaturan"}
           </NavButton>
         }
         mobileCenterAction={{
-          icon: ScanLineIcon,
+          icon: ScanIcon,
           label: "Scan",
           onClick: () => {},
         }}
@@ -228,7 +241,7 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
       ],
     },
     generateCode: (props) => `<NavButton
-  icon={HomeIcon}
+  icon={HouseIcon}
   label={"Beranda"}
   active={active === "home"}
   variant={"${String(props.variant || "subtle")}"}
@@ -707,11 +720,11 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
     },
   ]}
   navs={{
-    home: { title: "Beranda", icon: HomeIcon },
+    home: { title: "Beranda", icon: HouseIcon },
     projects: { title: "Proyek", icon: FolderIcon },
     active_projects: { title: "Proyek Aktif" },
     archived_projects: { title: "Arsip Proyek" },
-    settings: { title: "Pengaturan", icon: SettingsIcon },
+    settings: { title: "Pengaturan", icon: GearIcon },
   }}
   activeKey={"home"}
   expanded={${isExpanded}}
@@ -775,10 +788,15 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
 const SNACKBAR_DEMO_ITEMS = [
   { key: "home", label: "Beranda", icon: HouseIcon },
   { key: "animals", label: "Ternak", icon: PawPrintIcon, badge: 3 },
-  { key: "tasks", label: "Tugas", icon: ClipboardCheckIcon },
-  { key: "notifications", label: "Notifikasi", icon: BellRingIcon, badge: 12 },
-  { key: "profile", label: "Profil", icon: CircleUserIcon },
-  { key: "settings", label: "Pengaturan", icon: Settings2Icon },
+  { key: "tasks", label: "Tugas", icon: ClipboardTextIcon },
+  {
+    key: "notifications",
+    label: "Notifikasi",
+    icon: BellRingingIcon,
+    badge: 12,
+  },
+  { key: "profile", label: "Profil", icon: UserCircleIcon },
+  { key: "settings", label: "Pengaturan", icon: SlidersHorizontalIcon },
 ];
 
 const SnackbarPlaygroundDemo = (props: Record<string, unknown>) => {
@@ -802,7 +820,7 @@ const SnackbarPlaygroundDemo = (props: Record<string, unknown>) => {
         centerAction={
           props.withCenterAction === false
             ? undefined
-            : { icon: ScanLineIcon, label: "Scan", onClick: () => undefined }
+            : { icon: ScanIcon, label: "Scan", onClick: () => undefined }
         }
       />
     </Box>

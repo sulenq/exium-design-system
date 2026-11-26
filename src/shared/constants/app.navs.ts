@@ -1,13 +1,7 @@
 // src/shared/constants/app.navs.ts
 
 import type { NavItem } from "@/shared/types/nav.type";
-import {
-  BookOpenIcon,
-  CompassIcon,
-  LayersIcon,
-  PaletteIcon,
-  SparklesIcon,
-} from "lucide-react";
+import { BookOpenIcon, CompassIcon, StackIcon, PaletteIcon, SparkleIcon } from "@phosphor-icons/react";
 
 export const APP_NAVS_MAP = {
   docs: {
@@ -16,12 +10,12 @@ export const APP_NAVS_MAP = {
     pathname: "/design-system/ui",
   },
   components: {
-    icon: LayersIcon,
+    icon: StackIcon,
     title: "Components",
     pathname: "/design-system/ui",
   },
   demo: {
-    icon: SparklesIcon,
+    icon: SparkleIcon,
     title: "Demo Showcase",
     pathname: "/demo",
   },
@@ -45,12 +39,12 @@ export const INTERNAL_APP_NAVS_MAP = {
     pathname: "/design-system/ui",
   },
   components: {
-    icon: LayersIcon,
+    icon: StackIcon,
     title: "Components",
     pathname: "/design-system/ui",
   },
   demo: {
-    icon: SparklesIcon,
+    icon: SparkleIcon,
     title: "Demo Showcase",
     pathname: "/demo",
   },

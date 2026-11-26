@@ -12,7 +12,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import type { FeaturesCarouselProps } from "@/features/branding/types/branding.type";
 import { PATH_CONFIG } from "@/shared/constants/paths";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
 
 const CAROUSEL_ITEMS_LIST = [
   {

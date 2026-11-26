@@ -7,12 +7,7 @@ import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
 import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
-import {
-  AccessibilityIcon,
-  LayersIcon,
-  ShieldCheckIcon,
-  ZapIcon,
-} from "lucide-react";
+import { PersonArmsSpreadIcon, StackIcon, ShieldCheckIcon, LightningIcon } from "@phosphor-icons/react";
 
 const PRINCIPLES = [
   {
@@ -25,19 +20,19 @@ const PRINCIPLES = [
     title: "Zero Runtime Fallback Surprises",
     description:
       "Never silently mask missing data or broken endpoints. Errors and empty states are surfaced explicitly via designated feedback primitives.",
-    icon: ZapIcon,
+    icon: LightningIcon,
   },
   {
     title: "Flat Architectural Hierarchy",
     description:
       "Components are organized strictly in atomic flat folders by group: src/design-system/components/<group>/<component>/<component>.tsx with adjacent types.",
-    icon: LayersIcon,
+    icon: StackIcon,
   },
   {
     title: "Accessibility by Default",
     description:
       "Full keyboard navigability, WAI-ARIA conformance, high contrast ratios, and screen reader-friendly labelling are built into every component recipe.",
-    icon: AccessibilityIcon,
+    icon: PersonArmsSpreadIcon,
   },
 ];
 

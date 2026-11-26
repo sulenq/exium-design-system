@@ -9,7 +9,7 @@ export const DECORATIVE_DOCS: Record<string, ComponentDocSpec> = {
   emoji: {
     key: "emoji",
     title: "Emoji",
-    category: "Decorative",
+    category: "Feedback",
     description:
       "Komponen Emoji berpotongan (sliced SVG) dengan penyesuaian dinamis colorPalette (solid, emphasized, muted, subtle).",
     importPath:

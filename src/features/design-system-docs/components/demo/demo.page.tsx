@@ -92,29 +92,7 @@ import {
   IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
-import {
-  BellIcon,
-  CheckCircleIcon,
-  CogIcon,
-  CompassIcon,
-  EyeIcon,
-  FolderIcon,
-  LayersIcon,
-  LayoutGridIcon,
-  MessageSquareIcon,
-  MousePointerClickIcon,
-  PaletteIcon,
-  SparklesIcon,
-  TableIcon,
-  TextCursorInputIcon,
-  EditIcon,
-  TrashIcon,
-  Undo2Icon,
-  TypeIcon,
-  UploadIcon,
-  UserIcon,
-  WrenchIcon,
-} from "lucide-react";
+import { BellIcon, CheckCircleIcon, GearIcon, CompassIcon, EyeIcon, FolderIcon, StackIcon, SquaresFourIcon, ChatTextIcon, CursorClickIcon, PaletteIcon, SparkleIcon, TableIcon, CursorTextIcon, PencilSimpleIcon, TrashIcon, ArrowUUpLeftIcon, TextTIcon, UploadSimpleIcon, UserIcon, WrenchIcon } from "@phosphor-icons/react";
 import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
@@ -129,7 +107,7 @@ const DemoCard = ({
   children,
 }: {
   title: string;
-  icon?: typeof MousePointerClickIcon;
+  icon?: typeof CursorClickIcon;
   children: ReactNode;
 }) => {
   return (
@@ -236,7 +214,7 @@ export const DemoPage = () => {
 
 const ButtonCard = () => {
   return (
-    <DemoCard title={"Button"} icon={MousePointerClickIcon}>
+    <DemoCard title={"Button"} icon={CursorClickIcon}>
       <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
         <Button primary={true}>Primary</Button>
         <Button variant={"surface"}>Surface</Button>
@@ -250,7 +228,7 @@ const ButtonCard = () => {
 
 const IconButtonCard = () => {
   return (
-    <DemoCard title={"IconButton"} icon={MousePointerClickIcon}>
+    <DemoCard title={"IconButton"} icon={CursorClickIcon}>
       <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
         <IconButton primary={true}>
           <AppIcon icon={IconPlus} />
@@ -271,7 +249,7 @@ const IconButtonCard = () => {
 
 const ButtonGroupCard = () => {
   return (
-    <DemoCard title={"ButtonGroup"} icon={MousePointerClickIcon}>
+    <DemoCard title={"ButtonGroup"} icon={CursorClickIcon}>
       <VStack align={"start"} gap={2}>
         <ButtonGroup attached={true}>
           <Button variant={"outline"}>Left</Button>
@@ -288,11 +266,11 @@ const ColorModeAndLocaleCard = () => {
   const { setLocale } = useLocale();
 
   return (
-    <DemoCard title={"Theme & Locale"} icon={CogIcon}>
+    <DemoCard title={"Theme & Locale"} icon={GearIcon}>
       <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={2}>
         <SettingsTrigger modalKey={"settings"} w={"fit"}>
           <IconButton>
-            <AppIcon icon={CogIcon} strokeWidth={1.3} size={"lg"} />
+            <AppIcon icon={GearIcon} strokeWidth={1.3} size={"lg"} />
           </IconButton>
         </SettingsTrigger>
 
@@ -313,7 +291,7 @@ const ColorModeAndLocaleCard = () => {
 
 const BrandingCard = () => {
   return (
-    <DemoCard title={"Logo & Watermark"} icon={SparklesIcon}>
+    <DemoCard title={"Logo & Watermark"} icon={SparkleIcon}>
       <VStack align={"start"} gap={3}>
         <Logo />
         <BrandWatermark />
@@ -324,7 +302,7 @@ const BrandingCard = () => {
 
 const TypographyCard = () => {
   return (
-    <DemoCard title={"Typography (P)"} icon={TypeIcon}>
+    <DemoCard title={"Typography (P)"} icon={TextTIcon}>
       <VStack align={"start"} gap={1}>
         <P color={"fg.solid"}>{"Solid text color"}</P>
         <P color={"fg.emphasized"}>{"Emphasized text color"}</P>
@@ -340,7 +318,7 @@ const TabularNumCard = () => {
   const [tnum, setTnum] = useState<number>(10);
 
   return (
-    <DemoCard title={"Tabular Num (TNum)"} icon={TypeIcon}>
+    <DemoCard title={"Tabular Num (TNum)"} icon={TextTIcon}>
       <HStack align={"center"} gap={4}>
         <VStack align={"start"} gap={1}>
           <HStack align={"center"} justify={"space-between"} gap={3}>
@@ -368,7 +346,7 @@ const TabularNumCard = () => {
 
 const InputCard = () => {
   return (
-    <DemoCard title={"Input"} icon={TextCursorInputIcon}>
+    <DemoCard title={"Input"} icon={CursorTextIcon}>
       <VStack align={"stretch"} gap={2}>
         <Field label={"Text Input"}>
           <Input placeholder={"Ketik sesuatu..."} />
@@ -380,7 +358,7 @@ const InputCard = () => {
 
 const PasswordInputCard = () => {
   return (
-    <DemoCard title={"PasswordInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"PasswordInput"} icon={CursorTextIcon}>
       <Field label={"Password Input"}>
         <PasswordInput
           withPasswordStrength={true}
@@ -393,7 +371,7 @@ const PasswordInputCard = () => {
 
 const SearchInputCard = () => {
   return (
-    <DemoCard title={"SearchInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"SearchInput"} icon={CursorTextIcon}>
       <SearchInput placeholder={"Cari data..."} />
     </DemoCard>
   );
@@ -401,7 +379,7 @@ const SearchInputCard = () => {
 
 const NumberInputCard = () => {
   return (
-    <DemoCard title={"NumberInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"NumberInput"} icon={CursorTextIcon}>
       <Field label={"Nominal"}>
         <NumberInput
           placeholder={"0"}
@@ -418,7 +396,7 @@ const NumberInputCard = () => {
 
 const SteppedNumberInputCard = () => {
   return (
-    <DemoCard title={"SteppedNumberInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"SteppedNumberInput"} icon={CursorTextIcon}>
       <SteppedNumberInput />
     </DemoCard>
   );
@@ -426,7 +404,7 @@ const SteppedNumberInputCard = () => {
 
 const DateInputCard = () => {
   return (
-    <DemoCard title={"DateInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"DateInput"} icon={CursorTextIcon}>
       <Field label={"Tanggal"}>
         <DateInput modalKey={"demo-date-input"} />
       </Field>
@@ -436,7 +414,7 @@ const DateInputCard = () => {
 
 const SelectCard = () => {
   return (
-    <DemoCard title={"Select Input"} icon={TextCursorInputIcon}>
+    <DemoCard title={"Select Input"} icon={CursorTextIcon}>
       <Field label={"Pilihan Status"}>
         <Select
           options={[
@@ -452,7 +430,7 @@ const SelectCard = () => {
 
 const FocusSelectCard = () => {
   return (
-    <DemoCard title={"FocusSelectInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"FocusSelectInput"} icon={CursorTextIcon}>
       <Field label={"Focus Select"}>
         <FocusSelectInput
           options={[
@@ -468,7 +446,7 @@ const FocusSelectCard = () => {
 
 const PinInputCard = () => {
   return (
-    <DemoCard title={"PinInput (OTP)"} icon={TextCursorInputIcon}>
+    <DemoCard title={"PinInput (OTP)"} icon={CursorTextIcon}>
       <VStack align={"start"} gap={2}>
         <PinInput count={4} />
       </VStack>
@@ -478,7 +456,7 @@ const PinInputCard = () => {
 
 const CheckboxCard = () => {
   return (
-    <DemoCard title={"Checkbox"} icon={TextCursorInputIcon}>
+    <DemoCard title={"Checkbox"} icon={CursorTextIcon}>
       <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
         <Checkbox defaultChecked={true}>Aktif</Checkbox>
         <Checkbox>Pilihan Tambahan</Checkbox>
@@ -489,7 +467,7 @@ const CheckboxCard = () => {
 
 const SwitchCard = () => {
   return (
-    <DemoCard title={"Switch"} icon={TextCursorInputIcon}>
+    <DemoCard title={"Switch"} icon={CursorTextIcon}>
       <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={4}>
         <Switch defaultChecked={true}>Notifikasi Email</Switch>
         <Switch>Mode Gelap</Switch>
@@ -500,7 +478,7 @@ const SwitchCard = () => {
 
 const RadioInputCard = () => {
   return (
-    <DemoCard title={"RadioInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"RadioInput"} icon={CursorTextIcon}>
       <RadioInput
         options={[
           { label: "Pilihan Utama", value: "utama" },
@@ -513,7 +491,7 @@ const RadioInputCard = () => {
 
 const RadioCardInputCard = () => {
   return (
-    <DemoCard title={"RadioCardInput"} icon={TextCursorInputIcon}>
+    <DemoCard title={"RadioCardInput"} icon={CursorTextIcon}>
       <RadioCardInput.Root defaultValue={"option-1"}>
         <HStack gap={3} w={"full"}>
           <RadioCardInput.Item value={"option-1"} flex={1}>
@@ -559,7 +537,7 @@ const RadioCardInputCard = () => {
 
 const SliderCard = () => {
   return (
-    <DemoCard title={"Slider"} icon={TextCursorInputIcon}>
+    <DemoCard title={"Slider"} icon={CursorTextIcon}>
       <Slider defaultValue={[45]} w={"full"} />
     </DemoCard>
   );
@@ -567,7 +545,7 @@ const SliderCard = () => {
 
 const TextareaCard = () => {
   return (
-    <DemoCard title={"Textarea"} icon={TextCursorInputIcon}>
+    <DemoCard title={"Textarea"} icon={CursorTextIcon}>
       <Field label={"Catatan Tambahan"}>
         <Textarea
           placeholder={"Tuliskan deskripsi atau catatan..."}
@@ -606,7 +584,7 @@ const FileInputDropzoneCard = () => {
   });
 
   return (
-    <DemoCard title={"FileInput (Dropzone)"} icon={UploadIcon}>
+    <DemoCard title={"FileInput (Dropzone)"} icon={UploadSimpleIcon}>
       <VStack w={"full"} align={"stretch"} gap={2}>
         <FileInput
           inputProps={register("file_dropzone")}
@@ -626,7 +604,7 @@ const FileInputButtonCard = () => {
   const { register } = useForm();
 
   return (
-    <DemoCard title={"FileInput (Button Trigger)"} icon={UploadIcon}>
+    <DemoCard title={"FileInput (Button Trigger)"} icon={UploadSimpleIcon}>
       <VStack w={"full"} align={"stretch"} gap={2}>
         <FileInput
           inputProps={register("file_btn")}
@@ -641,7 +619,7 @@ const FileInputButtonCard = () => {
 
 const RichTextEditorCard = () => {
   return (
-    <DemoCard title={"RichTextEditor"} icon={TextCursorInputIcon}>
+    <DemoCard title={"RichTextEditor"} icon={CursorTextIcon}>
       <RichTextEditorPresetEssential />
     </DemoCard>
   );
@@ -649,7 +627,7 @@ const RichTextEditorCard = () => {
 
 const ProgressCard = () => {
   return (
-    <DemoCard title={"Progress"} icon={MessageSquareIcon}>
+    <DemoCard title={"Progress"} icon={ChatTextIcon}>
       <VStack align={"stretch"} gap={3}>
         <Progress.Root value={65}>
           <Progress.Track>
@@ -675,7 +653,7 @@ const ProgressCard = () => {
 
 const ProgressCircleCard = () => {
   return (
-    <DemoCard title={"ProgressCircle"} icon={MessageSquareIcon}>
+    <DemoCard title={"ProgressCircle"} icon={ChatTextIcon}>
       <HStack align={"center"} gap={4}>
         <ProgressCircle.Root value={68} size={"xl"}>
           <ProgressCircle.Circle>
@@ -700,7 +678,7 @@ const ProgressCircleCard = () => {
 
 const SkeletonCard = () => {
   return (
-    <DemoCard title={"Skeleton Loaders"} icon={MessageSquareIcon}>
+    <DemoCard title={"Skeleton Loaders"} icon={ChatTextIcon}>
       <VStack align={"stretch"} gap={3}>
         <HStack align={"center"} gap={3}>
           <SkeletonCircle boxSize={"36px"} />
@@ -716,7 +694,7 @@ const SkeletonCard = () => {
 
 const StateNoDataCard = () => {
   return (
-    <DemoCard title={"State: No Data"} icon={MessageSquareIcon}>
+    <DemoCard title={"State: No Data"} icon={ChatTextIcon}>
       <StateNoData />
     </DemoCard>
   );
@@ -724,7 +702,7 @@ const StateNoDataCard = () => {
 
 const StateAccessDeniedCard = () => {
   return (
-    <DemoCard title={"State: Access Denied"} icon={MessageSquareIcon}>
+    <DemoCard title={"State: Access Denied"} icon={ChatTextIcon}>
       <StateAccessDenied />
     </DemoCard>
   );
@@ -732,7 +710,7 @@ const StateAccessDeniedCard = () => {
 
 const StateNoResultCard = () => {
   return (
-    <DemoCard title={"State: No Result"} icon={MessageSquareIcon}>
+    <DemoCard title={"State: No Result"} icon={ChatTextIcon}>
       <StateNoResult />
     </DemoCard>
   );
@@ -740,7 +718,7 @@ const StateNoResultCard = () => {
 
 const StateRetryCard = () => {
   return (
-    <DemoCard title={"State: Retry"} icon={MessageSquareIcon}>
+    <DemoCard title={"State: Retry"} icon={ChatTextIcon}>
       <StateRetry />
     </DemoCard>
   );
@@ -761,7 +739,7 @@ const EmojiCard = () => {
   ];
 
   return (
-    <DemoCard title={"Emoji"} icon={MessageSquareIcon}>
+    <DemoCard title={"Emoji"} icon={ChatTextIcon}>
       <HStack wrap={"wrap"} align={"center"} justify={"start"} gap={3}>
         {EMOJI_KEYS.map((key) => (
           <Emoji key={key} variant={key} />
@@ -863,7 +841,7 @@ const AccordionCard = () => {
   ];
 
   return (
-    <DemoCard title={"Accordion"} icon={LayersIcon}>
+    <DemoCard title={"Accordion"} icon={StackIcon}>
       <Accordion.Root
         collapsible={true}
         multiple={true}
@@ -894,7 +872,7 @@ const TabsCard = () => {
   ];
 
   return (
-    <DemoCard title={"Tabs"} icon={LayersIcon}>
+    <DemoCard title={"Tabs"} icon={StackIcon}>
       <Tabs.Root defaultValue={"pengguna"} w={"full"}>
         <Tabs.List>
           {tabs.map((tab, index) => (
@@ -927,7 +905,7 @@ const StepsCard = () => {
   ];
 
   return (
-    <DemoCard title={"Steps"} icon={LayersIcon}>
+    <DemoCard title={"Steps"} icon={StackIcon}>
       <Steps.Root count={steps.length} defaultStep={1} w={"full"}>
         <Steps.List>
           {steps.map((step, index) => (
@@ -962,7 +940,7 @@ const StepsCard = () => {
 
 const BreadcrumbCard = () => {
   return (
-    <DemoCard title={"Breadcrumb"} icon={LayersIcon}>
+    <DemoCard title={"Breadcrumb"} icon={StackIcon}>
       <Breadcrumb.Root>
         <Breadcrumb.List>
           <Breadcrumb.Item>
@@ -989,7 +967,7 @@ const CarouselCard = () => {
   ];
 
   return (
-    <DemoCard title={"Carousel"} icon={LayersIcon}>
+    <DemoCard title={"Carousel"} icon={StackIcon}>
       <Carousel.Root slideCount={images.length} w={"full"}>
         <Carousel.ItemGroup>
           {images.map((image, index) => (
@@ -1255,7 +1233,7 @@ const Layout = () => {
       <Container.Body gap={3} p={4}>
         <HStack align={"center"} gap={2} w={"full"} pb={1}>
           <AppIcon
-            icon={LayoutGridIcon}
+            icon={SquaresFourIcon}
             size={"md"}
             color={"colorPalette.fg"}
           />
@@ -1365,7 +1343,7 @@ export const DataDisplay = () => {
       {
         key: "edit",
         label: "Edit",
-        icon: EditIcon,
+        icon: PencilSimpleIcon,
         onClick: (item) => {
           console.log("Edit item:", item);
         },
@@ -1373,7 +1351,7 @@ export const DataDisplay = () => {
       {
         key: "restore",
         label: "Restore",
-        icon: Undo2Icon,
+        icon: ArrowUUpLeftIcon,
         onClick: (item) => {
           console.log("Restore item:", item);
         },

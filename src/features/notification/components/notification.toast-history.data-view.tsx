@@ -9,7 +9,7 @@ import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-
 import { NotificationGroupStackCard } from "@/features/notification/components/notification.item";
 import type { NotificationToastHistoryContentProps } from "@/features/notification/types/notification.type";
 import { t } from "@/shared/libs/i18n";
-import { BellIcon } from "lucide-react";
+import { BellIcon } from "@phosphor-icons/react";
 import { memo } from "react";
 
 export const NotificationToastHistoryDataView = memo(

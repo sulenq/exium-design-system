@@ -497,7 +497,7 @@ export const DateInput = memo(
         </HStack>
 
         {modalKey && (
-          <Box display={"inline-flex"} alignItems={"center"} my={"auto"} mr={1}>
+          <Box display={"inline-flex"} alignItems={"center"} my={"auto"}>
             <DatePickerTrigger
               modalKey={modalKey}
               datePickerSubtitle={datePickerSubtitle}
@@ -512,11 +512,10 @@ export const DateInput = memo(
             >
               <IconButton
                 size={"xs"}
-                variant={"ghost"}
-                aspectRatio={"square"}
+                variant={"filledIcon"}
                 aria-label={t["common.open_date_picker"]()}
               >
-                <AppIcon icon={CalendarIcon} />
+                <AppIcon icon={CalendarIcon} weight={"fill"} />
               </IconButton>
             </DatePickerTrigger>
           </Box>

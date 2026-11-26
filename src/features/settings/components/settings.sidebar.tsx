@@ -16,7 +16,7 @@ import type { SettingNavKey } from "@/features/settings/types/settings-navs.type
 import { t } from "@/shared/libs/i18n";
 import { back } from "@/shared/utils/client/navigation";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { ChevronLeftIcon } from "lucide-react";
+import { CaretLeftIcon } from "@phosphor-icons/react";
 
 export const SettingsSidebar = () => {
   // Hooks
@@ -52,7 +52,7 @@ export const SettingsSidebarHeader = () => {
       <HStack>
         {isSmallViewport && (
           <IconButton onClick={back}>
-            <AppIcon icon={ChevronLeftIcon} />
+            <AppIcon icon={CaretLeftIcon} />
           </IconButton>
         )}
 

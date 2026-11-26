@@ -55,6 +55,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
 
         <ChakraSlider.Control
           ref={controlRef}
+          h={"20px"}
           data-active={isHolding ? "" : undefined}
           cursor={"pointer"}
           transform={"translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"}

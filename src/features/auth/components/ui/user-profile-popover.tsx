@@ -16,7 +16,7 @@ import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { useSignoutMutation } from "@/features/auth/hooks/use-signout.mutation";
 import type { UserProfilePopoverTriggerProps } from "@/features/auth/types/user-profile-popover.type";
 import { UserRoleBadge } from "@/features/shared/components/user-role.badge";
-import { LockIcon, LogOutIcon, MoonIcon, SunIcon } from "lucide-react";
+import { LockIcon, SignOutIcon, MoonIcon, SunIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const UserProfilePopoverTrigger = (
@@ -174,7 +174,7 @@ export const UserProfilePopoverTrigger = (
                   justifyContent={"start"}
                   onClick={handleClose}
                 >
-                  <AppIcon icon={LogOutIcon} />
+                  <AppIcon icon={SignOutIcon} />
                   {"Keluar"}
                 </Button>
               </SignoutTrigger>

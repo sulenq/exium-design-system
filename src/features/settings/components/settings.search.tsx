@@ -9,7 +9,7 @@ import { useSettingsSearchIndex } from "@/features/settings/hooks/use-settings-s
 import type { SettingNavKey } from "@/features/settings/types/settings-navs.type";
 import type { SettingsSearchTriggerProps } from "@/features/settings/types/settings.type";
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { SearchIcon } from "lucide-react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 export const SettingsSearchTrigger = (props: SettingsSearchTriggerProps) => {
   // Props
@@ -53,7 +53,7 @@ export const SettingsSearchButton = (props: IconButtonProps) => {
       queryKey={"settingsSearch"}
     >
       <IconButton {...props}>
-        <AppIcon icon={SearchIcon} />
+        <AppIcon icon={MagnifyingGlassIcon} />
       </IconButton>
     </SettingsSearchTrigger>
   );

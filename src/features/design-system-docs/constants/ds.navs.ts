@@ -532,10 +532,6 @@ export const DS_NAVS_MAP = {
     icon: ChartLineIcon,
     title: "Sparkline",
   },
-  outline_contour_perspective: {
-    icon: ShapesIcon,
-    title: "OutlineContourPerspective",
-  },
   action_bar: {
     icon: SlidersHorizontalIcon,
     title: "ActionBar",

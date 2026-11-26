@@ -9,12 +9,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useInternalTotpVerifyMutation } from "@/features/auth/hooks/use-internal-auth.mutation";
 import type { TotpVerifyStepProps } from "@/features/auth/types/totp.type";
 import { ApiError } from "@/shared/libs/api-client/api-error";
-import {
-  AlertTriangleIcon,
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ShieldCheckIcon,
-} from "lucide-react";
+import { WarningIcon, ArrowLeftIcon, ArrowRightIcon, ShieldCheckIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const TotpVerifyStep = (props: TotpVerifyStepProps) => {
@@ -129,7 +124,7 @@ export const TotpVerifyStep = (props: TotpVerifyStepProps) => {
           gap={3}
           align={"start"}
         >
-          <AppIcon icon={AlertTriangleIcon} color={"fg.error"} size={"md"} />
+          <AppIcon icon={WarningIcon} color={"fg.error"} size={"md"} />
 
           <P fontSize={"sm"} color={"fg.error"}>
             {customError}

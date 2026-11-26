@@ -23,13 +23,7 @@ import {
 } from "@/features/auth/schemas/signin.schema";
 import type { SigninFormValues } from "@/features/auth/types/signin.type";
 import { isDevModeEnabled } from "@/shared/utils/env/env.utils";
-import {
-  ArrowRightIcon,
-  Code2Icon,
-  KeyRoundIcon,
-  LockIcon,
-  MailIcon,
-} from "lucide-react";
+import { ArrowRightIcon, CodeIcon, KeyIcon, LockIcon, EnvelopeIcon } from "@phosphor-icons/react";
 import { useForm } from "react-hook-form";
 
 export const SigninForm = (props: StackProps) => {
@@ -109,7 +103,7 @@ export const SigninForm = (props: StackProps) => {
           loading={ssoSigninMutation.isPending}
           onClick={handleSsoClick}
         >
-          <AppIcon icon={KeyRoundIcon} />
+          <AppIcon icon={KeyIcon} />
           {"Continue with Single Sign-On (SSO)"}
         </Button>
       </VStack>
@@ -133,7 +127,7 @@ export const SigninForm = (props: StackProps) => {
               w={"full"}
             >
               <Input
-                startElement={<AppIcon icon={MailIcon} color={"fg.subtle"} />}
+                startElement={<AppIcon icon={EnvelopeIcon} color={"fg.subtle"} />}
                 placeholder={"name@company.com"}
                 {...register("email")}
               />
@@ -184,7 +178,7 @@ export const SigninForm = (props: StackProps) => {
       {isDevMode && (
         <HStack w={"full"} align={"center"} justify={"center"} gap={2} pt={2}>
           <Badge size={"xs"} variant={"surface"} colorPalette={"orange"}>
-            <AppIcon icon={Code2Icon} size={"xs"} />
+            <AppIcon icon={CodeIcon} size={"xs"} />
             <P fontSize={"2xs"}>{"DEV MODE ACTIVE"}</P>
           </Badge>
           <P fontSize={"xs"} color={"fg.subtle"}>

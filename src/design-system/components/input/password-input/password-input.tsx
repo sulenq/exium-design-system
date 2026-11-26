@@ -13,7 +13,10 @@ import type {
   PasswordStrengthMeterProps,
 } from "@/design-system/components/input/password-input/password-input.type";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { toast } from "@/design-system/components/toast";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
@@ -258,9 +261,7 @@ const VisibilityTrigger = forwardRef<HTMLButtonElement, ButtonProps>(
         tabIndex={-1}
         ref={ref}
         size={"xs"}
-        variant={"plain"}
-        color={"fg.muted"}
-        _hover={{ color: "fg" }}
+        variant={"filledIcon"}
         aspectRatio={"square"}
         mr={-2}
         position={"relative"}

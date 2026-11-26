@@ -11,7 +11,7 @@ import { Menu } from "@/design-system/components/overlay/menu/menu";
 import { Popover } from "@/design-system/components/overlay/popover/popover";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
-import { ChevronDownIcon } from "lucide-react";
+import { CaretDownIcon } from "@phosphor-icons/react";
 
 export const OVERLAY_DOCS: Record<string, ComponentDocSpec> = {
 
@@ -298,7 +298,7 @@ export const OVERLAY_DOCS: Record<string, ComponentDocSpec> = {
       >
         <Menu.Trigger asChild>
           <Button variant={"outline"}>
-            Buka Menu Pilihan <AppIcon icon={ChevronDownIcon} size={"sm"} />
+            Buka Menu Pilihan <AppIcon icon={CaretDownIcon} size={"sm"} />
           </Button>
         </Menu.Trigger>
         <Menu.Content minW={"160px"}>

@@ -146,9 +146,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         endElement={
           value ? (
             <IconButton
-              variant={"plain"}
-              color={"fg.muted"}
-              _hover={{ color: "fg" }}
+              variant={"filledIcon"}
               size={"xs"}
               onClick={handleClear}
               me={-2}

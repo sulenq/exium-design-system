@@ -1,8 +1,11 @@
 // src/features/auth/components/ui/signin-shell.tsx
 
 import { Logo } from "@/design-system/components/branding/logo/logo";
-import { OutlineContourPerspective } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import { Box } from "@/design-system/components/layout/box/box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { SimpleGrid } from "@/design-system/components/layout/grid/grid";
 import { PageContainer } from "@/design-system/components/layout/page-container/page-container";
 import { P, PSerif } from "@/design-system/components/typography/p/p";
@@ -20,13 +23,22 @@ export const SigninShell = (props: SigninShellProps) => {
 
   return (
     <PageContainer p={[2, 4, 6]} pos={"relative"}>
-      <OutlineContourPerspective
+      <Box
         pos={"absolute"}
         left={0}
         bottom={0}
         w={"full"}
         h={"500px"}
         opacity={0.1}
+        bg={"fg"}
+        maskImage={
+          "url(/assets/svgs/decorative/outline-contour-perspective.svg)"
+        }
+        maskSize={"cover"}
+        maskRepeat={"no-repeat"}
+        maskPosition={"center"}
+        pointerEvents={"none"}
+        aria-hidden={true}
       />
 
       <SimpleGrid

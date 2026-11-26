@@ -18,7 +18,7 @@ import type {
 } from "@/features/design-system-docs/types/hook-docs.type";
 import { getLocaleLabel, t } from "@/shared/libs/i18n";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
-import { LanguagesIcon } from "lucide-react";
+import { TranslateIcon } from "@phosphor-icons/react";
 
 const HOOKS_SPECS_MAP: Record<string, HookDocSpec> = {
   use_disclosure: {
@@ -218,7 +218,7 @@ const UseLocaleInteractiveDemo = () => {
             colorPalette={"blue"}
             onClick={() => setLocale("id")}
           >
-            <AppIcon icon={LanguagesIcon} />
+            <AppIcon icon={TranslateIcon} />
             {"Bahasa Indonesia (ID)"}
           </Button>
 
@@ -227,7 +227,7 @@ const UseLocaleInteractiveDemo = () => {
             colorPalette={"blue"}
             onClick={() => setLocale("en")}
           >
-            <AppIcon icon={LanguagesIcon} />
+            <AppIcon icon={TranslateIcon} />
             {"English (EN)"}
           </Button>
         </HStack>

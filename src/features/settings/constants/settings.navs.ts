@@ -1,73 +1,61 @@
 // src/features/settings/constants/settings.navs.ts
 
 import type { NavItem } from "@/shared/types/nav.type";
-import {
-  Bell,
-  Clock,
-  HelpCircle,
-  Info,
-  Languages,
-  Lock,
-  Monitor,
-  Plug,
-  SlidersHorizontal,
-  User,
-  UserCircle,
-} from "lucide-react";
+import { BellIcon, ClockIcon, QuestionIcon, InfoIcon, TranslateIcon, LockIcon, MonitorIcon, PlugIcon, SlidersHorizontalIcon, UserIcon, UserCircleIcon } from "@phosphor-icons/react";
 
 export const SETTINGS_NAVS_MAP = {
   profile: {
-    icon: User,
+    icon: UserIcon,
     titleKey: "settings.profile.title",
     descriptionKey: "settings.profile.description",
   },
   account: {
-    icon: UserCircle,
+    icon: UserCircleIcon,
     titleKey: "settings.account.title",
     descriptionKey: "settings.account.description",
   },
   privacy: {
-    icon: Lock,
+    icon: LockIcon,
     titleKey: "settings.privacy.title",
     descriptionKey: "settings.privacy.description",
   },
   notification: {
-    icon: Bell,
+    icon: BellIcon,
     titleKey: "settings.notification.title",
     descriptionKey: "settings.notification.description",
   },
   appearance: {
-    icon: Monitor,
+    icon: MonitorIcon,
     titleKey: "settings.appearance.title",
     descriptionKey: "settings.appearance.description",
   },
   language: {
-    icon: Languages,
+    icon: TranslateIcon,
     titleKey: "settings.language.title",
     descriptionKey: "settings.language.description",
   },
   datetime: {
-    icon: Clock,
+    icon: ClockIcon,
     titleKey: "settings.datetime.title",
     descriptionKey: "settings.datetime.description",
   },
   integration: {
-    icon: Plug,
+    icon: PlugIcon,
     titleKey: "settings.integration.title",
     descriptionKey: "settings.integration.description",
   },
   advanced: {
-    icon: SlidersHorizontal,
+    icon: SlidersHorizontalIcon,
     titleKey: "settings.advanced.title",
     descriptionKey: "settings.advanced.description",
   },
   support: {
-    icon: HelpCircle,
+    icon: QuestionIcon,
     titleKey: "settings.support.title",
     descriptionKey: "settings.support.description",
   },
   about: {
-    icon: Info,
+    icon: InfoIcon,
     titleKey: "settings.about.title",
     descriptionKey: "settings.about.description",
   },

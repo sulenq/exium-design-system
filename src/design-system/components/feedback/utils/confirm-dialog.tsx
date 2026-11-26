@@ -103,7 +103,8 @@ export const ConfirmDialogModal = (props: {
         <Modal.Footer>
           <VStack gap={2} w={"full"}>
             <Button
-              primary
+              primary={true}
+              bouncy={true}
               variant={"solid"}
               colorPalette={colorPalette}
               onClick={handleConfirm}
@@ -113,7 +114,11 @@ export const ConfirmDialogModal = (props: {
               {resolvedConfirmLabel}
             </Button>
 
-            <Button onClick={handleCancel} autoFocus={isDestructive}>
+            <Button
+              bouncy={true}
+              onClick={handleCancel}
+              autoFocus={isDestructive}
+            >
               {resolvedCancelLabel}
             </Button>
           </VStack>

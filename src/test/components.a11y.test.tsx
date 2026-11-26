@@ -9,7 +9,7 @@ import { Snackbar } from "@/design-system/components/navigation/snackbar/snackba
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { renderWithSystem } from "@/test/render";
 import { fireEvent, screen } from "@testing-library/react";
-import { HomeIcon, ListIcon, ScanLineIcon, UserIcon } from "lucide-react";
+import { HouseIcon, ListIcon, ScanIcon, UserIcon } from "@phosphor-icons/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 
@@ -71,7 +71,7 @@ describe("PinInput", () => {
 
 describe("Snackbar", () => {
   const items = [
-    { key: "home", label: "Beranda", icon: HomeIcon },
+    { key: "home", label: "Beranda", icon: HouseIcon },
     { key: "list", label: "Ternak", icon: ListIcon },
     { key: "profile", label: "Profil", icon: UserIcon },
   ];
@@ -83,7 +83,7 @@ describe("Snackbar", () => {
         items={items}
         activeKey={"home"}
         onSelect={onSelect}
-        centerAction={{ icon: ScanLineIcon, label: "Scan", onClick: () => {} }}
+        centerAction={{ icon: ScanIcon, label: "Scan", onClick: () => {} }}
       />,
     );
     expect(screen.getByRole("navigation")).toHaveAccessibleName();

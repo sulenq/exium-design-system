@@ -31,7 +31,7 @@ export const IconographyFoundationPage = () => {
           <CodeBlock
             code={`import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Sparkle } from "@phosphor-icons/react";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon } from "@phosphor-icons/react";
 
 // Lucide icon
 <AppIcon icon={CheckIcon} size={"md"} color={"green.fg"} />

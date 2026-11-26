@@ -4,19 +4,7 @@ import type {
   InboxItem,
   InboxResolvedUI,
 } from "@/features/notification/types/inbox.type";
-import {
-  AlertTriangleIcon,
-  BellIcon,
-  CheckCircle2Icon,
-  ClipboardListIcon,
-  ClockIcon,
-  CreditCardIcon,
-  FileTextIcon,
-  HelpCircleIcon,
-  ShieldCheckIcon,
-  UserCheckIcon,
-  XCircleIcon,
-} from "lucide-react";
+import { WarningIcon, BellIcon, CheckCircleIcon, ClipboardTextIcon, ClockIcon, CreditCardIcon, FileTextIcon, QuestionIcon, ShieldCheckIcon, UserCheckIcon, XCircleIcon } from "@phosphor-icons/react";
 
 export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
   const meta = item.metadata ?? {};
@@ -107,7 +95,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
           "Pembayaran terverifikasi. Layanan spasial masuk ke dalam antrean pemrosesan.",
         actionUrl: targetUrl,
         actionLabel: "Lihat detail transaksi",
-        icon: CheckCircle2Icon,
+        icon: CheckCircleIcon,
         colorPalette: "blue",
       };
     }
@@ -140,7 +128,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
           "Potongan layer spasial selesai diproses dan menunggu verifikasi akhir Tim ATR/BPN.",
         actionUrl: targetUrl,
         actionLabel: "Cek status verifikasi",
-        icon: ClipboardListIcon,
+        icon: ClipboardTextIcon,
         colorPalette: "purple",
       };
     }
@@ -176,7 +164,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
           "Seluruh layer data spasial telah aktif dan siap diakses via WMS & WFS.",
         actionUrl: targetUrl,
         actionLabel: "Buka data saya",
-        icon: CheckCircle2Icon,
+        icon: CheckCircleIcon,
         colorPalette: "green",
       };
     }
@@ -226,7 +214,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
           `Layanan data spasial pada workspace '${meta.workspaceName ?? ""}' akan segera berakhir. Segera lakukan perpanjangan.`,
         actionUrl: `/mitra/my-data/${meta.workspaceId ?? meta.workspaceName ?? ""}`,
         actionLabel: "Perpanjang layanan",
-        icon: AlertTriangleIcon,
+        icon: WarningIcon,
         colorPalette: "orange",
       };
 
@@ -249,7 +237,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
         message: `Tiket bantuan #${meta.ticketNumber ?? ""} berhasil dibuat. Petugas kami akan segera menanggapi.`,
         actionUrl: `/mitra/help-center/${meta.ticketId ?? ""}`,
         actionLabel: "Lihat tiket",
-        icon: HelpCircleIcon,
+        icon: QuestionIcon,
         colorPalette: "blue",
       };
 
@@ -259,7 +247,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
         message: "Petugas telah membalas tiket bantuan Anda.",
         actionUrl: `/mitra/help-center/${meta.ticketId ?? ""}`,
         actionLabel: "Baca balasan",
-        icon: HelpCircleIcon,
+        icon: QuestionIcon,
         colorPalette: "blue",
       };
 
@@ -270,7 +258,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
         message: `Kendala tiket #${meta.ticketNumber ?? ""} telah diselesaikan oleh petugas.`,
         actionUrl: `/mitra/help-center/${meta.ticketId ?? ""}`,
         actionLabel: "Detail tiket",
-        icon: CheckCircle2Icon,
+        icon: CheckCircleIcon,
         colorPalette: "green",
       };
 
@@ -335,7 +323,7 @@ export const resolveInboxUI = (item: InboxItem): InboxResolvedUI => {
           "Mitra mengajukan pesanan yang memerlukan verifikasi layer spasial.",
         actionUrl: `/internal/order-review/${meta.orderId ?? ""}`,
         actionLabel: "Review pesanan",
-        icon: ClipboardListIcon,
+        icon: ClipboardTextIcon,
         colorPalette: "blue",
       };
 

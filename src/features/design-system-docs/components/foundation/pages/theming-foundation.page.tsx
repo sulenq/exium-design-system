@@ -11,7 +11,7 @@ import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { CodeBlock } from "@/features/design-system-docs/components/code-block";
 import { FoundationHeader } from "@/features/design-system-docs/components/foundation/foundation-header";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon } from "@phosphor-icons/react";
 
 export const ThemingFoundationPage = () => {
   // Stores

@@ -15,7 +15,7 @@ import { useAuthSession } from "@/features/auth/hooks/use-auth-session";
 import { useSignoutMutation } from "@/features/auth/hooks/use-signout.mutation";
 import type { UserIdCardProps } from "@/features/auth/types/user-id-card.type";
 import { UserRoleBadge } from "@/features/shared/components/user-role.badge";
-import { LogOutIcon } from "lucide-react";
+import { SignOutIcon } from "@phosphor-icons/react";
 
 export const UserIdCard = (props: UserIdCardProps) => {
   // Props
@@ -137,7 +137,7 @@ export const UserIdCard = (props: UserIdCardProps) => {
                     color: "fg.error",
                   }}
                 >
-                  <AppIcon icon={LogOutIcon} />
+                  <AppIcon icon={SignOutIcon} />
                 </Button>
               </SignoutTrigger>
             )}

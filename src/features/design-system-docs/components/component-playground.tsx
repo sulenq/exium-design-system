@@ -23,12 +23,7 @@ import { ComponentPlaygroundContainer } from "@/features/design-system-docs/comp
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { ColorPaletteSelect } from "@/features/design-system-docs/components/color-palette.select";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  CopyIcon,
-} from "lucide-react";
+import { CheckIcon, CaretDownIcon, CaretUpIcon, CopyIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
@@ -124,7 +119,7 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
                 onClick={() => setIsCodeExpanded((prev) => !prev)}
               >
                 <AppIcon
-                  icon={isCodeExpanded ? ChevronUpIcon : ChevronDownIcon}
+                  icon={isCodeExpanded ? CaretUpIcon : CaretDownIcon}
                   size={"sm"}
                 />
                 {isCodeExpanded ? "Collapse" : "Expand"}

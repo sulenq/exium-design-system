@@ -18,7 +18,7 @@ import type {
   NotificationTabsProps,
   NotificationTabValue,
 } from "@/features/notification/types/notification.type";
-import { BellIcon, InboxIcon } from "lucide-react";
+import { BellIcon, TrayIcon } from "@phosphor-icons/react";
 import { memo, useCallback, useEffect, useState, useTransition } from "react";
 
 export const NotificationPage = () => {
@@ -135,7 +135,7 @@ const NotificationTabs = memo((props: NotificationTabsProps) => {
           justifyContent={"center"}
           h={"headerH"}
         >
-          <AppIcon icon={InboxIcon} />
+          <AppIcon icon={TrayIcon} />
           {"Inbox"}
           {unreadCount > 0 && (
             <Badge colorPalette={"blue"} ml={1}>

@@ -1,7 +1,5 @@
 import { Button } from "@/design-system/components/button/button/button";
 import { CloseButton } from "@/design-system/components/button/close-button/close-button";
-import { OutlineContourPerspective } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective";
-import { Box } from "@/design-system/components/layout/box/box";
 import { Center } from "@/design-system/components/layout/center/center";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { ActionBar } from "@/design-system/components/overlay/action-bar/action-bar";
@@ -92,47 +90,6 @@ export const DISPLAY_DOCS: Record<string, ComponentDocSpec> = {
           <List.Item key={item}>{item}</List.Item>
         ))}
       </List.Root>
-    ),
-  },
-
-  outline_contour_perspective: {
-    key: "outline_contour_perspective",
-    title: "OutlineContourPerspective",
-    category: "Decorative",
-    description:
-      "Ilustrasi kontur garis untuk latar dekoratif (halaman login, hero). Warna mengikuti tema dan mode terang-gelap kecuali `color` diisi.",
-    importPath:
-      'import { OutlineContourPerspective } from "@/design-system/components/decorative/outline-contour-perspective/outline-contour-perspective";',
-    component: OutlineContourPerspective,
-    defaultProps: {},
-    propsSpec: [
-      {
-        name: "color",
-        type: "string",
-        description: "Warna garis. Default mengikuti tema.",
-        controlKind: "color",
-      },
-    ],
-    a11y: {
-      notes: "Dekoratif saja; jangan taruh informasi penting di dalamnya.",
-    },
-    generateCode: (props) => {
-      const colorProp = props.color ? `\n    color={"${String(props.color)}"}` : "";
-      return `<Box pos={"relative"} w={"full"} h={"220px"} overflow={"hidden"} rounded={"md"} bg={"bg.subtle"}>
-  <OutlineContourPerspective${colorProp}
-    pos={"absolute"}
-    inset={0}
-  />
-</Box>`;
-    },
-    renderPlayground: (props) => (
-      <Box pos={"relative"} w={"full"} h={"220px"} overflow={"hidden"} rounded={"md"} bg={"bg.subtle"}>
-        <OutlineContourPerspective
-          color={props.color ? String(props.color) : undefined}
-          pos={"absolute"}
-          inset={0}
-        />
-      </Box>
     ),
   },
 

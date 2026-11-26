@@ -1,10 +1,10 @@
 // src/shared/types/status.type.ts
 
-import type { LucideIcon } from "lucide-react";
+import type { Icon } from "@phosphor-icons/react";
 
 export type UserRoleConfig = {
   label: string;
   colorPalette: "purple" | "blue";
-  icon?: LucideIcon;
+  icon?: Icon;
 };
 
