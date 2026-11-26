@@ -1,128 +1,191 @@
 // src/design-system/components/input/time-input/time-input.tsx
 
-import {
-  CLICKY_STYLE_PROPS,
-  applyClickyScale,
-} from "@/shared/constants/styles";
-import { Button } from "@/design-system/components/button/button/button";
+"use client";
+
+import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
 import type {
   TimeInputProps,
-  TimeParts,
-  TimePickerPanelProps,
-  TimeUnit,
+  TimeSegmentInputProps,
+  TimeSegmentKey,
+  TimeSegmentValues,
   TimeValue,
 } from "@/design-system/components/input/time-input/time-input.type";
-import { TimeWheelColumn } from "@/design-system/components/input/time-input/time-wheel-column";
+import { TimePickerTrigger } from "@/design-system/components/input/time-picker/time-picker";
 import {
-  EMPTY_TIME_PARTS,
   formatTime,
-  HOURS_COUNT,
-  MINUTES_COUNT,
   parseTime,
-  SECONDS_COUNT,
 } from "@/design-system/components/input/utils/time.utils";
 import { Box } from "@/design-system/components/layout/box/box";
-import {
-  HStack,
-  VStack,
-} from "@/design-system/components/layout/flex-box/flex-box";
-import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
-import { Modal } from "@/design-system/components/overlay/modal/modal";
+import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { t } from "@/shared/libs/i18n";
 import { useFieldContext } from "@chakra-ui/react";
 import { ClockIcon } from "@phosphor-icons/react";
-import { forwardRef, useState, type ChangeEvent } from "react";
+import {
+  forwardRef,
+  Fragment,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+} from "react";
 
 // -------------------------------------------------------------------------------------
-// TimePickerPanel — wheels + confirm footer. Mounted only while the modal is
-// open, so its draft always starts from the committed value.
+// Helpers
 // -------------------------------------------------------------------------------------
 
-const TimePickerPanel = (props: TimePickerPanelProps) => {
+const EMPTY_SEGMENTS: TimeSegmentValues = {
+  hours: "",
+  minutes: "",
+  seconds: "",
+};
+
+function timeValueToSegments(val: TimeValue): TimeSegmentValues {
+  if (!val) return EMPTY_SEGMENTS;
+  const parsed = parseTime(val);
+  if (!parsed) return EMPTY_SEGMENTS;
+  return {
+    hours: String(parsed.hours).padStart(2, "0"),
+    minutes: String(parsed.minutes).padStart(2, "0"),
+    seconds: String(parsed.seconds).padStart(2, "0"),
+  };
+}
+
+function segmentsToTimeValue(
+  segments: TimeSegmentValues,
+  withSeconds: boolean,
+): TimeValue {
+  const h = parseInt(segments.hours, 10);
+  const m = parseInt(segments.minutes, 10);
+  const s = withSeconds ? parseInt(segments.seconds, 10) : 0;
+
+  if (isNaN(h) || isNaN(m) || (withSeconds && isNaN(s))) return null;
+  if (h < 0 || h > 23) return null;
+  if (m < 0 || m > 59) return null;
+  if (s < 0 || s > 59) return null;
+
+  return formatTime({ hours: h, minutes: m, seconds: s }, withSeconds);
+}
+
+// -------------------------------------------------------------------------------------
+// TimeSegmentInput — a single numeric segment (hh, mm, ss)
+// -------------------------------------------------------------------------------------
+
+const TimeSegmentInput = memo(function TimeSegmentInput(
+  props: TimeSegmentInputProps,
+) {
   // Props
   const {
-    initialValue,
-    withSeconds,
-    minuteStep,
-    secondStep,
-    onConfirm,
-    onCancel,
+    id,
+    segmentKey,
+    value,
+    disabled,
+    showPlaceholder = true,
+    onValueChange,
+    onAutoAdvance,
+    onArrowNavigate,
+    inputRef,
+    onBlur,
   } = props;
 
-  // States
-  const [draft, setDraft] = useState<TimeParts>(
-    () => parseTime(initialValue) ?? EMPTY_TIME_PARTS,
-  );
+  // Derived Values
+  const placeholder =
+    segmentKey === "hours" ? "hh" : segmentKey === "minutes" ? "mm" : "ss";
 
   // Handlers
-  const handleUnitChange = (unit: TimeUnit, nextValue: number) => {
-    setDraft((prev) => ({ ...prev, [unit]: nextValue }));
-  };
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const rawValue = e.target.value.replace(/\D/g, "").slice(0, 2);
+    onValueChange(segmentKey, rawValue);
 
-  const handleConfirm = () => {
-    const confirmed: TimeParts = withSeconds ? draft : { ...draft, seconds: 0 };
-    onConfirm(formatTime(confirmed, withSeconds));
-  };
+    if (rawValue.length === 2) {
+      onAutoAdvance(segmentKey);
+    }
+  }
+
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "ArrowLeft") {
+      if (e.currentTarget.selectionStart === 0) {
+        e.preventDefault();
+        onArrowNavigate(segmentKey, "prev");
+      }
+      return;
+    }
+
+    if (e.key === "ArrowRight") {
+      if (e.currentTarget.selectionStart === e.currentTarget.value.length) {
+        e.preventDefault();
+        onArrowNavigate(segmentKey, "next");
+      }
+      return;
+    }
+
+    if (e.key === "Backspace" && e.currentTarget.value.length === 0) {
+      e.preventDefault();
+      onArrowNavigate(segmentKey, "prev");
+      return;
+    }
+
+    if (e.key === ":" || e.key === "/" || e.key === "-") {
+      e.preventDefault();
+      onArrowNavigate(segmentKey, "next");
+    }
+  }
+
+  function handleFocus(e: FocusEvent<HTMLInputElement>) {
+    e.target.select();
+  }
+
+  function handleBlur(e: FocusEvent<HTMLInputElement>) {
+    if (value.length === 1) {
+      onValueChange(segmentKey, value.padStart(2, "0"));
+    }
+    onBlur?.(e);
+  }
 
   return (
-    <>
-      <Modal.Body pt={0}>
-        <HStack align={"center"} justify={"center"} gap={2}>
-          <TimeWheelColumn
-            label={t["common.hours"]()}
-            value={draft.hours}
-            count={HOURS_COUNT}
-            onValueChange={(next) => handleUnitChange("hours", next)}
-          />
-
-          <P fontSize={"xl"} fontWeight={"semibold"} aria-hidden={true}>
-            {":"}
-          </P>
-
-          <TimeWheelColumn
-            label={t["common.minutes"]()}
-            value={draft.minutes}
-            count={MINUTES_COUNT}
-            step={minuteStep}
-            onValueChange={(next) => handleUnitChange("minutes", next)}
-          />
-
-          {withSeconds && (
-            <>
-              <P fontSize={"xl"} fontWeight={"semibold"} aria-hidden={true}>
-                {":"}
-              </P>
-
-              <TimeWheelColumn
-                label={t["common.seconds"]()}
-                value={draft.seconds}
-                count={SECONDS_COUNT}
-                step={secondStep}
-                onValueChange={(next) => handleUnitChange("seconds", next)}
-              />
-            </>
-          )}
-        </HStack>
-      </Modal.Body>
-
-      <Modal.Footer>
-        <VStack gap={2} w={"full"}>
-          <Button primary={true} bouncy={true} onClick={handleConfirm}>
-            {t["action.confirm"]()}
-          </Button>
-
-          <Button bouncy={true} onClick={onCancel}>
-            {t["action.cancel"]()}
-          </Button>
-        </VStack>
-      </Modal.Footer>
-    </>
+    <Box
+      as={"input"}
+      id={id}
+      ref={inputRef}
+      // @ts-expect-error -- HTML input attributes on Chakra Box
+      type={"text"}
+      inputMode={"numeric"}
+      maxLength={2}
+      value={value}
+      disabled={disabled}
+      placeholder={showPlaceholder ? placeholder : ""}
+      aria-label={
+        segmentKey === "hours"
+          ? t["common.hours"]()
+          : segmentKey === "minutes"
+            ? t["common.minutes"]()
+            : t["common.seconds"]()
+      }
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      w={"2.5ch"}
+      textAlign={"center"}
+      bg={"transparent"}
+      border={"none"}
+      outline={"none"}
+      fontSize={"md"}
+      fontVariantNumeric={"tabular-nums"}
+      color={disabled ? "fg.muted" : "fg"}
+      _placeholder={{ color: "fg.subtle" }}
+      cursor={disabled ? "not-allowed" : "text"}
+    />
   );
-};
+});
 
 // -------------------------------------------------------------------------------------
 // TimeInput (public)
@@ -140,150 +203,188 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       minuteStep = 1,
       secondStep = 1,
       title,
-      placeholder,
       children,
-      disabled = false,
+      disabled: disabledProp = false,
       name,
       onChange,
       onBlur,
       ...restProps
     } = props;
 
-    // Stores
-    const { theme } = useThemeStore();
-
     // Contexts
-    const chakraFieldContext = useFieldContext();
+    const { theme } = useThemeStore();
+    const fieldContext = useFieldContext();
     const customFieldContext = useFieldContextValue();
-    const isFloatingVariant = customFieldContext?.variant === "floating";
-    const floatingLabel = isFloatingVariant
-      ? customFieldContext?.label
-      : undefined;
+    const disabled = disabledProp || Boolean(fieldContext?.disabled);
+    const invalid = Boolean(fieldContext?.invalid);
 
-    // Hooks
-    const { modalKey, isOpen, open, close } = usePopDisclosure({
-      modalKey: propsModalKey,
-    });
+    // Refs
+    const hoursRef = useRef<HTMLInputElement | null>(null);
+    const minutesRef = useRef<HTMLInputElement | null>(null);
+    const secondsRef = useRef<HTMLInputElement | null>(null);
 
     // States
-    const [internalValue, setInternalValue] = useState<TimeValue>(defaultValue);
+    const [uncontrolledValue, setUncontrolledValue] = useState<TimeValue>(
+      () => defaultValue,
+    );
+    const [isFocused, setIsFocused] = useState<boolean>(false);
+
+    const isControlled = controlledValue !== undefined;
+    const committedValue = isControlled ? controlledValue : uncontrolledValue;
+
+    const [segments, setSegments] = useState<TimeSegmentValues>(() =>
+      timeValueToSegments(committedValue),
+    );
+    const [prevCommitted, setPrevCommitted] =
+      useState<TimeValue>(committedValue);
+
+    if (committedValue !== prevCommitted) {
+      setPrevCommitted(committedValue);
+      setSegments(timeValueToSegments(committedValue));
+    }
 
     // Derived Values
-    const isControlled = controlledValue !== undefined;
-    const rawValue = isControlled ? controlledValue : internalValue;
-    const committedParts = parseTime(rawValue);
-    const committedValue: TimeValue = committedParts
-      ? formatTime(committedParts, withSeconds)
-      : null;
-    const hasValue = committedValue !== null;
-    const isInvalid = Boolean(chakraFieldContext?.invalid);
-    const resolvedTitle = title ?? t["common.select_time"]();
-    const resolvedPlaceholder =
-      placeholder ?? (withSeconds ? "--:--:--" : "--:--");
+    const segmentOrder = useMemo<TimeSegmentKey[]>(
+      () =>
+        withSeconds ? ["hours", "minutes", "seconds"] : ["hours", "minutes"],
+      [withSeconds],
+    );
+    const resolvedTitle = title ?? "Pilih Waktu";
+    const modalKey = propsModalKey ?? `time-input-${name ?? "picker"}`;
+
+    const isFloatingField = customFieldContext?.variant === "floating";
+    const floatingLabel = isFloatingField
+      ? customFieldContext?.label
+      : undefined;
     const hasFloatingLabel = Boolean(floatingLabel);
-    const triggerText = hasValue ? committedValue : resolvedPlaceholder;
-    const triggerTextColor = hasValue ? "fg" : "fg.subtle";
-    const triggerBorderColor = isInvalid ? "border.error" : "border.muted";
-    const triggerHeight = hasFloatingLabel ? "48px" : 10;
-    const triggerOpacity = disabled ? 0.5 : 1;
-    const triggerCursor = disabled ? "not-allowed" : "pointer";
-    // An empty floating field shows only its label, like the other inputs
-    const isTriggerTextVisible = hasValue || !hasFloatingLabel;
-    const floatingLabelTransform = hasValue
+    const hasSegmentValue = Boolean(
+      segments.hours || segments.minutes || segments.seconds,
+    );
+    const isLabelFloated = isFocused || hasSegmentValue;
+    const floatingLabelTransform = isLabelFloated
       ? "translateY(0)"
-      : "translateY(12px)";
-    const floatingLabelFontSize = hasValue ? "xs" : "md";
+      : "translateY(8px)";
+    const floatingLabelFontSize = isLabelFloated ? "xs" : "md";
+
+    const containerHeight = hasFloatingLabel ? "52px" : "40px";
+    const containerBorderColor = invalid
+      ? "border.error"
+      : isFocused
+        ? "border.emphasized"
+        : "border.muted";
+    const containerOpacity = disabled ? 0.5 : 1;
+    const containerCursor = disabled ? "not-allowed" : "text";
 
     // Handlers
-    const handleConfirm = (nextValue: string) => {
-      if (!isControlled) {
-        setInternalValue(nextValue);
-      }
-      onValueChange?.(nextValue);
-      onChange?.({
-        target: { name, value: nextValue },
-      } as ChangeEvent<HTMLInputElement>);
-      close();
+    const commitValue = useCallback(
+      (nextValue: TimeValue) => {
+        if (!isControlled) {
+          setUncontrolledValue(nextValue);
+        }
+        onValueChange?.(nextValue);
+        if (onChange) {
+          const syntheticEvent = {
+            target: { name: name ?? "", value: nextValue ?? "" },
+            currentTarget: { name: name ?? "", value: nextValue ?? "" },
+          } as ChangeEvent<HTMLInputElement>;
+          onChange(syntheticEvent);
+        }
+      },
+      [isControlled, name, onChange, onValueChange],
+    );
+
+    const handleSegmentChange = useCallback(
+      (key: TimeSegmentKey, nextVal: string) => {
+        const next = { ...segments, [key]: nextVal };
+        setSegments(next);
+        const parsed = segmentsToTimeValue(next, withSeconds);
+        if (parsed !== null) {
+          commitValue(parsed);
+        } else if (!next.hours && !next.minutes && !next.seconds) {
+          commitValue(null);
+        }
+      },
+      [commitValue, segments, withSeconds],
+    );
+
+    const focusSegment = useCallback((key: TimeSegmentKey) => {
+      const target =
+        key === "hours"
+          ? hoursRef.current
+          : key === "minutes"
+            ? minutesRef.current
+            : secondsRef.current;
+      target?.focus();
+    }, []);
+
+    const handleAutoAdvance = useCallback(
+      (key: TimeSegmentKey) => {
+        const idx = segmentOrder.indexOf(key);
+        const nextKey = segmentOrder[idx + 1];
+        if (nextKey) focusSegment(nextKey);
+      },
+      [focusSegment, segmentOrder],
+    );
+
+    const handleArrowNavigate = useCallback(
+      (key: TimeSegmentKey, dir: "prev" | "next") => {
+        const idx = segmentOrder.indexOf(key);
+        const targetKey =
+          dir === "prev" ? segmentOrder[idx - 1] : segmentOrder[idx + 1];
+        if (targetKey) focusSegment(targetKey);
+      },
+      [focusSegment, segmentOrder],
+    );
+
+    const handleContainerClick = (e: MouseEvent<HTMLDivElement>) => {
+      if (disabled) return;
+      if ((e.target as HTMLElement).tagName === "INPUT") return;
+      if ((e.target as HTMLElement).closest("button")) return;
+      focusSegment("hours");
     };
 
-    const defaultTrigger = (
-      <HStack
-        as={"button"}
-        // @ts-expect-error -- `type`/`disabled` belong to the rendered <button>
-        type={"button"}
-        disabled={disabled}
-        aria-label={`${floatingLabel ?? resolvedTitle}: ${triggerText}`}
-        position={"relative"}
-        align={"center"}
-        justify={"space-between"}
-        gap={2}
-        w={"full"}
-        h={triggerHeight}
-        px={3}
-        border={"1px solid"}
-        borderColor={triggerBorderColor}
-        rounded={theme.radii.component}
-        bg={"transparent"}
-        opacity={triggerOpacity}
-        cursor={triggerCursor}
-        textAlign={"start"}
-        {...CLICKY_STYLE_PROPS}
-        onPointerDown={(e) => applyClickyScale(e.currentTarget)}
-        _focusVisible={{
-          outline: "2px solid",
-          outlineColor: "border.emphasized",
-          outlineOffset: "2px",
-        }}
-        onBlur={onBlur}
-        {...restProps}
-      >
-        {hasFloatingLabel && (
-          <Box
-            position={"absolute"}
-            left={"12px"}
-            right={"44px"}
-            top={"7px"}
-            pointerEvents={"none"}
-            transform={floatingLabelTransform}
-            transition={"transform 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
+    const handleContainerFocus = () => {
+      setIsFocused(true);
+    };
+
+    const handleContainerBlur = (e: FocusEvent<HTMLDivElement>) => {
+      if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+        setIsFocused(false);
+        onBlur?.(e);
+      }
+    };
+
+    const handlePickerConfirm = (confirmedValue: TimeValue) => {
+      setSegments(timeValueToSegments(confirmedValue));
+      commitValue(confirmedValue);
+    };
+
+    if (children) {
+      return (
+        <>
+          <input
+            type={"hidden"}
+            name={name}
+            ref={ref}
+            value={committedValue ?? ""}
+            disabled={disabled}
+            readOnly={true}
+          />
+          <TimePickerTrigger
+            modalKey={modalKey}
+            title={resolvedTitle}
+            value={committedValue}
+            onValueChange={handlePickerConfirm}
+            withSeconds={withSeconds}
+            minuteStep={minuteStep}
+            secondStep={secondStep}
+            disabled={disabled}
           >
-            <P
-              lineClamp={1}
-              fontSize={floatingLabelFontSize}
-              fontWeight={"medium"}
-              color={"fg.subtle"}
-              transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-            >
-              {floatingLabel}
-            </P>
-          </Box>
-        )}
-
-        <Box flex={1} minW={0} {...(hasFloatingLabel && { pt: "22px" })}>
-          {isTriggerTextVisible && (
-            <P color={triggerTextColor} fontVariantNumeric={"tabular-nums"}>
-              {triggerText}
-            </P>
-          )}
-        </Box>
-
-        <Box
-          as={"span"}
-          display={"inline-flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          boxSize={6}
-          rounded={theme.radii.component}
-          bg={"bg.subtle"}
-          color={"fg.muted"}
-          mr={"-1"}
-          aria-hidden={true}
-          pointerEvents={"none"}
-        >
-          <AppIcon icon={ClockIcon} weight={"fill"} />
-        </Box>
-      </HStack>
-    );
+            {children}
+          </TimePickerTrigger>
+        </>
+      );
+    }
 
     return (
       <>
@@ -292,33 +393,112 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           name={name}
           ref={ref}
           value={committedValue ?? ""}
+          disabled={disabled}
+          readOnly={true}
         />
 
-        <Modal.Root
-          modalKey={modalKey}
-          opened={isOpen}
-          open={open}
-          close={close}
-          size={"xs"}
+        <HStack
+          position={"relative"}
+          align={"center"}
+          justify={"space-between"}
+          gap={2}
+          w={"full"}
+          h={containerHeight}
+          px={3}
+          border={"1px solid"}
+          borderColor={containerBorderColor}
+          rounded={theme.radii.component}
+          bg={"transparent"}
+          opacity={containerOpacity}
+          cursor={containerCursor}
+          transition={"200ms"}
+          onClick={handleContainerClick}
+          onFocus={handleContainerFocus}
+          onBlur={handleContainerBlur}
+          {...restProps}
         >
-          <Modal.Trigger>{children ?? defaultTrigger}</Modal.Trigger>
+          {hasFloatingLabel && (
+            <Box
+              position={"absolute"}
+              left={"12px"}
+              right={"44px"}
+              top={"5px"}
+              pointerEvents={"none"}
+              transform={floatingLabelTransform}
+              transition={"transform 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
+            >
+              <P
+                lineClamp={1}
+                fontSize={floatingLabelFontSize}
+                fontWeight={"normal"}
+                color={"fg.muted"}
+                transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
+              >
+                {floatingLabel}
+              </P>
+            </Box>
+          )}
 
-          <Modal.Content>
-            <Modal.Header>
-              <Modal.Title mx={"auto"}>{resolvedTitle}</Modal.Title>
-              <Modal.CloseButton mb={"auto"} />
-            </Modal.Header>
+          <HStack
+            flex={1}
+            minW={0}
+            align={"center"}
+            gap={0.5}
+            {...(hasFloatingLabel && { pt: "20px" })}
+          >
+            {segmentOrder.map((segKey, idx) => (
+              <Fragment key={segKey}>
+                {idx > 0 && (
+                  <P
+                    color={hasSegmentValue ? "fg" : "fg.subtle"}
+                    aria-hidden={true}
+                    userSelect={"none"}
+                  >
+                    {":"}
+                  </P>
+                )}
+                <TimeSegmentInput
+                  id={`${modalKey}-${segKey}`}
+                  segmentKey={segKey}
+                  value={segments[segKey]}
+                  disabled={disabled}
+                  showPlaceholder={!hasFloatingLabel || isLabelFloated}
+                  onValueChange={handleSegmentChange}
+                  onAutoAdvance={handleAutoAdvance}
+                  onArrowNavigate={handleArrowNavigate}
+                  inputRef={
+                    segKey === "hours"
+                      ? hoursRef
+                      : segKey === "minutes"
+                        ? minutesRef
+                        : secondsRef
+                  }
+                />
+              </Fragment>
+            ))}
+          </HStack>
 
-            <TimePickerPanel
-              initialValue={committedValue}
-              withSeconds={withSeconds}
-              minuteStep={minuteStep}
-              secondStep={secondStep}
-              onConfirm={handleConfirm}
-              onCancel={close}
-            />
-          </Modal.Content>
-        </Modal.Root>
+          <TimePickerTrigger
+            modalKey={modalKey}
+            title={resolvedTitle}
+            value={committedValue}
+            onValueChange={handlePickerConfirm}
+            withSeconds={withSeconds}
+            minuteStep={minuteStep}
+            secondStep={secondStep}
+            disabled={disabled}
+          >
+            <IconButton
+              size={"xs"}
+              variant={"filledIcon"}
+              aria-label={resolvedTitle}
+              disabled={disabled}
+              mr={"-1"}
+            >
+              <AppIcon icon={ClockIcon} weight={"fill"} />
+            </IconButton>
+          </TimePickerTrigger>
+        </HStack>
       </>
     );
   },

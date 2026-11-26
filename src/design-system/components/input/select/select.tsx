@@ -4,6 +4,7 @@ import {
   CLICKY_STYLE_PROPS,
   applyClickyScale,
 } from "@/shared/constants/styles";
+import { t } from "@/shared/libs/i18n";
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type {
@@ -65,7 +66,7 @@ export default function SelectInput(props: SelectProps) {
     onRetry,
     errorTitle,
     errorMessage,
-    title,
+    title = t["common.select_option"](),
     modalKey,
     ...restProps
   } = props;
@@ -302,6 +303,7 @@ export default function SelectInput(props: SelectProps) {
             rounded={theme.radii.component}
             cursor={"pointer"}
             minW={0}
+            px={3}
             {...CLICKY_STYLE_PROPS}
             onPointerDown={(e) => applyClickyScale(e.currentTarget)}
           >

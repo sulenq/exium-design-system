@@ -1,5 +1,7 @@
 // src/design-system/components/input/switch/switch.tsx
 
+import { tintLight } from "@/shared/utils/style/color";
+
 import type { SwitchProps } from "@/design-system/components/input/switch/switch.type";
 import { Circle } from "@/design-system/components/layout/box/box";
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
@@ -62,6 +64,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           justifyContent={"flex-start"}
           w={"36px"}
           p={"2px"}
+          _checked={{
+            bg: `linear-gradient(to right, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`,
+          }}
           {...controlProps}
         >
           <Circle
@@ -72,7 +77,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             w={isHolding ? "60%" : "50%"}
             h={"full"}
             // bg={`{colors.colorPalette.contrast}`}
-            bg={"fg.inverted"}
+            bg={"bg.body"}
             css={{
               "[data-state=checked] &": {
                 ml: isHolding ? "40%" : "50%",

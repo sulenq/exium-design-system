@@ -81,8 +81,8 @@
 
 /* Text Selection */
 ::selection {
-  background-color: var(--chakra-colors-blue-solid, #2563eb);
-  color: #ffffff;
+  background-color: var(--chakra-colors-bg-emphasized, #e4e4e7);
+  color: var(--chakra-colors-fg, inherit);
 }
 
 /* Autofill Form Controls (Override Firefox yellow and WebKit cyan/yellow bg) */

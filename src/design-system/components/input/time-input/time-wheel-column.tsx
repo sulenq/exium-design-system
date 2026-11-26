@@ -40,6 +40,14 @@ export const TimeWheelColumn = (props: TimeWheelColumnProps) => {
     at: 0,
   });
   const hasPositionedRef = useRef<boolean>(false);
+  const lastWheelAtRef = useRef<number>(0);
+  const wheelStateRef = useRef({
+    selectedIndex: 0,
+    lastIndex: 0,
+    options: [] as number[],
+    value: 0,
+    onValueChange: (_v: number) => {},
+  });
 
   // Derived Values
   const options = useMemo(() => getWheelOptions(count, step), [count, step]);
@@ -65,6 +73,56 @@ export const TimeWheelColumn = (props: TimeWheelColumnProps) => {
     }
     node.scrollTop = targetTop;
   }, [selectedIndex]);
+
+  useEffect(() => {
+    wheelStateRef.current = {
+      selectedIndex,
+      lastIndex,
+      options,
+      value,
+      onValueChange,
+    };
+  });
+
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      const absDelta = Math.abs(e.deltaY);
+      if (absDelta < 1) return;
+      e.preventDefault();
+
+      const now = Date.now();
+      const dt = now - lastWheelAtRef.current;
+      lastWheelAtRef.current = now;
+
+      let stepCount = 1;
+      if (absDelta > 120) {
+        stepCount = Math.min(5, Math.round(absDelta / 100));
+      } else if (dt < 35) {
+        stepCount = 4;
+      } else if (dt < 75) {
+        stepCount = 2;
+      }
+
+      const state = wheelStateRef.current;
+      const step = (e.deltaY > 0 ? 1 : -1) * stepCount;
+      const clamped = Math.min(
+        Math.max(state.selectedIndex + step, 0),
+        state.lastIndex,
+      );
+      const nextValue = state.options[clamped];
+      if (nextValue !== undefined && nextValue !== state.value) {
+        state.onValueChange(nextValue);
+      }
+    };
+
+    node.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      node.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
 
   useEffect(() => {
     return () => {

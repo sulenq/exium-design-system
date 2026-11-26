@@ -1,7 +1,7 @@
 // src/design-system/components/input/time-input/time-input.type.ts
 
 import type { StackProps } from "@/design-system/components/layout/flex-box/flex-box.type";
-import type { ChangeEvent, FocusEvent, ReactNode } from "react";
+import type { ChangeEvent, FocusEvent, ReactNode, RefObject } from "react";
 
 /** "HH:mm:ss" (or "HH:mm" when seconds are off), 24-hour clock. null = empty. */
 export type TimeValue = string | null;
@@ -57,6 +57,27 @@ export type TimeWheelColumnProps = {
   /** Interval between options. */
   step?: number;
   onValueChange: (value: number) => void;
+};
+
+export type TimeSegmentKey = "hours" | "minutes" | "seconds";
+
+export type TimeSegmentValues = {
+  hours: string;
+  minutes: string;
+  seconds: string;
+};
+
+export type TimeSegmentInputProps = {
+  id: string;
+  segmentKey: TimeSegmentKey;
+  value: string;
+  disabled?: boolean;
+  showPlaceholder?: boolean;
+  onValueChange: (key: TimeSegmentKey, value: string) => void;
+  onAutoAdvance: (key: TimeSegmentKey) => void;
+  onArrowNavigate: (key: TimeSegmentKey, dir: "prev" | "next") => void;
+  inputRef: RefObject<HTMLInputElement | null>;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 };
 
 export type TimePickerPanelProps = {
