@@ -41,6 +41,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
       <ChakraSlider.Root
         ref={ref}
         colorPalette={theme.colorPalette}
+        css={{ "--slider-thumb-size": "12px" }}
         {...restProps}
       >
         {(label || showValue) && (
@@ -71,9 +72,15 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             outline={isHolding ? "4px solid" : ""}
             outlineColor={"bg.muted !important"}
             transition={"all 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-            h={isHolding ? "calc(var(--slider-track-size) + 2px)" : ""}
+            h={
+              isHolding
+                ? "calc(var(--slider-track-size) + 4px)"
+                : "calc(var(--slider-track-size) + 2px)"
+            }
             _vertical={{
-              w: isHolding ? "calc(var(--slider-track-size) + 2px)" : "",
+              w: isHolding
+                ? "calc(var(--slider-track-size) + 4px)"
+                : "calc(var(--slider-track-size) + 2px)",
               h: "100%",
             }}
           >
@@ -82,17 +89,13 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
               _vertical={{
                 bg: `linear-gradient(to top, {colors.colorPalette.solid}, ${tintLight("colorPalette.solid", 20)})`,
               }}
+              rounded={theme.radii.component}
             />
           </ChakraSlider.Track>
 
           <ChakraSlider.Thumb
             index={0}
-            transform={
-              isHolding
-                ? "scale(1.2) translateX(calc(var(--slider-thumb-size) / -2 + 2px)) !important"
-                : ""
-            }
-            transition={"transform 150ms"}
+            ml={"-2px"}
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
