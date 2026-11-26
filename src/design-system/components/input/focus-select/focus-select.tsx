@@ -50,7 +50,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
   const {
     modalKey: modalKeyProp,
     title,
-    placeholder = t["action.select"](),
+    placeholder = "",
     options = [],
     value: controlledValue,
     defaultValue = "",

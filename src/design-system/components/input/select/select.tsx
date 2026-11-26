@@ -1,5 +1,10 @@
 // src/design-system/components/input/select/select.tsx
 
+import {
+  CLICKY_STYLE_PROPS,
+  applyClickyScale,
+} from "@/shared/constants/styles";
+
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type {
   SelectOption,
@@ -28,7 +33,6 @@ import {
 import { CaretDownIcon, XCircleIcon } from "@phosphor-icons/react";
 import type React from "react";
 import { isValidElement, useMemo, useState } from "react";
-import { t } from "@/shared/libs/i18n";
 
 const EMPTY_OPTIONS: SelectOption[] = [];
 
@@ -43,7 +47,7 @@ export default function SelectInput(props: SelectProps) {
     onValueChange,
     options: optionsProp,
     selectOptions: deprecatedSelectOptions,
-    placeholder = t["common.select_option"](),
+    placeholder = "",
     clearable = true,
     size = "md",
     iconSize = "sm",
@@ -132,6 +136,7 @@ export default function SelectInput(props: SelectProps) {
         errorTitle={errorTitle}
         errorMessage={errorMessage}
         size={size}
+        variant={restProps.variant}
         renderOption={
           renderOption
             ? (opt) => {
@@ -297,10 +302,8 @@ export default function SelectInput(props: SelectProps) {
             rounded={theme.radii.component}
             cursor={"pointer"}
             minW={0}
-            _active={{
-              transform: "scale(0.95)",
-            }}
-            transition={"transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)"}
+            {...CLICKY_STYLE_PROPS}
+            onPointerDown={(e) => applyClickyScale(e.currentTarget)}
           >
             {renderTriggerContent()}
           </ChakraSelect.Trigger>

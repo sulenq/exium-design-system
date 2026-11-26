@@ -6,7 +6,7 @@ import { useFieldContextValue } from "@/design-system/components/input/context/f
 import {
   floatingLabelWrapperCss,
   getFloatingPlaceholder,
-} from "@/design-system/components/input/floating-label/floating-label.css";
+} from "@/design-system/styles/floating-label.css";
 import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type {
   NumberInputProps,
@@ -19,7 +19,12 @@ import { useThemeStore } from "@/design-system/stores/theme-store";
 import { dispatchNativeInputEvent } from "@/shared/utils/dom/dispatch-native-input-event";
 import { mergeRefs } from "@/shared/utils/react/merge-refs";
 import { NumberInput as ChakraNumberInput } from "@chakra-ui/react";
-import { CaretDownIcon as ChevronDown, CaretUpIcon as ChevronUp, MinusIcon, PlusIcon } from "@phosphor-icons/react";
+import {
+  CaretDownIcon as ChevronDown,
+  CaretUpIcon as ChevronUp,
+  MinusIcon,
+  PlusIcon,
+} from "@phosphor-icons/react";
 import { useCallback, useRef, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 

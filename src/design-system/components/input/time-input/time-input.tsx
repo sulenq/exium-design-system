@@ -1,5 +1,9 @@
 // src/design-system/components/input/time-input/time-input.tsx
 
+import {
+  CLICKY_STYLE_PROPS,
+  applyClickyScale,
+} from "@/shared/constants/styles";
 import { Button } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
@@ -223,7 +227,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
         opacity={triggerOpacity}
         cursor={triggerCursor}
         textAlign={"start"}
-        transition={"200ms"}
+        {...CLICKY_STYLE_PROPS}
+        onPointerDown={(e) => applyClickyScale(e.currentTarget)}
         _focusVisible={{
           outline: "2px solid",
           outlineColor: "border.emphasized",

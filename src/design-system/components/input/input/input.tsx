@@ -4,7 +4,7 @@ import { useFieldContextValue } from "@/design-system/components/input/context/f
 import {
   floatingLabelWrapperCss,
   getFloatingPlaceholder,
-} from "@/design-system/components/input/floating-label/floating-label.css";
+} from "@/design-system/styles/floating-label.css";
 import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type { InputProps } from "@/design-system/components/input/input/input.type";
 import { Box } from "@/design-system/components/layout/box/box";

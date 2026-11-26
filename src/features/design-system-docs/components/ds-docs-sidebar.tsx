@@ -20,6 +20,7 @@ import type {
 import type { NavItem } from "@/shared/types/nav.type";
 import { useMemo, useState } from "react";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
+import { minimalScrollbarCss } from "@/design-system/styles/scrollbar.css";
 
 const DEFAULT_SIDEBAR_EXPANDED = true;
 
@@ -28,10 +29,9 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
   const { activeNavKey, onSelectNav, isMobileDrawer = false } = props;
 
   // Persisted state with custom key and object { opened: boolean }
-  const [sidebarState, setSidebarState] = usePersistedState<{ opened: boolean }>(
-    "sidebar",
-    { opened: DEFAULT_SIDEBAR_EXPANDED },
-  );
+  const [sidebarState, setSidebarState] = usePersistedState<{
+    opened: boolean;
+  }>("sidebar", { opened: DEFAULT_SIDEBAR_EXPANDED });
 
   const expanded = isMobileDrawer ? true : sidebarState.opened;
 
@@ -84,7 +84,7 @@ export const DsDocsSidebar = (props: DsDocsSidebarProps) => {
       </Sidebar.Header>
 
       <Sidebar.Body>
-        <VScrollContainer>
+        <VScrollContainer css={minimalScrollbarCss}>
           {/* Filter Input (Only when expanded) */}
           {expanded && (
             <Box p={3} flexShrink={0} w={"full"}>
@@ -133,7 +133,8 @@ const DsDocsSidebarHeader = ({
       <HStack align={"center"} gap={3}>
         <Logo boxSize={18} ml={1.5} flexShrink={0} />
 
-        <P lineClamp={1}
+        <P
+          lineClamp={1}
           w={expanded ? "" : 0}
           fontSize={"lg"}
           fontWeight={"semibold"}
@@ -147,7 +148,8 @@ const DsDocsSidebarHeader = ({
       {isMobileDrawer ? (
         <Drawer.CloseButton pos={"relative"} top={"auto"} right={"auto"} />
       ) : (
-        <P lineClamp={1}
+        <P
+          lineClamp={1}
           w={expanded ? "" : 0}
           mr={1}
           fontSize={"sm"}

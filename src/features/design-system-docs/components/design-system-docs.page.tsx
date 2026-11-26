@@ -158,9 +158,11 @@ export const DesignSystemDocsPage = () => {
         {/* Header Bar */}
         <HStack
           flexShrink={0}
+          flexWrap={"wrap"}
           align={"center"}
           justify={"space-between"}
-          h={"56px"}
+          gap={2}
+          minH={"56px"}
           p={2}
           pl={4}
         >

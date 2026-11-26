@@ -9,7 +9,10 @@ import type {
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { useBounceDrag } from "@/design-system/hooks/use-bounce-drag";
 import { useMergedRefs } from "@/design-system/hooks/use-merge-refs";
-import { CLICKY_STYLE_PROPS } from "@/shared/constants/styles";
+import {
+  CLICKY_STYLE_PROPS,
+  applyClickyScale,
+} from "@/shared/constants/styles";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { isTextTruncated } from "@/shared/utils/dom/text-truncation.utils";
 import { tintLight } from "@/shared/utils/style/color";
@@ -198,6 +201,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         }
         _active={clicky ? CLICKY_STYLE_PROPS._active : undefined}
         onPointerDown={(e) => {
+          applyClickyScale(e.currentTarget, clicky);
           if (bouncy) onBouncePointerDown(e);
           onPointerDown?.(e);
         }}
@@ -303,6 +307,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         }
         _active={clicky ? CLICKY_STYLE_PROPS._active : undefined}
         onPointerDown={(e) => {
+          applyClickyScale(e.currentTarget, clicky);
           if (bouncy) onBouncePointerDown(e);
           onPointerDown?.(e);
         }}

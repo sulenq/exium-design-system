@@ -6,7 +6,7 @@ import { useFieldContextValue } from "@/design-system/components/input/context/f
 import {
   floatingLabelWrapperCss,
   getFloatingPlaceholder,
-} from "@/design-system/components/input/floating-label/floating-label.css";
+} from "@/design-system/styles/floating-label.css";
 import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
 import type {
   PasswordInputProps,
@@ -146,7 +146,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         colorPalette={"neutral"}
         fontSize={"md"}
         rounded={theme.radii.component}
-        placeholder={"••••••••"}
+        placeholder={""}
         {...restProps}
         {...(isFloatingVariant && {
           placeholder: getFloatingPlaceholder(restProps.placeholder),
