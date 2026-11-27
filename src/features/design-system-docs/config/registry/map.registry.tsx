@@ -1,6 +1,9 @@
 import { Button } from "@/design-system/components/button/button/button";
 import { Box } from "@/design-system/components/layout/box/box";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { BaseMap, Map } from "@/design-system/components/map/map/map";
 import { MapLayerManagementPanel } from "@/design-system/components/map/map/map.controls/map.layer-management-panel";
 import { MapDrawControls } from "@/design-system/components/map/map/map.draw-controls";
@@ -16,7 +19,9 @@ import type { ReactNode } from "react";
 // Demo data
 // -------------------------------------------------------------------------------------
 
-const DEMO_BBOX: [number, number, number, number] = [110.35, -7.85, 110.45, -7.75];
+const DEMO_BBOX: [number, number, number, number] = [
+  110.35, -7.85, 110.45, -7.75,
+];
 
 /** Generic layers: the app's adapter fills `appearance`; the map only renders it. */
 const DEMO_LAYERS: GenericMapLayer[] = [
@@ -25,14 +30,22 @@ const DEMO_LAYERS: GenericMapLayer[] = [
     title: "Padang penggembalaan",
     bbox: DEMO_BBOX,
     zIndex: 2,
-    appearance: { colorPalette: "green", icon: SquaresFourIcon, categoryLabel: "Area" },
+    appearance: {
+      colorPalette: "green",
+      icon: SquaresFourIcon,
+      categoryLabel: "Area",
+    },
   },
   {
     id: "demo:kandang",
     title: "Lokasi kandang",
     bbox: DEMO_BBOX,
     zIndex: 1,
-    appearance: { colorPalette: "blue", icon: StackIcon, categoryLabel: "Titik" },
+    appearance: {
+      colorPalette: "blue",
+      icon: StackIcon,
+      categoryLabel: "Titik",
+    },
   },
 ];
 
@@ -87,7 +100,9 @@ const DemoLayerManagement = () => (
 
 const FeatureInfoDemo = () => {
   // Stores
-  const setSelectedFeature = useMapFeatureInfoStore((s) => s.setSelectedFeature);
+  const setSelectedFeature = useMapFeatureInfoStore(
+    (s) => s.setSelectedFeature,
+  );
   const clearFeatureInfo = useMapFeatureInfoStore((s) => s.clearFeatureInfo);
 
   return (
@@ -107,7 +122,11 @@ const FeatureInfoDemo = () => {
                   layerId: DEMO_LAYERS[0].id,
                   title: "Padang penggembalaan Blok C",
                   appearance: DEMO_LAYERS[0].appearance,
-                  properties: { luas_ha: 12.4, kapasitas_ekor: 40, pengelola: "Kelompok Tani Makmur" },
+                  properties: {
+                    luas_ha: 12.4,
+                    kapasitas_ekor: 40,
+                    pengelola: "Kelompok Tani Makmur",
+                  },
                   geometry: null,
                 })
               }
@@ -123,7 +142,6 @@ const FeatureInfoDemo = () => {
     </MapFrame>
   );
 };
-
 
 // -------------------------------------------------------------------------------------
 // Specs
@@ -172,12 +190,14 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
         name: "layers",
         type: "MapLayerConfig[]",
         required: true,
-        description: "Layer WFS, WMS, raster, atau vector tile. `appearance` menentukan warna, ikon, dan label tiap layer.",
+        description:
+          "Layer WFS, WMS, raster, atau vector tile. `appearance` menentukan warna, ikon, dan label tiap layer.",
       },
       {
         name: "layerManagement",
         type: "ReactNode",
-        description: "Kontrol layer di kanan atas, misalnya MapLayerManagementPanel berisi katalog layer app.",
+        description:
+          "Kontrol layer di kanan atas, misalnya MapLayerManagementPanel berisi katalog layer app.",
       },
       {
         name: "onDrawFinish",
@@ -190,16 +210,14 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
         description: "Ganti style basemap.",
       },
     ],
-    generateCode: () => `<Map layers={[]} layerManagement={<DemoLayerManagement />} />`,
+    generateCode: () =>
+      `<Map layers={[]} layerManagement={<DemoLayerManagement />} />`,
     renderPlayground: () => (
       <MapFrame h={"480px"}>
         <Map layers={[]} layerManagement={<DemoLayerManagement />} />
       </MapFrame>
     ),
   },
-
-
-
 
   map_draw_controls: {
     key: "map_draw_controls",
@@ -231,8 +249,4 @@ export const MAP_DOCS: Record<string, ComponentDocSpec> = {
 />`,
     renderPlayground: () => <FeatureInfoDemo />,
   },
-
-
-
-
 };

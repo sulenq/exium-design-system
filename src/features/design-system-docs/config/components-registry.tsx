@@ -16,6 +16,7 @@ import { DISCLOSURE_DOCS } from "@/features/design-system-docs/config/registry/d
 import { ICONS_DOCS } from "@/features/design-system-docs/config/registry/icons.registry";
 import { MEDIA_DOCS } from "@/features/design-system-docs/config/registry/media.registry";
 import { OVERLAY_DOCS } from "@/features/design-system-docs/config/registry/overlay.registry";
+import { PRIMITIVES_DOCS } from "@/features/design-system-docs/config/registry/primitives.registry";
 import { TYPOGRAPHY_DOCS } from "@/features/design-system-docs/config/registry/typography.registry";
 import { UTILITIES_DOCS } from "@/features/design-system-docs/config/registry/utilities.registry";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
@@ -39,4 +40,5 @@ export const COMPONENTS_REGISTRY: Record<string, ComponentDocSpec> = {
   ...CHART_DOCS,
   ...DISPLAY_DOCS,
   ...MAP_DOCS,
+  ...PRIMITIVES_DOCS,
 };
