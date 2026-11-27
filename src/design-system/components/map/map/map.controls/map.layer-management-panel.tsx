@@ -183,7 +183,7 @@ const MapLayerManagementPanelComponent = <
 
       <Popover.Content w={isSmallViewport ? "300px" : "380px"}>
         <HeaderContainer>
-          <P fontWeight={"medium"}>{title}</P>
+          <P fontWeight={"semibold"}>{title}</P>
 
           <Badge colorPalette={"blue"}>
             {badgeLabel ?? `${enabledCount} aktif`}

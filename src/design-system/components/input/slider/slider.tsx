@@ -55,7 +55,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
 
         <ChakraSlider.Control
           ref={controlRef}
-          h={"20px"}
+          // h={"20px"}
           data-active={isHolding ? "" : undefined}
           cursor={"pointer"}
           transform={"translate(var(--bounce-x, 0px), var(--bounce-y, 0px))"}
@@ -73,16 +73,16 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             shadow={"none"}
             outline={isHolding ? "4px solid" : ""}
             outlineColor={"bg.muted !important"}
-            transition={"all 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
+            transition={"150ms ease"}
             h={
               isHolding
-                ? "calc(var(--slider-track-size) + 8px)"
-                : "calc(var(--slider-track-size) + 4px)"
+                ? "calc(var(--slider-track-size) + 6px)"
+                : "calc(var(--slider-track-size) + 2px)"
             }
             _vertical={{
               w: isHolding
-                ? "calc(var(--slider-track-size) + 8px)"
-                : "calc(var(--slider-track-size) + 4px)",
+                ? "calc(var(--slider-track-size) + 6px)"
+                : "calc(var(--slider-track-size) + 2px)",
               h: "100%",
             }}
           >

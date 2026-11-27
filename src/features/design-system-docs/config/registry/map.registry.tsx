@@ -92,7 +92,7 @@ const MapSlot = (props: {
 
 const DemoLayerManagement = () => (
   <MapLayerManagementPanel<GenericMapLayer>
-    title={"Layer"}
+    title={"Manajemen Layer"}
     layers={DEMO_LAYERS}
     showSymbology={false}
   />
