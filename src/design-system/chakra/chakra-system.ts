@@ -2547,7 +2547,7 @@ export const chakraConfig = defineConfig({
             borderRadius: "inherit",
             pointerEvents: "none",
             background: {
-              base: "radial-gradient(ellipse 60% 25% at 50% 100%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 70%)",
+              base: "radial-gradient(ellipse 65% 30% at 50% 100%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 75%)",
               _dark:
                 "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
             },

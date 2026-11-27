@@ -55,6 +55,7 @@ export const MapCompass = (props: StackProps) => {
         <IconButton
           aria-label={t["map.reset_north"]()}
           size={"sm"}
+          variant={"glassGhost"}
           roundedLeft={0}
           onClick={resetNorth}
         >

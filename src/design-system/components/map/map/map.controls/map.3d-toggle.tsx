@@ -110,6 +110,7 @@ export const Map3DToggle = (props: StackProps) => {
         <IconButton
           aria-label={is3D ? t["map.switch_to_2d"]() : t["map.switch_to_3d"]()}
           size={"sm"}
+          variant={"glassGhost"}
           color={is3D ? `${theme.colorPalette}.300` : undefined}
           onClick={handleToggle}
         >

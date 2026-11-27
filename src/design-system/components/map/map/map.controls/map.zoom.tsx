@@ -31,6 +31,7 @@ export const MapZoom = (props: StackProps) => {
           <IconButton
             aria-label={t["map.zoom_out"]()}
             size={"sm"}
+            variant={"glassGhost"}
             roundedRight={0}
             onClick={zoomOut}
           >
@@ -45,6 +46,7 @@ export const MapZoom = (props: StackProps) => {
           <IconButton
             aria-label={t["map.zoom_in"]()}
             size={"sm"}
+            variant={"glassGhost"}
             roundedLeft={0}
             onClick={zoomIn}
           >

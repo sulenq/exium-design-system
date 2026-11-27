@@ -245,7 +245,6 @@ export const MapSearch = () => {
             w={"full"}
             minW={"0"}
             border={"none"}
-            layerStyle={"frosted"}
             outline={"none"}
             bg={"transparent"}
             onFocus={handleFocus}

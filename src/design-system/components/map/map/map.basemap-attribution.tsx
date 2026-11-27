@@ -31,7 +31,11 @@ export const MapAttribution = () => {
             content={t["map.attribution"]()}
             positioning={{ placement: "bottom" }}
           >
-            <IconButton aria-label={t["map.attribution"]()} size={"sm"}>
+            <IconButton
+              aria-label={t["map.attribution"]()}
+              size={"sm"}
+              variant={"glassGhost"}
+            >
               <AppIcon icon={InfoIcon} />
             </IconButton>
           </Tooltip>

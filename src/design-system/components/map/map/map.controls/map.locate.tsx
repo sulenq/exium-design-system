@@ -33,6 +33,7 @@ export const MapLocate = (props: StackProps) => {
         <IconButton
           aria-label={isActive ? t["map.hide_my_location"]() : t["map.show_my_location"]()}
           size={"sm"}
+          variant={"glassGhost"}
           loading={isLocating}
           onClick={toggle}
           color={isActive ? `${theme.colorPalette}.fg` : undefined}

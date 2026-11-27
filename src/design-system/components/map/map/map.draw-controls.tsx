@@ -19,6 +19,7 @@ export const MapDrawControls = () => {
         <IconButton
           aria-label={isDrawing ? t["map.cancel_drawing"]() : t["map.draw_polygon"]()}
           size={"sm"}
+          variant={"glassGhost"}
           colorPalette={isDrawing ? "red" : "blue"}
           onClick={() => {
             if (isDrawing) {

@@ -101,7 +101,7 @@ export const buttonRecipe = defineRecipe({
           borderRadius: "inherit",
           pointerEvents: "none",
           background: {
-            base: "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(214, 214, 214, 0.28) 0%, rgba(161, 161, 170, 0) 70%)",
+            base: "radial-gradient(ellipse 65% 30% at 50% 100%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 75%)",
             _dark:
               "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
           },
@@ -109,14 +109,37 @@ export const buttonRecipe = defineRecipe({
 
         _hover: {
           bg: {
-            base: "rgba(243, 243, 243, 0.62)",
-            _dark: "rgba(42, 42, 48, 0.68)",
+            base: "rgba(255, 255, 255, 0.28)",
+            _dark: "rgba(255, 255, 255, 0.12)",
+          },
+          boxShadow: {
+            base: "inset 0 1px 0 0 #ffffff, 0 2px 8px rgba(0, 0, 0, 0.08)",
+            _dark:
+              "inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 2px 8px rgba(0, 0, 0, 0.28)",
           },
         },
         _active: {
           bg: {
-            base: "rgba(255, 255, 255, 0.88)",
-            _dark: "rgba(39, 39, 42, 0.88)",
+            base: "rgba(255, 255, 255, 0.42)",
+            _dark: "rgba(255, 255, 255, 0.18)",
+          },
+          transform: "scale(0.98)",
+        },
+      },
+
+      glassGhost: {
+        bg: "transparent",
+        color: "fg",
+        _hover: {
+          bg: {
+            base: "rgba(255, 255, 255, 0.35)",
+            _dark: "rgba(255, 255, 255, 0.1)",
+          },
+        },
+        _active: {
+          bg: {
+            base: "rgba(255, 255, 255, 0.55)",
+            _dark: "rgba(255, 255, 255, 0.16)",
           },
         },
       },
