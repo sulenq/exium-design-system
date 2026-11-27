@@ -100,6 +100,7 @@ const FeatureInfoDemo = () => {
           <HStack gap={2}>
             <Button
               size={"sm"}
+              variant={"glass"}
               onClick={() =>
                 setSelectedFeature({
                   id: "demo-1",
@@ -113,7 +114,7 @@ const FeatureInfoDemo = () => {
             >
               {"Simulasikan klik fitur"}
             </Button>
-            <Button size={"sm"} variant={"outline"} onClick={clearFeatureInfo}>
+            <Button size={"sm"} variant={"glass"} onClick={clearFeatureInfo}>
               {"Reset"}
             </Button>
           </HStack>
@@ -139,12 +140,13 @@ const MapDrawDemo = () => {
       <HStack gap={2}>
         <Button
           size={"sm"}
+          variant={"solid"}
           colorPalette={isDrawing ? "red" : "blue"}
           onClick={() => (isDrawing ? cancel() : start("polygon"))}
         >
           {isDrawing ? "Batal Draw" : "Mulai Draw Polygon"}
         </Button>
-        <Button size={"sm"} variant={"outline"} onClick={() => cancel()}>
+        <Button size={"sm"} onClick={() => cancel()}>
           {"Reset Polygon"}
         </Button>
       </HStack>
