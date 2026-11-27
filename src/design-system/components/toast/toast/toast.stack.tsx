@@ -22,7 +22,7 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export function ToastStack<TItem>({
+export const ToastStack = <TItem,>({
   groupLabel,
   items: itemsProp,
   getId,
@@ -32,7 +32,7 @@ export function ToastStack<TItem>({
   getPriority,
   onCloseAll,
   onClickOutside,
-}: ToastStackProps<TItem>) {
+}: ToastStackProps<TItem>) => {
   // Derived Values — stable sort so errors and warnings surface first
   const items = useMemo(() => {
     if (!getPriority) return itemsProp;

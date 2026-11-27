@@ -34,7 +34,7 @@ import { useState } from "react";
 // TimePicker (reusable wheel content + confirm/cancel actions)
 // -------------------------------------------------------------------------------------
 
-export function TimePicker(props: TimePickerProps) {
+export const TimePicker = (props: TimePickerProps) => {
   // Props
   const {
     value = null,
@@ -132,7 +132,7 @@ export function TimePicker(props: TimePickerProps) {
 // TimePickerTrigger (Modal wrapper around TimePicker)
 // -------------------------------------------------------------------------------------
 
-export function TimePickerTrigger(props: TimePickerTriggerProps) {
+export const TimePickerTrigger = (props: TimePickerTriggerProps) => {
   // Props
   const {
     modalKey,

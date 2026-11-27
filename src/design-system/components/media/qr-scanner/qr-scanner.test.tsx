@@ -39,7 +39,7 @@ describe("QrScanner", () => {
         onScan={onScan}
         onReject={onReject}
         validate={(value) =>
-          value.startsWith("TQ-") ? { ok: true } : { ok: false, message: "Bukan eartag TernaQin" }
+          value.startsWith("ITEM-") ? { ok: true } : { ok: false, message: "Format kode tidak valid" }
         }
         haptic={false}
         sound={false}
@@ -48,7 +48,7 @@ describe("QrScanner", () => {
 
     await waitFor(() => expect(onReject).toHaveBeenCalledTimes(1));
     expect(onScan).not.toHaveBeenCalled();
-    expect(screen.getByRole("status")).toHaveTextContent("Bukan eartag TernaQin");
+    expect(screen.getByRole("status")).toHaveTextContent("Format kode tidak valid");
   });
 
   it("ignores the same value inside the cooldown in continuous mode", async () => {
@@ -72,7 +72,7 @@ describe("QrScanner", () => {
     renderWithSystem(
       <QrScanner
         onScan={onScan}
-        manualEntry={{ label: "Nomor eartag", pattern: /^TQ-\d+$/ }}
+        manualEntry={{ label: "Kode QR", pattern: /^ITEM-\d+$/ }}
         haptic={false}
         sound={false}
       />,
@@ -81,14 +81,14 @@ describe("QrScanner", () => {
     expect(await screen.findByText("Izin kamera ditolak")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /Ketik manual/ }));
 
-    const input = screen.getByRole("textbox", { name: /Nomor eartag/ });
+    const input = screen.getByRole("textbox", { name: /Kode QR/ });
     fireEvent.change(input, { target: { value: "abc" } });
     fireEvent.click(screen.getByRole("button", { name: "Gunakan" }));
     expect(await screen.findByText("Format tidak sesuai")).toBeInTheDocument();
 
-    fireEvent.change(input, { target: { value: "TQ-42" } });
+    fireEvent.change(input, { target: { value: "ITEM-42" } });
     fireEvent.click(screen.getByRole("button", { name: "Gunakan" }));
-    await waitFor(() => expect(onScan).toHaveBeenCalledWith(expect.objectContaining({ value: "TQ-42", format: "manual" })));
+    await waitFor(() => expect(onScan).toHaveBeenCalledWith(expect.objectContaining({ value: "ITEM-42", format: "manual" })));
   });
 
   it("shows the unsupported state without mediaDevices", async () => {

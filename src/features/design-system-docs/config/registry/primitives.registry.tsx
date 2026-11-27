@@ -66,8 +66,8 @@ const QrScannerDemo = (props: { mode: "single" | "continuous" }) => {
         validate={(value) =>
           value.trim().length >= 3 ? { ok: true } : { ok: false, message: "Kode terlalu pendek" }
         }
-        manualEntry={{ label: "Nomor eartag", placeholder: "TQ-0001" }}
-        overlay={<Badge>{`${scans.length} ternak terbaca`}</Badge>}
+        manualEntry={{ label: "Kode QR", placeholder: "ITEM-0001" }}
+        overlay={<Badge>{`${scans.length} item terbaca`}</Badge>}
         onScan={(result) => setScans((current) => [result, ...current].slice(0, 5))}
       />
       {scans.map((scan) => (
@@ -90,7 +90,7 @@ const CameraCaptureDemo = (props: {
 
   return (
     <VStack w={"full"} maxW={"420px"} gap={2} align={"stretch"}>
-      <Field label={"Foto ternak"} helperText={"Kamera dibuka langsung, tanpa galeri"}>
+      <Field label={"Foto dokumen"} helperText={"Kamera dibuka langsung, tanpa galeri"}>
         <CameraCapture
           value={items}
           onChange={setItems}
@@ -109,7 +109,7 @@ const CameraCaptureDemo = (props: {
   );
 };
 
-const DEMO_EARTAGS = ["TQ-0001", "TQ-0002", "TQ-0003", "TQ-0004", "TQ-0005", "TQ-0006"];
+const DEMO_QR_CODES = ["ITEM-0001", "ITEM-0002", "ITEM-0003", "ITEM-0004", "ITEM-0005", "ITEM-0006"];
 
 const PrintLayoutDemo = (props: { pageSize: PrintPageSize; columns: number }) => {
   // Props
@@ -125,11 +125,11 @@ const PrintLayoutDemo = (props: { pageSize: PrintPageSize; columns: number }) =>
       </Button>
       <Box w={"full"} overflowX={"auto"} display={"flex"} justifyContent={"center"} py={2}>
         <PrintLayout pageSize={pageSize} columns={columns} preview={true}>
-          {DEMO_EARTAGS.map((eartag) => (
-            <VStack key={eartag} gap={1} align={"center"} p={2} border={"1px dashed"} borderColor={"gray.300"}>
-              <QrCode value={eartag} size={"sm"} />
+          {DEMO_QR_CODES.map((code) => (
+            <VStack key={code} gap={1} align={"center"} p={2} border={"1px dashed"} borderColor={"gray.300"}>
+              <QrCode value={code} size={"sm"} />
               <P fontSize={"xs"} fontWeight={"semibold"}>
-                {eartag}
+                {code}
               </P>
             </VStack>
           ))}
@@ -246,7 +246,7 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
     title: "QrScanner",
     category: "Media",
     description:
-      "Scan QR eartag dari kamera. Mode `single` berhenti setelah berhasil; `continuous` langsung siap scan berikutnya. `validate` menentukan success atau rejected beserta pesannya. Getar dan nada berbeda untuk tiap hasil, cooldown mencegah QR yang sama terbaca dua kali, dan tersedia fallback ketik manual. Butuh HTTPS dan izin kamera.",
+      "Scan QR code dari kamera. Mode `single` berhenti setelah berhasil; `continuous` langsung siap scan berikutnya. `validate` menentukan success atau rejected beserta pesannya. Getar dan nada berbeda untuk tiap hasil, cooldown mencegah QR yang sama terbaca dua kali, dan tersedia fallback ketik manual. Butuh HTTPS dan izin kamera.",
     importPath:
       'import { QrScanner } from "@/design-system/components/media/qr-scanner/qr-scanner";',
     component: QrScanner,
@@ -340,7 +340,7 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
     title: "TreeView",
     category: "Disclosure",
     description:
-      "Pohon data dalam dua orientasi. `vertical` untuk struktur bertingkat (blok dan kandang). `horizontal` untuk silsilah: ternak di kiri, setiap generasi satu kolom ke kanan, bisa di-collapse per node, dan induk yang tidak tercatat tampil sebagai node \"Tidak diketahui\".",
+      "Pohon data dalam dua orientasi. `vertical` untuk struktur bertingkat (kategori dan sub-kategori). `horizontal` untuk silsilah atau hierarki relasi: node utama di kiri, setiap generasi satu kolom ke kanan, bisa di-collapse per node, dan induk yang tidak tercatat tampil sebagai node \"Tidak diketahui\".",
     importPath:
       'import { TreeView } from "@/design-system/components/disclosure/tree-view/tree-view";',
     component: TreeView,
@@ -360,7 +360,7 @@ export const PRIMITIVES_DOCS: Record<string, ComponentDocSpec> = {
         { key: "ArrowRight", action: "Horizontal: buka node, lalu pindah ke generasi berikutnya." },
         { key: "ArrowLeft", action: "Horizontal: kembali ke generasi sebelumnya." },
         { key: "ArrowUp / ArrowDown", action: "Pindah antar saudara." },
-        { key: "Home", action: "Kembali ke ternak utama." },
+        { key: "Home", action: "Kembali ke node utama." },
         { key: "Enter / Space", action: "Pilih node." },
       ],
     },

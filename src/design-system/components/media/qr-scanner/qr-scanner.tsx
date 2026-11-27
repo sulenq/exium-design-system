@@ -30,7 +30,7 @@ const DECODE_INTERVAL_MS = 150;
 const RESULT_VISIBLE_MS = 1200;
 
 /**
- * Camera QR scanner for eartags and documents.
+ * Camera QR scanner for codes and documents.
  *
  * - `single` stops after an accepted scan; `continuous` is ready for the next one.
  * - `validate` decides between success and rejected, with its own message.

@@ -25,7 +25,7 @@ export type QrScannerStatus =
   | "error";
 
 export type QrScannerManualEntry = {
-  /** Label of the manual input, e.g. "Nomor eartag". */
+  /** Label of the manual input, e.g. "Kode QR". */
   label: string;
   placeholder?: string;
   /** Typed values that do not match are refused before `validate`. */
@@ -39,7 +39,7 @@ export type QrScannerProps = Omit<BoxProps, "children" | "onError"> & {
   onReject?: (result: QrScanResult, message: string) => void;
   /** `single` pauses after a success; `continuous` is ready for the next code right away. */
   mode?: "single" | "continuous";
-  /** Decide whether a value is accepted, e.g. "eartag belongs to this farm". */
+  /** Decide whether a value is accepted, e.g. "code matches expected format". */
   validate?: (value: string) => QrScanValidation | Promise<QrScanValidation>;
   /** Ignore the same value for this long (ms). Default 1500. */
   cooldownMs?: number;
@@ -56,7 +56,7 @@ export type QrScannerProps = Omit<BoxProps, "children" | "onError"> & {
   haptic?: boolean;
   /** Short tone on result. Default true. */
   sound?: boolean;
-  /** Content on top of the camera, e.g. "12 dari 40 ternak". */
+  /** Content on top of the camera, e.g. "12 dari 40 item". */
   overlay?: ReactNode;
   /** Seconds without a detection before showing a hint. Default 5. */
   noDetectionHintAfterSec?: number;

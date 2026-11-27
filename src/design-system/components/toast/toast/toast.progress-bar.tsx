@@ -4,7 +4,7 @@ import { Box } from "@/design-system/components/layout/box/box";
 import type { ToastItemData } from "@/design-system/components/toast/toast/toast.type";
 import { useColorModeValue } from "@/design-system/hooks/use-color-mode";
 
-export function ToastProgressBar({ toast }: { toast: ToastItemData }) {
+export const ToastProgressBar = ({ toast }: { toast: ToastItemData }) => {
   const bg = useColorModeValue("bg.emphasized", "whiteAlpha.300");
 
   if (toast.duration === null) return null;

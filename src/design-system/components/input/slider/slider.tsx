@@ -42,7 +42,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
         ref={ref}
         thumbAlignment={"contain"}
         colorPalette={theme.colorPalette}
-        css={{ "--slider-thumb-size": isHolding ? "16px" : "12px" }}
+        // css={{ "--slider-thumb-size": isHolding ? "16px" : "12px" }}
         {...restProps}
       >
         {(label || showValue) && (

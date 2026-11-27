@@ -32,9 +32,11 @@ import { CrosshairIcon as FocusIcon, DotsSixVerticalIcon as GripVerticalIcon, Se
 import React, { memo, useEffect, useRef, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 
-function MapLayerManagementItemComponent<
+const MapLayerManagementItemComponent = <
   T extends GenericMapLayer = GenericMapLayer,
->(props: MapLayerManagementItemProps<T>) {
+>(
+  props: MapLayerManagementItemProps<T>,
+) => {
   // Props
   const {
     layer,
@@ -190,45 +192,52 @@ function MapLayerManagementItemComponent<
           />
         )}
 
-        <HStack
-          align={"center"}
-          gap={4}
-          colorPalette={colorPalette}
-          rounded={theme.radii.component}
-          cursor={"pointer"}
-          onClick={handleToggle}
+        <Switch.Root
+          size={"sm"}
+          checked={isEnabled}
+          onCheckedChange={handleToggle}
           w={"full"}
         >
-          <HStack flex={1} align={"center"} gap={2}>
-            <Tooltip content={t["map.drag_to_reorder"]()}>
-              <IconButton
-                ref={dragHandleRef}
-                aria-label={t["map.reorder_layer"]()}
-                variant={"plain"}
-                size={"2xs"}
-                px={0}
-                cursor={"grab"}
-                onClick={(e) => e.stopPropagation()}
-                color={"fg.subtle"}
-                _hover={{ color: "fg" }}
-                _active={{ cursor: "grabbing" }}
+          <HStack
+            align={"center"}
+            gap={4}
+            rounded={theme.radii.component}
+            cursor={"pointer"}
+            w={"full"}
+          >
+            <HStack flex={1} align={"center"} gap={2}>
+              <Tooltip content={t["map.drag_to_reorder"]()}>
+                <IconButton
+                  ref={dragHandleRef}
+                  aria-label={t["map.reorder_layer"]()}
+                  variant={"plain"}
+                  size={"2xs"}
+                  px={0}
+                  cursor={"grab"}
+                  onClick={(e) => e.stopPropagation()}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  color={"fg.subtle"}
+                  _hover={{ color: "fg" }}
+                  _active={{ cursor: "grabbing" }}
+                >
+                  <AppIcon icon={GripVerticalIcon} size={"sm"} />
+                </IconButton>
+              </Tooltip>
+
+              <P
+                lineClamp={1}
+                fontWeight={"medium"}
+                color={isEnabled ? "fg" : "fg.subtle"}
               >
-                <AppIcon icon={GripVerticalIcon} size={"sm"} />
-              </IconButton>
-            </Tooltip>
+                {displayName.replace(/_/g, " ")}
+              </P>
+            </HStack>
 
-            <P lineClamp={1}
-              fontWeight={"medium"}
-              color={isEnabled ? `fg` : "fg.subtle"}
-            >
-              {displayName.replace(/_/g, " ")}
-            </P>
+            <HStack align={"center"} gap={2} mr={1}>
+              <Switch.Control />
+            </HStack>
           </HStack>
-
-          <HStack align={"center"} gap={2} mr={1}>
-            <Switch size={"sm"} checked={isEnabled} pointerEvents={"none"} />
-          </HStack>
-        </HStack>
+        </Switch.Root>
 
         <HStack
           align={"center"}

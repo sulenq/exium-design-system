@@ -155,7 +155,7 @@ const PopoverBody = forwardRef<HTMLDivElement, PopoverBodyProps>(
     const { children, ...restProps } = props;
 
     return (
-      <ChakraPopover.Body ref={ref} {...restProps}>
+      <ChakraPopover.Body ref={ref} p={4} {...restProps}>
         {children}
       </ChakraPopover.Body>
     );

@@ -45,7 +45,7 @@ import {
 
 const SKELETON_LIST_COUNT = 5;
 
-export function FocusSelectInput(props: FocusSelectInputProps) {
+export const FocusSelectInput = (props: FocusSelectInputProps) => {
   // Props
   const {
     modalKey: modalKeyProp,

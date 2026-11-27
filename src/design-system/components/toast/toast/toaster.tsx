@@ -38,7 +38,7 @@ function getPlacementStyles(placement: ToastPlacement) {
   };
 }
 
-export function Toaster() {
+export const Toaster = () => {
   usePageVisibility();
 
   const entries = useToastVisibleStore((s) => s.entries);

@@ -4,7 +4,7 @@ import { isEmptyArray } from "@/shared/utils/data/array";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
-export function ModalPurger() {
+export const ModalPurger = () => {
   const navigate = useNavigate();
   const search = useSearch({
     strict: false,

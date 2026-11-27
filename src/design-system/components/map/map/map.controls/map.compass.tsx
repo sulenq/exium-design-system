@@ -51,7 +51,10 @@ export const MapCompass = (props: StackProps) => {
         </P>
       </ToggleTip>
 
-      <Tooltip content={t["map.reset_north"]()} positioning={{ placement: "top" }}>
+      <Tooltip
+        content={t["map.reset_north"]()}
+        positioning={{ placement: "top" }}
+      >
         <IconButton
           aria-label={t["map.reset_north"]()}
           size={"sm"}
@@ -61,9 +64,9 @@ export const MapCompass = (props: StackProps) => {
         >
           <AppIcon
             icon={Navigation2Icon}
-            fill={"red.400"}
-            stroke={"red.400"}
-            transform={`rotate(${-bearing}deg)`}
+            color={"red.400"}
+            weight={"fill"}
+            transform={`rotate(${-bearing + 45}deg)`}
           />
         </IconButton>
       </Tooltip>

@@ -36,7 +36,7 @@ function isMeasurement<Q extends UnitQuantity>(
   return typeof val === "object" && val !== null && "unit" in val;
 }
 
-export function UnitInput<Q extends UnitQuantity>(props: UnitInputProps<Q>) {
+export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => {
   // Props
   const {
     quantity,

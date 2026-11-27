@@ -9,7 +9,10 @@ import { Slider } from "@/design-system/components/input/slider/slider";
 import { Switch } from "@/design-system/components/input/switch/switch";
 import { Box } from "@/design-system/components/layout/box/box";
 import { Center } from "@/design-system/components/layout/center/center";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Separator } from "@/design-system/components/layout/separator/separator";
 import { useMapLayerStore } from "@/design-system/components/map/stores/map.layer.store";
 import type {
@@ -29,9 +32,11 @@ import { isEmptyArray } from "@/shared/utils/data/array";
 import { StackIcon as LayersIcon } from "@phosphor-icons/react";
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 
-function MapLayerManagementPanelComponent<
+const MapLayerManagementPanelComponent = <
   T extends GenericMapLayer = GenericMapLayer,
->(props: MapLayerManagementPanelProps<T>) {
+>(
+  props: MapLayerManagementPanelProps<T>,
+) => {
   // Props
   const {
     title,
@@ -160,14 +165,14 @@ function MapLayerManagementPanelComponent<
         ) : children ? (
           children
         ) : (
-          <MapOverlayContainer p={"2px"}>
+          <MapOverlayContainer>
             <Tooltip
               content={tooltipContent}
               positioning={{ placement: "bottom" }}
             >
               <Box position={"relative"}>
-                <IconButton size={"xs"}>
-                  <AppIcon icon={LayersIcon} boxSize={5} />
+                <IconButton size={"sm"} variant={"glassGhost"}>
+                  <AppIcon icon={LayersIcon} />
                 </IconButton>
                 <CountBadge floating={true}>{enabledCount}</CountBadge>
               </Box>
@@ -210,30 +215,29 @@ function MapLayerManagementPanelComponent<
             <VStack gap={2}>
               {!isEmptyArray(orderedLayers) && (
                 <VStack gap={3} p={1} align={"stretch"}>
-                  <HStack
-                    justify={"space-between"}
-                    align={"center"}
-                    cursor={"pointer"}
-                    onClick={() => {
+                  <Switch.Root
+                    size={"sm"}
+                    checked={isAllEnabled}
+                    onCheckedChange={() => {
                       handleToggleAll(!isAllEnabled);
                     }}
+                    w={"full"}
                   >
-                    <P fontSize={"sm"} fontWeight={"medium"}>
-                      {"Muat Semua Layer"}
-                    </P>
+                    <HStack
+                      justify={"space-between"}
+                      align={"center"}
+                      cursor={"pointer"}
+                      w={"full"}
+                    >
+                      <P fontWeight={"medium"}>{"Muat Semua Layer"}</P>
 
-                    <Switch
-                      size={"sm"}
-                      checked={isAllEnabled}
-                      pointerEvents={"none"}
-                    />
-                  </HStack>
+                      <Switch.Control />
+                    </HStack>
+                  </Switch.Root>
 
                   <VStack gap={2} align={"stretch"}>
                     <HStack justify={"space-between"} w={"full"}>
-                      <P fontSize={"sm"} fontWeight={"medium"}>
-                        {"Opasitas Semua Layer"}
-                      </P>
+                      <P fontWeight={"medium"}>{"Opasitas Semua Layer"}</P>
 
                       <P
                         fontSize={"sm"}
@@ -306,7 +310,7 @@ function MapLayerManagementPanelComponent<
       </Popover.Content>
     </Popover.Root>
   );
-}
+};
 
 export const MapLayerManagementPanel = memo(
   MapLayerManagementPanelComponent,

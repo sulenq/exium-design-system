@@ -3,7 +3,7 @@
 import { Circle } from "@/design-system/components/layout/box/box";
 import type { ToastIconProps } from "@/design-system/components/toast/toast/toast.type";
 
-export function ToastIcon(props: ToastIconProps) {
+export const ToastIcon = (props: ToastIconProps) => {
   // Props
   const { toast, icon, ...restProps } = props;
   const resolvedIcon = toast.icon ?? icon;

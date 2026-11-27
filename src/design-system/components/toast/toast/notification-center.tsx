@@ -12,13 +12,13 @@ import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { t } from "@/shared/libs/i18n";
 
-function ToastHistoryItem({
+const ToastHistoryItem = ({
   entry,
   onDelete,
 }: {
   entry: HistoryEntry;
   onDelete: (id: string) => void;
-}) {
+}) => {
   return (
     <Box
       borderWidth={"1px"}
@@ -61,7 +61,7 @@ function ToastHistoryItem({
   );
 }
 
-export function NotificationCenter() {
+export const NotificationCenter = () => {
   const { groups, deleteOne, deleteMany, markAllRead } = useToastHistory();
   const { maxVisiblePerGroup } = getToastConfig();
 
