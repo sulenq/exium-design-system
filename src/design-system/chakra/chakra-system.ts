@@ -143,17 +143,17 @@ export const chakraConfig = defineConfig({
 
     tokens: {
       colors: {
-        canvasLight: { value: "#e6e8eaff" },
-        canvasDark: { value: "#141417" },
+        canvasLight: { value: "#e8e8e8" },
+        canvasDark: { value: "#141414" },
 
-        canvasLightAlpha: { value: "#eff1f4d9" },
-        canvasDarkAlpha: { value: "#141417d9" },
+        canvasLightAlpha: { value: "#e8e8e8d9" },
+        canvasDarkAlpha: { value: "#141414d9" },
 
-        bodyLight: { value: "#f4f4f5" },
-        bodyDark: { value: "#1b1b1e" },
+        bodyLight: { value: "#f4f4f4" },
+        bodyDark: { value: "#1b1b1b" },
 
-        bodyLightAlpha: { value: "#f4f4f5bf" },
-        bodyDarkAlpha: { value: "#1b1b1ebf" },
+        bodyLightAlpha: { value: "#f4f4f4bf" },
+        bodyDarkAlpha: { value: "#1b1b1bbf" },
 
         an0: { value: "#6b72800f" },
         an1: { value: "#6b72801f" },
