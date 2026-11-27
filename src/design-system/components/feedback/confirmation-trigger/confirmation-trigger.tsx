@@ -221,8 +221,10 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
   };
 
   const handleConfirm = () => {
-    popModal.close();
-    void Promise.resolve(onConfirm?.()).catch(console.error);
+    setTimeout(() => {
+      popModal.close();
+      void Promise.resolve(onConfirm?.()).catch(console.error);
+    }, 220);
   };
 
   return (
