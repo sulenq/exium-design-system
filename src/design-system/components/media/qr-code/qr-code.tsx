@@ -62,7 +62,7 @@ export const QrCode = (props: QrCodeProps) => {
               p={"2px"}
               w={"fit"}
               h={"fit"}
-              rounded={theme.radii.component}
+              rounded={`calc(${theme.radii.component} - 4px)`}
             >
               {overlay}
             </ChakraQrCode.Overlay>

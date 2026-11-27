@@ -1,13 +1,15 @@
 import { Logo } from "@/design-system/components/branding/logo/logo";
 import { Avatar } from "@/design-system/components/media/avatar/avatar";
 import { QrCode } from "@/design-system/components/media/qr-code/qr-code";
-import type { QrCodeErrorCorrection, QrCodeSize } from "@/design-system/components/media/qr-code/qr-code.type";
+import type {
+  QrCodeErrorCorrection,
+  QrCodeSize,
+} from "@/design-system/components/media/qr-code/qr-code.type";
 import { Image } from "@/design-system/components/media/image/image";
 import { COLOR_PALETTE_OPTIONS } from "@/design-system/constants/colors";
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 
 export const MEDIA_DOCS: Record<string, ComponentDocSpec> = {
-
   qr_code: {
     key: "qr_code",
     title: "QR Code",
@@ -110,7 +112,7 @@ export const MEDIA_DOCS: Record<string, ComponentDocSpec> = {
         overlay={
           props.withLogo ? (
             <Logo
-              boxSize={7}
+              boxSize={20}
               color={`${String(props.colorPalette || "blue")}.solid`}
             />
           ) : undefined
@@ -119,7 +121,6 @@ export const MEDIA_DOCS: Record<string, ComponentDocSpec> = {
       />
     ),
   },
-
 
   avatar: {
     key: "avatar",
@@ -185,7 +186,6 @@ export const MEDIA_DOCS: Record<string, ComponentDocSpec> = {
       />
     ),
   },
-
 
   image: {
     key: "image",
@@ -257,5 +257,4 @@ export const MEDIA_DOCS: Record<string, ComponentDocSpec> = {
       />
     ),
   },
-
 };

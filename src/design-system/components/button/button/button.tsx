@@ -79,7 +79,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     });
 
     const mergedRef = useMergedRefs({
-      refs: bouncy ? [ref, bounceRef] : [ref],
+      refs: [ref, bounceRef],
     });
 
     // Stores
@@ -265,7 +265,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     });
 
     const mergedRef = useMergedRefs({
-      refs: bouncy ? [ref, bounceRef] : [ref],
+      refs: [ref, bounceRef],
     });
 
     // Stores
