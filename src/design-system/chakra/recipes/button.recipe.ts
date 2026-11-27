@@ -73,10 +73,7 @@ export const buttonRecipe = defineRecipe({
       glass: {
         position: "relative",
         isolation: "isolate",
-        bg: {
-          base: "#fafafabf",
-          _dark: "bg.bodyAlpha",
-        },
+        bg: "bg.bodyAlpha",
         border: "1px solid",
         borderColor: "an0 !important",
         backdropFilter: "blur(16px) saturate(180%)",

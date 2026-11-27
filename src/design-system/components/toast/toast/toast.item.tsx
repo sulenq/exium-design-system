@@ -31,8 +31,13 @@ import { useFirstMountEffect } from "@/shared/hooks/use-first-mount-effect";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { formatRelativeTime } from "@/shared/utils/formatter/date.formatter";
 import { useLocale } from "@/shared/libs/i18n/locale-provider";
-import { tintDark } from "@/shared/utils/style/color";
-import { WarningCircleIcon as AlertCircleIcon, CheckCircleIcon, CaretDownIcon as ChevronDownIcon, InfoIcon, XCircleIcon } from "@phosphor-icons/react";
+import {
+  WarningCircleIcon as AlertCircleIcon,
+  CheckCircleIcon,
+  CaretDownIcon as ChevronDownIcon,
+  InfoIcon,
+  XCircleIcon,
+} from "@phosphor-icons/react";
 import { memo, useState } from "react";
 import { t } from "@/shared/libs/i18n";
 
@@ -129,7 +134,8 @@ export const ToastItem = memo(function ToastItem(
       w={"full"}
       maxW={"full"}
       minW={0}
-      bg={stackExpanded ? "bg.body" : tintDark("bg.body", index * 2)}
+      // bg={stackExpanded ? "bg.body" : tintDark("bg.body", index * 2)}
+      layerStyle={"glass"}
       border={"1px solid"}
       borderColor={"border.subtle"}
       rounded={theme.radii.container}

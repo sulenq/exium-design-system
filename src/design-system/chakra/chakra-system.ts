@@ -2523,10 +2523,7 @@ export const chakraConfig = defineConfig({
         value: {
           position: "relative",
           isolation: "isolate",
-          bg: {
-            base: "rgba(250, 250, 250, 0.35)",
-            _dark: "rgba(24, 24, 27, 0.35)",
-          },
+          bg: "bg.bodyAlpha",
           border: "1px solid",
           borderColor: "an0 !important",
           backdropFilter: "blur(6px) saturate(140%)",

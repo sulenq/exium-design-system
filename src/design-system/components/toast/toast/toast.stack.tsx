@@ -2,7 +2,10 @@
 
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { DEFAULT_TOAST_GROUP } from "@/design-system/components/toast/core/toast.config";
 import { toastTimerControls } from "@/design-system/components/toast/core/toast.manager";
 import type { ToastStackProps } from "@/design-system/components/toast/toast/toast.type";
@@ -13,7 +16,10 @@ import { useFirstMountEffect } from "@/shared/hooks/use-first-mount-effect";
 import { t } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { Box } from "@chakra-ui/react";
-import { CaretUpIcon as ChevronUpIcon, TrashIcon as Trash2Icon } from "@phosphor-icons/react";
+import {
+  CaretUpIcon as ChevronUpIcon,
+  TrashIcon as Trash2Icon,
+} from "@phosphor-icons/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export function ToastStack<TItem>({
@@ -237,7 +243,6 @@ export function ToastStack<TItem>({
                   "transform 250ms cubic-bezier(0.2, 0, 0, 1), margin-top 250ms cubic-bezier(0.2, 0, 0, 1), opacity 250ms ease"
                 }
                 pointerEvents={expanded || isFirstVisual ? "auto" : "none"}
-                willChange={isCollapsed ? "transform, opacity" : undefined}
               >
                 <Box w={"full"} minW={0} minH={"0px"} overflow={"visible"}>
                   {renderItem({

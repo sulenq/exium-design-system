@@ -70,13 +70,13 @@ export function Toaster() {
         transform={placementStyles.transform}
         transition={"200ms"}
         pointerEvents={"none"}
-        css={{
-          "&:has([data-state='expanded'])": {
-            bg: "bg.backdrop",
-            // backdropFilter: "blur(5px)",
-            pointerEvents: "auto",
-          },
-        }}
+        // css={{
+        //   "&:has([data-state='expanded'])": {
+        //     // bg: "bg.backdrop",
+        //     // backdropFilter: "blur(5px)",
+        //     // pointerEvents: "auto",
+        //   },
+        // }}
       >
         <VStack minW={0} w={"full"} maxW={"360px"}>
           <ToastStack
@@ -93,7 +93,9 @@ export function Toaster() {
               />
             )}
             isItemLeaving={(toastItem) => toastItem.status === "leaving"}
-            getPriority={(toastItem) => VARIANT_PRIORITY[toastItem.variant] ?? 0}
+            getPriority={(toastItem) =>
+              VARIANT_PRIORITY[toastItem.variant] ?? 0
+            }
             onCloseAll={() =>
               visibleToasts.forEach((toastItem) => toast.close(toastItem.id))
             }
