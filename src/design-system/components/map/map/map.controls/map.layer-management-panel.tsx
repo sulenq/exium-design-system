@@ -190,7 +190,7 @@ const MapLayerManagementPanelComponent = <
           </Badge>
         </HeaderContainer>
 
-        <Separator borderColor={"bg.canvas"} />
+        <Separator />
 
         <Popover.Body p={3} maxH={"500px"} overflowY={"auto"}>
           {isLoading ? (

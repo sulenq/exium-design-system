@@ -132,14 +132,14 @@ export const buttonRecipe = defineRecipe({
         color: "fg",
         _hover: {
           bg: {
-            base: "rgba(255, 255, 255, 0.35)",
-            _dark: "rgba(255, 255, 255, 0.1)",
+            base: "rgba(255, 255, 255, 0.65)",
+            _dark: "rgba(255, 255, 255, 0.18)",
           },
         },
         _active: {
           bg: {
-            base: "rgba(255, 255, 255, 0.55)",
-            _dark: "rgba(255, 255, 255, 0.16)",
+            base: "rgba(255, 255, 255, 0.8)",
+            _dark: "rgba(255, 255, 255, 0.25)",
           },
         },
       },
