@@ -457,7 +457,7 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
         <VScrollContainer
           w={"full"}
           maxW={"360px"}
-          h={"200px"}
+          h={"120px"}
           border={"1px solid"}
           borderColor={"border.subtle"}
           rounded={"md"}

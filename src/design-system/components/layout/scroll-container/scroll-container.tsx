@@ -7,9 +7,17 @@ import type {
   ScrollButtonProps,
   VScrollContainerProps,
 } from "@/design-system/components/layout/scroll-container/scroll-container.type";
-import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
+import {
+  HStack,
+  VStack,
+} from "@/design-system/components/layout/flex-box/flex-box";
 import { Box } from "@chakra-ui/react";
-import { CaretDownIcon as ChevronDown, CaretLeftIcon as ChevronLeft, CaretRightIcon as ChevronRight, CaretUpIcon as ChevronUp } from "@phosphor-icons/react";
+import {
+  CaretDownIcon as ChevronDown,
+  CaretLeftIcon as ChevronLeft,
+  CaretRightIcon as ChevronRight,
+  CaretUpIcon as ChevronUp,
+} from "@phosphor-icons/react";
 import {
   forwardRef,
   useCallback,
@@ -96,9 +104,11 @@ export const VScrollContainer = forwardRef<
       flex={1}
       position={"relative"}
       overflow={"hidden"}
-      w={"full"}
+      w={restProps.w ?? "full"}
+      maxW={restProps.maxW}
       minH={0}
-      h={"full"}
+      h={restProps.h ?? "full"}
+      maxH={restProps.maxH}
     >
       {showScrollButtons && showUp && (
         <ScrollButton
@@ -271,7 +281,12 @@ export const HScrollContainer = forwardRef<
   }, [enableScroll, updateScrollState]);
 
   return (
-    <Box position={"relative"} w={"full"} role={"group"}>
+    <Box
+      position={"relative"}
+      w={restProps.w ?? "full"}
+      maxW={restProps.maxW}
+      role={"group"}
+    >
       {showScrollButtons && showLeft && (
         <ScrollButton
           direction={"left"}
