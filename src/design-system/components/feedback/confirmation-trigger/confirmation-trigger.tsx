@@ -111,21 +111,20 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
       userSelect={"none"}
       touchAction={"none"}
     >
-      {/* {!isDragging && offsetX === 0 && (
-        <AbsoluteCenter w={"full"} px={12} pointerEvents={"none"}>
-          <P
-            fontSize={"sm"}
-            fontWeight={"medium"}
-            color={"fg.muted"}
-            lineClamp={1}
-          >
-            {label}
-          </P>
-        </AbsoluteCenter>
-      )} */}
+      <AbsoluteCenter w={"full"} px={12} zIndex={0} pointerEvents={"none"}>
+        <P
+          fontSize={"sm"}
+          fontWeight={"medium"}
+          color={"fg.muted"}
+          lineClamp={1}
+        >
+          {label}
+        </P>
+      </AbsoluteCenter>
 
       <Box
         position={"relative"}
+        zIndex={1}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"flex-end"}
@@ -147,10 +146,18 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
         >
           <P
             fontSize={"sm"}
-            color={isThresholdReached ? `${colorPalette}.contrast` : `fg/50`}
+            fontWeight={"semibold"}
+            color={`${colorPalette}.contrast`}
+            opacity={isThresholdReached ? 1 : 0}
+            transform={
+              isThresholdReached ? "translateX(0)" : "translateX(-12px)"
+            }
+            transition={
+              "opacity 200ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1)"
+            }
             lineClamp={1}
           >
-            {isThresholdReached ? "Konfirmasi" : label}
+            {"Konfirmasi"}
           </P>
         </AbsoluteCenter>
 

@@ -23,7 +23,12 @@ import { ComponentPlaygroundContainer } from "@/features/design-system-docs/comp
 import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-docs-spec.type";
 import { ColorPaletteSelect } from "@/features/design-system-docs/components/color-palette.select";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { CheckIcon, CaretDownIcon, CaretUpIcon, CopyIcon } from "@phosphor-icons/react";
+import {
+  CheckIcon,
+  CaretDownIcon,
+  CaretUpIcon,
+  CopyIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
@@ -183,80 +188,80 @@ export const ComponentPlayground = ({ spec }: { spec: ComponentDocSpec }) => {
               {spec.propsSpec
                 .filter((prop) => prop.controlKind !== undefined)
                 .map((prop) => (
-                <Box key={prop.name}>
-                  <P
-                    fontSize={"xs"}
-                    fontWeight={"medium"}
-                    color={"fg.muted"}
-                    mb={1.5}
-                  >
-                    {prop.name}
-                  </P>
-
-                  {prop.controlKind === "text" && (
-                    <Input
-                      size={"sm"}
-                      value={(propsState[prop.name] as string) ?? ""}
-                      onChange={(e) =>
-                        handlePropChange(prop.name, e.target.value)
-                      }
-                    />
-                  )}
-
-                  {prop.controlKind === "number" && (
-                    <NumberInput
-                      size={"sm"}
-                      min={prop.name === "page" ? 1 : undefined}
-                      value={String(propsState[prop.name] ?? 0)}
-                      onValueChange={(details) =>
-                        handlePropChange(
-                          prop.name,
-                          prop.name === "page"
-                            ? Math.max(1, Number(details.value) || 1)
-                            : Number(details.value) || 0,
-                        )
-                      }
-                    />
-                  )}
-
-                  {prop.controlKind === "boolean" && (
-                    <Switch
-                      checked={(propsState[prop.name] as boolean) ?? false}
-                      onCheckedChange={(e) =>
-                        handlePropChange(prop.name, e.checked)
-                      }
+                  <Box key={prop.name}>
+                    <P
+                      fontSize={"xs"}
+                      fontWeight={"medium"}
+                      color={"fg.muted"}
+                      mb={1.5}
                     >
-                      <P fontSize={"xs"}>
-                        {propsState[prop.name] ? "True" : "False"}
-                      </P>
-                    </Switch>
-                  )}
+                      {prop.name}
+                    </P>
 
-                  {prop.name === "colorPalette" ? (
-                    <ColorPaletteSelect
-                      value={String(propsState[prop.name] ?? "")}
-                      onValueChange={(val) =>
-                        handlePropChange(prop.name, String(val ?? ""))
-                      }
-                      size={"sm"}
-                      selectMode={"default"}
-                    />
-                  ) : prop.controlKind === "select" && prop.options ? (
-                    <SelectInput
-                      size={"sm"}
-                      placeholder={`Pilih ${prop.name}`}
-                      value={String(propsState[prop.name] ?? "")}
-                      options={prop.options.map((opt) => ({
-                        label: String(opt),
-                        value: String(opt),
-                      }))}
-                      onValueChange={(val) =>
-                        handlePropChange(prop.name, String(val ?? ""))
-                      }
-                    />
-                  ) : null}
-                </Box>
-              ))}
+                    {prop.controlKind === "text" && (
+                      <Input
+                        size={"sm"}
+                        value={(propsState[prop.name] as string) ?? ""}
+                        onChange={(e) =>
+                          handlePropChange(prop.name, e.target.value)
+                        }
+                      />
+                    )}
+
+                    {prop.controlKind === "number" && (
+                      <NumberInput
+                        size={"sm"}
+                        min={prop.name === "page" ? 1 : undefined}
+                        value={String(propsState[prop.name] ?? 0)}
+                        onValueChange={(details) =>
+                          handlePropChange(
+                            prop.name,
+                            prop.name === "page"
+                              ? Math.max(1, Number(details.value) || 1)
+                              : Number(details.value) || 0,
+                          )
+                        }
+                      />
+                    )}
+
+                    {prop.controlKind === "boolean" && (
+                      <Switch
+                        checked={(propsState[prop.name] as boolean) ?? false}
+                        onCheckedChange={(e) =>
+                          handlePropChange(prop.name, e.checked)
+                        }
+                      >
+                        <P fontSize={"xs"}>
+                          {propsState[prop.name] ? "True" : "False"}
+                        </P>
+                      </Switch>
+                    )}
+
+                    {prop.name === "colorPalette" ? (
+                      <ColorPaletteSelect
+                        value={String(propsState[prop.name] ?? "")}
+                        onValueChange={(val) =>
+                          handlePropChange(prop.name, String(val ?? ""))
+                        }
+                        size={"sm"}
+                        selectMode={"default"}
+                      />
+                    ) : prop.controlKind === "select" && prop.options ? (
+                      <SelectInput
+                        size={"sm"}
+                        placeholder={`Pilih ${prop.name}`}
+                        value={String(propsState[prop.name] ?? "")}
+                        options={prop.options.map((opt) => ({
+                          label: String(opt),
+                          value: String(opt),
+                        }))}
+                        onValueChange={(val) =>
+                          handlePropChange(prop.name, String(val ?? ""))
+                        }
+                      />
+                    ) : null}
+                  </Box>
+                ))}
             </SimpleGrid>
           )}
         </Tabs.Content>
