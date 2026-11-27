@@ -5,8 +5,8 @@ import type { ToastEngineConfig } from "@/design-system/components/toast/toast/t
 export const DEFAULT_TOAST_GROUP = "Sistem";
 
 const DEFAULT_TOAST_CONFIG: ToastEngineConfig = {
-  defaultDuration: null,
-  // defaultDuration: 5000,
+  // defaultDuration: null,
+  defaultDuration: 5000,
   variantDurations: {
     error: 10000,
     warning: 8000,
