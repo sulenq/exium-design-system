@@ -506,14 +506,30 @@ const NavIcon = (props: VNavIconProps) => {
   // Props
   const { nav, ...restProps } = props;
 
-  return (
-    nav.icon && (
+  if (nav.icon) {
+    return (
       <AppIcon
         icon={nav.icon}
         weight={"fill"}
         color={"fg.muted"}
         {...restProps}
       />
-    )
+    );
+  }
+
+  const initial = nav.title?.trim().charAt(0).toUpperCase() || "?";
+
+  return (
+    <Box
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+      boxSize={4}
+      flexShrink={0}
+    >
+      <P fontSize={"xs"} fontWeight={"semibold"} color={"fg.muted"} lineHeight={1}>
+        {initial}
+      </P>
+    </Box>
   );
 };

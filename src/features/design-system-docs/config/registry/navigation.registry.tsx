@@ -463,7 +463,7 @@ export const NAVIGATION_DOCS: Record<string, ComponentDocSpec> = {
     importPath:
       'import { Snackbar } from "@/design-system/components/navigation/snackbar/snackbar";',
     component: Snackbar,
-    defaultProps: { itemCount: 4, withCenterAction: true },
+    defaultProps: { itemCount: 4 },
     propsSpec: [
       {
         name: "items",
@@ -688,6 +688,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
     component: VNavs,
     defaultProps: {
       expanded: true,
+      withIcon: true,
     },
     propsSpec: [
       {
@@ -696,6 +697,14 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
         defaultValue: true,
         description:
           "Status buka/tutup label navigasi (true: full, false: rail).",
+        controlKind: "boolean",
+      },
+      {
+        name: "withIcon",
+        type: "boolean",
+        defaultValue: true,
+        description:
+          "Demo: tampilkan ikon atau fallback huruf awal saat ikon kosong.",
         controlKind: "boolean",
       },
     ],
@@ -734,7 +743,8 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
     },
     renderPlayground: (props) => {
       const isExpanded = Boolean(props.expanded);
-      return <VNavsPlaygroundDemo expanded={isExpanded} />;
+      const withIcon = props.withIcon !== false;
+      return <VNavsPlaygroundDemo expanded={isExpanded} withIcon={withIcon} />;
     },
   },
 
@@ -787,7 +797,7 @@ const [isOpened, setIsOpened] = usePersistedState<boolean>(
 
 const SNACKBAR_DEMO_ITEMS = [
   { key: "home", label: "Beranda", icon: HouseIcon },
-  { key: "animals", label: "Ternak", icon: PawPrintIcon, badge: 3 },
+  { key: "projects", label: "Proyek", icon: ScanIcon, badge: 3 },
   { key: "tasks", label: "Tugas", icon: ClipboardTextIcon },
   {
     key: "notifications",
@@ -817,11 +827,6 @@ const SnackbarPlaygroundDemo = (props: Record<string, unknown>) => {
         onSelect={setActiveKey}
         safeArea={false}
         hideOnKeyboard={false}
-        centerAction={
-          props.withCenterAction === false
-            ? undefined
-            : { icon: ScanIcon, label: "Scan", onClick: () => undefined }
-        }
       />
     </Box>
   );
@@ -936,8 +941,23 @@ const SidebarPlaygroundDemo = ({
   );
 };
 
-const VNavsPlaygroundDemo = ({ expanded }: { expanded: boolean }) => {
+const VNavsPlaygroundDemo = ({
+  expanded,
+  withIcon,
+}: {
+  expanded: boolean;
+  withIcon: boolean;
+}) => {
   const [activeNavKey, setActiveNavKey] = useState("home");
+
+  const navsMap = withIcon
+    ? DEMO_NAVS_MAP
+    : Object.fromEntries(
+        Object.entries(DEMO_NAVS_MAP).map(([key, val]) => [
+          key,
+          { ...val, icon: undefined },
+        ]),
+      );
 
   return (
     <Box
@@ -954,7 +974,7 @@ const VNavsPlaygroundDemo = ({ expanded }: { expanded: boolean }) => {
         <VNavs
           flex={1}
           groups={DEMO_NAV_GROUPS}
-          navs={DEMO_NAVS_MAP}
+          navs={navsMap}
           activeKey={activeNavKey}
           expanded={expanded}
           onNavClick={setActiveNavKey}

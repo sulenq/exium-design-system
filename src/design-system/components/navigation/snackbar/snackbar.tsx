@@ -1,6 +1,6 @@
 // src/design-system/components/navigation/snackbar/snackbar.tsx
 
-import { Button, IconButton } from "@/design-system/components/button/button/button";
+import { Button } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
@@ -40,8 +40,8 @@ export const SnackbarContainer = (props: SnackbarContainerProps) => {
       bg={"bg.body"}
       borderTop={"1px solid"}
       borderColor={"border.subtle"}
-      pt={3}
-      pb={safeArea ? "calc(env(safe-area-inset-bottom) + 16px)" : 4}
+      pt={2}
+      pb={safeArea ? "calc(env(safe-area-inset-bottom) + 8px)" : 2}
       align={"center"}
       zIndex={2}
       flexShrink={0}
@@ -103,39 +103,23 @@ const SnackbarButton = (props: {
 
 export const Snackbar = (props: SnackbarProps) => {
   // Props
-  const { items, activeKey, onSelect, centerAction, endSlot, ...restProps } =
-    props;
+  const { items, activeKey, onSelect, endSlot, ...restProps } = props;
 
   // Derived Values
   const hasOverflow = items.length > MAX_INLINE_ITEMS;
   const inlineItems = hasOverflow ? items.slice(0, MAX_INLINE_ITEMS - 1) : items;
   const overflowItems = hasOverflow ? items.slice(MAX_INLINE_ITEMS - 1) : [];
   const isOverflowActive = overflowItems.some((item) => item.key === activeKey);
-  const centerIndex = Math.ceil(inlineItems.length / 2);
 
   return (
     <SnackbarContainer px={2} gap={1} {...restProps}>
-      {inlineItems.map((item, index) => (
-        <HStack key={item.key} flex={1} minW={0} gap={1}>
-          {centerAction && index === centerIndex && (
-            <IconButton
-              aria-label={centerAction.label}
-              rounded={"full"}
-              size={"xl"}
-              primary={true}
-              flexShrink={0}
-              onClick={centerAction.onClick}
-            >
-              <AppIcon icon={centerAction.icon} />
-            </IconButton>
-          )}
-
-          <SnackbarButton
-            item={item}
-            isActive={item.key === activeKey}
-            onSelect={onSelect}
-          />
-        </HStack>
+      {inlineItems.map((item) => (
+        <SnackbarButton
+          key={item.key}
+          item={item}
+          isActive={item.key === activeKey}
+          onSelect={onSelect}
+        />
       ))}
 
       {hasOverflow && (

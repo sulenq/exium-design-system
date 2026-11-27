@@ -144,16 +144,16 @@ export const chakraConfig = defineConfig({
     tokens: {
       colors: {
         canvasLight: { value: "#e6e8eaff" },
-        canvasDark: { value: "#0f1011" },
+        canvasDark: { value: "#141417" },
 
         canvasLightAlpha: { value: "#eff1f4d9" },
-        canvasDarkAlpha: { value: "#0f1011d9" },
+        canvasDarkAlpha: { value: "#141417d9" },
 
         bodyLight: { value: "#f4f4f5" },
-        bodyDark: { value: "#171717" },
+        bodyDark: { value: "#1b1b1e" },
 
         bodyLightAlpha: { value: "#f4f4f5bf" },
-        bodyDarkAlpha: { value: "#1a1b1cbf" },
+        bodyDarkAlpha: { value: "#1b1b1ebf" },
 
         an0: { value: "#6b72800f" },
         an1: { value: "#6b72801f" },
@@ -163,17 +163,17 @@ export const chakraConfig = defineConfig({
         placeholder: { value: "#9ca3af91" },
 
         neutral: {
-          50: { value: "#ececef" },
-          100: { value: "#e5e5e8" },
-          200: { value: "#d8d8dc" },
-          300: { value: "#bcbcc2" },
+          50: { value: "#ededed" },
+          100: { value: "#e4e4e4" },
+          200: { value: "#d4d4d4" },
+          300: { value: "#bdbdbd" },
           400: { value: "#a3a3a3" },
           500: { value: "#808080" },
           600: { value: "#6b6b6b" },
           700: { value: "#545454" },
-          800: { value: "#2e2e32" },
-          900: { value: "#1e1e22" },
-          950: { value: "#141416" },
+          800: { value: "#2e2e2e" },
+          900: { value: "#232323" },
+          950: { value: "#181818" },
         },
 
         grey: {
@@ -776,13 +776,13 @@ export const chakraConfig = defineConfig({
           subtle: {
             value: {
               base: "{colors.neutral.50} !important",
-              _dark: "{colors.neutral.950} !important",
+              _dark: "{colors.neutral.900} !important",
             },
           },
           muted: {
             value: {
               base: "{colors.neutral.100} !important",
-              _dark: "{colors.neutral.900} !important",
+              _dark: "{colors.neutral.800} !important",
             },
           },
           emphasized: {

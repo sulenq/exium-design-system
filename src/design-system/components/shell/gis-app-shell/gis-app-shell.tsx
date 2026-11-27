@@ -159,7 +159,7 @@ const SidebarHeader = () => {
     <Sidebar.Header>
       <NavLink to={logoPath}>
         <HStack align={"center"} gap={3}>
-          <Logo flexShrink={0} boxSize={6} ml={1} />
+          <Logo flexShrink={0} boxSize={18} ml={1.5} />
 
           <P lineClamp={1}
             w={expanded ? "" : 0}

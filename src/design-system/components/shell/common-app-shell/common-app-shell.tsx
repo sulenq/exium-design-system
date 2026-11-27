@@ -44,7 +44,9 @@ export const CommonAppShell = (props: CommonAppShellProps) => {
   const isSmallViewport = useIsSmallViewport();
 
   // Derived Values
-  const resolvedBrand = brand ?? <Logo />;
+  const resolvedBrand = brand ?? (
+    <Logo boxSize={18} ml={1.5} flexShrink={0} />
+  );
   const content = children ?? <Outlet />;
   const hasNav = !isEmptyArray(navItems);
 

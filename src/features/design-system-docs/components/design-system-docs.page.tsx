@@ -178,7 +178,11 @@ export const DesignSystemDocsPage = () => {
               </IconButton>
             )}
 
-            <P fontWeight={"semibold"}>Exium Design System Documentation</P>
+            {!isSmallViewport && (
+              <P fontWeight={"semibold"}>
+                {"Exium Design System Documentation"}
+              </P>
+            )}
           </HStack>
 
           <HStack align={"center"} gap={2}>
