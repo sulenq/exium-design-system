@@ -163,7 +163,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       >
         <Input
           type={"search"}
-          autoComplete={"off"}
+          autoComplete={"one-time-code"}
           autoCorrect={"off"}
           autoCapitalize={"none"}
           spellCheck={false}
@@ -171,6 +171,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
           data-1p-ignore={"true"}
           data-form-type={"other"}
           {...restProps}
+          readOnly={restProps.readOnly ?? true}
+          onFocus={(e) => {
+            if (!restProps.readOnly) {
+              e.currentTarget.removeAttribute("readonly");
+            }
+            restProps.onFocus?.(e);
+          }}
           w={"full"}
           minW={"0"}
           maxW={"full"}
