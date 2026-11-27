@@ -44,6 +44,7 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
 
   // States
   const [offsetX, setOffsetX] = useState<number>(0);
+  const [trackWidth, setTrackWidth] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isThresholdReached, setIsThresholdReached] = useState<boolean>(false);
 
@@ -51,6 +52,7 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
     const track = trackRef.current;
     if (!track) return;
+    setTrackWidth(track.clientWidth);
     const thumbSize = 36;
     const padding = 4;
     maxOffsetRef.current = Math.max(
@@ -101,16 +103,18 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
       userSelect={"none"}
       touchAction={"none"}
     >
-      <AbsoluteCenter w={"full"} px={10} pointerEvents={"none"}>
-        <P
-          fontSize={"sm"}
-          fontWeight={"medium"}
-          color={"fg.muted"}
-          lineClamp={1}
-        >
-          {label}
-        </P>
-      </AbsoluteCenter>
+      {!isDragging && offsetX === 0 && (
+        <AbsoluteCenter w={"full"} px={12} pointerEvents={"none"}>
+          <P
+            fontSize={"sm"}
+            fontWeight={"medium"}
+            color={"fg.muted"}
+            lineClamp={1}
+          >
+            {label}
+          </P>
+        </AbsoluteCenter>
+      )}
 
       <Box
         position={"relative"}
@@ -126,21 +130,31 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
           isDragging ? "none" : "width 220ms cubic-bezier(0.22, 1, 0.36, 1)"
         }
       >
-        {isThresholdReached && (
-          <AbsoluteCenter w={"full"} px={12} pointerEvents={"none"}>
+        {(isDragging || offsetX > 0) && (
+          <AbsoluteCenter
+            left={trackWidth > 0 ? `${trackWidth / 2 - 4}px` : "50%"}
+            w={trackWidth > 0 ? `${trackWidth}px` : "full"}
+            px={12}
+            zIndex={1}
+            pointerEvents={"none"}
+          >
             <P
               fontSize={"sm"}
-              fontWeight={"semibold"}
-              color={"white"}
+              fontWeight={isThresholdReached ? "semibold" : "medium"}
+              color={
+                isThresholdReached
+                  ? `${colorPalette}.contrast`
+                  : `${colorPalette}.subtle`
+              }
               lineClamp={1}
             >
-              {"Konfirmasi"}
+              {isThresholdReached ? "Konfirmasi" : label}
             </P>
           </AbsoluteCenter>
         )}
-
         <Box
           position={"relative"}
+          zIndex={2}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}

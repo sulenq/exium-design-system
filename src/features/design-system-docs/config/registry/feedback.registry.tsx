@@ -573,7 +573,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
           colorPalette={(props.colorPalette as string) || "red"}
           variant={"outline"}
         >
-          {"Buka Dialog Konfirmasi"}
+          {"Buka Konfirmasi"}
         </Button>
       </ConfirmationTrigger>
     ),
