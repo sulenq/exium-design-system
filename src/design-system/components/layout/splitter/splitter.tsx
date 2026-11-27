@@ -14,7 +14,10 @@ import type {
 import { Tooltip } from "@/design-system/components/overlay/tooltip/tooltip";
 import { t } from "@/shared/libs/i18n";
 import { Box, chakra } from "@chakra-ui/react";
-import { DotsSixIcon as GripHorizontal, DotsSixVerticalIcon as GripVertical } from "@phosphor-icons/react";
+import {
+  DotsSixIcon as GripHorizontal,
+  DotsSixVerticalIcon as GripVertical,
+} from "@phosphor-icons/react";
 import {
   createContext,
   forwardRef,
@@ -390,13 +393,9 @@ const SplitterRoot = forwardRef<SplitterGroupHandle, SplitterRootProps>(
           return;
         }
 
-        // 2. If short tap/click on trigger without substantial drag (< 10px), cycle snap step:
-        // S1 (50%) -> S2 (full) -> S0 (min) -> S1 (50%)
+        // 2. If short tap/click on trigger without substantial drag (< 10px), stay at current snap step:
         if (absDelta < 10) {
-          const currentSnap = snapIndexRef.current;
-          const nextStep: 0 | 1 | 2 =
-            currentSnap === 1 ? 2 : currentSnap === 2 ? 0 : 1;
-          snapToStep(nextStep);
+          snapToStep(snapIndexRef.current);
           return;
         }
 
@@ -706,6 +705,8 @@ const SplitterResizeTrigger = forwardRef<
         justifyContent={"center"}
         pos={"relative"}
         zIndex={10}
+        my={isVertical ? "-4px" : undefined}
+        mx={isVertical ? undefined : "-4px"}
         cursor={isVertical ? "row-resize" : "col-resize"}
         outline={"none"}
         border={"none"}
