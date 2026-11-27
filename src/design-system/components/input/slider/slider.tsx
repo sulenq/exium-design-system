@@ -114,6 +114,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
             transition={
               "width 0.18s cubic-bezier(0.4, 0, 0.2, 1), height 0.18s cubic-bezier(0.4, 0, 0.2, 1)"
             }
+            borderColor={`${theme.colorPalette}.fg`}
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerUp}
             onPointerCancel={handlePointerUp}
