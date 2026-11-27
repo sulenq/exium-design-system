@@ -149,10 +149,10 @@ export const chakraConfig = defineConfig({
         canvasLightAlpha: { value: "#f9fafcd9" },
         canvasDarkAlpha: { value: "#161717d9" },
 
-        bodyLight: { value: "#ffffff" },
+        bodyLight: { value: "#f4f4f5" },
         bodyDark: { value: "#171717" },
 
-        bodyLightAlpha: { value: "#ffffffbf" },
+        bodyLightAlpha: { value: "#f4f4f5bf" },
         bodyDarkAlpha: { value: "#1a1b1cbf" },
 
         an0: { value: "#6b72800f" },
@@ -163,9 +163,9 @@ export const chakraConfig = defineConfig({
         placeholder: { value: "#9ca3af91" },
 
         neutral: {
-          50: { value: "#f7f7f7" },
-          100: { value: "#f2f2f2" },
-          200: { value: "#dbdbdb" },
+          50: { value: "#ededef" },
+          100: { value: "#e4e4e7" },
+          200: { value: "#d4d4d8" },
           300: { value: "#c2c2c2" },
           400: { value: "#a3a3a3" },
           500: { value: "#808080" },
@@ -2525,12 +2525,15 @@ export const chakraConfig = defineConfig({
           isolation: "isolate",
           bg: "bg.bodyAlpha",
           border: "1px solid",
-          borderColor: "an0 !important",
-          backdropFilter: "blur(6px) saturate(140%)",
-          WebkitBackdropFilter: "blur(6px) saturate(140%)",
+          borderColor: {
+            base: "rgba(255, 255, 255, 0.85) !important",
+            _dark: "an0 !important",
+          },
+          backdropFilter: "blur(10px) saturate(160%)",
+          WebkitBackdropFilter: "blur(10px) saturate(160%)",
           boxShadow: {
-            base: "inset 0 1px 0 0 rgba(255, 255, 255, 0.95)",
-            _dark: "inset 0 1px 0 0 rgba(255, 255, 255, 0.2)",
+            base: "inset 0 1px 0 0 #ffffff, 0 1px 3px rgba(0, 0, 0, 0.04)",
+            _dark: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
           },
           backgroundImage: {
             base: "linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 30%)",
@@ -2544,7 +2547,7 @@ export const chakraConfig = defineConfig({
             borderRadius: "inherit",
             pointerEvents: "none",
             background: {
-              base: "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(214, 214, 214, 0.28) 0%, rgba(161, 161, 170, 0) 70%)",
+              base: "radial-gradient(ellipse 60% 25% at 50% 100%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 70%)",
               _dark:
                 "radial-gradient(ellipse 80% 45% at 50% 105%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 70%)",
             },

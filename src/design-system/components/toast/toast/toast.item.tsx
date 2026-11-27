@@ -137,9 +137,9 @@ export const ToastItem = memo(function ToastItem(
       // bg={stackExpanded ? "bg.body" : tintDark("bg.body", index * 2)}
       layerStyle={"glass"}
       border={"1px solid"}
-      borderColor={"border.subtle"}
+      // border={"none"}
+      borderColor={"an0"}
       rounded={theme.radii.container}
-      shadow={"sm"}
       opacity={toastData.status === "visible" ? 1 : 0}
       tabIndex={0}
       userSelect={"text"}
