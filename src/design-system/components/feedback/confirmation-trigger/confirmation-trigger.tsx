@@ -24,6 +24,7 @@ import {
 } from "@phosphor-icons/react";
 import {
   isValidElement,
+  useEffect,
   useRef,
   useState,
   type ComponentType,
@@ -47,6 +48,13 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
   const [trackWidth, setTrackWidth] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isThresholdReached, setIsThresholdReached] = useState<boolean>(false);
+
+  // Effects
+  useEffect(() => {
+    if (trackRef.current) {
+      setTrackWidth(trackRef.current.clientWidth);
+    }
+  }, []);
 
   // Handlers
   const handlePointerDown = (e: PointerEvent<HTMLDivElement>) => {
@@ -103,7 +111,7 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
       userSelect={"none"}
       touchAction={"none"}
     >
-      {!isDragging && offsetX === 0 && (
+      {/* {!isDragging && offsetX === 0 && (
         <AbsoluteCenter w={"full"} px={12} pointerEvents={"none"}>
           <P
             fontSize={"sm"}
@@ -114,7 +122,7 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
             {label}
           </P>
         </AbsoluteCenter>
-      )}
+      )} */}
 
       <Box
         position={"relative"}
@@ -130,28 +138,22 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
           isDragging ? "none" : "width 220ms cubic-bezier(0.22, 1, 0.36, 1)"
         }
       >
-        {(isDragging || offsetX > 0) && (
-          <AbsoluteCenter
-            left={trackWidth > 0 ? `${trackWidth / 2 - 4}px` : "50%"}
-            w={trackWidth > 0 ? `${trackWidth}px` : "full"}
-            px={12}
-            zIndex={1}
-            pointerEvents={"none"}
+        <AbsoluteCenter
+          left={trackWidth > 0 ? `${trackWidth / 2 - 4}px` : "50%"}
+          w={trackWidth > 0 ? `${trackWidth}px` : "full"}
+          px={12}
+          zIndex={1}
+          pointerEvents={"none"}
+        >
+          <P
+            fontSize={"sm"}
+            color={isThresholdReached ? `${colorPalette}.contrast` : `fg/50`}
+            lineClamp={1}
           >
-            <P
-              fontSize={"sm"}
-              fontWeight={isThresholdReached ? "semibold" : "medium"}
-              color={
-                isThresholdReached
-                  ? `${colorPalette}.contrast`
-                  : `${colorPalette}.subtle`
-              }
-              lineClamp={1}
-            >
-              {isThresholdReached ? "Konfirmasi" : label}
-            </P>
-          </AbsoluteCenter>
-        )}
+            {isThresholdReached ? "Konfirmasi" : label}
+          </P>
+        </AbsoluteCenter>
+
         <Box
           position={"relative"}
           zIndex={2}
