@@ -105,7 +105,7 @@ const SlideToConfirm = (props: SlideToConfirmProps) => {
       w={"full"}
       h={"fit"}
       p={1}
-      rounded={theme.radii.component}
+      rounded={theme.radii.container}
       bg={"bg.subtle"}
       overflow={"hidden"}
       userSelect={"none"}
