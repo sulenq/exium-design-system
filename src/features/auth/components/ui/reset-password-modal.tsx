@@ -13,7 +13,7 @@ import { RadioIndicator } from "@/design-system/components/input/radio-indicator
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Separator } from "@/design-system/components/layout/separator/separator";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
@@ -61,7 +61,7 @@ export const ResetPasswordTrigger = (props: ResetPasswordTriggerProps) => {
   } = props;
 
   const { user, isAuthenticated } = useAuthSession();
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: customModalKey,
   });
 
@@ -103,7 +103,7 @@ export const ResetPasswordModal = (props: ResetPasswordModalProps) => {
     onClose,
   } = props;
 
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: customModalKey,
   });
 

@@ -11,7 +11,7 @@ import {
   VStack,
 } from "@/design-system/components/layout/flex-box/flex-box";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { P } from "@/design-system/components/typography/p/p";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
@@ -36,7 +36,7 @@ export const DesignSystemDocsPage = () => {
   const isSmallViewport = useIsSmallViewport();
   const search = useSearch({ from: "/design-system/ui" });
   const navigate = useNavigate({ from: "/design-system/ui" });
-  const mobileDrawer = usePopModal({ modalKey: "ds-docs-mobile-nav" });
+  const mobileDrawer = usePopDisclosure({ modalKey: "ds-docs-mobile-nav" });
   const { locale, setLocale } = useLocale();
 
   // Derived Values

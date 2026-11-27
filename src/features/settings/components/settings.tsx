@@ -1,7 +1,7 @@
 // src/features/settings/components/settings.tsx
 
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import type { PopModalTriggerProps } from "@/design-system/components/overlay/modal/modal.type";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { useIsSmallViewport } from "@/design-system/hooks/use-is-small-viewport";
@@ -17,7 +17,7 @@ export const SettingsTrigger = (props: PopModalTriggerProps) => {
   const { activeSettingNavKey } = useSearch({
     strict: false,
   });
-  const { isOpen, open, close } = usePopModal({
+  const { isOpen, open, close } = usePopDisclosure({
     modalKey,
     depth: activeSettingNavKey ? 2 : 1,
   });

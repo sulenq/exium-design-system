@@ -21,8 +21,6 @@ export type FieldProps = Omit<
   locked?: boolean;
   lockedText?: ReactNode;
   variant?: FieldVariant;
-  /** @deprecated Kept only for DurationInput; remove together with it. */
   hasValue?: boolean;
-  /** @deprecated Kept only for DurationInput; remove together with it. */
   isFloating?: boolean;
 };

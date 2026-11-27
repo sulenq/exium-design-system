@@ -47,7 +47,6 @@ export default function SelectInput(props: SelectProps) {
     defaultValue = "",
     onValueChange,
     options: optionsProp,
-    selectOptions: deprecatedSelectOptions,
     placeholder = "",
     clearable = true,
     size = "md",
@@ -71,7 +70,7 @@ export default function SelectInput(props: SelectProps) {
     ...restProps
   } = props;
 
-  const options = optionsProp ?? deprecatedSelectOptions ?? EMPTY_OPTIONS;
+  const options = optionsProp ?? EMPTY_OPTIONS;
   const isFetchingLoading = Boolean(isFetching || isLoading);
 
   // Stores

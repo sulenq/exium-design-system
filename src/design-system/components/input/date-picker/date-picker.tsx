@@ -43,7 +43,7 @@ import {
 } from "@/design-system/components/input/utils/date.utils";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Grid } from "@/design-system/components/layout/grid/grid";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
@@ -677,7 +677,7 @@ export const DatePickerTrigger = memo(function DatePickerTrigger(
     ...restProps
   } = props;
 
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: propsModalKey,
   });
 

@@ -14,7 +14,7 @@ import { useFocusAlertContext } from "@/design-system/components/focus-alert/foc
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Box, Circle } from "@/design-system/components/layout/box/box";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
@@ -54,7 +54,7 @@ export const FocusAlertItem = (props: FocusAlertItemProps) => {
   const modalKey = modalKeyProp ?? ctx?.modalKey ?? "";
 
   // Hooks
-  const { isOpen, open, close } = usePopModal({ modalKey });
+  const { isOpen, open, close } = usePopDisclosure({ modalKey });
 
   return (
     <Modal.Root
@@ -105,7 +105,7 @@ export const FocusAlertTrigger = (props: FocusAlertTriggerProps) => {
   } = props;
 
   // Hooks
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: modalKeyProp,
   });
 

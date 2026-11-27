@@ -11,7 +11,7 @@ import type {
 import { SearchInput } from "@/design-system/components/input/search-input/search-input";
 import { HStack, VStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Kbd } from "@/design-system/components/typography/kbd/kbd";
 import { P } from "@/design-system/components/typography/p/p";
@@ -53,7 +53,7 @@ export const FocusSearchTrigger = <T,>(props: FocusSearchTriggerProps<T>) => {
   const { children, modalKey, queryKey, searchIndex, onResultSelect } = props;
 
   // Hooks
-  const { isOpen, open, close } = usePopModal({
+  const { isOpen, open, close } = usePopDisclosure({
     modalKey,
   });
 

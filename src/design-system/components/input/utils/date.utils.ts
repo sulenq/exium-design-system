@@ -20,7 +20,6 @@ import {
 // Constants
 // -------------------------------------------------------------------------------------
 
-/** @deprecated English only. Use `getMonthNames(locale)`. */
 export const MONTHS = [
   "January",
   "February",
@@ -36,7 +35,6 @@ export const MONTHS = [
   "December",
 ] as const;
 
-/** @deprecated English only. Use `getMonthNames(locale, "short")`. */
 export const MONTHS_SHORT = [
   "Jan",
   "Feb",
@@ -52,7 +50,6 @@ export const MONTHS_SHORT = [
   "Dec",
 ] as const;
 
-/** @deprecated English only. Use `getWeekdayNames(locale)`. */
 export const WEEKDAYS_HEADER = ["S", "M", "T", "W", "T", "F", "S"] as const;
 
 export const YEAR_PAGE_SIZE = 16;

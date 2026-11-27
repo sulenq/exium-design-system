@@ -8,10 +8,6 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { startTransition, useCallback, useEffect, useMemo, useRef } from "react";
 
 export const OVERLAY_SEARCH_PARAM_KEY = "overlay";
-/**
- * @deprecated Use OVERLAY_SEARCH_PARAM_KEY ("overlay") instead.
- */
-export const MODAL_SEARCH_PARAM_KEY = OVERLAY_SEARCH_PARAM_KEY;
 
 // Module-level tracking for overlays opened through open() in this session
 const openedByApp = new Set<string>();

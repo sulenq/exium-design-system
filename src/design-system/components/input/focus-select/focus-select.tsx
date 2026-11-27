@@ -20,7 +20,7 @@ import {
   VStack,
 } from "@/design-system/components/layout/flex-box/flex-box";
 import { VScrollContainer } from "@/design-system/components/layout/scroll-container/scroll-container";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
@@ -100,7 +100,7 @@ export function FocusSelectInput(props: FocusSelectInputProps) {
   );
 
   // Hooks
-  const { isOpen, open, close } = usePopModal({
+  const { isOpen, open, close } = usePopDisclosure({
     modalKey: resolvedModalKey,
   });
 

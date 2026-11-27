@@ -1,6 +1,6 @@
 import { Button } from "@/design-system/components/button/button/button";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
@@ -352,7 +352,7 @@ const DrawerPlaygroundDemo = (props?: Record<string, unknown>) => {
   const size =
     (props?.size as "xs" | "sm" | "md" | "lg" | "xl" | "full") || "xs";
 
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: "docs-drawer",
   });
   return (
@@ -421,7 +421,7 @@ const DialogPlaygroundDemo = (props?: Record<string, unknown>) => {
   const scrollBehavior =
     (props?.scrollBehavior as "inside" | "outside") || "inside";
 
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: "docs-dialog",
   });
 
@@ -493,11 +493,11 @@ const ModalPlaygroundDemo = ({
 }: {
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "full";
 }) => {
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: "docs-modal",
   });
 
-  const childModal = usePopModal({
+  const childModal = usePopDisclosure({
     modalKey: `${modalKey}.child`,
   });
 

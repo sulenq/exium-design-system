@@ -36,7 +36,7 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
     } = props;
 
     // Derived Values
-    // @deprecated Inspect children props recursively to resolve hasValue - kept only for DurationInput; remove together with it.
+    // Inspect children props recursively to resolve hasValue - kept for DurationInput.
     const childHasValue = useMemo(() => {
       let found = false;
       const scan = (nodes: ReactNode) => {
@@ -119,12 +119,12 @@ export const Field = forwardRef<HTMLDivElement, FieldProps>(
 
     return (
       <ChakraField.Root
-          ref={ref}
-          gap={1}
-          readOnly={locked || undefined}
-          data-locked={locked || undefined}
-          {...restProps}
-        >
+        ref={ref}
+        gap={1}
+        readOnly={locked || undefined}
+        data-locked={locked || undefined}
+        {...restProps}
+      >
         {label && (
           <ChakraField.Label fontSize={"md"} {...labelProps}>
             <P fontSize={"xs"} fontWeight={"medium"} color={"fg.subtle"}>

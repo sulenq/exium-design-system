@@ -18,7 +18,7 @@ import type { ComponentDocSpec } from "@/features/design-system-docs/types/ds-do
 import { WifiSlashIcon } from "@phosphor-icons/react";
 import { ConfirmationTrigger } from "@/design-system/components/feedback/confirmation-trigger/confirmation-trigger";
 import { FocusAlertItem } from "@/design-system/components/focus-alert/focus-alert/focus-alert";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { toast } from "@/design-system/components/toast";
 import { Alert } from "@/design-system/components/feedback/alert/alert";
 import {
@@ -758,7 +758,7 @@ export const FEEDBACK_DOCS: Record<string, ComponentDocSpec> = {
 };
 
 const FocusAlertPlaygroundDemo = (props: Record<string, unknown>) => {
-  const { modalKey, open } = usePopModal({ modalKey: "docs-focus-alert-demo" });
+  const { modalKey, open } = usePopDisclosure({ modalKey: "docs-focus-alert-demo" });
   return (
     <VStack gap={3}>
       <Button variant={"outline"} onClick={() => open()}>

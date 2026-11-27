@@ -29,8 +29,6 @@ export type SelectProps = Omit<
   defaultValue?: string;
   onValueChange?: (value: string, option?: SelectOption) => void;
   options?: SelectOption[];
-  /** @deprecated use `options` instead */
-  selectOptions?: SelectOption[];
   placeholder?: string;
   clearable?: boolean;
   width?: string | number;

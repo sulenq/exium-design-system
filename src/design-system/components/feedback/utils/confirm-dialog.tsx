@@ -6,7 +6,7 @@ import { focusAlert } from "@/design-system/components/focus-alert/utils/focus-a
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { Circle } from "@/design-system/components/layout/box/box";
 import { VStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
@@ -33,7 +33,7 @@ export const ConfirmDialogModal = (props: {
   } = options;
 
   // Hooks
-  const { isOpen, close } = usePopModal({ modalKey });
+  const { isOpen, close } = usePopDisclosure({ modalKey });
 
   // Resolved Values
   const resolvedTitle = title ?? t["action.confirm"]?.() ?? "Konfirmasi";

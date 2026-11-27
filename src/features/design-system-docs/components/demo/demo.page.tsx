@@ -69,7 +69,7 @@ import {
 import { Splitter } from "@/design-system/components/layout/splitter/splitter";
 import { Image } from "@/design-system/components/media/image/image";
 import { ExternalLink } from "@/design-system/components/navigation/link/link";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Dialog } from "@/design-system/components/overlay/dialog/dialog";
 import { Drawer } from "@/design-system/components/overlay/drawer/drawer";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
@@ -1069,7 +1069,7 @@ const UtilitiesCard = () => {
 
 const OModal = () => {
   // Hooks
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: "exampleModal",
   });
 
@@ -1112,7 +1112,7 @@ const OModal = () => {
 
 const ODialog = () => {
   // Hooks
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: "exampleDialog",
   });
 
@@ -1154,7 +1154,7 @@ const ODialog = () => {
 
 const ODrawer = () => {
   // Hooks
-  const { modalKey, isOpen, open, close } = usePopModal({
+  const { modalKey, isOpen, open, close } = usePopDisclosure({
     modalKey: "exampleDrawer",
   });
 

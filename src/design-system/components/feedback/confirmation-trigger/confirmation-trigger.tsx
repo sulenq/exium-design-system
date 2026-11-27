@@ -11,7 +11,7 @@ import {
   HStack,
   VStack,
 } from "@/design-system/components/layout/flex-box/flex-box";
-import { usePopModal } from "@/design-system/components/overlay/hooks/use-pop-modal";
+import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
 import { Modal } from "@/design-system/components/overlay/modal/modal";
 import { Heading } from "@/design-system/components/typography/heading/heading";
 import { P } from "@/design-system/components/typography/p/p";
@@ -208,7 +208,7 @@ export const ConfirmationTrigger = (props: ConfirmationTriggerProps) => {
   const { theme } = useThemeStore();
 
   // Hooks (Modal)
-  const popModal = usePopModal({
+  const popModal = usePopDisclosure({
     modalKey,
   });
 
