@@ -261,7 +261,7 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
     title: "ClickableContainer",
     category: "Layout",
     description:
-      "Membuat seluruh area kartu bisa diklik untuk memicu satu input di dalamnya (misalnya checkbox atau file input), sehingga target sentuh jauh lebih besar dari input itu sendiri.",
+      "Membuat seluruh area container bisa diklik untuk mendelegasikan interaksi ke elemen target (misalnya memfokuskan Input atau memicu file input tersembunyi), sehingga target klik jauh lebih luas.",
     importPath:
       'import { ClickableContainer } from "@/design-system/components/layout/clickable-container/clickable-container";',
     component: ClickableContainer,
@@ -297,24 +297,37 @@ export const LAYOUT_DOCS: Record<string, ComponentDocSpec> = {
     renderPlayground: (props) => (
       <ClickableContainer
         asLabel={Boolean(props.asLabel)}
+        w={"full"}
+        maxW={"md"}
         p={4}
         gap={3}
-        flexDir={"row"}
-        align={"center"}
         border={"1px solid"}
         borderColor={"border.subtle"}
-        rounded={"md"}
+        rounded={"lg"}
         cursor={"pointer"}
-        w={"full"}
-        maxW={"360px"}
+        transition={"border-color 150ms ease"}
+        _hover={{ borderColor: "border.emphasized" }}
       >
-        <input type={"checkbox"} aria-label={"Sudah divaksin"} />
-        <VStack align={"start"} gap={0}>
-          <P fontWeight={"medium"}>{"Sudah divaksin"}</P>
+        <VStack align={"start"} gap={1}>
+          <P fontWeight={"medium"}>{"Fokus Input via Container"}</P>
           <P fontSize={"sm"} color={"fg.muted"}>
-            {"Klik di mana saja pada kartu ini."}
+            {"Klik di mana saja pada kartu ini untuk memfokuskan input."}
           </P>
         </VStack>
+        <input
+          type={"text"}
+          placeholder={"Ketik catatan..."}
+          style={{
+            width: "100%",
+            height: "36px",
+            padding: "0 12px",
+            borderRadius: "8px",
+            border: "1px solid var(--chakra-colors-border-subtle)",
+            background: "transparent",
+            fontSize: "14px",
+            outline: "none",
+          }}
+        />
       </ClickableContainer>
     ),
   },
