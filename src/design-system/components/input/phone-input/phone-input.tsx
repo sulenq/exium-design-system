@@ -1,6 +1,5 @@
 // src/design-system/components/input/phone-input/phone-input.tsx
 
-import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import {
   FieldContext,
   useFieldContextValue,
@@ -10,7 +9,7 @@ import type {
   PhoneInputProps,
   PhoneInputValue,
 } from "@/design-system/components/input/phone-input/phone-input.type";
-import SelectInput from "@/design-system/components/input/select/select";
+import { PhoneCountrySelect } from "@/design-system/components/input/phone-input/phone-country-select";
 import type { SelectOption } from "@/design-system/components/input/select/select.type";
 import {
   findPhoneCountry,
@@ -29,9 +28,8 @@ import {
   PHONE_COUNTRIES,
 } from "@/design-system/constants/phone-countries";
 import type { PhoneCountry } from "@/design-system/constants/types/phone-countries.type";
-import { getLocale, t } from "@/shared/libs/i18n";
+import { getLocale } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
-import { CaretDownIcon as ChevronDownIcon } from "@phosphor-icons/react";
 import {
   forwardRef,
   useCallback,
@@ -66,12 +64,12 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
       onChange,
       disabled = false,
       readOnly = false,
+      floatingLabel: floatingLabelProp = true,
       ...restProps
     } = props;
 
     // Contexts
     const fieldContext = useFieldContextValue();
-    const isFloatingVariant = fieldContext?.variant === "floating";
     const inputFieldContext = useMemo(
       () => (fieldContext ? { ...fieldContext, hasValue: true } : null),
       [fieldContext],
@@ -319,7 +317,6 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
         data-phone-prefix={dialCodeLabel}
         // Input adornments ignore pointer events by default; the selector needs them
         pointerEvents={prefixPointerEvents}
-        {...(isFloatingVariant && { pt: "18px" })}
       >
         {isCountryStatic && (
           <Box
@@ -332,61 +329,14 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
         )}
 
         {!isCountryStatic && (
-          <Box
-            css={{
-              "& [data-part='control'], & [data-part='trigger'], & button": {
-                border: "none !important",
-                boxShadow: "none !important",
-                outline: "none !important",
-                bg: "transparent !important",
-                minH: "unset !important",
-                ps: "1 !important",
-                pe: "0 !important",
-              },
-              "& [data-part='trigger']:focus-visible": {
-                outline:
-                  "2px solid var(--chakra-colors-border-emphasized) !important",
-                outlineOffset: "2px",
-              },
-            }}
-          >
-            <SelectInput
-              value={activeCountry.code}
-              options={countryOptions}
-              clearable={false}
-              disabled={disabled}
-              modalKey={modalKey}
-              title={t["common.select_country"]()}
-              placeholder={t["common.select_country"]()}
-              contentProps={{ minW: "280px", w: "auto" }}
-              trigger={
-                <HStack align={"center"} gap={1}>
-                  {prefixLabel}
-                  <AppIcon
-                    icon={ChevronDownIcon}
-                    size={"sm"}
-                    color={"fg.subtle"}
-                  />
-                </HStack>
-              }
-              renderOption={(option) => (
-                <HStack gap={3} align={"center"} flex={1} minW={0}>
-                  <P lineHeight={1} aria-hidden={true}>
-                    {String(option.flag ?? "")}
-                  </P>
-                  <P flex={1} whiteSpace={"nowrap"} textAlign={"start"}>
-                    {String(option.name ?? option.label)}
-                  </P>
-                  <P color={"fg.muted"} whiteSpace={"nowrap"}>
-                    {String(option.dialCode ?? "")}
-                  </P>
-                </HStack>
-              )}
-              onValueChange={(nextCode) => {
-                if (nextCode) handleCountrySelect(nextCode);
-              }}
-            />
-          </Box>
+          <PhoneCountrySelect
+            value={activeCountry.code}
+            options={countryOptions}
+            prefixLabel={prefixLabel}
+            disabled={disabled}
+            modalKey={modalKey}
+            onValueChange={handleCountrySelect}
+          />
         )}
       </Box>
     );
@@ -410,6 +360,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
         {/* The prefix is always visible, so the floating label never rests over it */}
         <FieldContext.Provider value={inputFieldContext}>
           <Input
+            floatingLabel={floatingLabelProp}
             type={"tel"}
             inputMode={"tel"}
             autoComplete={"tel-national"}

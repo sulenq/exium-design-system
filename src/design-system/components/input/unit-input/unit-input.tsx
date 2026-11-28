@@ -62,6 +62,7 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
     inputProps,
     disabled = false,
     readOnly = false,
+    floatingLabel: floatingLabelProp = true,
     ...restProps
   } = props;
 
@@ -70,7 +71,8 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
 
   // Contexts
   const fieldContext = useFieldContextValue();
-  const isFloatingVariant = fieldContext?.variant === "floating";
+  const isFloatingVariant =
+    floatingLabelProp && fieldContext?.variant === "floating";
 
   // Registry definitions
   const quantityDef = UNIT_REGISTRY[quantity];

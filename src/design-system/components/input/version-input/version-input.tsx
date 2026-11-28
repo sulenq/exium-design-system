@@ -181,6 +181,7 @@ export const VersionInput = memo(
       withPrefix = true,
       min = 0,
       max = 999,
+      floatingLabel: floatingLabelProp = true,
       ...restProps
     } = props;
 
@@ -190,7 +191,8 @@ export const VersionInput = memo(
     // Contexts
     const chakraFieldContext = useFieldContext();
     const fieldContext = useFieldContextValue();
-    const isFloatingVariant = fieldContext?.variant === "floating";
+    const isFloatingVariant =
+      floatingLabelProp && fieldContext?.variant === "floating";
     const floatingLabel =
       propLabel ?? (isFloatingVariant ? fieldContext?.label : undefined);
     const isOptional = fieldContext?.optional;

@@ -60,6 +60,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       strengthOptions = DEFAULT_STRENGTH_OPTIONS,
       onChange,
       startElement,
+      floatingLabel: floatingLabelProp = true,
       ...restProps
     } = props;
 
@@ -79,7 +80,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     // Contexts
     const fieldContext = useFieldContextValue();
-    const isFloatingVariant = fieldContext?.variant === "floating";
+    const isFloatingVariant =
+      floatingLabelProp && fieldContext?.variant === "floating";
     const floatingLabel = isFloatingVariant ? fieldContext?.label : undefined;
     const isOptional = fieldContext?.optional;
 

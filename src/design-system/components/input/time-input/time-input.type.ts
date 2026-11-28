@@ -45,6 +45,7 @@ export type TimeInputProps = Omit<
   name?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLElement>) => void;
+  floatingLabel?: boolean;
 };
 
 export type TimeWheelColumnProps = {

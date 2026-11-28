@@ -59,12 +59,14 @@ export const NumberInput = (props: NumberInputProps) => {
     stepperVariant = "default",
     value,
     defaultValue,
+    floatingLabel: floatingLabelProp = true,
     ...restProps
   } = props;
 
   // Contexts
   const fieldContext = useFieldContextValue();
-  const isFloatingVariant = fieldContext?.variant === "floating";
+  const isFloatingVariant =
+    floatingLabelProp && fieldContext?.variant === "floating";
   const floatingLabel = isFloatingVariant ? fieldContext?.label : undefined;
   const isOptional = fieldContext?.optional;
 

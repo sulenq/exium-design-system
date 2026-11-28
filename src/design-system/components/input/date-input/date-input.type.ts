@@ -12,6 +12,7 @@ export type DateInputProps = DatePickerProps & {
   name?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  floatingLabel?: boolean;
 };
 
 export type FieldKey = "day" | "month" | "year";

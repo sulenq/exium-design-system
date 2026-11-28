@@ -48,5 +48,6 @@ export type SelectProps = Omit<
   errorMessage?: string;
   title?: string;
   modalKey?: string;
+  floatingLabel?: boolean;
 };
 

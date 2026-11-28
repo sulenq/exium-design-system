@@ -183,14 +183,35 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
             <Field label={"Nama lengkap"}>
               <Input />
             </Field>
+            <Field label={"Kata sandi"}>
+              <PasswordInput />
+            </Field>
             <Field label={"Nominal"}>
               <NumberInput />
             </Field>
             <Field label={"Berat"}>
               <UnitInput quantity={"mass"} />
             </Field>
+            <Field label={"Nomor telepon"}>
+              <PhoneInput modalKey={"fieldset-phone-input"} />
+            </Field>
             <Field label={"Tanggal"}>
               <DateInput modalKey={"fieldset-date-input"} />
+            </Field>
+            <Field label={"Rentang tanggal"}>
+              <DatePicker />
+            </Field>
+            <Field label={"Waktu"}>
+              <TimeInput modalKey={"fieldset-time-input"} />
+            </Field>
+            <Field label={"PIN"}>
+              <PinInput />
+            </Field>
+            <Field label={"Versi"}>
+              <VersionInput />
+            </Field>
+            <Field label={"Daftar item"}>
+              <StringArrayInput />
             </Field>
             <Field label={"Select"}>
               <SelectInput
@@ -215,6 +236,46 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
             </Field>
             <Field label={"Lampiran dokumen"} variant={"default"}>
               <FileInput />
+            </Field>
+            <Field label={"Persetujuan"} variant={"default"}>
+              <Checkbox>{"Saya setuju dengan ketentuan"}</Checkbox>
+            </Field>
+            <Field label={"Pilihan radio"} variant={"default"}>
+              <RadioInput
+                options={[
+                  { label: "Opsi A", value: "a" },
+                  { label: "Opsi B", value: "b" },
+                ]}
+              />
+            </Field>
+            <Field label={"Kartu pilihan"} variant={"default"}>
+              <RadioCardInput.Root defaultValue={"a"} w={"full"}>
+                <HStack gap={2} w={"full"}>
+                  <RadioCardInput.Item value={"a"} flex={1}>
+                    <RadioCardInput.ItemControl>
+                      <RadioCardInput.ItemText>{"Opsi A"}</RadioCardInput.ItemText>
+                      <RadioCardInput.ItemIndicator />
+                    </RadioCardInput.ItemControl>
+                  </RadioCardInput.Item>
+                  <RadioCardInput.Item value={"b"} flex={1}>
+                    <RadioCardInput.ItemControl>
+                      <RadioCardInput.ItemText>{"Opsi B"}</RadioCardInput.ItemText>
+                      <RadioCardInput.ItemIndicator />
+                    </RadioCardInput.ItemControl>
+                  </RadioCardInput.Item>
+                </HStack>
+              </RadioCardInput.Root>
+            </Field>
+            <Field label={"Segmen"} variant={"default"}>
+              <SegmentGroupInput
+                options={[
+                  { label: "Opsi A", value: "a" },
+                  { label: "Opsi B", value: "b" },
+                ]}
+              />
+            </Field>
+            <Field label={"Slider"} variant={"default"}>
+              <Slider defaultValue={[50]} />
             </Field>
             <Field label={"Notifikasi"} variant={"default"}>
               <Switch label={"Aktifkan notifikasi"} />

@@ -211,6 +211,7 @@ export const DateInput = memo(
       locale,
       disabled,
       datePickerSubtitle,
+      floatingLabel: floatingLabelProp = true,
       ...restProps
     } = props;
 
@@ -220,7 +221,8 @@ export const DateInput = memo(
     // Contexts
     const chakraFieldContext = useFieldContext();
     const customFieldContext = useFieldContextValue();
-    const isFloatingVariant = customFieldContext?.variant === "floating";
+    const isFloatingVariant =
+      floatingLabelProp && customFieldContext?.variant === "floating";
     const floatingLabel = isFloatingVariant
       ? customFieldContext?.label
       : undefined;

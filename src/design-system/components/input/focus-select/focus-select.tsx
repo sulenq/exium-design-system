@@ -74,6 +74,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
     trigger,
     children,
     renderOption,
+    floatingLabel: floatingLabelProp = true,
     ...restProps
   } = props;
 
@@ -175,7 +176,8 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
 
   // Contexts
   const fieldContext = useFieldContextValue();
-  const isFloatingField = fieldContext?.variant === "floating";
+  const isFloatingField =
+    floatingLabelProp && fieldContext?.variant === "floating";
   const floatingLabel = isFloatingField ? fieldContext?.label : undefined;
   const isOptional = fieldContext?.optional;
   const isLabelFloating = Boolean(currentValue) || isOpen;

@@ -5,4 +5,5 @@ import type { ReactNode } from "react";
 
 export type TextareaProps = ChakraTextareaProps & {
   startElement?: ReactNode;
+  floatingLabel?: boolean;
 };

@@ -20,7 +20,12 @@ import { forwardRef, useCallback, useRef, useState } from "react";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   // Props
-  const { startElement, endElement, ...restProps } = props;
+  const {
+    startElement,
+    endElement,
+    floatingLabel: floatingLabelProp = true,
+    ...restProps
+  } = props;
 
   // Refs
   const internalInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +43,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   // Contexts
   const fieldContext = useFieldContextValue();
-  const isFloatingVariant = fieldContext?.variant === "floating";
+  const isFloatingVariant =
+    floatingLabelProp && fieldContext?.variant === "floating";
   const floatingLabel = isFloatingVariant ? fieldContext?.label : undefined;
   const isOptional = fieldContext?.optional;
 

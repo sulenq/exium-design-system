@@ -70,6 +70,7 @@ export default function SelectInput(props: SelectProps) {
     errorMessage,
     title = t["common.select_option"](),
     modalKey,
+    floatingLabel: floatingLabelProp = true,
     ...restProps
   } = props;
 
@@ -79,7 +80,8 @@ export default function SelectInput(props: SelectProps) {
   // Stores
   const { theme } = useThemeStore();
   const fieldContext = useFieldContextValue();
-  const isFloatingField = fieldContext?.variant === "floating";
+  const isFloatingField =
+    floatingLabelProp && fieldContext?.variant === "floating";
   const floatingLabel = isFloatingField ? fieldContext?.label : undefined;
   const isOptional = fieldContext?.optional;
 

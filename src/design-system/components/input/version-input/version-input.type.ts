@@ -23,6 +23,7 @@ export type VersionInputProps = {
   withPrefix?: boolean;
   min?: number;
   max?: number;
+  floatingLabel?: boolean;
 };
 
 export type VersionSegmentInputProps = {

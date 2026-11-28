@@ -19,7 +19,11 @@ import { useCallback, useRef, useState } from "react";
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   function Textarea(props, ref) {
     // Props
-    const { startElement, ...restProps } = props;
+    const {
+      startElement,
+      floatingLabel: floatingLabelProp = true,
+      ...restProps
+    } = props;
 
     // Refs
     const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -37,7 +41,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     // Contexts
     const fieldContext = useFieldContextValue();
-    const isFloatingVariant = fieldContext?.variant === "floating";
+    const isFloatingVariant =
+      floatingLabelProp && fieldContext?.variant === "floating";
     const floatingLabel = isFloatingVariant ? fieldContext?.label : undefined;
     const isOptional = fieldContext?.optional;
 

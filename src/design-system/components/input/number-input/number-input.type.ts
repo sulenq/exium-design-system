@@ -14,6 +14,7 @@ export type NumberInputProps = NumberInputRootProps & {
   stepperVariant?: "default" | "borderless";
   inputProps?: NumberInputInputProps;
   onValueChange?: (details: { value: number; formattedValue: string }) => void;
+  floatingLabel?: boolean;
 };
 
 export type SteppedNumberInputProps = NumberInputRootProps & {

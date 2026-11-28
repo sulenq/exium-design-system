@@ -6,4 +6,5 @@ import type { ReactNode } from "react";
 export type InputProps = ChakraInputProps & {
   startElement?: ReactNode;
   endElement?: ReactNode;
+  floatingLabel?: boolean;
 };

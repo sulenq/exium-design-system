@@ -210,6 +210,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       name,
       onChange,
       onBlur,
+      floatingLabel: floatingLabelProp = true,
       ...restProps
     } = props;
 
@@ -254,7 +255,8 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const resolvedTitle = title ?? "Pilih Waktu";
     const modalKey = propsModalKey ?? `time-input-${name ?? "picker"}`;
 
-    const isFloatingField = customFieldContext?.variant === "floating";
+    const isFloatingField =
+      floatingLabelProp && customFieldContext?.variant === "floating";
     const floatingLabel = isFloatingField
       ? customFieldContext?.label
       : undefined;

@@ -56,4 +56,5 @@ export type FocusSelectInputProps = Omit<
   /** When true, automatically focuses the search input when modal opens. Defaults to false. */
   autoFocusSearch?: boolean;
   renderOption?: (option: FocusSelectOption) => React.ReactNode;
+  floatingLabel?: boolean;
 };
