@@ -76,7 +76,7 @@ export const ColorModeToggleTrigger = (props: BoxProps) => {
       Math.max(x, window.innerWidth - x),
       Math.max(y, window.innerHeight - y),
     );
-    const nextBg = colorMode === "light" ? "#09090b" : "#ffffff";
+    const nextBg = colorMode === "light" ? "#171717" : "#f7f7f7";
 
     setTransition({ phase: "growing", x, y, radius, nextBg });
   }
