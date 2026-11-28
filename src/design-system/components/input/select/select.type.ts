@@ -37,7 +37,7 @@ export type SelectProps = Omit<
   portalled?: boolean;
   portalRef?: RefObject<HTMLElement | null>;
   suffixLabel?: ReactNode;
-  trigger?: ReactNode | ((params: SelectTriggerRenderParams) => ReactNode);
+  triggerRender?: ReactNode | ((params: SelectTriggerRenderParams) => ReactNode);
   renderOption?: (option: SelectOption) => ReactNode;
   contentProps?: Partial<ChakraSelect.ContentProps>;
   isFetching?: boolean;

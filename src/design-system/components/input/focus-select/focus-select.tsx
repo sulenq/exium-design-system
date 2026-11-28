@@ -71,7 +71,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
     variant = "outline",
     w = "full",
     suffixLabel,
-    trigger,
+    triggerRender,
     children,
     renderOption,
     floatingLabel: floatingLabelProp = true,
@@ -183,7 +183,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
   const isLabelFloating = Boolean(currentValue);
 
   // Trigger Node
-  const customTrigger = trigger ?? children;
+  const customTrigger = triggerRender ?? children;
 
   // Helper
   const renderStartElement = (

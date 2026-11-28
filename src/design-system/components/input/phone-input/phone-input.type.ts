@@ -1,6 +1,7 @@
 // src/design-system/components/input/phone-input/phone-input.type.ts
 
 import type { InputProps } from "@/design-system/components/input/input/input.type";
+import type { SelectProps } from "@/design-system/components/input/select/select.type";
 import type { ChangeEvent } from "react";
 
 export type PhoneInputValue = {
@@ -44,10 +45,11 @@ export type PhoneInputProps = Omit<
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export type PhoneCountrySelectProps = {
+export type PhoneCountrySelectProps = Omit<
+  SelectProps,
+  "value" | "onValueChange" | "options"
+> & {
   value: string;
   countries?: string[];
-  disabled?: boolean;
-  modalKey?: string;
   onValueChange: (countryCode: string) => void;
 };

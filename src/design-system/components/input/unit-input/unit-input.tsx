@@ -1,20 +1,18 @@
 // src/design-system/components/input/unit-input/unit-input.tsx
 
-import {
-  FieldContext,
-  useFieldContextValue,
-} from "@/design-system/components/input/context/field.context";
+import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
 import { NumberInput } from "@/design-system/components/input/number-input/number-input";
-import SelectInput from "@/design-system/components/input/select/select";
+import { UnitSelect } from "@/design-system/components/input/unit-input/unit-select";
 import type { SelectOption } from "@/design-system/components/input/select/select.type";
 import type {
   Measurement,
   UnitInputProps,
   UnitInputValue,
 } from "@/design-system/components/input/unit-input/unit-input.type";
-import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
-import { P } from "@/design-system/components/typography/p/p";
+import { Separator } from "@/design-system/components/layout/separator/separator";
+import { useThemeStore } from "@/design-system/stores/theme-store";
+import { useFieldContext } from "@chakra-ui/react";
 import { VISUALLY_HIDDEN_INPUT_STYLE } from "@/design-system/constants/css-preset";
 import { UNIT_REGISTRY } from "@/design-system/constants/units";
 import type {
@@ -39,7 +37,7 @@ function isMeasurement<Q extends UnitQuantity>(
   return typeof val === "object" && val !== null && "unit" in val;
 }
 
-export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => {
+export const UnitInput = <Q extends UnitQuantity>(props: UnitInputProps<Q>) => {
   // Props
   const {
     quantity,
@@ -67,12 +65,15 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
   } = props;
 
   // Stores
+  const { theme } = useThemeStore();
   const measurementSystem = useMeasurementSystem();
 
   // Contexts
+  const chakraFieldContext = useFieldContext();
   const fieldContext = useFieldContextValue();
   const isFloatingVariant =
     floatingLabelProp && fieldContext?.variant === "floating";
+  const invalid = Boolean(chakraFieldContext?.invalid);
 
   // Registry definitions
   const quantityDef = UNIT_REGISTRY[quantity];
@@ -372,11 +373,7 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
   const currentLocale = getLocale();
 
   const unitOptions: SelectOption[] = useMemo(() => {
-    const formatOption = (u: {
-      key: string;
-      symbol: string;
-      name: string;
-    }) => {
+    const formatOption = (u: { key: string; symbol: string; name: string }) => {
       const localizedName = getLocalizedUnitName(
         quantity,
         u.key,
@@ -405,103 +402,50 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
     const ordered = [...neutrals, ...activeGroup, ...secondGroup];
 
     return ordered.map(formatOption);
-  }, [whitelistUnits, availableUnitDefs, measurementSystem, quantity, currentLocale]);
+  }, [
+    whitelistUnits,
+    availableUnitDefs,
+    measurementSystem,
+    quantity,
+    currentLocale,
+  ]);
 
   // Effective unit name for native form submission
   const resolvedUnitName = unitName ?? (name ? `${name}Unit` : undefined);
-
-  // Unit Dropdown Trigger JSX (integrated seamlessly as endElement)
-  const unitTriggerNode = (
-    <HStack h={"full"} align={"center"} gap={0}>
-      {/* 1px Vertical Divider between stepper and unit trigger */}
-      <Box
-        w={"1px"}
-        h={isFloatingVariant ? "26px" : "20px"}
-        bg={"border.muted"}
-      />
-
-      {/* Unit Select Dropdown */}
-      <Box
-        w={"auto"}
-        minW={"100px"}
-        h={"full"}
-        display={"flex"}
-        alignItems={"center"}
-        css={{
-          "& .chakra-select__control, & [data-part='control'], & .chakra-select__trigger, & [data-part='trigger'], & button":
-            {
-              border: "none !important",
-              borderWidth: "0 !important",
-              borderColor: "transparent !important",
-              boxShadow: "none !important",
-              outline: "none !important",
-              bg: "transparent !important",
-              minH: "unset !important",
-              _focus: {
-                boxShadow: "none !important",
-                border: "none !important",
-                outline: "none !important",
-              },
-              _focusVisible: {
-                boxShadow: "none !important",
-                border: "none !important",
-                outline: "none !important",
-              },
-              _active: {
-                boxShadow: "none !important",
-                border: "none !important",
-              },
+  const variant = restProps.variant;
+  const variantStyles =
+    variant === "subtle"
+      ? {
+          borderWidth: "1px",
+          borderColor: "transparent",
+          bg: "bg.subtle",
+          _focusWithin: {
+            borderColor: "colorPalette.focusRing",
+            outline: "1px solid",
+            outlineColor: "colorPalette.focusRing",
+          },
+        }
+      : variant === "flushed"
+        ? {
+            borderBottomWidth: "1px",
+            borderColor: "border",
+            bg: "transparent",
+            rounded: "0",
+            px: 0,
+            _focusWithin: {
+              borderColor: "colorPalette.focusRing",
             },
-        }}
-      >
-        <FieldContext.Provider value={null}>
-          <SelectInput
-          id={`unit-select-${quantity}`}
-          key={`unit-select-${quantity}`}
-          value={currentUnit}
-          options={unitOptions}
-          clearable={false}
-          disabled={disabled || readOnly}
-          contentProps={{
-            minW: "220px",
-            w: "auto",
-          }}
-          renderOption={(opt) => (
-            <HStack
-              gap={3}
-              align={"center"}
-              flex={1}
-              minW={0}
-              justify={"start"}
-            >
-              <P
-                fontWeight={"semibold"}
-                w={"48px"}
-                minW={"48px"}
-                whiteSpace={"nowrap"}
-                textAlign={"start"}
-              >
-                {String(opt.symbol || "")}
-              </P>
-              <P
-                color={"fg.muted"}
-                whiteSpace={"nowrap"}
-                textAlign={"start"}
-                flex={1}
-              >
-                {String(opt.name || opt.label)}
-              </P>
-            </HStack>
-          )}
-          onValueChange={(val) => {
-            if (val) handleUnitSelect(val);
-          }}
-          {...unitTriggerProps}
-        />
-        </FieldContext.Provider>
-      </Box>
-    </HStack>
-  );
+          }
+        : {
+            borderWidth: "1px",
+            borderColor: "border",
+            bg: "transparent",
+            _focusWithin: {
+              borderColor: "colorPalette.focusRing",
+              outline: "1px solid",
+              outlineColor: "colorPalette.focusRing",
+            },
+          };
 
   return (
     <>
@@ -518,29 +462,66 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
         />
       )}
 
-      <NumberInput
-        name={name}
-        inputProps={inputProps}
-        disabled={disabled}
-        readOnly={readOnly}
-        min={resolvedMin}
-        max={resolvedMax}
-        step={step}
-        stepper={stepper}
-        stepperVariant={"borderless"}
-        endElement={unitTriggerNode}
-        endElementPlacement={"after-stepper"}
-        {...(controlledValue !== undefined
-          ? { value: String(controlledValue) }
-          : convertedValue !== null
-            ? { value: convertedValue }
-            : {})}
-        {...(defaultValue !== undefined && {
-          defaultValue: defaultValue,
+      <HStack
+        w={"full"}
+        h={isFloatingVariant ? "48px" : "40px"}
+        align={"center"}
+        rounded={theme.radii.component}
+        opacity={disabled ? 0.5 : 1}
+        pointerEvents={disabled ? "none" : undefined}
+        {...variantStyles}
+        {...(invalid && {
+          borderColor: "border.error",
         })}
-        onValueChange={handleNumberChange}
-        {...restProps}
-      />
+      >
+        <NumberInput
+          name={name}
+          inputProps={inputProps}
+          disabled={disabled}
+          readOnly={readOnly}
+          min={resolvedMin}
+          max={resolvedMax}
+          step={step}
+          stepper={stepper}
+          stepperVariant={"borderless"}
+          floatingLabel={floatingLabelProp}
+          flex={1}
+          css={{
+            "& input": {
+              border: "none !important",
+              boxShadow: "none !important",
+              outline: "none !important",
+              bg: "transparent !important",
+            },
+          }}
+          {...(controlledValue !== undefined
+            ? { value: String(controlledValue) }
+            : convertedValue !== null
+              ? { value: convertedValue }
+              : {})}
+          {...(defaultValue !== undefined && {
+            defaultValue: defaultValue,
+          })}
+          onValueChange={handleNumberChange}
+          {...restProps}
+        />
+
+        <Separator
+          orientation={"vertical"}
+          h={isFloatingVariant ? "26px" : "20px"}
+          borderColor={"border.muted"}
+        />
+
+        <UnitSelect
+          value={currentUnit}
+          options={unitOptions}
+          disabled={disabled || readOnly}
+          onValueChange={handleUnitSelect}
+          border={"none"}
+          w={"100px"}
+          {...unitTriggerProps}
+        />
+      </HStack>
     </>
   );
-}
+};

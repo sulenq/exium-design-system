@@ -47,7 +47,7 @@ export type FocusSelectInputProps = Omit<
   /** When true, typing in the search input dynamically creates a custom option at the top of the list. Defaults to false. */
   customOption?: boolean;
   /** Optional custom trigger node or render function receiving trigger state */
-  trigger?:
+  triggerRender?:
     | React.ReactNode
     | ((params: FocusSelectTriggerRenderParams) => React.ReactNode);
   children?:

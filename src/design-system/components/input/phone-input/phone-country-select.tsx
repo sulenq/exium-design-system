@@ -9,7 +9,6 @@ import {
   getCountryName,
   getFlagEmoji,
 } from "@/design-system/components/input/utils/phone.utils";
-import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { P } from "@/design-system/components/typography/p/p";
 import { PHONE_COUNTRIES } from "@/design-system/constants/phone-countries";
@@ -28,6 +27,7 @@ export function PhoneCountrySelect(props: PhoneCountrySelectProps) {
     disabled = false,
     modalKey,
     onValueChange,
+    ...restProps
   } = props;
 
   // Derived Values
@@ -62,64 +62,65 @@ export function PhoneCountrySelect(props: PhoneCountrySelectProps) {
   }, [availableCountries, locale]);
 
   return (
-    <Box
-      css={{
-        "& [data-part='control'], & [data-part='trigger'], & button": {
-          border: "none !important",
-          boxShadow: "none !important",
-          outline: "none !important",
-          bg: "transparent !important",
-          minH: "unset !important",
-          ps: "1 !important",
-          pe: "0 !important",
-        },
-        "& [data-part='trigger']:focus-visible": {
-          outline:
-            "2px solid var(--chakra-colors-border-emphasized) !important",
-          outlineOffset: "2px",
-        },
-      }}
-    >
-      <SelectInput
-        value={value}
-        options={countryOptions}
-        clearable={false}
-        disabled={disabled}
-        modalKey={modalKey}
-        floatingLabel={false}
-        title={t["common.select_country"]()}
-        placeholder={t["common.select_country"]()}
-        contentProps={{ minW: "280px", w: "auto" }}
-        trigger={
-          <HStack align={"center"} gap={2}>
-            <HStack gap={1.5} align={"center"}>
-              <P lineHeight={1} aria-hidden={true}>
-                {getFlagEmoji(activeCountry.code)}
-              </P>
-              <P fontWeight={"medium"} whiteSpace={"nowrap"}>
-                {`+${activeCountry.dialCode}`}
-              </P>
-            </HStack>
-            <AppIcon icon={ChevronDownIcon} size={"sm"} color={"fg.subtle"} />
-          </HStack>
-        }
-        renderOption={(option) => (
-          <HStack gap={3} align={"center"} flex={1} minW={0}>
+    // <Box
+    //   css={{
+    //     "& [data-part='control'], & [data-part='trigger'], & button": {
+    //       border: "none !important",
+    //       boxShadow: "none !important",
+    //       outline: "none !important",
+    //       bg: "transparent !important",
+    //       minH: "unset !important",
+    //       ps: "1 !important",
+    //       pe: "0 !important",
+    //     },
+    //     "& [data-part='trigger']:focus-visible": {
+    //       outline:
+    //         "2px solid var(--chakra-colors-border-emphasized) !important",
+    //       outlineOffset: "2px",
+    //     },
+    //   }}
+    // >
+    <SelectInput
+      value={value}
+      options={countryOptions}
+      clearable={false}
+      disabled={disabled}
+      modalKey={modalKey}
+      floatingLabel={false}
+      title={t["common.select_country"]()}
+      placeholder={t["common.select_country"]()}
+      contentProps={{ minW: "280px", w: "auto" }}
+      triggerRender={
+        <HStack align={"center"} gap={2}>
+          <HStack gap={1.5} align={"center"}>
             <P lineHeight={1} aria-hidden={true}>
-              {String(option.flag ?? "")}
+              {getFlagEmoji(activeCountry.code)}
             </P>
-            <P flex={1} whiteSpace={"nowrap"} textAlign={"start"}>
-              {String(option.name ?? option.label)}
-            </P>
-            <P color={"fg.muted"} whiteSpace={"nowrap"}>
-              {String(option.dialCode ?? "")}
+            <P fontWeight={"medium"} whiteSpace={"nowrap"}>
+              {`+${activeCountry.dialCode}`}
             </P>
           </HStack>
-        )}
-        onValueChange={(nextCode) => {
-          if (nextCode) onValueChange(nextCode);
-        }}
-      />
-    </Box>
+          <AppIcon icon={ChevronDownIcon} size={"sm"} color={"fg.subtle"} />
+        </HStack>
+      }
+      renderOption={(option) => (
+        <HStack gap={3} align={"center"} flex={1} minW={0}>
+          <P lineHeight={1} aria-hidden={true}>
+            {String(option.flag ?? "")}
+          </P>
+          <P flex={1} whiteSpace={"nowrap"} textAlign={"start"}>
+            {String(option.name ?? option.label)}
+          </P>
+          <P color={"fg.muted"} whiteSpace={"nowrap"}>
+            {String(option.dialCode ?? "")}
+          </P>
+        </HStack>
+      )}
+      onValueChange={(nextCode) => {
+        if (nextCode) onValueChange(nextCode);
+      }}
+      {...restProps}
+    />
+    // </Box>
   );
 }

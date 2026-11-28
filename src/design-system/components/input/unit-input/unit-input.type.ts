@@ -1,7 +1,7 @@
 // src/design-system/components/input/unit-input/unit-input.type.ts
 
 import type { NumberInputProps } from "@/design-system/components/input/number-input/number-input.type";
-import type { SelectProps } from "@/design-system/components/input/select/select.type";
+import type { SelectOption, SelectProps } from "@/design-system/components/input/select/select.type";
 import type {
   UnitOf,
   UnitQuantity,
@@ -38,5 +38,14 @@ export type UnitInputProps<Q extends UnitQuantity> = Omit<
   unitName?: string; // hidden input name for the unit. Default `${name}Unit`
   stepper?: boolean; // default true
   unitTriggerProps?: Partial<SelectProps>;
+};
+
+export type UnitSelectProps = Omit<
+  SelectProps,
+  "value" | "onValueChange" | "options"
+> & {
+  value: string;
+  options: SelectOption[];
+  onValueChange: (unit: string) => void;
 };
 

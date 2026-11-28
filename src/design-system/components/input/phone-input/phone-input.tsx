@@ -14,7 +14,6 @@ import {
   parseInternationalNumber,
   sanitizeNationalNumber,
 } from "@/design-system/components/input/utils/phone.utils";
-import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { Separator } from "@/design-system/components/layout/separator/separator";
 import { P } from "@/design-system/components/typography/p/p";
@@ -270,21 +269,21 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
         )}
 
         {!isCountryStatic && (
-          <Box flexShrink={0}>
-            <PhoneCountrySelect
-              value={activeCountry.code}
-              countries={whitelistCountries}
-              disabled={disabled}
-              modalKey={modalKey}
-              onValueChange={handleCountrySelect}
-            />
-          </Box>
+          <PhoneCountrySelect
+            value={activeCountry.code}
+            countries={whitelistCountries}
+            disabled={disabled}
+            modalKey={modalKey}
+            onValueChange={handleCountrySelect}
+            border={"none"}
+            w={"100px"}
+          />
         )}
 
         <Separator
           orientation={"vertical"}
           h={isFloatingVariant ? "26px" : "20px"}
-          ml={2}
+          // ml={2}
           borderColor={"border.muted"}
         />
 

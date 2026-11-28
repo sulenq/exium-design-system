@@ -57,7 +57,7 @@ export default function SelectInput(props: SelectProps) {
     portalled = true,
     portalRef,
     suffixLabel,
-    trigger: customTrigger,
+    triggerRender: customTrigger,
     renderOption,
     contentProps,
     _hover,
@@ -346,6 +346,7 @@ export default function SelectInput(props: SelectProps) {
                   pb: "2px",
                 })}
               {...CLICKY_STYLE_PROPS}
+              {...(restProps as ChakraSelect.TriggerProps)}
               onPointerDown={(e) => applyClickyScale(e.currentTarget)}
             >
               {renderTriggerContent()}
