@@ -362,6 +362,7 @@ const FileInputInner = (props: FileinputInnerProps) => {
                       bg: "bg.subtle",
                     }
               }
+              transition={"none"}
               {...dropzoneProps}
             >
               <FileUpload.DropzoneContent
