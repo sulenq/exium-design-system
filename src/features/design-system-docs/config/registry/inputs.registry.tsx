@@ -208,7 +208,7 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
               <VersionInput />
             </Field>
             <Field label={"Daftar item"}>
-              <StringArrayInput />
+              <StringArrayInputDemo />
             </Field>
             <Field label={"Select"}>
               <SelectInput
