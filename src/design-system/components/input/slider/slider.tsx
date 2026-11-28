@@ -40,6 +40,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(
     return (
       <ChakraSlider.Root
         ref={ref}
+        w={"full"}
         thumbAlignment={"contain"}
         colorPalette={theme.colorPalette}
         // css={{ "--slider-thumb-size": isHolding ? "16px" : "12px" }}

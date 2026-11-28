@@ -16,7 +16,7 @@ import {
   Input as ChakraInput,
   InputGroup as ChakraInputGroup,
 } from "@chakra-ui/react";
-import { forwardRef, useCallback, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   // Props
@@ -31,15 +31,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const internalInputRef = useRef<HTMLInputElement>(null);
 
   // States
+  const [startElementEl, setStartElementEl] = useState<HTMLDivElement | null>(
+    null,
+  );
   const [startElementWidth, setStartElementWidth] = useState<number>(0);
 
-  const startElementRef = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      setStartElementWidth(node.offsetWidth);
-    } else {
+  useEffect(() => {
+    if (!startElementEl) {
       setStartElementWidth(0);
+      return;
     }
-  }, []);
+    const updateWidth = () => setStartElementWidth(startElementEl.offsetWidth);
+    updateWidth();
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(startElementEl);
+    return () => observer.disconnect();
+  }, [startElementEl]);
 
   // Contexts
   const fieldContext = useFieldContextValue();
@@ -132,7 +139,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       <ChakraInputGroup
         startElement={
           startElement ? (
-            <Box ref={startElementRef} display={"inline-flex"}>
+            <Box ref={setStartElementEl} display={"inline-flex"}>
               {startElement}
             </Box>
           ) : undefined

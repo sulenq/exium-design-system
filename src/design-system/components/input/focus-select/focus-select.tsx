@@ -250,7 +250,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
           <FloatingLabel label={floatingLabel} optional={isOptional} />
         )}
 
-        <HStack gap={3} flex={1} minW={0} justify={"start"}>
+        <HStack gap={3} flex={1} minW={0} justify={"start"} pe={6}>
           {isFetchingLoading && !currentValue ? (
             <Skeleton
               h={"16px"}

@@ -477,7 +477,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               variant={"filledIcon"}
               aria-label={resolvedTitle}
               disabled={disabled}
-              mr={"-1"}
+              mr={-2}
             >
               <AppIcon icon={ClockIcon} weight={"fill"} />
             </IconButton>

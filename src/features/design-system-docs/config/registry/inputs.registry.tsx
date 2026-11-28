@@ -198,9 +198,6 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
             <Field label={"Tanggal"}>
               <DateInput modalKey={"fieldset-date-input"} />
             </Field>
-            <Field label={"Rentang tanggal"}>
-              <DatePicker />
-            </Field>
             <Field label={"Waktu"}>
               <TimeInput modalKey={"fieldset-time-input"} />
             </Field>
