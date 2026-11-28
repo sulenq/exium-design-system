@@ -180,7 +180,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
     floatingLabelProp && fieldContext?.variant === "floating";
   const floatingLabel = isFloatingField ? fieldContext?.label : undefined;
   const isOptional = fieldContext?.optional;
-  const isLabelFloating = Boolean(currentValue) || isOpen;
+  const isLabelFloating = Boolean(currentValue);
 
   // Trigger Node
   const customTrigger = trigger ?? children;
@@ -237,6 +237,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
         disabled={disabled || isFetchingLoading}
         fontWeight={"normal"}
         data-has-value={currentValue ? "true" : "false"}
+        data-manual-float={"true"}
         data-floated={isLabelFloating ? "true" : undefined}
         css={isFloatingField && floatingLabel ? floatingLabelWrapperCss : undefined}
         {...(isFloatingField && {

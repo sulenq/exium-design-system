@@ -7,11 +7,9 @@ import type {
   PhoneInputProps,
   PhoneInputValue,
 } from "@/design-system/components/input/phone-input/phone-input.type";
-import type { SelectOption } from "@/design-system/components/input/select/select.type";
 import {
   findPhoneCountry,
   formatE164,
-  getCountryName,
   getFlagEmoji,
   parseInternationalNumber,
   sanitizeNationalNumber,
@@ -27,7 +25,6 @@ import {
 } from "@/design-system/constants/phone-countries";
 import type { PhoneCountry } from "@/design-system/constants/types/phone-countries.type";
 import { useThemeStore } from "@/design-system/stores/theme-store";
-import { getLocale } from "@/shared/libs/i18n";
 import { isEmptyArray } from "@/shared/utils/data/array";
 import { useFieldContext } from "@chakra-ui/react";
 import { forwardRef, useMemo, useState } from "react";
@@ -35,7 +32,7 @@ import { forwardRef, useMemo, useState } from "react";
 const CONTAINER_VARIANT_STYLES = {
   outline: {
     borderWidth: "1px",
-    borderColor: "border.emphasized",
+    borderColor: "border",
     bg: "transparent",
     _focusWithin: {
       borderColor: "colorPalette.focusRing",
@@ -55,7 +52,7 @@ const CONTAINER_VARIANT_STYLES = {
   },
   flushed: {
     borderBottomWidth: "1px",
-    borderColor: "border.emphasized",
+    borderColor: "border",
     bg: "transparent",
     rounded: "0",
     px: 0,
@@ -190,17 +187,6 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
     ]);
 
     const e164Value = formatE164(activeCountry.dialCode, nationalNumber);
-    const locale = getLocale();
-
-    const countryOptions = useMemo<SelectOption[]>(() => {
-      return availableCountries.map((c) => ({
-        value: c.code,
-        label: `+${c.dialCode}`,
-        flag: getFlagEmoji(c.code),
-        name: getCountryName(c.code, locale),
-        dialCode: `+${c.dialCode}`,
-      }));
-    }, [availableCountries, locale]);
 
     // Handlers
     const emitValue = (nextCountry: PhoneCountry, nextNational: string) => {
@@ -263,8 +249,6 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
       <HStack
         w={"full"}
         h={isFloatingVariant ? "48px" : "40px"}
-        px={3}
-        gap={2}
         align={"center"}
         rounded={theme.radii.component}
         opacity={disabled ? 0.5 : 1}
@@ -289,17 +273,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
           <Box flexShrink={0}>
             <PhoneCountrySelect
               value={activeCountry.code}
-              options={countryOptions}
-              prefixLabel={
-                <HStack gap={1.5} align={"center"}>
-                  <P lineHeight={1} aria-hidden={true}>
-                    {getFlagEmoji(activeCountry.code)}
-                  </P>
-                  <P fontWeight={"medium"} whiteSpace={"nowrap"}>
-                    {`+${activeCountry.dialCode}`}
-                  </P>
-                </HStack>
-              }
+              countries={whitelistCountries}
               disabled={disabled}
               modalKey={modalKey}
               onValueChange={handleCountrySelect}
@@ -310,6 +284,7 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
         <Separator
           orientation={"vertical"}
           h={isFloatingVariant ? "26px" : "20px"}
+          ml={2}
           borderColor={"border.muted"}
         />
 
@@ -323,7 +298,6 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
               boxShadow: "none !important",
               outline: "none !important",
               bg: "transparent !important",
-              pr: "0 !important",
             },
           }}
           value={nationalNumber}

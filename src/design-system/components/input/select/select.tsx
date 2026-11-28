@@ -227,7 +227,9 @@ export default function SelectInput(props: SelectProps) {
             display={"inline-block"}
             minW={0}
             fontSize={props?.fontSize ?? "md"}
-            opacity={isFloatingField && floatingLabel && !selectedOption ? 0 : 1}
+            opacity={
+              isFloatingField && floatingLabel && !selectedOption ? 0 : 1
+            }
           />
 
           {suffixLabel && (
@@ -280,7 +282,11 @@ export default function SelectInput(props: SelectProps) {
       value={currentValue ? [currentValue] : []}
       colorPalette={"neutral"}
       disabled={disabled}
-      ids={{ hiddenSelect: restProps.id ? `${restProps.id}-hidden-select` : undefined }}
+      ids={{
+        hiddenSelect: restProps.id
+          ? `${restProps.id}-hidden-select`
+          : undefined,
+      }}
       onValueChange={(e) => {
         const nextVal = e.value[0] ?? "";
         if (!isControlled) {
@@ -316,32 +322,35 @@ export default function SelectInput(props: SelectProps) {
           position={"relative"}
           w={"full"}
           css={
-            isFloatingField && floatingLabel ? floatingLabelWrapperCss : undefined
+            isFloatingField && floatingLabel
+              ? floatingLabelWrapperCss
+              : undefined
           }
+          data-manual-float={"true"}
           data-floated={currentValue ? "true" : undefined}
         >
           {isFloatingField && floatingLabel && (
             <FloatingLabel label={floatingLabel} optional={isOptional} />
           )}
           <ChakraSelect.Control rounded={theme.radii.component} _hover={_hover}>
-          <ChakraSelect.Trigger
-            rounded={theme.radii.component}
-            cursor={"pointer"}
-            minW={0}
-            px={3}
-            pr={clearable && hasValue && !disabled ? "52px" : "36px"}
-            {...(isFloatingField &&
-              floatingLabel && {
-                h: "48px",
-                pt: "22px",
-                pb: "2px",
-              })}
-            {...CLICKY_STYLE_PROPS}
-            onPointerDown={(e) => applyClickyScale(e.currentTarget)}
-          >
-            {renderTriggerContent()}
-          </ChakraSelect.Trigger>
-        </ChakraSelect.Control>
+            <ChakraSelect.Trigger
+              rounded={theme.radii.component}
+              cursor={"pointer"}
+              minW={0}
+              px={3}
+              pr={clearable && hasValue && !disabled ? "52px" : "36px"}
+              {...(isFloatingField &&
+                floatingLabel && {
+                  h: "48px",
+                  pt: "22px",
+                  pb: "2px",
+                })}
+              {...CLICKY_STYLE_PROPS}
+              onPointerDown={(e) => applyClickyScale(e.currentTarget)}
+            >
+              {renderTriggerContent()}
+            </ChakraSelect.Trigger>
+          </ChakraSelect.Control>
         </Box>
       </Tooltip>
 

@@ -1,8 +1,7 @@
 // src/design-system/components/input/phone-input/phone-input.type.ts
 
 import type { InputProps } from "@/design-system/components/input/input/input.type";
-import type { SelectOption } from "@/design-system/components/input/select/select.type";
-import type { ChangeEvent, ReactNode } from "react";
+import type { ChangeEvent } from "react";
 
 export type PhoneInputValue = {
   /** E.164 string ("+628123456789"), or "" when no number is entered. */
@@ -47,8 +46,7 @@ export type PhoneInputProps = Omit<
 
 export type PhoneCountrySelectProps = {
   value: string;
-  options: SelectOption[];
-  prefixLabel: ReactNode;
+  countries?: string[];
   disabled?: boolean;
   modalKey?: string;
   onValueChange: (countryCode: string) => void;

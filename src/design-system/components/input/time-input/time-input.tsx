@@ -270,7 +270,7 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     const containerBorderColor = invalid
       ? "border.error"
       : isFocused
-        ? "border.emphasized"
+        ? "border"
         : "border.muted";
     const containerOpacity = disabled ? 0.5 : 1;
     const containerCursor = disabled ? "not-allowed" : "text";
