@@ -17,7 +17,6 @@ export const FloatingLabel = (props: FloatingLabelProps) => {
       position={"absolute"}
       left={left}
       right={right}
-      top={"5px"}
       zIndex={1}
       pointerEvents={"none"}
     >

@@ -8,13 +8,14 @@ import { StateRetry } from "@/design-system/components/feedback/state-retry/stat
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import type { AppIconProps } from "@/design-system/components/icon/app-icon/app-icon.type";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
+import { floatingLabelWrapperCss } from "@/design-system/styles/floating-label.css";
 import { Field } from "@/design-system/components/input/field/field";
 import type {
   FocusSelectInputProps,
   FocusSelectOption,
 } from "@/design-system/components/input/focus-select/focus-select.type";
 import { SearchInput } from "@/design-system/components/input/search-input/search-input";
-import { Box } from "@/design-system/components/layout/box/box";
 import {
   HStack,
   VStack,
@@ -228,11 +229,14 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
         alignItems={"center"}
         justifyContent={"space-between"}
         w={w}
+        maxW={"full"}
         px={3}
         pr={clearable && currentValue && !disabled ? "60px" : "36px"}
         disabled={disabled || isFetchingLoading}
         fontWeight={"normal"}
         data-has-value={currentValue ? "true" : "false"}
+        data-floated={isLabelFloating ? "true" : undefined}
+        css={isFloatingField && floatingLabel ? floatingLabelWrapperCss : undefined}
         {...(isFloatingField && {
           h: "48px",
           pt: floatingLabel ? "22px" : 0,
@@ -241,40 +245,7 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
         {...restProps}
       >
         {isFloatingField && floatingLabel && (
-          <Box
-            position={"absolute"}
-            left={"12px"}
-            top={"7px"}
-            zIndex={1}
-            pointerEvents={"none"}
-            transform={isLabelFloating ? "translateY(0)" : "translateY(12px)"}
-            transition={
-              "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease"
-            }
-          >
-            <HStack align={"center"} gap={2}>
-              <P
-                lineClamp={1}
-                fontSize={isLabelFloating ? "xs" : "md"}
-                fontWeight={"medium"}
-                color={"fg.subtle"}
-                transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-              >
-                {floatingLabel}
-              </P>
-
-              {isOptional && (
-                <Badge
-                  size={"xs"}
-                  fontSize={"2xs"}
-                  colorPalette={"gray"}
-                  color={"fg.subtle"}
-                >
-                  {t["common.optional"]()}
-                </Badge>
-              )}
-            </HStack>
-          </Box>
+          <FloatingLabel label={floatingLabel} optional={isOptional} />
         )}
 
         <HStack gap={3} flex={1} minW={0} justify={"start"}>
@@ -296,6 +267,8 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
               <P
                 color={selectedOption ? "fg.default" : "fg.subtle"}
                 truncate
+                minW={0}
+                maxW={"full"}
                 data-placeholder={!selectedOption ? "true" : undefined}
                 opacity={
                   isFloatingField && floatingLabel && !selectedOption ? 0 : 1
@@ -593,4 +566,4 @@ export const FocusSelectInput = (props: FocusSelectInputProps) => {
       </Modal.Content>
     </Modal.Root>
   );
-}
+};

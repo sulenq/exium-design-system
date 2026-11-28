@@ -183,6 +183,33 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
             <Field label={"Nama lengkap"}>
               <Input />
             </Field>
+            <Field label={"Nominal"}>
+              <NumberInput />
+            </Field>
+            <Field label={"Berat"}>
+              <UnitInput quantity={"mass"} />
+            </Field>
+            <Field label={"Tanggal"}>
+              <DateInput modalKey={"fieldset-date-input"} />
+            </Field>
+            <Field label={"Select"}>
+              <SelectInput
+                options={[
+                  { label: "Opsi A", value: "a" },
+                  { label: "Opsi B", value: "b" },
+                  { label: "Opsi C", value: "c" },
+                ]}
+              />
+            </Field>
+            <Field label={"Focus Select"}>
+              <FocusSelectInput
+                options={[
+                  { label: "Opsi A", value: "a" },
+                  { label: "Opsi B", value: "b" },
+                  { label: "Opsi C", value: "c" },
+                ]}
+              />
+            </Field>
             <Field label={"Catatan"}>
               <Textarea />
             </Field>
@@ -1388,7 +1415,7 @@ export const INPUTS_DOCS: Record<string, ComponentDocSpec> = {
           helperText={String(props.helperText || "")}
           optional={Boolean(props.optional)}
         >
-          <Input placeholder={"Masukkan teks..."} />
+          <Input />
         </Field>
       </Box>
     ),

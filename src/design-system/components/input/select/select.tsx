@@ -7,6 +7,9 @@ import {
 import { t } from "@/shared/libs/i18n";
 
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
+import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
+import { floatingLabelWrapperCss } from "@/design-system/styles/floating-label.css";
 import type {
   SelectOption,
   SelectProps,
@@ -75,6 +78,10 @@ export default function SelectInput(props: SelectProps) {
 
   // Stores
   const { theme } = useThemeStore();
+  const fieldContext = useFieldContextValue();
+  const isFloatingField = fieldContext?.variant === "floating";
+  const floatingLabel = isFloatingField ? fieldContext?.label : undefined;
+  const isOptional = fieldContext?.optional;
 
   // States (Controlled & Uncontrolled support)
   const [internalValue, setInternalValue] = useState<string>(defaultValue);
@@ -218,6 +225,7 @@ export default function SelectInput(props: SelectProps) {
             display={"inline-block"}
             minW={0}
             fontSize={props?.fontSize ?? "md"}
+            opacity={isFloatingField && floatingLabel && !selectedOption ? 0 : 1}
           />
 
           {suffixLabel && (
@@ -227,6 +235,10 @@ export default function SelectInput(props: SelectProps) {
 
         <HStack
           gap={3}
+          position={"absolute"}
+          right={3}
+          top={"50%"}
+          transform={"translateY(-50%)"}
           align={"center"}
           justify={"center"}
           pointerEvents={"auto"}
@@ -266,6 +278,7 @@ export default function SelectInput(props: SelectProps) {
       value={currentValue ? [currentValue] : []}
       colorPalette={"neutral"}
       disabled={disabled}
+      ids={{ hiddenSelect: restProps.id ? `${restProps.id}-hidden-select` : undefined }}
       onValueChange={(e) => {
         const nextVal = e.value[0] ?? "";
         if (!isControlled) {
@@ -297,18 +310,37 @@ export default function SelectInput(props: SelectProps) {
           </HStack>
         }
       >
-        <ChakraSelect.Control rounded={theme.radii.component} _hover={_hover}>
+        <Box
+          position={"relative"}
+          w={"full"}
+          css={
+            isFloatingField && floatingLabel ? floatingLabelWrapperCss : undefined
+          }
+          data-floated={currentValue ? "true" : undefined}
+        >
+          {isFloatingField && floatingLabel && (
+            <FloatingLabel label={floatingLabel} optional={isOptional} />
+          )}
+          <ChakraSelect.Control rounded={theme.radii.component} _hover={_hover}>
           <ChakraSelect.Trigger
             rounded={theme.radii.component}
             cursor={"pointer"}
             minW={0}
             px={3}
+            pr={clearable && hasValue && !disabled ? "52px" : "36px"}
+            {...(isFloatingField &&
+              floatingLabel && {
+                h: "48px",
+                pt: "22px",
+                pb: "2px",
+              })}
             {...CLICKY_STYLE_PROPS}
             onPointerDown={(e) => applyClickyScale(e.currentTarget)}
           >
             {renderTriggerContent()}
           </ChakraSelect.Trigger>
         </ChakraSelect.Control>
+        </Box>
       </Tooltip>
 
       <Portal container={portalRef} disabled={!portalled}>

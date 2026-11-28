@@ -197,7 +197,6 @@ export const DesignSystemDocsPage = () => {
               }}
               options={localeOptions}
               clearable={false}
-              w={"160px"}
               size={"sm"}
               variant={"ghost"}
             />

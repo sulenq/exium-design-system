@@ -71,6 +71,13 @@ export const NumberInput = (props: NumberInputProps) => {
   // Stores
   const { theme } = useThemeStore();
 
+  // States
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasInternalValue, setHasInternalValue] = useState(
+    Boolean(defaultValue ?? value),
+  );
+  const hasValue = value !== undefined ? Boolean(value) : hasInternalValue;
+
   const size = restProps.size ?? "md";
 
   // Adaptive stepper sizing based on input size
@@ -294,6 +301,14 @@ export const NumberInput = (props: NumberInputProps) => {
         position={"relative"}
         w={restProps.w || "full"}
         css={floatingLabelWrapperCss}
+        data-manual-float={"true"}
+        data-floated={hasValue || isFocused ? "true" : undefined}
+        onFocusCapture={() => setIsFocused(true)}
+        onBlurCapture={() => setIsFocused(false)}
+        onInput={(e) => {
+          const target = e.target as HTMLInputElement;
+          setHasInternalValue(Boolean(target.value));
+        }}
       >
         <FloatingLabel
           label={floatingLabel}

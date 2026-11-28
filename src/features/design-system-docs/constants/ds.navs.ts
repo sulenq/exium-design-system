@@ -94,7 +94,7 @@ import {
 export const DS_NAVS_MAP = {
   overview: {
     icon: InfoIcon,
-    title: "Overview & Specs",
+    title: "Overview",
   },
 
   // Categories (Parent Nodes)

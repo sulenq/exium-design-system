@@ -5,14 +5,15 @@
  * Native `:placeholder-shown` requires a non-empty placeholder string to work.
  */
 export function getFloatingPlaceholder(placeholder?: string): string {
-  return placeholder ?? " ";
+  return placeholder || " ";
 }
 
 const FLOATED_CONTAINERS = [
-  "&:focus-within",
-  "&:has(:is(input, textarea):focus)",
-  "&:has(:is(input, textarea):not(:placeholder-shown))",
-  "&:has(:is(input, textarea):-webkit-autofill)",
+  "&[data-floated='true']",
+  "&:not([data-manual-float='true']):focus-within",
+  "&:not([data-manual-float='true']):has(:is(input:not([type='hidden']), textarea):focus)",
+  "&:not([data-manual-float='true']):has(:is(input:not([type='hidden']), textarea):not(:placeholder-shown))",
+  "&:not([data-manual-float='true']):has(:is(input:not([type='hidden']), textarea):-webkit-autofill)",
 ];
 
 const floatedSelector = (childSelector: string) =>
@@ -33,17 +34,22 @@ export const floatingLabelWrapperCss = {
 
   // Resting state
   "& [data-part='floating-label']": {
-    transform: "translateY(8px)",
-    transition:
-      "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease",
+    top: "4px",
+    transform: "translateY(10px)",
+    transition: "transform 0.18s ease, font-size 0.18s ease, color 0.18s ease",
+  },
+  "&:has(textarea) [data-part='floating-label']": {
+    top: "14px",
+    transform: "translateY(0)",
   },
   "& [data-part='floating-label-text']": {
     fontSize: "md",
-    transition: "font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)",
+    transition: "font-size 0.18s ease",
   },
 
   // Floated state
   [floatedSelector("[data-part='floating-label']")]: {
+    top: "4px",
     transform: "translateY(0)",
   },
   [floatedSelector("[data-part='floating-label-text']")]: {

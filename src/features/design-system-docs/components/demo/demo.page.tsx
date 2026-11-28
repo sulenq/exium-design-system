@@ -38,7 +38,10 @@ import { StateRetry } from "@/design-system/components/feedback/state-retry/stat
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useExistingFiles } from "@/design-system/components/input/hooks/use-existing-files";
 import { Checkbox } from "@/design-system/components/input/checkbox/checkbox";
+import { CurrencyInput } from "@/design-system/components/input/currency-input/currency-input";
 import { DateInput } from "@/design-system/components/input/date-input/date-input";
+import { TimePickerTrigger } from "@/design-system/components/input/time-picker/time-picker";
+import { UnitInput } from "@/design-system/components/input/unit-input/unit-input";
 import { Field } from "@/design-system/components/input/field/field";
 import { FileInput } from "@/design-system/components/input/file-input/file-input";
 import { FocusSelectInput } from "@/design-system/components/input/focus-select/focus-select";
@@ -180,13 +183,6 @@ export const DemoPage = () => {
         <IconButtonCard />
         <ButtonGroupCard />
         <InputCard />
-        <PasswordInputCard />
-        <SearchInputCard />
-        <NumberInputCard />
-        <SteppedNumberInputCard />
-        <DateInputCard />
-        <SelectCard />
-        <FocusSelectCard />
         <PinInputCard />
         <CheckboxCard />
         <SwitchCard />
@@ -369,99 +365,52 @@ const TabularNumCard = () => {
 const InputCard = () => {
   return (
     <DemoCard title={"Input"} icon={CursorTextIcon}>
-      <VStack align={"stretch"} gap={2}>
+      <VStack align={"stretch"} gap={3}>
         <Field label={"Text Input"}>
-          <Input placeholder={"Ketik sesuatu..."} />
+          <Input />
+        </Field>
+        <Field label={"Password Input"}>
+          <PasswordInput />
+        </Field>
+        <SearchInput />
+        <Field label={"Nominal"}>
+          <NumberInput />
+        </Field>
+        <Field label={"Harga (CurrencyInput)"}>
+          <CurrencyInput />
+        </Field>
+        <Field label={"Berat (UnitInput)"}>
+          <UnitInput quantity={"mass"} />
+        </Field>
+        <SteppedNumberInput defaultValue={"0"} />
+        <Field label={"Tanggal"}>
+          <DateInput />
+        </Field>
+        <Field label={"Waktu (TimePicker)"}>
+          <TimePickerTrigger modalKey={"demo-time-picker"} />
+        </Field>
+        <Field label={"Select Input"}>
+          <Select
+            options={[
+              { label: "Opsi A", value: "a" },
+              { label: "Opsi B", value: "b" },
+              { label: "Opsi C", value: "c" },
+            ]}
+          />
+        </Field>
+        <Field label={"Focus Select"}>
+          <FocusSelectInput
+            options={[
+              { label: "Opsi A", value: "a" },
+              { label: "Opsi B", value: "b" },
+              { label: "Opsi C", value: "c" },
+            ]}
+          />
+        </Field>
+        <Field label={"Textarea"}>
+          <Textarea />
         </Field>
       </VStack>
-    </DemoCard>
-  );
-};
-
-const PasswordInputCard = () => {
-  return (
-    <DemoCard title={"PasswordInput"} icon={CursorTextIcon}>
-      <Field label={"Password Input"}>
-        <PasswordInput
-          withPasswordStrength={true}
-          placeholder={"Kata sandi..."}
-        />
-      </Field>
-    </DemoCard>
-  );
-};
-
-const SearchInputCard = () => {
-  return (
-    <DemoCard title={"SearchInput"} icon={CursorTextIcon}>
-      <SearchInput placeholder={"Cari data..."} />
-    </DemoCard>
-  );
-};
-
-const NumberInputCard = () => {
-  return (
-    <DemoCard title={"NumberInput"} icon={CursorTextIcon}>
-      <Field label={"Nominal"}>
-        <NumberInput
-          placeholder={"0"}
-          formatOptions={{
-            style: "unit",
-            unit: "inch",
-            unitDisplay: "long",
-          }}
-        />
-      </Field>
-    </DemoCard>
-  );
-};
-
-const SteppedNumberInputCard = () => {
-  return (
-    <DemoCard title={"SteppedNumberInput"} icon={CursorTextIcon}>
-      <SteppedNumberInput />
-    </DemoCard>
-  );
-};
-
-const DateInputCard = () => {
-  return (
-    <DemoCard title={"DateInput"} icon={CursorTextIcon}>
-      <Field label={"Tanggal"}>
-        <DateInput modalKey={"demo-date-input"} />
-      </Field>
-    </DemoCard>
-  );
-};
-
-const SelectCard = () => {
-  return (
-    <DemoCard title={"Select Input"} icon={CursorTextIcon}>
-      <Field label={"Pilihan Status"}>
-        <Select
-          options={[
-            { label: "Option 1", value: "option-1" },
-            { label: "Option 2", value: "option-2" },
-            { label: "Option 3", value: "option-3" },
-          ]}
-        />
-      </Field>
-    </DemoCard>
-  );
-};
-
-const FocusSelectCard = () => {
-  return (
-    <DemoCard title={"FocusSelectInput"} icon={CursorTextIcon}>
-      <Field label={"Focus Select"}>
-        <FocusSelectInput
-          options={[
-            { label: "Kategori A", value: "kat-a" },
-            { label: "Kategori B", value: "kat-b" },
-            { label: "Kategori C", value: "kat-c" },
-          ]}
-        />
-      </Field>
     </DemoCard>
   );
 };

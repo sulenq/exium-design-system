@@ -3,6 +3,8 @@
 "use client";
 
 import { CalendarDate } from "@internationalized/date";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
+import { floatingLabelWrapperCss } from "@/design-system/styles/floating-label.css";
 import {
   forwardRef,
   Fragment,
@@ -40,7 +42,6 @@ import {
 import { Box } from "@/design-system/components/layout/box/box";
 import { HStack } from "@/design-system/components/layout/flex-box/flex-box";
 import { usePopDisclosure } from "@/design-system/components/overlay/hooks/use-pop-disclosure";
-import { Badge } from "@/design-system/components/typography/badge/badge";
 import { P } from "@/design-system/components/typography/p/p";
 import { useThemeStore } from "@/design-system/stores/theme-store";
 import { useFieldContext } from "@chakra-ui/react";
@@ -514,6 +515,7 @@ export const DateInput = memo(
                 size={"xs"}
                 variant={"filledIcon"}
                 aria-label={t["common.open_date_picker"]()}
+                mr={-2}
               >
                 <AppIcon icon={CalendarIcon} weight={"fill"} />
               </IconButton>
@@ -533,41 +535,13 @@ export const DateInput = memo(
         />
 
         {isFloatingVariant && floatingLabel ? (
-          <Box position={"relative"} w={restProps.w || "full"}>
-            <Box
-              position={"absolute"}
-              left={"12px"}
-              top={"7px"}
-              zIndex={1}
-              pointerEvents={"none"}
-              transform={isLabelFloating ? "translateY(0)" : "translateY(12px)"}
-              transition={
-                "transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease"
-              }
-            >
-              <HStack align={"center"} gap={2}>
-                <P
-                  lineClamp={1}
-                  fontSize={isLabelFloating ? "xs" : "md"}
-                  fontWeight={"medium"}
-                  color={"fg.subtle"}
-                  transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-                >
-                  {floatingLabel}
-                </P>
-
-                {isOptional && (
-                  <Badge
-                    size={"xs"}
-                    fontSize={"2xs"}
-                    colorPalette={"gray"}
-                    color={"fg.subtle"}
-                  >
-                    {t["common.optional"]()}
-                  </Badge>
-                )}
-              </HStack>
-            </Box>
+          <Box
+            position={"relative"}
+            w={restProps.w || "full"}
+            css={floatingLabelWrapperCss}
+            data-floated={isLabelFloating ? "true" : undefined}
+          >
+            <FloatingLabel label={floatingLabel} optional={isOptional} />
 
             {inputCore}
           </Box>

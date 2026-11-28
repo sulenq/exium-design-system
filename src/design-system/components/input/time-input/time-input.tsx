@@ -5,6 +5,8 @@
 import { IconButton } from "@/design-system/components/button/button/button";
 import { AppIcon } from "@/design-system/components/icon/app-icon/app-icon";
 import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import { FloatingLabel } from "@/design-system/components/input/floating-label/floating-label";
+import { floatingLabelWrapperCss } from "@/design-system/styles/floating-label.css";
 import type {
   TimeInputProps,
   TimeSegmentInputProps,
@@ -261,10 +263,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
       segments.hours || segments.minutes || segments.seconds,
     );
     const isLabelFloated = isFocused || hasSegmentValue;
-    const floatingLabelTransform = isLabelFloated
-      ? "translateY(0)"
-      : "translateY(8px)";
-    const floatingLabelFontSize = isLabelFloated ? "xs" : "md";
 
     const containerHeight = hasFloatingLabel ? "52px" : "40px";
     const containerBorderColor = invalid
@@ -415,28 +413,12 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
           onClick={handleContainerClick}
           onFocus={handleContainerFocus}
           onBlur={handleContainerBlur}
+          data-floated={isLabelFloated ? "true" : undefined}
+          css={hasFloatingLabel ? floatingLabelWrapperCss : undefined}
           {...restProps}
         >
           {hasFloatingLabel && (
-            <Box
-              position={"absolute"}
-              left={"12px"}
-              right={"44px"}
-              top={"5px"}
-              pointerEvents={"none"}
-              transform={floatingLabelTransform}
-              transition={"transform 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-            >
-              <P
-                lineClamp={1}
-                fontSize={floatingLabelFontSize}
-                fontWeight={"normal"}
-                color={"fg.muted"}
-                transition={"font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1)"}
-              >
-                {floatingLabel}
-              </P>
-            </Box>
+            <FloatingLabel label={floatingLabel} right={"44px"} />
           )}
 
           <HStack

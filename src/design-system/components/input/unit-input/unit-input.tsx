@@ -1,6 +1,9 @@
 // src/design-system/components/input/unit-input/unit-input.tsx
 
-import { useFieldContextValue } from "@/design-system/components/input/context/field.context";
+import {
+  FieldContext,
+  useFieldContextValue,
+} from "@/design-system/components/input/context/field.context";
 import { NumberInput } from "@/design-system/components/input/number-input/number-input";
 import SelectInput from "@/design-system/components/input/select/select";
 import type { SelectOption } from "@/design-system/components/input/select/select.type";
@@ -448,11 +451,10 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
               },
             },
         }}
-        {...(isFloatingVariant && {
-          pt: "18px",
-        })}
       >
-        <SelectInput
+        <FieldContext.Provider value={null}>
+          <SelectInput
+          id={`unit-select-${quantity}`}
           key={`unit-select-${quantity}`}
           value={currentUnit}
           options={unitOptions}
@@ -494,6 +496,7 @@ export const UnitInput = <Q extends UnitQuantity,>(props: UnitInputProps<Q>) => 
           }}
           {...unitTriggerProps}
         />
+        </FieldContext.Provider>
       </Box>
     </HStack>
   );
