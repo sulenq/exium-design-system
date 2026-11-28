@@ -14,6 +14,7 @@ import { t } from "@/shared/libs/i18n";
 export const StringArrayInput = (props: StringArrayInputProps) => {
   // Props
   const {
+    label,
     value = [],
     onChange,
     placeholder = "",
@@ -45,6 +46,8 @@ export const StringArrayInput = (props: StringArrayInputProps) => {
   return (
     <FieldContext.Provider value={null}>
       <VStack align={"stretch"} gap={3} w={"full"}>
+        {label && <P fontWeight={"medium"}>{label}</P>}
+
         {isEmptyArray(value) && (
           <P fontSize={"xs"} color={"fg.muted"} py={1}>
             {emptyText}
