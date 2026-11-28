@@ -395,3 +395,97 @@ export function getPlaceholder(field: "day" | "month" | "year"): string {
 export function getMaxLength(field: "day" | "month" | "year"): number {
   return field === "year" ? 4 : 2;
 }
+
+const DATE_SEGMENT_LENGTHS: Record<"dmy" | "mdy" | "ymd", [number, number, number]> = {
+  dmy: [2, 2, 4],
+  mdy: [2, 2, 4],
+  ymd: [4, 2, 2],
+};
+
+export function getDateFormatHint(inputFormat: "dmy" | "mdy" | "ymd"): string {
+  if (inputFormat === "mdy") return "MM/DD/YYYY";
+  if (inputFormat === "ymd") return "YYYY/MM/DD";
+  return "DD/MM/YYYY";
+}
+
+/**
+ * Formats raw typed date text into segmented `DD/MM/YYYY` (or `mdy`/`ymd`) form.
+ * Flags `invalidSeparator` when `/` is typed at the start or consecutively.
+ */
+export function formatDateInputValue(
+  raw: string,
+  inputFormat: "dmy" | "mdy" | "ymd",
+): { formatted: string; invalidSeparator: boolean; invalidRange: boolean } {
+  const lengths = DATE_SEGMENT_LENGTHS[inputFormat];
+  const cleaned = raw.replace(/[^\d/]/g, "");
+  let invalidSeparator = false;
+  let invalidRange = false;
+
+  if (cleaned.startsWith("/") || cleaned.includes("//")) {
+    invalidSeparator = true;
+  }
+
+  // Build digits while respecting explicit `/` after a 1-digit segment (e.g. `5/` -> `05/`)
+  const rawParts = cleaned.split("/");
+  let digits = "";
+  for (let i = 0; i < rawParts.length; i++) {
+    const partDigits = rawParts[i].replace(/\D/g, "");
+    const segIdx = Math.min(i, 2);
+    const maxSegLen = lengths[segIdx];
+    const hasTrailingSlash = i < rawParts.length - 1;
+
+    if (hasTrailingSlash && partDigits.length > 0 && partDigits.length < maxSegLen) {
+      digits += partDigits.padStart(maxSegLen, "0");
+    } else {
+      digits += partDigits;
+    }
+  }
+
+  const totalMaxDigits = lengths[0] + lengths[1] + lengths[2];
+  const capped = digits.slice(0, totalMaxDigits);
+
+  const p1 = capped.slice(0, lengths[0]);
+  const p2 = capped.slice(lengths[0], lengths[0] + lengths[1]);
+  const p3 = capped.slice(lengths[0] + lengths[1]);
+
+  const dayPart = inputFormat === "dmy" ? p1 : inputFormat === "mdy" ? p2 : p3;
+  const monthPart = inputFormat === "dmy" ? p2 : inputFormat === "mdy" ? p1 : p2;
+
+  if (dayPart.length === 2) {
+    const d = parseInt(dayPart, 10);
+    if (d < 1 || d > 31) invalidRange = true;
+  }
+  if (monthPart.length === 2) {
+    const m = parseInt(monthPart, 10);
+    if (m < 1 || m > 12) invalidRange = true;
+  }
+
+  let formatted = p1;
+  if (p1.length === lengths[0] && (p2.length > 0 || cleaned.endsWith("/"))) {
+    formatted += `/${p2}`;
+  } else if (p2.length > 0) {
+    formatted += `/${p2}`;
+  }
+  if (p2.length === lengths[1] && (p3.length > 0 || (p1.length === lengths[0] && cleaned.endsWith("/")))) {
+    formatted += `/${p3}`;
+  } else if (p3.length > 0) {
+    formatted += `/${p3}`;
+  }
+
+  return { formatted, invalidSeparator, invalidRange };
+}
+
+export function formatIsoToDisplayDate(
+  iso: DateValue,
+  inputFormat: "dmy" | "mdy" | "ymd",
+): string {
+  if (!iso) return "";
+  const parsed = parseISODate(iso);
+  if (!parsed) return "";
+  const dd = String(parsed.day).padStart(2, "0");
+  const mm = String(parsed.month).padStart(2, "0");
+  const yyyy = String(parsed.year).padStart(4, "0");
+  if (inputFormat === "mdy") return `${mm}/${dd}/${yyyy}`;
+  if (inputFormat === "ymd") return `${yyyy}/${mm}/${dd}`;
+  return `${dd}/${mm}/${yyyy}`;
+}

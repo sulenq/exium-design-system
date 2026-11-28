@@ -68,3 +68,71 @@ export function getNearestOptionIndex(
   });
   return nearestIndex;
 }
+
+/**
+ * Formats raw typed time text into `HH:mm:ss` (or `HH:mm` when `withSeconds` is false).
+ * Flags `invalidSeparator` when `:` is typed at the start or consecutively.
+ */
+export function formatTimeInputValue(
+  raw: string,
+  withSeconds: boolean,
+): { formatted: string; invalidSeparator: boolean; invalidRange: boolean } {
+  const maxSegments = withSeconds ? 3 : 2;
+  const cleaned = raw.replace(/[^\d:]/g, "");
+  let invalidSeparator = false;
+  let invalidRange = false;
+
+  if (cleaned.startsWith(":") || cleaned.includes("::")) {
+    invalidSeparator = true;
+  }
+
+  const rawParts = cleaned.split(":");
+  let digits = "";
+  for (let i = 0; i < rawParts.length; i++) {
+    const partDigits = rawParts[i].replace(/\D/g, "");
+    const hasTrailingColon = i < rawParts.length - 1;
+    if (hasTrailingColon && partDigits.length === 1) {
+      digits += partDigits.padStart(2, "0");
+    } else {
+      digits += partDigits;
+    }
+  }
+
+  const capped = digits.slice(0, maxSegments * 2);
+  const p1 = capped.slice(0, 2);
+  const p2 = capped.slice(2, 4);
+  const p3 = withSeconds ? capped.slice(4, 6) : "";
+
+  if (p1.length === 2 && parseInt(p1, 10) > 23) invalidRange = true;
+  if (p2.length === 2 && parseInt(p2, 10) > 59) invalidRange = true;
+  if (p3.length === 2 && parseInt(p3, 10) > 59) invalidRange = true;
+
+  let formatted = p1;
+  if (p1.length === 2 && (p2.length > 0 || cleaned.endsWith(":"))) {
+    formatted += `:${p2}`;
+  } else if (p2.length > 0) {
+    formatted += `:${p2}`;
+  }
+  if (withSeconds) {
+    if (p2.length === 2 && (p3.length > 0 || (p1.length === 2 && cleaned.endsWith(":")))) {
+      formatted += `:${p3}`;
+    } else if (p3.length > 0) {
+      formatted += `:${p3}`;
+    }
+  }
+
+  return { formatted, invalidSeparator, invalidRange };
+}
+
+export function formatTimeValueToDisplay(
+  value: string | null | undefined,
+  withSeconds: boolean,
+): string {
+  if (!value) return "";
+  const parts = value.split(":");
+  const hh = (parts[0] ?? "00").padStart(2, "0");
+  const mm = (parts[1] ?? "00").padStart(2, "0");
+  if (!withSeconds) return `${hh}:${mm}`;
+  const ss = (parts[2] ?? "00").padStart(2, "0");
+  return `${hh}:${mm}:${ss}`;
+}
